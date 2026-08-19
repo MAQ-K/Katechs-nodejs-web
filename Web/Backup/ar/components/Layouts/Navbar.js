@@ -129,9 +129,9 @@ const Navbar = ({ theme }) => {
 
                 <li className="nav-item">
                   <Link
-                        href="#"
+                        href="/services/seo/"
                         className={`nav-link ${
-                          currentPath == "" && "active"
+                          currentPath == "/services/seo/" && "active"
                         }`}
                       >
                         سيو

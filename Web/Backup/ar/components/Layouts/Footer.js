@@ -93,7 +93,7 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
+                    <Link href="/services/seo/">
                       <i className="right-icon bx bx-chevrons-right"></i>
                       تحسين محركات البحث سيو
                     </Link>

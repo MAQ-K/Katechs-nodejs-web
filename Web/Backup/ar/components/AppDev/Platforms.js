@@ -1,23 +1,75 @@
 import React from "react";
-import { box } from "./wireframeStyles";
+import Link from "next/link";
+import { motion } from "framer-motion";
+import Reveal, { EASE } from "../Common/Reveal";
+import Tilt3D from "../Emails/Tilt3D";
+import AppOrbit from "./AppOrbit";
 
-const platforms = ["تطبيقات iOS", "تطبيقات Android", "تطبيقات متعددة المنصات"];
+const platforms = [
+  {
+    icon: "bxl-apple bx",
+    title: "تطبيقات iOS",
+    meta: "Swift · آيفون وآيباد",
+  },
+  {
+    icon: "bxl-android bx",
+    title: "تطبيقات أندرويد",
+    meta: "Kotlin · هواتف وأجهزة أندرويد",
+  },
+  {
+    icon: "bx bx-devices",
+    title: "تطبيقات هجينة",
+    meta: "Flutter · المنصتان بكود واحد",
+  },
+];
 
 const Platforms = () => {
   return (
-    <section className="wireframe-platforms pb-100">
+    <section className="app-platforms" id="platforms">
       <div className="container">
-        <div style={{ ...box, height: 44, width: 260, margin: "0 auto 40px" }}>
-          عنوان القسم (Section Title)
+        <div className="app-platforms-head">
+          <Reveal as="h2">
+            نطوّر على المنصة
+            <br />
+            التي يستخدمها عملاؤك
+          </Reveal>
+
+          <Reveal as="p" delay={0.1}>
+            نختار التقنية المناسبة لمشروعك بناءً على جمهورك وميزانيتك وخطة
+            نموّك — سواء كان تطبيقًا أصليًا لمنصة واحدة أو تطبيقًا هجينًا يغطي
+            المنصتين بكود واحد.
+          </Reveal>
         </div>
 
-        <div className="row justify-content-center">
-          {platforms.map((label) => (
-            <div className="col-lg-4 col-sm-6" key={label}>
-              <div style={{ ...box, height: 180, marginBottom: 20, flexDirection: "column", gap: 10 }}>
-                <div style={{ ...box, width: 60, height: 60, borderRadius: "50%" }} />
-                {label}
-              </div>
+        <AppOrbit />
+
+        <div className="row">
+          {platforms.map((item, i) => (
+            <div className="col-lg-4 col-md-6" key={item.title}>
+              <Reveal className="app-platform-card" delay={0.08 * i}>
+                <Tilt3D className="app-platform-tilt" max={9} glare={false}>
+                  <div className="app-platform-media">
+                    <span className="app-platform-sheen" aria-hidden="true"></span>
+                    <motion.i
+                      className={item.icon}
+                      whileHover={{ scale: 1.12, rotate: -6 }}
+                      transition={{ duration: 0.4, ease: EASE }}
+                    ></motion.i>
+                  </div>
+                </Tilt3D>
+
+                <div className="app-platform-meta">
+                  <div>
+                    <h3>{item.title}</h3>
+                    <span>{item.meta}</span>
+                  </div>
+
+                  <Link href="#pricing" className="app-platform-link">
+                    الباقات
+                    <i className="bx bx-left-arrow-alt"></i>
+                  </Link>
+                </div>
+              </Reveal>
             </div>
           ))}
         </div>

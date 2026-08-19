@@ -1,11 +1,13 @@
 import React from "react";
 import Navbar from "../../../components/Layouts/Navbar";
 import Hero from "../../../components/AppDev/Hero";
+import TechMarquee from "../../../components/AppDev/TechMarquee";
 import Platforms from "../../../components/AppDev/Platforms";
 import Process from "../../../components/AppDev/Process";
+import Stats from "../../../components/AppDev/Stats";
 import Pricing from "../../../components/AppDev/Pricing";
-import FeaturesPlaceholder from "../../../components/AppDev/FeaturesPlaceholder";
-import FaqPlaceholder from "../../../components/AppDev/FaqPlaceholder";
+import Features from "../../../components/AppDev/Features";
+import Faq from "../../../components/AppDev/Faq";
 import Footer from "../../../components/Layouts/Footer";
 
 export default function AppDevelopmentPage() {
@@ -15,15 +17,19 @@ export default function AppDevelopmentPage() {
 
       <Hero />
 
+      <TechMarquee />
+
       <Platforms />
 
       <Process />
 
+      <Stats />
+
       <Pricing />
 
-      <FeaturesPlaceholder />
+      <Features />
 
-      <FaqPlaceholder />
+      <Faq />
 
       <Footer />
     </>
