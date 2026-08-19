@@ -17,5 +17,17 @@ const nextConfig = {
   images: {
     unoptimized: true,
   },
+  // The digital marketing page moved off the misspelled legacy URL
+  // (/services/degital-market/). Permanent redirect so the old address keeps
+  // working for any existing inbound links or search indexing.
+  async redirects() {
+    return [
+      {
+        source: '/services/degital-market',
+        destination: '/services/digital-marketing',
+        permanent: true,
+      },
+    ]
+  },
 }
 module.exports = nextConfig

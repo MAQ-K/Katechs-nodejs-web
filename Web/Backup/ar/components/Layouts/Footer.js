@@ -99,13 +99,13 @@ const Footer = () => {
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
+                    <Link href="/services/app-development/">
                       <i className="right-icon bx bx-chevrons-right"></i>
                       تطبيقات الجوال
                     </Link>
                   </li>
                   <li>
-                    <Link href="#">
+                    <Link href="/services/digital-marketing/">
                       <i className="right-icon bx bx-chevrons-right"></i>
                       تسويق إلكتروني
                     </Link>
@@ -140,7 +140,7 @@ const Footer = () => {
                
                 
                   <li>
-                    <Link href="#">
+                    <Link href="/training/">
                       <i className="right-icon bx bx-chevrons-right"></i>
                       تدريب
                     </Link>

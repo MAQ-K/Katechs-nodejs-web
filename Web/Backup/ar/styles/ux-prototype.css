@@ -1,0 +1,464 @@
+/*
+UX PROTOTYPE LAYER — deliberately unstyled.
+
+Shared neutral styling for the Stage-2.5 "functional UX" pass on the SEO,
+Digital Marketing and Training pages. The point of this file is REAL LAYOUT,
+HIERARCHY, INTERACTION AND RESPONSIVE BEHAVIOUR WITH NO VISUAL DESIGN — no
+brand colour, no shadows, no motion, no Cairo. Greyscale only, on purpose, so
+the flow can be judged before the visual pass.
+
+Every class is prefixed `ux-`, and the whole file is imported once in
+pages/_app.js. When the visual design phase starts, delete this file, remove
+that one import, and restyle with the real theme — nothing else depends on it.
+======================================================================== */
+
+:root {
+  --ux-ink: #16181d;
+  --ux-body: #55595f;
+  --ux-muted: #8b9098;
+  --ux-line: #dfe2e6;
+  --ux-line-strong: #c4c9cf;
+  --ux-surface: #f6f7f8;
+  --ux-white: #ffffff;
+  --ux-flag-bg: #fdf6e3;
+  --ux-flag-line: #d9b45e;
+  --ux-flag-ink: #7a5c14;
+}
+
+/* ---------- section shell ---------- */
+.ux-section {
+  padding: 70px 0;
+  background-color: var(--ux-white);
+}
+.ux-section.ux-alt {
+  background-color: var(--ux-surface);
+}
+.ux-section.ux-first {
+  padding-top: 150px;
+}
+
+/* ---------- typography ---------- */
+.ux-h1 {
+  font-size: 38px;
+  line-height: 1.35;
+  font-weight: 700;
+  color: var(--ux-ink);
+  margin: 0 0 16px;
+}
+.ux-h2 {
+  font-size: 27px;
+  line-height: 1.4;
+  font-weight: 700;
+  color: var(--ux-ink);
+  margin: 0 0 12px;
+}
+.ux-h3 {
+  font-size: 17px;
+  line-height: 1.5;
+  font-weight: 700;
+  color: var(--ux-ink);
+  margin: 0 0 8px;
+}
+.ux-lead {
+  font-size: 16px;
+  line-height: 1.9;
+  color: var(--ux-body);
+  margin: 0 0 20px;
+}
+.ux-p {
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--ux-body);
+  margin: 0 0 12px;
+}
+.ux-eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  color: var(--ux-muted);
+  margin-bottom: 12px;
+}
+.ux-small {
+  font-size: 12.5px;
+  color: var(--ux-muted);
+}
+
+/* ---------- section head ---------- */
+.ux-head {
+  max-width: 640px;
+  margin-bottom: 36px;
+}
+.ux-head.ux-center {
+  margin-inline: auto;
+  text-align: center;
+}
+.ux-head > :last-child {
+  margin-bottom: 0;
+}
+
+/* ---------- buttons ---------- */
+.ux-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  padding: 13px 22px;
+  border-radius: 4px;
+  border: 1px solid var(--ux-ink);
+  background-color: var(--ux-ink);
+  color: var(--ux-white);
+  font-size: 14px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: opacity 0.15s ease;
+}
+.ux-btn:hover {
+  opacity: 0.85;
+  color: var(--ux-white);
+}
+.ux-btn-secondary {
+  background-color: transparent;
+  border-color: var(--ux-line-strong);
+  color: var(--ux-ink);
+}
+.ux-btn-secondary:hover {
+  color: var(--ux-ink);
+  border-color: var(--ux-ink);
+}
+.ux-btn-block {
+  width: 100%;
+}
+.ux-btn-sm {
+  padding: 9px 16px;
+  font-size: 13px;
+}
+.ux-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+/* ---------- cards & grid ---------- */
+.ux-grid {
+  display: grid;
+  gap: 18px;
+}
+.ux-grid-2 { grid-template-columns: repeat(2, 1fr); }
+.ux-grid-3 { grid-template-columns: repeat(3, 1fr); }
+.ux-grid-4 { grid-template-columns: repeat(4, 1fr); }
+
+.ux-card {
+  display: flex;
+  flex-direction: column;
+  padding: 22px;
+  border: 1px solid var(--ux-line);
+  border-radius: 6px;
+  background-color: var(--ux-white);
+}
+.ux-card > :last-child {
+  margin-bottom: 0;
+}
+
+/* Neutral stand-in for an icon that the visual phase will replace. */
+.ux-icon {
+  width: 38px;
+  height: 38px;
+  border: 1px solid var(--ux-line-strong);
+  border-radius: 4px;
+  margin-bottom: 14px;
+  flex-shrink: 0;
+}
+
+/* Explicitly labelled image slot, so nobody mistakes it for a design choice. */
+.ux-media {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 260px;
+  border: 1px dashed var(--ux-line-strong);
+  border-radius: 6px;
+  background-color: var(--ux-surface);
+  color: var(--ux-muted);
+  font-size: 13px;
+  text-align: center;
+  padding: 20px;
+}
+.ux-media-tall {
+  aspect-ratio: 4 / 5;
+  min-height: 0;
+}
+
+/* ---------- two-column split ---------- */
+.ux-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+  align-items: center;
+}
+
+/* ---------- lists ---------- */
+.ux-list {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 20px;
+}
+.ux-list li {
+  position: relative;
+  padding-inline-start: 20px;
+  margin-bottom: 10px;
+  font-size: 14.5px;
+  line-height: 1.7;
+  color: var(--ux-body);
+}
+.ux-list li::before {
+  content: "";
+  position: absolute;
+  inset-inline-start: 0;
+  top: 9px;
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background-color: var(--ux-line-strong);
+}
+
+/* ---------- numbered steps ---------- */
+.ux-step-num {
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ux-muted);
+  letter-spacing: 1px;
+  margin-bottom: 10px;
+  display: block;
+}
+
+/* ---------- stat tile ---------- */
+.ux-stat {
+  text-align: center;
+  padding: 24px 16px;
+  border: 1px solid var(--ux-line);
+  border-radius: 6px;
+}
+.ux-stat-value {
+  display: block;
+  font-size: 30px;
+  font-weight: 700;
+  color: var(--ux-ink);
+  line-height: 1.2;
+  margin-bottom: 6px;
+}
+.ux-stat-label {
+  font-size: 13px;
+  color: var(--ux-body);
+}
+
+/* ---------- pills / tags ---------- */
+.ux-tag {
+  display: inline-block;
+  padding: 4px 10px;
+  border: 1px solid var(--ux-line);
+  border-radius: 50px;
+  font-size: 11.5px;
+  color: var(--ux-body);
+}
+.ux-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  margin-bottom: 12px;
+}
+
+/* ---------- form controls ---------- */
+.ux-field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex: 1;
+  min-width: 200px;
+}
+.ux-label {
+  font-size: 12.5px;
+  font-weight: 600;
+  color: var(--ux-body);
+}
+.ux-input,
+.ux-select {
+  width: 100%;
+  padding: 12px 14px;
+  border: 1px solid var(--ux-line-strong);
+  border-radius: 4px;
+  background-color: var(--ux-white);
+  color: var(--ux-ink);
+  font-size: 14px;
+  font-family: inherit;
+}
+.ux-input:focus,
+.ux-select:focus {
+  outline: 2px solid var(--ux-ink);
+  outline-offset: -1px;
+}
+.ux-input-error {
+  border-color: #b4453a;
+}
+.ux-error {
+  font-size: 12.5px;
+  color: #b4453a;
+}
+.ux-success {
+  font-size: 13.5px;
+  color: var(--ux-ink);
+  border: 1px solid var(--ux-line-strong);
+  border-radius: 4px;
+  padding: 14px 16px;
+  background-color: var(--ux-surface);
+}
+.ux-form-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  align-items: flex-end;
+}
+
+/* ---------- filter bar ---------- */
+.ux-filters {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  align-items: flex-end;
+  padding: 18px;
+  border: 1px solid var(--ux-line);
+  border-radius: 6px;
+  margin-bottom: 24px;
+}
+.ux-filter-count {
+  font-size: 13px;
+  color: var(--ux-muted);
+  margin-bottom: 16px;
+}
+
+/* ---------- table ---------- */
+.ux-table-wrap {
+  overflow-x: auto;
+  border: 1px solid var(--ux-line);
+  border-radius: 6px;
+}
+.ux-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 640px;
+}
+.ux-table th,
+.ux-table td {
+  text-align: start;
+  padding: 14px 16px;
+  font-size: 13.5px;
+  border-bottom: 1px solid var(--ux-line);
+}
+.ux-table th {
+  font-weight: 700;
+  color: var(--ux-ink);
+  background-color: var(--ux-surface);
+}
+.ux-table td {
+  color: var(--ux-body);
+}
+.ux-table tr:last-child td {
+  border-bottom: 0;
+}
+
+/* ---------- accordion (react-accessible-accordion, neutral skin) ---------- */
+.ux-accordion {
+  max-width: 780px;
+}
+.ux-accordion.ux-center {
+  margin-inline: auto;
+}
+.ux-accordion .accordion__item {
+  border: 1px solid var(--ux-line);
+  border-radius: 6px;
+  margin-bottom: 10px;
+  overflow: hidden;
+}
+.ux-accordion .accordion__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  width: 100%;
+  padding: 18px 20px;
+  background-color: var(--ux-white);
+  color: var(--ux-ink);
+  font-size: 15px;
+  font-weight: 600;
+  cursor: pointer;
+}
+/* fancy-example.css (global import in _app.js) draws its own chevron here */
+.ux-accordion .accordion__button::before {
+  display: none;
+}
+.ux-accordion .accordion__button .ux-acc-sign {
+  flex-shrink: 0;
+  font-size: 18px;
+  color: var(--ux-muted);
+}
+.ux-accordion .accordion__button[aria-expanded="true"] .ux-acc-sign {
+  transform: rotate(45deg);
+}
+.ux-accordion .accordion__panel {
+  padding: 0 20px 18px;
+}
+.ux-accordion .accordion__panel p {
+  margin: 0;
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--ux-body);
+}
+
+/* ---------- client-data flag ---------- */
+.ux-flag {
+  border: 1px solid var(--ux-flag-line);
+  background-color: var(--ux-flag-bg);
+  color: var(--ux-flag-ink);
+  border-radius: 4px;
+  padding: 10px 14px;
+  font-size: 12.5px;
+  line-height: 1.7;
+  margin-bottom: 20px;
+}
+.ux-flag strong {
+  color: var(--ux-flag-ink);
+}
+
+/* ---------- note to reviewers ---------- */
+.ux-note {
+  font-size: 12px;
+  color: var(--ux-muted);
+  margin-top: 10px;
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 991px) {
+  .ux-section {
+    padding: 55px 0;
+  }
+  .ux-section.ux-first {
+    padding-top: 120px;
+  }
+  .ux-h1 { font-size: 30px; }
+  .ux-h2 { font-size: 23px; }
+  .ux-split {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+  .ux-grid-4 { grid-template-columns: repeat(2, 1fr); }
+  .ux-grid-3 { grid-template-columns: repeat(2, 1fr); }
+}
+
+@media (max-width: 767px) {
+  .ux-h1 { font-size: 25px; }
+  .ux-h2 { font-size: 20px; }
+  .ux-grid-2,
+  .ux-grid-3,
+  .ux-grid-4 { grid-template-columns: 1fr; }
+  .ux-filters { padding: 14px; }
+}

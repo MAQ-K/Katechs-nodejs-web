@@ -1,17 +1,17 @@
 import React from "react";
 import Link from "next/link";
 
-// UX PROTOTYPE. Research says monthly retainer tiers are the norm for SEO, but
-// the model is still unconfirmed — see data/seo/structure.md, question 3.
-// Plans differ on real scope; prices stay blank.
+// UX PROTOTYPE. Monthly retainer tiers are the industry norm (WebFX publishes
+// "from $X/month" plus an "included in all plans" checklist). Model still
+// unconfirmed — see data/digital-marketing/structure.md, question 3.
 const plans = [
   {
     name: "الباقة الأساسية",
-    summary: "موقع صغير أو نشاط محلي",
+    summary: "نشاط صغير يبدأ حضوره الرقمي",
     features: [
-      "تحليل تقني للموقع",
-      "تحسين عدد محدود من الصفحات",
-      "كلمات مفتاحية أساسية",
+      "قناة إعلانية واحدة",
+      "إدارة منصتي تواصل",
+      "خطة محتوى شهرية",
       "تقرير شهري",
     ],
   },
@@ -20,20 +20,20 @@ const plans = [
     summary: "الأكثر طلبًا للشركات النامية",
     features: [
       "كل ما في الأساسية",
-      "تحسين مستمر للمحتوى",
-      "بناء روابط خلفية",
-      "سيو محلي وخرائط جوجل",
-      "تقرير شهري وجلسة متابعة",
+      "قنوات إعلانية متعددة",
+      "إدارة كل منصات التواصل",
+      "تصميم منشورات وإعلانات",
+      "لوحة متابعة وتقرير شهري",
     ],
   },
   {
     name: "باقة الشركات",
-    summary: "مواقع كبيرة أو متاجر إلكترونية",
+    summary: "ميزانيات أكبر وأهداف نمو محددة",
     features: [
       "كل ما في المتقدمة",
-      "سيو المتاجر وصفحات المنتجات",
-      "تهيئة للظهور في نتائج الذكاء الاصطناعي",
-      "خطة محتوى موسّعة",
+      "استراتيجية موسّعة متعددة القنوات",
+      "تسويق بالبريد الإلكتروني",
+      "تقارير عائد استثمار تفصيلية",
       "مدير حساب مخصّص",
     ],
   },
@@ -45,12 +45,12 @@ const Pricing = () => {
       <div className="container">
         <div className="ux-head ux-center">
           <span className="ux-eyebrow">الباقات</span>
-          <h2 className="ux-h2">اختر ما يناسب حجم موقعك</h2>
+          <h2 className="ux-h2">اختر ما يناسب حجم نشاطك</h2>
         </div>
 
         <div className="ux-flag">
-          <strong>سؤال مفتوح:</strong> اشتراك شهري (وهو المعتاد في هذا المجال)
-          أم تسعير حسب المشروع؟ الأسعار متروكة فارغة حتى يتحدد ذلك.
+          <strong>سؤال مفتوح:</strong> اشتراك شهري (المعتاد في هذا المجال) أم
+          تسعير حسب المشروع؟ الأسعار متروكة فارغة حتى يتحدد ذلك.
         </div>
 
         <div className="ux-grid ux-grid-3">
@@ -71,7 +71,7 @@ const Pricing = () => {
               </ul>
 
               <div style={{ marginTop: "auto" }}>
-                <Link href="/contactWeb" className="ux-btn ux-btn-block">
+                <Link href="/digital-market-order" className="ux-btn ux-btn-block">
                   اطلب الباقة
                 </Link>
               </div>

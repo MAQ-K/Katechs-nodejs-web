@@ -1,43 +1,41 @@
 import React from "react";
-import { box } from "./wireframeStyles";
 
-// Section 5 — GEO/AEO. Every 2026 source treats visibility inside Google AI
-// Overviews and ChatGPT as mandatory on an SEO service page now, and it is the
-// clearest differentiator against older local competitors.
-const points = ["نقطة 1", "نقطة 2", "نقطة 3"];
+// UX PROTOTYPE. This section is the 2026 differentiator — see
+// data/seo/structure.md for why it is not optional any more.
+const points = [
+  "بناء المحتوى بصيغة تسهّل على أنظمة الذكاء الاصطناعي اقتباسه",
+  "بيانات منظّمة (Schema) تشرح لمحركات البحث ما تقدّمه بالضبط",
+  "إجابات واضحة ومباشرة في بداية كل صفحة، لا مقدمات طويلة",
+];
 
 const AiSearch = () => {
   return (
-    <section className="wireframe-seo-ai pb-100">
+    <section className="ux-section">
       <div className="container">
-        <div className="row align-items-center">
-          <div className="col-lg-6">
-            <div style={{ ...box, height: 30, width: 190, marginBottom: 14, fontSize: 12 }}>
-              Eyebrow: بحث الذكاء الاصطناعي
-            </div>
+        <div className="ux-split">
+          <div>
+            <span className="ux-eyebrow">بحث الذكاء الاصطناعي</span>
 
-            <div style={{ ...box, height: 70, marginBottom: 16, justifyContent: "flex-start", padding: 16, fontSize: 18 }}>
-              عنوان: الظهور في نتائج الذكاء الاصطناعي
-            </div>
+            <h2 className="ux-h2">
+              الظهور في نتائج الذكاء الاصطناعي، لا في جوجل وحده
+            </h2>
 
-            <div style={{ ...box, height: 70, marginBottom: 20, justifyContent: "flex-start", alignItems: "flex-start", padding: 16 }}>
-              فقرة توضيحية
-            </div>
+            <p className="ux-p">
+              جزء متزايد من الباحثين يحصل على إجابته من ملخصات الذكاء الاصطناعي
+              دون فتح أي موقع. نعمل على أن يكون موقعك أحد المصادر التي تُقتبس
+              في تلك الإجابات.
+            </p>
 
-            <ul style={{ listStyle: "none", padding: 0, margin: 0 }}>
+            <ul className="ux-list">
               {points.map((text) => (
-                <li key={text} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                  <span style={{ width: 14, height: 14, borderRadius: 3, border: "2px solid #9ca3af", flexShrink: 0 }} />
-                  <span style={{ color: "#6b7280" }}>{text}</span>
-                </li>
+                <li key={text}>{text}</li>
               ))}
             </ul>
           </div>
 
-          <div className="col-lg-6">
-            <div style={{ ...box, height: 300, flexDirection: "column", gap: 8 }}>
-              <div>رسم توضيحي</div>
-              <div style={{ fontSize: 12 }}>(AI Overviews / ChatGPT)</div>
+          <div>
+            <div className="ux-media">
+              مساحة صورة — ملخص ذكاء اصطناعي يقتبس الموقع
             </div>
           </div>
         </div>

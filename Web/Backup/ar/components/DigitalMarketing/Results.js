@@ -1,10 +1,10 @@
 import React from "react";
 
-// UX PROTOTYPE. Field structure follows WebFX's case-study cards (industry →
-// challenge → what was done → the metric that moved). Values stay blank.
+// UX PROTOTYPE. Field structure follows WebFX's case-study cards: industry →
+// challenge → what was done → the metric that moved.
 const cases = [1, 2, 3];
 
-const CaseStudies = () => {
+const Results = () => {
   return (
     <section className="ux-section">
       <div className="container">
@@ -13,20 +13,20 @@ const CaseStudies = () => {
         </div>
 
         <div className="ux-flag">
-          <strong>مطلوب من العميل:</strong> دراسات حالة حقيقية — المجال،
-          المشكلة، ما نُفّذ، والرقم الذي تغيّر. لا يمكن كتابة هذا القسم بدونها.
+          <strong>مطلوب من العميل:</strong> دراسات حالة حقيقية — القطاع،
+          المشكلة، ما نُفّذ، والرقم الذي تغيّر.
         </div>
 
         <div className="ux-grid ux-grid-3">
           {cases.map((n) => (
             <div className="ux-card" key={n}>
               <div className="ux-tag-row">
-                <span className="ux-tag">المجال</span>
+                <span className="ux-tag">القطاع</span>
               </div>
 
               <h3 className="ux-h3">اسم العميل أو القطاع</h3>
               <p className="ux-p">
-                وصف مختصر للوضع قبل البدء والمشكلة التي كانت تمنع الظهور.
+                وصف مختصر للوضع قبل الحملة والهدف المطلوب تحقيقه.
               </p>
 
               <div style={{ marginTop: "auto", paddingTop: 16 }}>
@@ -41,4 +41,4 @@ const CaseStudies = () => {
   );
 };
 
-export default CaseStudies;
+export default Results;

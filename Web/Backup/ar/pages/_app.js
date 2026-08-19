@@ -15,6 +15,10 @@ import "../styles/responsive.css";
 // Global RTL styles
 import "../styles/rtl.css";
 import "../styles/homepage-sections.css";
+// TEMPORARY — neutral styling for the Stage-2.5 functional-UX prototypes
+// (SEO, Digital Marketing, Training). Delete this import together with
+// styles/ux-prototype.css when those pages enter the visual design phase.
+import "../styles/ux-prototype.css";
 
 import Head from "next/head";
 import GoTop from "../components/Shared/GoTop";

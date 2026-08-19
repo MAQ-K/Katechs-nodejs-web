@@ -1,45 +1,73 @@
 import React from "react";
-import { box } from "./wireframeStyles";
+import Link from "next/link";
 
-// Section 3 — the core offering. Taxonomy follows Digital Agency Network's
-// 2026 services list (SEO, SEM/PPC, social, content, email are the core five).
+// UX PROTOTYPE. Taxonomy follows Digital Agency Network's 2026 services list.
 //
-// The SEO card deliberately CROSS-LINKS to /services/seo/ instead of restating
-// it — repeating that content here would put two of our own pages in
-// competition for the same intent. See data/digital-marketing/structure.md.
+// The SEO card CROSS-LINKS to /services/seo/ rather than restating it —
+// repeating that content here would put two of our own pages in competition
+// for the same intent. See data/digital-marketing/structure.md.
 const channels = [
-  { label: "تحسين محركات البحث (SEO)", link: "/services/seo/" },
-  { label: "الإعلانات المدفوعة (Google Ads)" },
-  { label: "إعلانات السوشيال ميديا" },
-  { label: "إدارة منصات التواصل" },
-  { label: "التسويق بالمحتوى" },
-  { label: "التسويق بالبريد الإلكتروني" },
+  {
+    title: "تحسين محركات البحث (SEO)",
+    text: "ظهور دائم في نتائج البحث دون دفع مقابل كل زيارة.",
+    href: "/services/seo/",
+    linkText: "صفحة السيو",
+  },
+  {
+    title: "الإعلانات المدفوعة",
+    text: "حملات على محركات البحث تصل لمن يبحث عن خدمتك في نفس اللحظة.",
+  },
+  {
+    title: "إعلانات السوشيال ميديا",
+    text: "استهداف دقيق حسب الاهتمام والموقع والسلوك على منصات التواصل.",
+  },
+  {
+    title: "إدارة منصات التواصل",
+    text: "خطة محتوى شهرية وتصميم منشورات وإدارة التفاعل مع جمهورك.",
+  },
+  {
+    title: "التسويق بالمحتوى",
+    text: "محتوى يبني ثقة جمهورك بك قبل أن يطلب منك شيئًا.",
+  },
+  {
+    title: "التسويق بالبريد الإلكتروني",
+    text: "حملات بريدية تعيد العملاء الحاليين بدل ملاحقة عملاء جدد فقط.",
+  },
 ];
 
 const Channels = () => {
   return (
-    <section className="wireframe-dm-channels pb-100" id="channels">
+    <section className="ux-section" id="channels">
       <div className="container">
-        <div style={{ ...box, height: 44, width: 280, margin: "0 auto 40px" }}>
-          عنوان القسم (Section Title)
+        <div className="ux-head">
+          <h2 className="ux-h2">القنوات التي نعمل عليها</h2>
+          <p className="ux-p">
+            لا نستخدم كل القنوات لكل عميل — نختار ما يناسب جمهورك وميزانيتك.
+          </p>
         </div>
 
-        <div className="row justify-content-center">
+        <div className="ux-grid ux-grid-3">
           {channels.map((item) => (
-            <div className="col-lg-4 col-md-6" key={item.label}>
-              <div style={{ ...box, height: 200, marginBottom: 24, flexDirection: "column", gap: 12, padding: 20 }}>
-                <div style={{ ...box, width: 48, height: 48, borderRadius: 10 }} />
-                <div>{item.label}</div>
-                <div style={{ ...box, height: 34, width: "85%", fontSize: 11 }}>وصف قصير</div>
-                {item.link && (
-                  <div style={{ fontSize: 11, color: "#6b7280" }}>
-                    رابط داخلي إلى {item.link}
-                  </div>
-                )}
-              </div>
+            <div className="ux-card" key={item.title}>
+              <span className="ux-icon" aria-hidden="true"></span>
+              <h3 className="ux-h3">{item.title}</h3>
+              <p className="ux-p">{item.text}</p>
+
+              {item.href && (
+                <div style={{ marginTop: "auto", paddingTop: 8 }}>
+                  <Link href={item.href} className="ux-btn ux-btn-secondary ux-btn-sm">
+                    {item.linkText}
+                  </Link>
+                </div>
+              )}
             </div>
           ))}
         </div>
+
+        <p className="ux-note">
+          سؤال مفتوح: أي منصات إعلانية نذكرها بالاسم — Google، Meta، TikTok،
+          Snapchat، X؟
+        </p>
       </div>
     </section>
   );

@@ -109,7 +109,10 @@ const AppOrbit = () => {
 
     // A flick keeps spinning and decays to a stop; a slow release just stops.
     if (!reduced && Math.abs(velocity) > 20) {
-      animate(dragRotate, dragRotate.get() + velocity * 0.35, {
+      // Inertia projects its own endpoint from velocity and power, so the
+      // second argument is just the current value — there is no fixed target
+      // to land on, and the ring is free to keep turning past any angle.
+      animate(dragRotate, dragRotate.get(), {
         type: "inertia",
         velocity,
         power: 0.6,

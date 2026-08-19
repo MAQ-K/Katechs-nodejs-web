@@ -140,9 +140,9 @@ const Navbar = ({ theme }) => {
 
                 <li className="nav-item">
                   <Link
-                        href="#"
+                        href="/services/digital-marketing/"
                         className={`nav-link ${
-                          currentPath == "" && "active"
+                          currentPath == "/services/digital-marketing/" && "active"
                         }`}
                       >
                         تسويق إلكتروني
@@ -166,9 +166,9 @@ const Navbar = ({ theme }) => {
 
                 <li className="nav-item m-rr">
                   <Link
-                        href="#"
+                        href="/training/"
                         className={`nav-link ${
-                          currentPath == "" && "active"
+                          currentPath == "/training/" && "active"
                         }`}
                       >
                         التدريب

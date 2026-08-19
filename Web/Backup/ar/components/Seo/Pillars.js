@@ -1,37 +1,60 @@
 import React from "react";
-import { box } from "./wireframeStyles";
 
-// Section 4 — the core "what is included" grid. Pillar list follows Backlinko's
-// canonical breakdown, cross-checked against the five pillars already stated in
-// components/Common/SeoShowcase.js (live on the homepage).
+// UX PROTOTYPE. The first five pillars are the ones already stated in
+// components/Common/SeoShowcase.js (live on the homepage) — reused rather than
+// rewritten. E-commerce SEO is the one addition, from Backlinko's breakdown.
 const pillars = [
-  "السيو التقني",
-  "سيو داخل الصفحة",
-  "بناء الروابط الخلفية",
-  "المحتوى وتحليل الكلمات المفتاحية",
-  "السيو المحلي (خرائط جوجل)",
-  "سيو المتاجر الإلكترونية",
+  {
+    title: "السيو التقني",
+    text: "سرعة الموقع، الفهرسة، البنية، الأخطاء التي تمنع جوجل من قراءة صفحاتك.",
+  },
+  {
+    title: "تحسين محتوى الصفحات",
+    text: "العناوين والوصف والنصوص داخل كل صفحة، بحيث تخدم الباحث ومحرك البحث معًا.",
+  },
+  {
+    title: "تحليل الكلمات المفتاحية",
+    text: "معرفة ما يبحث عنه عملاؤك فعلًا، وبناء صفحاتك حول تلك العبارات.",
+  },
+  {
+    title: "بناء الروابط الخلفية",
+    text: "روابط من مواقع ذات ثقة ترفع مصداقية موقعك أمام محركات البحث.",
+  },
+  {
+    title: "السيو المحلي",
+    text: "الظهور في خرائط جوجل ونتائج البحث المحلية لمن يبحث بالقرب منك.",
+  },
+  {
+    title: "سيو المتاجر الإلكترونية",
+    text: "صفحات المنتجات والتصنيفات، بحيث تصل منتجاتك لمن يبحث عنها مباشرة.",
+  },
 ];
 
 const Pillars = () => {
   return (
-    <section className="wireframe-seo-pillars pb-100">
+    <section className="ux-section ux-alt">
       <div className="container">
-        <div style={{ ...box, height: 44, width: 280, margin: "0 auto 40px" }}>
-          عنوان القسم (Section Title)
+        <div className="ux-head">
+          <h2 className="ux-h2">ما الذي نعمل عليه بالضبط</h2>
+          <p className="ux-p">
+            السيو ليس بندًا واحدًا — هذه المحاور الستة هي ما نغطيه في كل مشروع.
+          </p>
         </div>
 
-        <div className="row justify-content-center">
-          {pillars.map((label) => (
-            <div className="col-lg-4 col-md-6" key={label}>
-              <div style={{ ...box, height: 190, marginBottom: 24, flexDirection: "column", gap: 12, padding: 20 }}>
-                <div style={{ ...box, width: 48, height: 48, borderRadius: 10 }} />
-                <div>{label}</div>
-                <div style={{ ...box, height: 34, width: "85%", fontSize: 11 }}>وصف قصير</div>
-              </div>
+        <div className="ux-grid ux-grid-3">
+          {pillars.map((item) => (
+            <div className="ux-card" key={item.title}>
+              <span className="ux-icon" aria-hidden="true"></span>
+              <h3 className="ux-h3">{item.title}</h3>
+              <p className="ux-p">{item.text}</p>
             </div>
           ))}
         </div>
+
+        <p className="ux-note">
+          خمسة من هذه المحاور مكتوبة فعليًا في
+          components/Common/SeoShowcase.js — أُعيد استخدامها كما هي.
+        </p>
       </div>
     </section>
   );

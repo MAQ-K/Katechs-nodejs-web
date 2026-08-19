@@ -1,33 +1,42 @@
 import React from "react";
-import { box } from "./wireframeStyles";
 
-// Section 6 — de-risks the engagement by showing what actually happens after
-// signup. SEO is a long-cycle purchase, so the process section carries more
-// weight here than it does on the app-development page.
+// UX PROTOTYPE.
 const steps = [
-  "تحليل الموقع والمنافسين",
-  "استراتيجية وكلمات مفتاحية",
-  "التنفيذ والتحسين",
-  "التقارير والمتابعة الشهرية",
+  {
+    title: "تحليل الموقع والمنافسين",
+    text: "نفحص موقعك ونقارنه بمن يتصدّر أمامك، ونحدد الفجوات.",
+  },
+  {
+    title: "استراتيجية وكلمات مفتاحية",
+    text: "نتفق على العبارات المستهدفة وخطة الصفحات قبل أي تنفيذ.",
+  },
+  {
+    title: "التنفيذ والتحسين",
+    text: "عمل فعلي على الموقع: التقني، المحتوى، الروابط.",
+  },
+  {
+    title: "التقارير والمتابعة",
+    text: "تقرير شهري يوضح ما نُفّذ وما تغيّر في الترتيب والزيارات.",
+  },
 ];
 
 const Process = () => {
   return (
-    <section className="wireframe-seo-process pb-100" id="process">
+    <section className="ux-section ux-alt" id="process">
       <div className="container">
-        <div style={{ ...box, height: 44, width: 280, margin: "0 auto 40px" }}>
-          عنوان القسم (Section Title)
+        <div className="ux-head ux-center">
+          <span className="ux-eyebrow">كيف نعمل</span>
+          <h2 className="ux-h2">أربع مراحل واضحة من أول يوم</h2>
         </div>
 
-        <div className="row justify-content-center">
-          {steps.map((label, i) => (
-            <div className="col-lg-3 col-sm-6" key={label}>
-              <div style={{ ...box, height: 170, marginBottom: 20, flexDirection: "column", gap: 10, padding: 16, position: "relative" }}>
-                <span style={{ position: "absolute", top: 10, insetInlineStart: 14, color: "#9ca3af", fontSize: 13 }}>
-                  {String(i + 1).padStart(2, "0")}
-                </span>
-                {label}
-              </div>
+        <div className="ux-grid ux-grid-4">
+          {steps.map((step, i) => (
+            <div className="ux-card" key={step.title}>
+              <span className="ux-step-num">
+                {String(i + 1).padStart(2, "0")}
+              </span>
+              <h3 className="ux-h3">{step.title}</h3>
+              <p className="ux-p">{step.text}</p>
             </div>
           ))}
         </div>

@@ -1,45 +1,50 @@
 import React from "react";
-import { box } from "./wireframeStyles";
+import Link from "next/link";
 
-const bullets = ["نبذة 1", "نبذة 2", "نبذة 3"];
+// UX PROTOTYPE — real layout/hierarchy, deliberately unstyled. See
+// styles/ux-prototype.css.
+const bullets = [
+  "تقارير أداء شهرية توضح ما تغيّر بالضبط",
+  "عمل على الموقع نفسه، لا وعود بترتيب سريع",
+  "فريق يتابع معك بعد بدء النتائج",
+];
 
 const Hero = () => {
   return (
-    <section className="wireframe-seo-hero" style={{ paddingTop: 160, paddingBottom: 60 }}>
+    <section className="ux-section ux-first">
       <div className="container">
-        <div className="row align-items-center">
-          <div className="col-lg-6">
-            <div style={{ ...box, height: 30, width: 170, marginBottom: 16, fontSize: 12 }}>
-              Eyebrow / تصنيف
-            </div>
+        <div className="ux-split">
+          <div>
+            <span className="ux-eyebrow">تحسين محركات البحث</span>
 
-            <div style={{ ...box, height: 100, marginBottom: 16, justifyContent: "flex-start", padding: 16, fontSize: 22 }}>
-              العنوان الرئيسي (H1)
-            </div>
+            <h1 className="ux-h1">
+              اجعل عملاءك يجدونك أول ما يبحثون
+            </h1>
 
-            <div style={{ ...box, height: 80, marginBottom: 24, justifyContent: "flex-start", alignItems: "flex-start", padding: 16 }}>
-              الفقرة التعريفية (Paragraph)
-            </div>
+            <p className="ux-lead">
+              نعمل على موقعك من الداخل — بنيته وسرعته ومحتواه وروابطه — حتى
+              يظهر أمام من يبحث عن خدماتك فعلًا، ونطلعك على ما نفعله شهرًا بشهر.
+            </p>
 
-            <ul style={{ listStyle: "none", padding: 0, margin: "0 0 24px" }}>
+            <ul className="ux-list">
               {bullets.map((text) => (
-                <li key={text} style={{ display: "flex", alignItems: "center", gap: 10, marginBottom: 10 }}>
-                  <span style={{ width: 14, height: 14, borderRadius: "50%", border: "2px solid #9ca3af", flexShrink: 0 }} />
-                  <span style={{ color: "#6b7280" }}>{text}</span>
-                </li>
+                <li key={text}>{text}</li>
               ))}
             </ul>
 
-            <div style={{ display: "flex", gap: 12, flexWrap: "wrap" }}>
-              <div style={{ ...box, height: 50, width: 170 }}>زر CTA أساسي</div>
-              <div style={{ ...box, height: 50, width: 150 }}>زر ثانوي</div>
+            <div className="ux-actions">
+              <Link href="#audit" className="ux-btn">
+                احصل على تحليل مجاني
+              </Link>
+              <Link href="#pricing" className="ux-btn ux-btn-secondary">
+                شاهد الباقات
+              </Link>
             </div>
           </div>
 
-          <div className="col-lg-6">
-            <div style={{ ...box, aspectRatio: "4 / 5", width: "100%", maxWidth: 440, margin: "0 auto", flexDirection: "column", gap: 8 }}>
-              <div>صورة / رسم توضيحي</div>
-              <div style={{ fontSize: 12 }}>(نتائج بحث + تحسن الترتيب)</div>
+          <div>
+            <div className="ux-media ux-media-tall">
+              مساحة صورة — نتائج بحث وتحسّن الترتيب
             </div>
           </div>
         </div>

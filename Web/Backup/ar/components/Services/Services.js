@@ -17,7 +17,7 @@ const servicesData = [
     category: "تسويق إلكتروني",
     tagline: "حملات تسويق تحوّل الإعلانات إلى مبيعات فعلية",
     icon: "flaticon-promotion",
-    link: "/services/degital-market/",
+    link: "/services/digital-marketing/",
   },
   {
     number: "03",
