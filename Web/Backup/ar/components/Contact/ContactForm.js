@@ -1,0 +1,211 @@
+import React, { useState } from "react";
+import axios from "axios";
+import Swal from "sweetalert2";
+import withReactContent from "sweetalert2-react-content";
+import baseUrl from "../../utils/baseUrl";
+import Image from "next/image";
+import ReCAPTCHA from "react-google-recaptcha";
+const MySwal = withReactContent(Swal);
+
+
+const alertContent = () => {
+  MySwal.fire({
+    title: "تم الارسال",
+    text: "تم الارسال وسيتم التواصل خلال 24 ساعه",
+    icon: "success",
+    timer: 3000,
+    timerProgressBar: true,
+    showConfirmButton: false,
+  });
+};
+
+// Form initial state
+const INITIAL_STATE = {
+  name: "",
+  email: "",
+  number: "",
+  subject: "",
+  text: "",
+};
+
+
+
+
+
+const ContactForm = () => {
+  const [contact, setContact] = useState(INITIAL_STATE);
+  const [verfied, setVerifed] = useState(false);
+
+  function onChange(value) {
+    console.log("Captcha value:", value);
+    setVerifed(true);
+  }
+
+
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setContact((prevState) => ({ ...prevState, [name]: value }));
+    // console.log(contact)
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const url = `${baseUrl}/api/contact`;
+      const { name, email, number, subject, text } = contact;
+      const payload = { name, email, number, subject, text };
+      const response = await axios.post(url, payload);
+      console.log(response);
+      setContact(INITIAL_STATE);
+      alertContent();
+
+    } catch (error) {
+      console.log(error);
+    }
+  };
+ 
+
+
+
+  return (
+    <div className="main-contact-area pb-100">
+      <div className="container">
+        <div className="section-title">
+        
+          <h2>يسعدنا تواصلكم معنا</h2>
+          <p>
+           يسعدنا استقبال الاستفسارات عبر النموذج التالي او الاراقام الموضحه ادناه
+          </p>
+        </div>
+
+        <div className="row align-items-center">
+          <div className="col-lg-12 col-md-12">
+            <div className="contact-wrap contact-pages mb-0">
+              <div className="contact-form">
+                <form onSubmit={handleSubmit} id="contact-form">
+                  <div className="row">
+                    <div className="col-lg-6 col-sm-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="name"
+                          placeholder="الأسم بالكامل"
+                          className="form-control"
+                          value={contact.name}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6 col-sm-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="email"
+                          placeholder="البريد الالكتروني"
+                          className="form-control"
+                          value={contact.email}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6 col-sm-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="number"
+                          placeholder="رقم الهاتف"
+                          className="form-control"
+                          value={contact.number}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-6 col-sm-6">
+                      <div className="form-group">
+                        <input
+                          type="text"
+                          name="subject"
+                          placeholder="الموضوع"
+                          className="form-control"
+                          value={contact.subject}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>
+
+                    <div className="col-lg-12 col-md-12">
+                      <div className="form-group">
+                        <textarea
+                          name="text"
+                          cols="30"
+                          rows="6"
+                          placeholder="رسالتك"
+                          className="form-control"
+                          value={contact.text}
+                          onChange={handleChange}
+                          required
+                        />
+                      </div>
+                    </div>                    
+
+                  
+                   
+           
+
+                    <div className="col-lg-12 col-sm-12 mb-20">
+                      
+                    <ReCAPTCHA
+                      
+                      sitekey='6LfNIjgrAAAAAHcjwSFDQOiP-SyTAOdLrQstPc16'
+                      onChange={onChange}
+                    />
+                    </div>
+
+
+
+                    <div className="col-lg-12 col-sm-12">
+                      <button 
+                      type="submit" 
+                      disabled={!verfied}
+                      className="default-btn btn-two"          
+                      >
+
+                        ارسال الرساله
+                      </button>
+                    </div>
+
+
+
+
+
+
+
+                  </div>
+                </form>
+              </div>
+            </div>
+          </div>
+
+{/*           <div className="col-lg-6 col-md-12"> 
+              
+            <div className="contact-img">
+              <Image src={contactImg} alt="Image" width={807} height={704} />
+            </div>
+          </div> */}
+        </div>
+      </div>
+    </div>
+  );
+  
+};
+
+
+
+export default ContactForm;

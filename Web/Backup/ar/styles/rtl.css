@@ -1,0 +1,570 @@
+html {
+    direction: rtl;
+}
+.navbar-brand {
+    margin-right: 0;
+}
+.navbar-area .navbar .navbar-nav .nav-item .dropdown-menu {
+    right: 0;
+    left: auto;
+    text-align: right;
+}
+.navbar-area .navbar .navbar-nav .nav-item .dropdown-menu::before {
+    right: 20px;
+    left: auto;
+}
+.navbar-area .navbar .navbar-nav .nav-item .dropdown-menu li a::before {
+    right: 0;
+    left: auto;
+}
+.navbar-area .navbar .navbar-nav .nav-item .dropdown-menu li .dropdown-menu {
+    right: 105%;
+    left: auto;
+}
+.navbar-area .navbar .navbar-nav .nav-item .dropdown-menu li a i {
+    float: left;
+}
+.navbar-area .navbar .navbar-nav .nav-item .dropdown-menu li a:hover i {
+    margin-right: 145px;
+    margin-left: 0;
+}
+.navbar-area .navbar .navbar-nav .nav-item .dropdown-menu li .dropdown-menu::before {
+    right: -11px;
+    left: auto;
+}
+.main-banner-area .banner-text {
+    margin-right: auto;
+    margin-left: 0;
+}
+.main-banner-area .banner-text .banner-btn .default-btn {
+    margin-left: 15px;
+    margin-right: 0;
+}
+.about-content ul li {
+    padding-right: 35px;
+    padding-left: 0;
+}
+.about-content ul li i {
+    right: 0;
+    left: auto;
+}
+.choose-card {
+    padding-right: 120px;
+    padding-left: 30px;
+}
+.choose-card span {
+    right: 30px;
+    left: auto;
+}
+.single-offer {
+    padding-left: 20px;
+    padding-right: 100px;
+}
+.single-offer i {
+    right: 20px;
+    left: auto;
+}
+.single-business {
+    padding-right: 70px;
+    padding-left: 0;
+}
+.single-business i {
+    right: 0;
+    left: auto;
+}
+.industries-area .industries-content .industries-item li {
+    padding-right: 40px;
+    padding-left: 12px;
+}
+.industries-area .industries-content .industries-item li i {
+    right: 17px;
+    left: auto;
+}
+.industries-area .industries-list-tab .tabs li a {
+    padding-right: 80px;
+    padding-left: 30px;
+}
+.industries-area .industries-list-tab .tabs li i {
+    right: 20px;
+    left: auto;
+}
+.industries-area .industries-list-tab .tabs li span {
+    padding-left: 30px;
+    padding-right: 75px;
+}
+.client-img {
+    right: 30px;
+    left: auto;
+}
+.single-client::before {
+    right: 35px;
+    left: auto;
+}
+.single-news .news-content-wrap ul li {
+    padding-left: 10px;
+    padding-right: 0;
+}
+.single-news .news-content-wrap ul li a i {
+    margin-left: 5px;
+    margin-right: 0;
+}
+.single-widget h3::before {
+    right: 0;
+    left: auto;
+}
+.single-widget .information li.address {
+    padding-right: 30px;
+    padding-left: 0;
+}
+.single-widget .information li.address i {
+    right: 0;
+    left: auto;
+}
+.single-widget ul li a {
+    padding-right: 20px;
+    padding-left: 0;
+}
+.single-widget .information li a {
+    padding-right: 0;
+}
+.single-widget ul li a .right-icon {
+    right: 0;
+    left: auto;
+}
+.single-widget .social-icon li a {
+    padding-right: 0;
+}
+.footer-bottom-area .designed {
+    text-align: left;
+}
+.footer-bottom-area .privacy ul li {
+    padding-left: 24px;
+    padding-right: 0;
+}
+.footer-bottom-area .privacy ul li a::before {
+    right: -14px;
+    left: auto;
+}
+.navbar-area .navbar-nav {
+    padding: 0;
+}
+.go-top {
+    left: 15px;
+    right: auto;
+}
+.newsletter-wrap .newsletter-form .default-btn {
+    left: 0;
+    right: auto;
+}
+.single-industries {
+    padding-right: 90px;
+    padding-left: 30px;
+}
+.single-industries i {
+    right: 30px;
+    left: auto;
+}
+.single-industries .right-icon {
+    left: 23px;
+    right: auto;
+}
+.single-industries:hover a {
+    left: 20px;
+    right: auto;
+}
+.footer-top-area .footer-shape img:nth-child(1) {
+    left: 0 !important;
+    right: auto !important;
+}
+.faq-accordion .accordion .accordion-title {
+    padding: 20px 25px 17px 60px;
+}
+.faq-accordion .accordion .accordion-title i {
+    left: 25px;
+    right: auto;
+}
+.security-details .single-offer{
+    padding-right:90px !important;
+} 
+.security-details .single-offer i{
+    top: 10px;
+} 
+.single-widget ul li a:hover {
+    transform: translateX(-5px);
+}
+.faq-accordion .accordion .accordion-content {
+    padding-left: 60px;
+    padding-right: 25px;
+}
+.single-news:hover .blog-img .dates {
+    right: 0;
+    left: auto;
+}
+.single-news .blog-img .dates {
+    right: -125px;
+    left: auto;
+}
+.page-title-area .page-title-content ul li::before {
+    left: -3px;
+    right: auto;
+}
+.single-pricing ul li {
+    padding-right: 28px;
+    padding-left: 0;
+    text-align: right;
+}
+.single-pricing ul li i {
+    right: 0;
+    left: auto;
+}
+.user-area-all-style .contact-form-action .forget {
+    float: left;
+}
+.user-area-all-style .contact-form-action .now-register {
+    float: left;
+}
+.coming-soon-area .coming-soon-content .newsletter-form button {
+    left: 0;
+    right: auto;
+}
+.coming-soon-area .coming-soon-content .newsletter-form .input-newsletter {
+    padding-right: 15px;
+    padding-left: 0;
+}
+.coming-soon-area .coming-soon-content #timer div:first-child {
+    margin-right: 0;
+    margin-left: 30px;
+}
+.coming-soon-area .coming-soon-content #timer div:last-child {
+    margin-left: 0;
+    margin-right: 30px;
+}
+.service-sidebar-area .service-list ul li i {
+    float: left;
+}
+.service-details-wrap ul .paint {
+    margin-left: 30px;
+    margin-right: 0;
+}
+.service-details-wrap ul li {
+    padding-right: 35px;
+    padding-left: 0;
+}
+.WebOffer-feature ul li {
+    padding-right: 35px;
+    padding-left: 0;
+    padding-left: 35px;
+}
+.service-details-wrap ul li i {
+    right: 0;
+    left: auto;
+}
+.product-area .woocommerce-topbar .woocommerce-topbar-ordering .nice-select .list .option {
+    text-align: right;
+}
+.product-area .woocommerce-topbar .woocommerce-topbar-ordering .nice-select {
+    text-align: right !important;
+    padding: 17px 20px 13px 35px;
+}
+.product-area .woocommerce-topbar .woocommerce-topbar-ordering .nice-select:after {
+    left: 20px;
+    right: auto;
+}
+.product-area .single-product-box .product-image .sale-btn {
+    right: 20px;
+    left: auto;
+}
+.checkout-area .billing-details .form-group .nice-select {
+    text-align: right !important;
+}
+.checkout-area .billing-details .form-group .nice-select:after {
+    left: 20px;
+    right: auto;
+}
+.checkout-area .billing-details .form-group .nice-select .list .option {
+    text-align: right;
+}
+.form-check {
+    padding-right: 1.25rem;
+    padding-left: 0;
+}
+form-check-input {
+    margin-right: -1.25rem;
+    margin-left: 0;
+}
+.checkout-area .order-details .payment-box .payment-method p [type="radio"]:not(:checked) + label {
+    padding-right: 27px;
+    padding-left: 0;
+}
+.checkout-area .order-details .payment-box .payment-method p [type="radio"]:not(:checked) + label::before {
+    right: 0;
+    left: auto;
+}
+.checkout-area .order-details .payment-box .payment-method p [type="radio"]:checked + label::after {
+    right: 3px;
+    left: auto;
+}
+.checkout-area .order-details .payment-box .payment-method p [type="radio"]:checked + label {
+    padding-right: 27px;
+    padding-left: 0;
+}
+.checkout-area .order-details .payment-box .payment-method p [type="radio"]:checked + label::before {
+    right: 0;
+    left: auto;
+}
+.form-check-input {
+    margin-right: -1.25rem !important;
+    margin-left: 0 !important;
+}
+.cart-area .cart-table table tbody tr td.product-subtotal .remove {
+    float: left;
+}
+.text-right {
+    text-align: left!important;
+}
+.nice-select .option {
+    text-align: right;
+}
+.cart-area .cart-totals ul li span {
+    float: left;
+}
+.product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .additional-information li {
+    text-align: right;
+}
+.product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-title .btn {
+    left: 0;
+    right: auto;
+}
+.product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-comments .review-item {
+    padding-left: 200px;
+    padding-right: 0;
+}
+.product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-comments .review-item .review-report-link {
+    left: 0;
+    right: auto;
+}
+.news-details-area .widget-area .widget .widget-title::before {
+    right: 0;
+    left: auto;
+}
+.news-details-area .widget-area .widget_search form button {
+    left: 0;
+    right: auto;
+}
+.news-details-area .widget-area .widget-peru-posts-thumb .item .thumb {
+    float: right;
+    margin-left: 15px;
+    margin-right: 0;
+}
+.news-details-area .widget-area .widget_categories ul li a span {
+    float: left;
+}
+.news-details-area .widget-area .widget_categories ul li::before {
+    right: 0;
+    left: auto;
+}
+.news-details-area .widget-area .widget_categories ul li {
+    padding-right: 17px;
+    padding-left: 0;
+}
+.news-details-area .widget-area .tagcloud a {
+    margin-left: 10px;
+    margin-right: 0;
+}
+.news-details-area .blog-details-desc .article-content .entry-meta ul li {
+    margin-left: 20px;
+    margin-right: 0;
+}
+.news-details-area .blog-details-desc .article-content .entry-meta ul li:last-child {
+    margin-left: 0;
+}
+.news-details-area .blog-details-desc .article-content .entry-meta ul li::before {
+    left: -15px;
+    right: auto;
+}
+.news-details-area blockquote::before {
+    right: 50px;
+    left: auto;
+}
+.news-details-area blockquote::after {
+    right: 0;
+    left: auto;
+}
+.news-details-area .blog-details-desc .article-footer .article-tags span {
+    margin-left: 5px;
+    margin-right: 0;
+}
+.news-details-area .blog-details-desc .article-footer .article-share .social {
+    text-align: left;
+}
+.news-details-area .widget-area .widget_meta ul li {
+    padding-right: 17px;
+    padding-left: 0;;
+}
+.news-details-area .widget-area .widget_meta ul li::before {
+    right: 0;
+    left: auto;
+}
+.news-details-area .post-navigation .navigation-links .nav-next {
+    text-align: left;
+}
+.news-details-area .comments-area .comments-title::before {
+    right: -25px;
+    left: auto;
+}
+.news-details-area .comments-area .comment-body {
+    padding-right: 65px;
+    padding-left: 0;
+}
+.news-details-area .comments-area .comment-author .avatar {
+    right: -65px;
+    left: auto;
+}
+.news-details-area .comments-area .children {
+    margin-right: 40px;
+    margin-left: 0;
+}
+.news-details-area .comments-area .comment-respond .comment-reply-title::before {
+    right: -25px;
+    left: auto;
+}
+.owl-carousel { 
+    direction: ltr;
+}
+.owl-carousel .owl-item { 
+    direction: rtl; 
+}
+.faq-accordion .accordion .accordion__button {
+    text-align: right;
+    padding: 20px 30px;
+}
+.faq-accordion .accordion .accordion__panel {
+    padding-right: 30px;
+    padding-left: 30px;
+}
+.accordion__button:before {
+    margin-right: 0;
+    margin-left: 10px;
+}
+.user-area-all-style .contact-form-action form .form-condition .agree-label label {
+    padding-left: 0;
+    padding-right: 5px;
+}
+.scroll-to-top .top {
+    right: auto;
+    left: 15px;
+}
+.form-check .form-check-input {
+    float: right;
+}
+.user-area-all-style .contact-form-action .account-desc a {
+    margin-left: 0;
+    margin-right: 10px;
+}
+
+
+/*
+Responsive CSS
+============================*/
+@media only screen and (max-width: 767px) {
+    .mobile-nav .logo {
+        right: 15px;
+        left: auto;
+    }
+    .mean-container .mean-nav ul li a.mean-expand {
+        width: 90%;
+    }
+    .choose-card span i {
+        right: 70px !important;
+        left: auto !important;
+    }
+    .choose-card span {
+        right: 0;
+    }
+    .product-details-area .products-details-tab .tab_content .tabs_item .products-details-tab-content .product-review-form .review-comments .review-item {
+        padding-left: 0 !important;
+    }
+    .news-details-area .comments-area .comment-body {
+        padding-right: 0 !important;
+    }
+    .news-details-area .comments-area .comment-author .avatar {
+        right: 0 !important;
+        left: auto !important;
+    }
+    .navbar-area .navbar .navbar-nav .nav-item .dropdown-menu li .dropdown-menu {
+        right: 0;
+        left: auto;
+    }
+    .navbar-area nav .navbar-nav {
+        padding-right: 0 !important;
+        padding-left: 15px;
+    }
+}
+
+@media only screen and (min-width: 576px) and (max-width: 767px) {
+    .choose-card span {
+        left: 40px;
+        margin-left: 0;
+    }
+    .single-offer {
+        padding: 20px;
+    }
+    .industries-area .industries-list-tab .tabs li span {
+        padding-left: 20px !important;
+        padding-right: 60px !important;
+    }
+}
+
+@media only screen and (min-width: 768px) and (max-width: 991px) {
+    .industries-area .industries-list-tab .tabs li a {
+        padding-right: 90px !important;
+    }
+    .mobile-nav .logo {
+        right: 15px;
+        left: auto;
+    }
+    .mean-container .mean-nav ul li a.mean-expand {
+        width: 90%;
+    }
+    .navbar-area .navbar .navbar-nav .nav-item .dropdown-menu li .dropdown-menu {
+        right: -110%;
+        left: auto;
+    }
+    .navbar-area .navbar-nav {
+        margin-left: 0 !important;
+    }
+    .navbar-area nav .navbar-nav .nav-item:nth-last-child(1) .dropdown-menu, .navbar-area nav .navbar-nav .nav-item:nth-last-child(2) .dropdown-menu {
+        left: 0 !important;
+        right: auto !important;
+    }
+}
+
+@media only screen and (min-width : 992px) and (max-width : 1199px) {
+    .industries-area .industries-list-tab .tabs li a {
+        padding-right: 65px !important;
+        padding-left: 20px !important;
+    }
+    .industries-area .industries-list-tab .tabs li i {
+        right: 20px !important;
+        left: auto !important;
+    }
+    .industries-area .industries-list-tab .tabs li span {
+        padding-left: 20px !important;
+        padding-right: 65px !important;
+    }
+    .single-industries {
+        padding-left: 25px !important;
+        padding-right: 85px !important;
+    }
+    .single-offer {
+        padding-left: 20px !important;
+        padding-right: 75px !important;
+    }
+}
+
+@media only screen and (min-width: 1824px) {
+    .footer-top-area .footer-shape img:nth-child(1) {
+        left: 10% !important;
+        right: auto !important;
+    }
+}
