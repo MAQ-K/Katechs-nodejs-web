@@ -1,14 +1,14 @@
 import React, { useMemo, useState } from "react";
+import Reveal from "../Common/Reveal";
 
-// UX PROTOTYPE — the filtering here is genuinely wired up, because the
-// filter → result-count → empty-state → load-more flow IS what needs
-// reviewing. Card fields follow General Assembly's catalog (tag, title, short
-// description, delivery method, duration) plus level / start date / price,
-// which a paid B2C catalog needs.
+// Visual pass — the filtering logic is unchanged (this IS what needs
+// reviewing), only the skin moved from .ux-* to .tr-*. Card fields follow
+// the same structure as before: tag row, title, short description,
+// format/duration/start, price + register.
 //
 // ⚠ The courses below are STRUCTURAL PLACEHOLDERS so the filtering can be
-// exercised. They are not a proposed curriculum — the real course list is
-// open question 1 in data/training/structure.md.
+// exercised. Not a proposed curriculum — real course list is open question 1
+// in data/training/structure.md.
 const PLACEHOLDER_COURSES = [
   { id: 1, title: "دورة تجريبية أ", field: "برمجة", level: "مبتدئ", format: "مباشر" },
   { id: 2, title: "دورة تجريبية ب", field: "برمجة", level: "متوسط", format: "ذاتي" },
@@ -58,87 +58,123 @@ const Catalog = () => {
   const isFiltered = field !== ALL || level !== ALL || format !== ALL;
 
   return (
-    <section className="ux-section" id="courses">
+    <section className="tr-section" id="courses">
       <div className="container">
-        <div className="ux-head">
-          <h2 className="ux-h2">الدورات المتاحة</h2>
-          <p className="ux-p">اختر المجال والمستوى ونمط التعلم الذي يناسبك.</p>
-        </div>
-
-        <div className="ux-flag">
-          <strong>مطلوب من العميل:</strong> قائمة الدورات الحقيقية. الدورات
-          المعروضة هنا عناصر تجريبية لاختبار الفلترة فقط — وليست منهجًا مقترحًا.
-        </div>
-
-        <div className="ux-filters">
-          <div className="ux-field">
-            <label className="ux-label" htmlFor="ux-f-field">المجال</label>
-            <select id="ux-f-field" className="ux-select" value={field} onChange={onFilter(setField)}>
-              <option>{ALL}</option>
-              {FIELDS.map((f) => <option key={f}>{f}</option>)}
-            </select>
+        <Reveal>
+          <div className="tr-head">
+            <h2 className="tr-h2">الدورات المتاحة</h2>
+            <p className="tr-p">اختر المجال والمستوى ونمط التعلم الذي يناسبك.</p>
           </div>
+        </Reveal>
 
-          <div className="ux-field">
-            <label className="ux-label" htmlFor="ux-f-level">المستوى</label>
-            <select id="ux-f-level" className="ux-select" value={level} onChange={onFilter(setLevel)}>
-              <option>{ALL}</option>
-              {LEVELS.map((l) => <option key={l}>{l}</option>)}
-            </select>
+        <Reveal delay={0.05}>
+          <div className="tr-flag">
+            <div>
+              <strong>مطلوب من العميل:</strong> قائمة الدورات الحقيقية.
+              الدورات المعروضة هنا عناصر تجريبية لاختبار الفلترة فقط — وليست
+              منهجًا مقترحًا.
+            </div>
           </div>
+        </Reveal>
 
-          <div className="ux-field">
-            <label className="ux-label" htmlFor="ux-f-format">نمط التعلم</label>
-            <select id="ux-f-format" className="ux-select" value={format} onChange={onFilter(setFormat)}>
-              <option>{ALL}</option>
-              {FORMATS.map((f) => <option key={f}>{f}</option>)}
-            </select>
+        <Reveal delay={0.1}>
+          <div className="tr-filters">
+            <div className="tr-field">
+              <label className="tr-label" htmlFor="tr-f-field">
+                المجال
+              </label>
+              <select
+                id="tr-f-field"
+                className="tr-select"
+                value={field}
+                onChange={onFilter(setField)}
+              >
+                <option>{ALL}</option>
+                {FIELDS.map((f) => (
+                  <option key={f}>{f}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="tr-field">
+              <label className="tr-label" htmlFor="tr-f-level">
+                المستوى
+              </label>
+              <select
+                id="tr-f-level"
+                className="tr-select"
+                value={level}
+                onChange={onFilter(setLevel)}
+              >
+                <option>{ALL}</option>
+                {LEVELS.map((l) => (
+                  <option key={l}>{l}</option>
+                ))}
+              </select>
+            </div>
+
+            <div className="tr-field">
+              <label className="tr-label" htmlFor="tr-f-format">
+                نمط التعلم
+              </label>
+              <select
+                id="tr-f-format"
+                className="tr-select"
+                value={format}
+                onChange={onFilter(setFormat)}
+              >
+                <option>{ALL}</option>
+                {FORMATS.map((f) => (
+                  <option key={f}>{f}</option>
+                ))}
+              </select>
+            </div>
+
+            <button
+              type="button"
+              className="tr-btn tr-btn-ghost"
+              onClick={reset}
+              disabled={!isFiltered}
+            >
+              إعادة تعيين
+            </button>
           </div>
+        </Reveal>
 
-          <button
-            type="button"
-            className="ux-btn ux-btn-secondary"
-            onClick={reset}
-            disabled={!isFiltered}
-          >
-            إعادة تعيين
-          </button>
-        </div>
-
-        <p className="ux-filter-count" role="status">
+        <p className="tr-filter-count" role="status">
           {filtered.length} دورة مطابقة
         </p>
 
         {filtered.length === 0 ? (
-          <div className="ux-success">
+          <div className="tr-empty">
             لا توجد دورات مطابقة لهذا الاختيار.
-            <div className="ux-note">
+            <div className="tr-note">
               (حالة فارغة — جزء من تدفق الفلترة المطلوب مراجعته)
             </div>
           </div>
         ) : (
-          <div className="ux-grid ux-grid-3">
+          <div className="tr-grid">
             {visible.map((course) => (
-              <div className="ux-card" key={course.id}>
-                <div className="ux-tag-row">
-                  <span className="ux-tag">{course.field}</span>
-                  <span className="ux-tag">{course.level}</span>
+              <div className="tr-card" key={course.id}>
+                <div className="tr-tag-row">
+                  <span className="tr-tag">{course.field}</span>
+                  <span className="tr-tag">{course.level}</span>
                 </div>
 
-                <h3 className="ux-h3">{course.title}</h3>
-                <p className="ux-p">
-                  وصف مختصر للدورة في سطرين، يوضح ما سيتعلمه المتدرب وما الذي
-                  سيكون قادرًا على فعله بعدها.
+                <h3 className="tr-h3">{course.title}</h3>
+                <p className="tr-p">
+                  وصف مختصر للدورة في سطرين، يوضح ما سيتعلمه المتدرب وما
+                  الذي سيكون قادرًا على فعله بعدها.
                 </p>
 
                 <div style={{ marginTop: "auto", paddingTop: 12 }}>
-                  <p className="ux-small" style={{ marginBottom: 12 }}>
+                  <p className="tr-fit" style={{ marginBottom: 12 }}>
                     {course.format} · 00 ساعة · يبدأ 00/00
                   </p>
 
-                  <div className="ux-actions">
-                    <span className="ux-tag">السعر —</span>
-                    <button type="button" className="ux-btn ux-btn-sm">
+                  <div className="tr-actions">
+                    <span className="tr-tag">السعر —</span>
+                    <button type="button" className="tr-btn tr-btn-sm">
                       سجّل
                     </button>
                   </div>
@@ -152,7 +188,7 @@ const Catalog = () => {
           <div style={{ textAlign: "center", marginTop: 24 }}>
             <button
               type="button"
-              className="ux-btn ux-btn-secondary"
+              className="tr-btn tr-btn-ghost"
               onClick={() => setShown((s) => s + PAGE_SIZE)}
             >
               عرض المزيد ({filtered.length - shown})

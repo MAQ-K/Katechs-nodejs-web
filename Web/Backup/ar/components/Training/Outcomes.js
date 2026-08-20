@@ -1,53 +1,61 @@
 import React from "react";
+import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
+import { motion } from "framer-motion";
 
-// UX PROTOTYPE. The single strongest converter on a paid course page — and the
-// one thing that absolutely cannot be written without the client.
+// Visual pass — light testimonial-style card grid. No real graduate quotes
+// exist yet (see flag) — copy unchanged.
 const items = [1, 2, 3];
 
 const Outcomes = () => {
   return (
-    <section className="ux-section">
+    <section className="tr-section">
       <div className="container">
-        <div className="ux-head ux-center">
-          <h2 className="ux-h2">ماذا حقق خريجونا</h2>
-        </div>
+        <Reveal>
+          <div className="tr-head tr-center">
+            <h2 className="tr-h2">ماذا حقق خريجونا</h2>
+          </div>
+        </Reveal>
 
-        <div className="ux-flag">
-          <strong>مطلوب من العميل:</strong> آراء ونتائج خريجين حقيقية. لا
-          تُختلق شهادات متدربين.
-        </div>
+        <Reveal delay={0.05}>
+          <div className="tr-flag" style={{ display: "flex", marginInline: "auto", maxWidth: 640 }}>
+            <div>
+              <strong>مطلوب من العميل:</strong> آراء ونتائج خريجين حقيقية. لا
+              تُختلق شهادات متدربين.
+            </div>
+          </div>
+        </Reveal>
 
-        <div className="ux-grid ux-grid-3">
+        <motion.div
+          className="tr-grid"
+          variants={staggerParent(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {items.map((n) => (
-            <div className="ux-card" key={n}>
-              <p className="ux-p">
-                نص رأي المتدرب — ما الذي كان يريده قبل الدورة، وما الذي استطاع
-                فعله بعدها.
+            <motion.div className="tr-card" key={n} variants={staggerItem()}>
+              <i className="bx bxs-quote-alt-left tr-quote-icon"></i>
+              <p className="tr-p">
+                نص رأي المتدرب — ما الذي كان يريده قبل الدورة، وما الذي
+                استطاع فعله بعدها.
               </p>
 
-              <div
-                style={{
-                  display: "flex",
-                  alignItems: "center",
-                  gap: 12,
-                  marginTop: "auto",
-                  paddingTop: 16,
-                }}
-              >
-                <div
-                  className="ux-media"
-                  style={{ width: 42, height: 42, minHeight: 0, borderRadius: "50%", fontSize: 10, padding: 0 }}
-                >
-                  صورة
-                </div>
+              <div className="tr-outcome-foot">
+                <span className="tr-avatar-circle tr-avatar-sm">
+                  <i className="bx bx-user"></i>
+                </span>
                 <div>
-                  <p className="ux-h3" style={{ margin: 0, fontSize: 14 }}>اسم الخريج</p>
-                  <p className="ux-small" style={{ margin: 0 }}>الدورة · النتيجة</p>
+                  <p className="tr-h3" style={{ margin: 0, fontSize: 14 }}>
+                    اسم الخريج
+                  </p>
+                  <p className="tr-fit" style={{ margin: 0 }}>
+                    الدورة · النتيجة
+                  </p>
                 </div>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

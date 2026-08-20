@@ -6,10 +6,8 @@ import {
   AccordionItemPanel,
   AccordionItemButton,
 } from "react-accessible-accordion";
+import Reveal from "../Common/Reveal";
 
-// UX PROTOTYPE — real accordion behaviour (react-accessible-accordion, already
-// a dependency and used on the Emails page), neutral skin. Answers below are
-// grounded in what this page already states; no timelines are asserted.
 const faqs = [
   {
     q: "متى أبدأ برؤية نتائج؟",
@@ -35,29 +33,35 @@ const faqs = [
 
 const Faq = () => {
   return (
-    <section className="ux-section ux-alt">
+    <section className="seo-section">
       <div className="container">
-        <div className="ux-head ux-center">
-          <h2 className="ux-h2">أسئلة شائعة</h2>
-        </div>
+        <Reveal>
+          <div className="seo-head seo-center">
+            <h2 className="seo-h2">أسئلة شائعة</h2>
+          </div>
+        </Reveal>
 
-        <div className="ux-accordion ux-center">
-          <Accordion allowZeroExpanded preExpanded={["0"]}>
-            {faqs.map((item, i) => (
-              <AccordionItem uuid={String(i)} key={item.q}>
-                <AccordionItemHeading>
-                  <AccordionItemButton>
-                    <span>{item.q}</span>
-                    <span className="ux-acc-sign" aria-hidden="true">+</span>
-                  </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                  <p>{item.a}</p>
-                </AccordionItemPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        <Reveal delay={0.05}>
+          <div className="seo-accordion">
+            <Accordion allowZeroExpanded preExpanded={["0"]}>
+              {faqs.map((item, i) => (
+                <AccordionItem uuid={String(i)} key={item.q}>
+                  <AccordionItemHeading>
+                    <AccordionItemButton>
+                      <span>{item.q}</span>
+                      <span className="seo-acc-sign" aria-hidden="true">
+                        +
+                      </span>
+                    </AccordionItemButton>
+                  </AccordionItemHeading>
+                  <AccordionItemPanel>
+                    <p>{item.a}</p>
+                  </AccordionItemPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,18 +1,21 @@
 import React from "react";
+import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
+import { motion } from "framer-motion";
 
-// UX PROTOTYPE. Unlike the service pages, a B2C course page is expected to
-// show a real per-seat price rather than "request a quote" — but no price
-// exists yet, so the figures stay blank. Open question 2 in
-// data/training/structure.md.
+// Visual pass, same seo-plan card pattern as components/Seo/Pricing.js.
+// Real prices/refund policy still open — see data/training/structure.md,
+// question 2. Prices stay blank.
 const plans = [
   {
     name: "دورة مفردة",
     summary: "تسجّل في دورة واحدة",
+    popular: false,
     features: ["وصول كامل لمحتوى الدورة", "المشروع النهائي", "شهادة إتمام"],
   },
   {
     name: "مسار كامل",
     summary: "عدة دورات متتابعة في مجال واحد",
+    popular: true,
     features: [
       "كل دورات المسار",
       "متابعة فردية مع مرشد",
@@ -23,48 +26,77 @@ const plans = [
   {
     name: "اشتراك",
     summary: "وصول مفتوح لفترة محددة",
-    features: ["وصول لكل الدورات المتاحة", "دورات جديدة أثناء اشتراكك", "شهادة عند إتمام أي دورة"],
+    popular: false,
+    features: [
+      "وصول لكل الدورات المتاحة",
+      "دورات جديدة أثناء اشتراكك",
+      "شهادة عند إتمام أي دورة",
+    ],
   },
 ];
 
 const Pricing = () => {
   return (
-    <section className="ux-section ux-alt" id="pricing">
+    <section className="tr-section tr-alt" id="pricing">
       <div className="container">
-        <div className="ux-head ux-center">
-          <h2 className="ux-h2">الأسعار</h2>
-        </div>
+        <Reveal>
+          <div className="tr-head tr-center">
+            <h2 className="tr-h2">الأسعار</h2>
+          </div>
+        </Reveal>
 
-        <div className="ux-flag">
-          <strong>مطلوب من العميل:</strong> الأسعار الفعلية، وهل يوجد تقسيط أو
-          خصم للتسجيل المبكر؟
-        </div>
+        <Reveal delay={0.05}>
+          <div className="tr-flag" style={{ display: "flex", marginInline: "auto", maxWidth: 640 }}>
+            <div>
+              <strong>مطلوب من العميل:</strong> الأسعار الفعلية، وهل يوجد
+              تقسيط أو خصم للتسجيل المبكر؟
+            </div>
+          </div>
+        </Reveal>
 
-        <div className="ux-grid ux-grid-3">
+        <motion.div
+          className="tr-grid"
+          variants={staggerParent(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {plans.map((plan) => (
-            <div className="ux-card" key={plan.name}>
-              <h3 className="ux-h3">{plan.name}</h3>
-              <p className="ux-p">{plan.summary}</p>
+            <motion.div
+              className={`tr-card tr-plan${plan.popular ? " is-popular" : ""}`}
+              key={plan.name}
+              variants={staggerItem()}
+            >
+              <span className="tr-plan-badge">
+                <i className="bx bx-star"></i>
+                الأكثر طلبًا
+              </span>
 
-              <div style={{ padding: "14px 0", borderBottom: "1px solid var(--ux-line)", marginBottom: 14 }}>
-                <span className="ux-stat-value">— —</span>
-                <span className="ux-stat-label">السعر</span>
+              <h3 className="tr-h3">{plan.name}</h3>
+              <p className="tr-p">{plan.summary}</p>
+
+              <div className="tr-plan-price">
+                <span className="tr-stat-value">— —</span>
+                <span className="tr-stat-label">السعر</span>
               </div>
 
-              <ul className="ux-list">
+              <ul className="tr-list">
                 {plan.features.map((f) => (
-                  <li key={f}>{f}</li>
+                  <li key={f}>
+                    <i className="bx bx-check"></i>
+                    {f}
+                  </li>
                 ))}
               </ul>
 
               <div style={{ marginTop: "auto" }}>
-                <button type="button" className="ux-btn ux-btn-block">
+                <button type="button" className="tr-btn tr-btn-block">
                   سجّل الآن
                 </button>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -1,6 +1,12 @@
 import React from "react";
+import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
+import { motion } from "framer-motion";
 
-// UX PROTOTYPE. Values are intentionally left as "00" — see the flag below.
+// Visual pass — from "seo page inspiration/numbers section 2nd.png".
+// No real client numbers exist yet (see flag) — a static "00" read as a
+// broken counter rather than a deliberate pending state, so this shows a
+// shimmering placeholder bar instead. Swap seo-stat-pending for a real
+// <span className="seo-stat-value"> once figures land.
 const stats = [
   "مواقع نعمل عليها",
   "كلمات في الصفحة الأولى",
@@ -10,25 +16,39 @@ const stats = [
 
 const Results = () => {
   return (
-    <section className="ux-section">
+    <section className="seo-section">
       <div className="container">
-        <div className="ux-head ux-center">
-          <h2 className="ux-h2">نتائج نقيسها، لا وعود</h2>
-        </div>
+        <Reveal>
+          <div className="seo-head seo-center">
+            <h2 className="seo-h2">نتائج نقيسها، لا وعود</h2>
+          </div>
+        </Reveal>
 
-        <div className="ux-flag">
-          <strong>مطلوب من العميل:</strong> أرقام حقيقية لهذا القسم. لن تُكتب
-          أي قيمة هنا دون بيانات فعلية.
-        </div>
-
-        <div className="ux-grid ux-grid-4">
-          {stats.map((label) => (
-            <div className="ux-stat" key={label}>
-              <span className="ux-stat-value">00</span>
-              <span className="ux-stat-label">{label}</span>
+        <Reveal delay={0.05}>
+          <div className="seo-flag" style={{ display: "flex", marginInline: "auto", maxWidth: 640 }}>
+            <div>
+              <strong>مطلوب من العميل:</strong> أرقام حقيقية لهذا القسم. لن
+              تُكتب أي قيمة هنا دون بيانات فعلية.
             </div>
+          </div>
+        </Reveal>
+
+        <motion.div
+          className="seo-stats-row"
+          variants={staggerParent(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
+          {stats.map((label) => (
+            <motion.div className="seo-stat" key={label} variants={staggerItem()}>
+              <span className="seo-stat-pending" aria-label="بيانات قادمة">
+                <span className="seo-stat-pending-bar"></span>
+              </span>
+              <span className="seo-stat-label">{label}</span>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

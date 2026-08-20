@@ -1,4 +1,4 @@
-import React, { useRef } from "react";
+import React, { useRef, useState, useEffect } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import {
@@ -30,6 +30,16 @@ const Hero = () => {
   const sectionRef = useRef(null);
   const reduced = useReducedMotion();
 
+  // useScroll/useTransform resolve their scroll-linked value differently on
+  // the server (no DOM to measure) than on the client's first paint (before
+  // the first measurement lands) — feeding that straight into `style` was
+  // causing a real hydration mismatch on `.app-hero-scroll-cue`. Rendering
+  // the same static value on the server and the client's first paint, then
+  // switching to the live scroll-linked value only after mount, keeps both
+  // renders identical.
+  const [mounted, setMounted] = useState(false);
+  useEffect(() => setMounted(true), []);
+
   // Scroll-linked parallax: the media column drifts up and the headline block
   // drifts down slightly as the hero leaves the viewport.
   const { scrollYProgress } = useScroll({
@@ -42,8 +52,8 @@ const Hero = () => {
   const textY = useTransform(smooth, [0, 1], [0, 55]);
   const fade = useTransform(smooth, [0, 0.85], [1, 0.25]);
 
-  const parallax = reduced ? {} : { y: mediaY, opacity: fade };
-  const textParallax = reduced ? {} : { y: textY, opacity: fade };
+  const parallax = reduced || !mounted ? {} : { y: mediaY, opacity: fade };
+  const textParallax = reduced || !mounted ? {} : { y: textY, opacity: fade };
 
   return (
     <section className="app-hero" ref={sectionRef}>
@@ -148,7 +158,7 @@ const Hero = () => {
       <motion.span
         className="app-hero-scroll-cue"
         aria-hidden="true"
-        style={reduced ? {} : { opacity: fade }}
+        style={reduced || !mounted ? {} : { opacity: fade }}
       >
         <i className="bx bx-chevron-down"></i>
       </motion.span>

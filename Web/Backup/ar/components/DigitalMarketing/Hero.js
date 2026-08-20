@@ -1,57 +1,121 @@
 import React from "react";
 import Link from "next/link";
+import Reveal from "../Common/Reveal";
+import Magnetic from "../Common/Magnetic";
 
-// UX PROTOTYPE — real layout/hierarchy, deliberately unstyled. See
-// styles/ux-prototype.css.
-const bullets = [
-  "خطة مبنية على دراسة سوقك ومنافسيك، لا قوالب جاهزة",
-  "تنفيذ على القنوات التي يوجد فيها عملاؤك فعلًا",
-  "تقارير توضح أين ذهبت الميزانية وماذا أعادت",
+// Visual pass — from "seo page inspiration/1st section.png" (split hero with
+// a stat/badge card), following the same treatment already shipped on
+// components/Seo/Hero.js. Copy unchanged from the UX prototype.
+const proof = [
+  "خطة مبنية على دراسة سوقك ومنافسيك",
+  "تنفيذ على القنوات التي فيها عملاؤك",
+  "تقارير توضح أين ذهبت الميزانية",
 ];
 
 const Hero = () => {
   return (
-    <section className="ux-section ux-first">
+    <section className="dm-section dm-first">
       <div className="container">
-        <div className="ux-split">
+        <div className="dm-split">
           <div>
-            <span className="ux-eyebrow">التسويق الإلكتروني</span>
+            <Reveal>
+              <div className="dm-media-panel">
+                <div className="dm-campaign-card">
+                  <div className="dm-campaign-badge">
+                    <i className="bx bx-trending-up"></i>
+                    عائد 3.2x
+                  </div>
 
-            <h1 className="ux-h1">
-              حملات تسويق تتحول إلى مبيعات، لا مجرد مشاهدات
-            </h1>
+                  <div className="dm-campaign-bar">
+                    <i className="bx bx-bar-chart-alt-2"></i>
+                    أداء الحملات هذا الشهر
+                  </div>
 
-            <p className="ux-lead">
-              ندرس سوقك وجمهورك أولًا، ثم نختار القنوات المناسبة وننفذ الحملات
-              ونقيس النتائج — بحيث تعرف في كل شهر ما الذي أنفقته وما الذي عاد
-              عليك.
-            </p>
-
-            <ul className="ux-list">
-              {bullets.map((text) => (
-                <li key={text}>{text}</li>
-              ))}
-            </ul>
-
-            <div className="ux-actions">
-              <Link href="/digital-market-order" className="ux-btn">
-                اطلب عرض سعر
-              </Link>
-              <Link href="#channels" className="ux-btn ux-btn-secondary">
-                شاهد الخدمات
-              </Link>
-            </div>
-
-            <p className="ux-note">
-              سؤال مفتوح: يبقى الزر الأساسي على /digital-market-order أم ينتقل
-              إلى /contactWeb؟
-            </p>
+                  <div className="dm-campaign-row">
+                    <span className="dm-campaign-label">
+                      <i className="bx bxl-google"></i>
+                      إعلانات البحث
+                    </span>
+                    <span className="dm-campaign-track">
+                      <span className="dm-campaign-fill" style={{ width: "82%" }}></span>
+                    </span>
+                  </div>
+                  <div className="dm-campaign-row">
+                    <span className="dm-campaign-label">
+                      <i className="bx bxl-facebook-circle"></i>
+                      سوشيال ميديا
+                    </span>
+                    <span className="dm-campaign-track">
+                      <span className="dm-campaign-fill" style={{ width: "64%" }}></span>
+                    </span>
+                  </div>
+                  <div className="dm-campaign-row">
+                    <span className="dm-campaign-label">
+                      <i className="bx bx-envelope"></i>
+                      البريد الإلكتروني
+                    </span>
+                    <span className="dm-campaign-track">
+                      <span className="dm-campaign-fill" style={{ width: "45%" }}></span>
+                    </span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
 
           <div>
-            <div className="ux-media ux-media-tall">
-              مساحة صورة — حملات ونمو
-            </div>
+            <Reveal delay={0.05}>
+              <span className="dm-eyebrow">
+                <span className="dot"></span>
+                التسويق الإلكتروني
+              </span>
+            </Reveal>
+
+            <Reveal delay={0.1}>
+              <h1 className="dm-h1">
+                حملات تسويق تتحول إلى مبيعات، لا مجرد مشاهدات
+              </h1>
+            </Reveal>
+
+            <Reveal delay={0.15}>
+              <p className="dm-p">
+                ندرس سوقك وجمهورك أولًا، ثم نختار القنوات المناسبة وننفذ
+                الحملات ونقيس النتائج — بحيث تعرف في كل شهر ما الذي أنفقته
+                وما الذي عاد عليك.
+              </p>
+            </Reveal>
+
+            <Reveal delay={0.2}>
+              <div className="dm-proof-row">
+                {proof.map((text) => (
+                  <span key={text}>
+                    <i className="bx bx-check"></i>
+                    {text}
+                  </span>
+                ))}
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.25}>
+              <div className="dm-actions">
+                <Magnetic>
+                  <Link href="/digital-market-order" className="dm-btn">
+                    اطلب عرض سعر
+                    <i className="bx bx-left-arrow-alt"></i>
+                  </Link>
+                </Magnetic>
+                <Link href="#channels" className="dm-btn dm-btn-ghost">
+                  شاهد الخدمات
+                </Link>
+              </div>
+            </Reveal>
+
+            <Reveal delay={0.3}>
+              <p className="dm-note">
+                سؤال مفتوح: يبقى الزر الأساسي على /digital-market-order أم
+                ينتقل إلى /contactWeb؟
+              </p>
+            </Reveal>
           </div>
         </div>
       </div>

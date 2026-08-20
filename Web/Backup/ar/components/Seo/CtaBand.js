@@ -1,29 +1,34 @@
 import React from "react";
 import Link from "next/link";
+import Reveal from "../Common/Reveal";
+import Magnetic from "../Common/Magnetic";
 
-// UX PROTOTYPE — final conversion band. Repeats the page's primary action
-// (the free audit) rather than introducing a new one.
 const CtaBand = () => {
   return (
-    <section className="ux-section">
+    <section className="seo-section seo-dark">
       <div className="container">
-        <div className="ux-card" style={{ textAlign: "center", alignItems: "center", padding: "44px 24px" }}>
-          <h2 className="ux-h2">ابدأ بمعرفة أين يقف موقعك الآن</h2>
+        <Reveal>
+          <div className="seo-cta-band">
+            <h2 className="seo-h2">ابدأ بمعرفة أين يقف موقعك الآن</h2>
 
-          <p className="ux-p" style={{ maxWidth: 520 }}>
-            تحليل مجاني يوضح أهم ما يمنع موقعك من الظهور، ثم تقرر إن أردت
-            المتابعة معنا.
-          </p>
+            <p className="seo-p" style={{ maxWidth: 520, marginInline: "auto" }}>
+              تحليل مجاني يوضح أهم ما يمنع موقعك من الظهور، ثم تقرر إن أردت
+              المتابعة معنا.
+            </p>
 
-          <div className="ux-actions" style={{ justifyContent: "center" }}>
-            <Link href="#audit" className="ux-btn">
-              احصل على التحليل المجاني
-            </Link>
-            <Link href="/contactWeb" className="ux-btn ux-btn-secondary">
-              تواصل معنا
-            </Link>
+            <div className="seo-actions seo-center" style={{ marginTop: 26 }}>
+              <Magnetic>
+                <Link href="#audit" className="seo-btn seo-btn-invert">
+                  احصل على التحليل المجاني
+                  <i className="bx bx-left-arrow-alt"></i>
+                </Link>
+              </Magnetic>
+              <Link href="/contactWeb" className="seo-btn seo-btn-ghost">
+                تواصل معنا
+              </Link>
+            </div>
           </div>
-        </div>
+        </Reveal>
       </div>
     </section>
   );

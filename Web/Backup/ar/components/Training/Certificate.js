@@ -1,9 +1,10 @@
 import React from "react";
+import Reveal from "../Common/Reveal";
 
-// UX PROTOTYPE. Wording depends on whether the certificate is accredited by a
-// third party or issued by KaTechs — open question 5 in
-// data/training/structure.md. Deliberately worded as "شهادة إتمام" only, since
-// claiming accreditation without confirmation would be a false claim.
+// Visual pass — split layout, same pattern as components/Seo/AiSearch.js,
+// with an illustrative certificate-seal mock instead of a placeholder photo
+// (no real certificate design exists yet). Copy unchanged — accreditation
+// wording stays open per the note.
 const points = [
   "تُمنح بعد تسليم المشروع النهائي، لا بمجرد الحضور",
   "تحمل اسم الدورة وعدد ساعاتها",
@@ -12,31 +13,57 @@ const points = [
 
 const Certificate = () => {
   return (
-    <section className="ux-section ux-alt">
+    <section className="tr-section tr-alt">
       <div className="container">
-        <div className="ux-split">
+        <div className="tr-split">
           <div>
-            <h2 className="ux-h2">شهادة إتمام عند نهاية الدورة</h2>
+            <Reveal delay={0.05}>
+              <h2 className="tr-h2">شهادة إتمام عند نهاية الدورة</h2>
+            </Reveal>
 
-            <p className="ux-p">
-              الشهادة ليست ورقة حضور — تُمنح بعد إنجاز المشروع النهائي
-              واستيفاء متطلبات الدورة.
-            </p>
+            <Reveal delay={0.1}>
+              <p className="tr-p">
+                الشهادة ليست ورقة حضور — تُمنح بعد إنجاز المشروع النهائي
+                واستيفاء متطلبات الدورة.
+              </p>
+            </Reveal>
 
-            <ul className="ux-list">
-              {points.map((text) => (
-                <li key={text}>{text}</li>
-              ))}
-            </ul>
+            <Reveal delay={0.15}>
+              <ul className="tr-list" style={{ marginTop: 20 }}>
+                {points.map((text) => (
+                  <li key={text}>
+                    <i className="bx bx-check"></i>
+                    {text}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
 
-            <p className="ux-note">
-              سؤال مفتوح: هل الشهادة معتمدة من جهة خارجية أم صادرة من كاتكس؟
-              الصياغة الحالية لا تدّعي أي اعتماد خارجي.
-            </p>
+            <Reveal delay={0.2}>
+              <p className="tr-note">
+                سؤال مفتوح: هل الشهادة معتمدة من جهة خارجية أم صادرة من
+                كاتكس؟ الصياغة الحالية لا تدّعي أي اعتماد خارجي.
+              </p>
+            </Reveal>
           </div>
 
           <div>
-            <div className="ux-media">مساحة صورة — نموذج الشهادة</div>
+            <Reveal>
+              <div className="tr-media-panel">
+                <div className="tr-cert-card">
+                  <span className="tr-cert-seal">
+                    <i className="bx bxs-award"></i>
+                  </span>
+                  <div className="tr-skel-line w80" style={{ marginInline: "auto" }}></div>
+                  <div className="tr-skel-line w60" style={{ marginInline: "auto" }}></div>
+                  <div className="tr-cert-line"></div>
+                  <div className="tr-cert-foot">
+                    <span>اسم المتدرب</span>
+                    <span>KaTechs</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>

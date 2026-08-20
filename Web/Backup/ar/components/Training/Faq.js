@@ -6,12 +6,11 @@ import {
   AccordionItemPanel,
   AccordionItemButton,
 } from "react-accessible-accordion";
+import Reveal from "../Common/Reveal";
 
-// UX PROTOTYPE — real accordion behaviour, neutral skin.
-//
-// ⚠ These answers describe how the page is STRUCTURED to answer each
-// objection. Several depend on client decisions still open (refunds, hardware
-// requirements, recordings) and must be confirmed before they go live.
+// Visual pass — same accordion skin pattern as components/Seo/Faq.js.
+// Copy unchanged — refund policy / recording availability remain open
+// questions per the flag.
 const faqs = [
   {
     q: "هل أحتاج خبرة سابقة؟",
@@ -37,34 +36,45 @@ const faqs = [
 
 const Faq = () => {
   return (
-    <section className="ux-section">
+    <section className="tr-section">
       <div className="container">
-        <div className="ux-head ux-center">
-          <h2 className="ux-h2">أسئلة شائعة</h2>
-        </div>
+        <Reveal>
+          <div className="tr-head tr-center">
+            <h2 className="tr-h2">أسئلة شائعة</h2>
+          </div>
+        </Reveal>
 
-        <div className="ux-flag" style={{ maxWidth: 780, marginInline: "auto" }}>
-          <strong>تحتاج قرارًا:</strong> سياسة الاسترداد، وهل تُسجَّل المحاضرات
-          المباشرة. الإجابتان مكتوبتان حاليًا كأسئلة مفتوحة، لا كوعود.
-        </div>
+        <Reveal delay={0.05}>
+          <div className="tr-flag" style={{ maxWidth: 780, marginInline: "auto" }}>
+            <div>
+              <strong>تحتاج قرارًا:</strong> سياسة الاسترداد، وهل تُسجَّل
+              المحاضرات المباشرة. الإجابتان مكتوبتان حاليًا كأسئلة مفتوحة، لا
+              كوعود.
+            </div>
+          </div>
+        </Reveal>
 
-        <div className="ux-accordion ux-center">
-          <Accordion allowZeroExpanded preExpanded={["0"]}>
-            {faqs.map((item, i) => (
-              <AccordionItem uuid={String(i)} key={item.q}>
-                <AccordionItemHeading>
-                  <AccordionItemButton>
-                    <span>{item.q}</span>
-                    <span className="ux-acc-sign" aria-hidden="true">+</span>
-                  </AccordionItemButton>
-                </AccordionItemHeading>
-                <AccordionItemPanel>
-                  <p>{item.a}</p>
-                </AccordionItemPanel>
-              </AccordionItem>
-            ))}
-          </Accordion>
-        </div>
+        <Reveal delay={0.1}>
+          <div className="tr-accordion">
+            <Accordion allowZeroExpanded preExpanded={["0"]}>
+              {faqs.map((item, i) => (
+                <AccordionItem uuid={String(i)} key={item.q}>
+                  <AccordionItemHeading>
+                    <AccordionItemButton>
+                      <span>{item.q}</span>
+                      <span className="tr-acc-sign" aria-hidden="true">
+                        +
+                      </span>
+                    </AccordionItemButton>
+                  </AccordionItemHeading>
+                  <AccordionItemPanel>
+                    <p>{item.a}</p>
+                  </AccordionItemPanel>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
+        </Reveal>
       </div>
     </section>
   );

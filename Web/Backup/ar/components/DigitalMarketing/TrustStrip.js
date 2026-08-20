@@ -1,41 +1,43 @@
 import React from "react";
+import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
+import { motion } from "framer-motion";
 
-// UX PROTOTYPE. WebFX puts social proof immediately after the hero; across
-// every source the markers that work are client logos, verified review scores
-// and concrete numbers — not vague promises.
+// Visual pass. Copy/flag unchanged — no real client logos exist yet.
 const logos = [1, 2, 3, 4, 5];
 
 const TrustStrip = () => {
   return (
-    <section className="ux-section ux-alt">
+    <section className="dm-section dm-alt">
       <div className="container">
-        <div className="ux-flag">
-          <strong>مطلوب من العميل:</strong> شعارات عملاء حقيقية أو أرقام
-          موثقة. لن يُكتب أي رقم هنا دون بيانات فعلية.
-        </div>
+        <Reveal>
+          <div
+            className="dm-flag"
+            style={{ display: "flex", marginInline: "auto", maxWidth: 640, marginBottom: 36 }}
+          >
+            <div>
+              <strong>مطلوب من العميل:</strong> شعارات عملاء حقيقية أو أرقام
+              موثقة. لن يُكتب أي رقم هنا دون بيانات فعلية.
+            </div>
+          </div>
+        </Reveal>
 
-        <p className="ux-small" style={{ textAlign: "center", marginBottom: 18 }}>
-          عملاء نعمل معهم
-        </p>
+        <Reveal delay={0.05}>
+          <p className="dm-strip-label">عملاء نعمل معهم</p>
+        </Reveal>
 
-        <div
-          style={{
-            display: "flex",
-            flexWrap: "wrap",
-            gap: 14,
-            justifyContent: "center",
-          }}
+        <motion.div
+          className="dm-logo-row"
+          variants={staggerParent(0.06)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
         >
           {logos.map((n) => (
-            <div
-              key={n}
-              className="ux-media"
-              style={{ minHeight: 72, width: 150, fontSize: 12 }}
-            >
+            <motion.div className="dm-logo-box" key={n} variants={staggerItem()}>
               شعار
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

@@ -5905,6 +5905,7 @@ Service Details Area Style
 Hosting Services — Hero Section Style
 ======================================================*/
 .hosting-hero {
+  position: relative;
   padding-top: 160px;
   padding-bottom: 80px;
   overflow: hidden;
@@ -6115,6 +6116,35 @@ Hosting Services — Hero Section Style
       white-space: nowrap;
     }
   }
+
+  // ---- Motion pass: ambient glow + tilt frame ----
+  // Reuses the App Dev/Emails "Motion Lab" conventions (Reveal for the
+  // scroll-in text, Tilt3D for the cursor tilt, same appGlowPulse keyframe).
+  .container {
+    position: relative;
+    z-index: 1;
+  }
+
+  .hosting-hero-glow {
+    position: absolute;
+    z-index: 0;
+    top: -160px;
+    inset-inline-end: -140px;
+    width: 620px;
+    height: 620px;
+    pointer-events: none;
+    background: radial-gradient(
+      circle,
+      rgba($main-color, 0.14) 0%,
+      rgba($main-color, 0) 65%
+    );
+    animation: appGlowPulse 9s ease-in-out infinite;
+  }
+
+  // Tilt wrapper needs depth for the domain card's translateZ to mean anything.
+  .hosting-hero-img {
+    transform-style: preserve-3d;
+  }
 }
 
 /*
@@ -6173,10 +6203,6 @@ Hosting Services — Pricing Section Style
     margin-bottom: 30px;
     text-align: center;
     transition: $transition;
-
-    &:hover {
-      transform: translateY(-6px);
-    }
 
     .hosting-pricing-badge {
       position: absolute;
@@ -6281,12 +6307,10 @@ Hosting Services — Pricing Section Style
 
     &.hosting-pricing-card-popular {
       background-color: #0a1f44;
-      transform: scale(1.05);
-      z-index: 2;
-
-      &:hover {
-        transform: scale(1.05) translateY(-6px);
-      }
+      // The scale-up + z-index live on .hosting-pricing-beam (the wrapper),
+      // not here — it needs to lift the ring along with the card, and a
+      // `transform: scale()` here would fight the motion.div's own
+      // `transform` (the whileHover lift).
 
       .hosting-pricing-name,
       .hosting-pricing-price-value {
@@ -6308,6 +6332,58 @@ Hosting Services — Pricing Section Style
         }
       }
     }
+  }
+
+  // ---- Motion pass: rotating border-beam ring on the popular plan ----
+  // Same mechanic as .app-plan-beam / .email-plan-beam — a 2px padded ring
+  // with a spinning conic-gradient behind it, reusing the shared appBeamSpin
+  // keyframe. Scale lives here (not on the card) so the ring lifts together
+  // with the card as one unit, and so it never fights the motion.div's own
+  // `transform` on the card (the whileHover lift).
+  .hosting-pricing-beam {
+    position: relative;
+    z-index: 2;
+    display: flex;
+    width: 100%;
+    padding: 2px;
+    margin-bottom: 30px;
+    border-radius: 22px;
+    overflow: hidden;
+    isolation: isolate;
+    scale: 1.05;
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: -1;
+      left: 50%;
+      top: 50%;
+      width: 220%;
+      aspect-ratio: 1;
+      transform: translate(-50%, -50%) rotate(0deg);
+      background: conic-gradient(
+        from 0deg,
+        transparent 0deg 250deg,
+        $main-color 300deg,
+        #5ce1c9 340deg,
+        #ffffff 356deg,
+        transparent 360deg
+      );
+      animation: appBeamSpin 5s linear infinite;
+    }
+
+    &:hover::before {
+      animation-duration: 2s;
+    }
+
+    .hosting-pricing-card {
+      width: 100%;
+      margin-bottom: 0;
+    }
+  }
+
+  .hosting-pricing-cta-magnet {
+    display: block;
   }
 }
 
@@ -6448,6 +6524,7 @@ Hosting Services — Feature Grid Section Style
       font-size: 30px;
       color: $black-color;
       margin-bottom: 18px;
+      transition: color 0.3s ease, transform 0.3s ease;
     }
 
     h3 {
@@ -6481,6 +6558,7 @@ Hosting Services — Feature Grid Section Style
 
       i {
         color: $main-color;
+        transform: scale(1.12);
       }
 
       &::before {
@@ -7703,6 +7781,7 @@ sections read as one system.)
   background-color: #0b0b0d;
   padding-top: 100px;
   padding-bottom: 100px;
+  overflow: hidden;
 
   .app-platforms-head {
     display: flex;
@@ -9719,5 +9798,2936 @@ marquee, the beam and the ambient hero glow.
 
   .app-btn-shine::after {
     display: none;
+  }
+}
+
+/* ===================================================================
+   SEO PAGE — own visual system (flat black/white editorial, alternating
+   light/dark bands), from public/images/seo page inspiration/*.png.
+   Deliberately NOT the soft-emboss recipe used on Hosting/Emails/AppDev —
+   each service page gets a distinct treatment on the shared shell, same
+   as the rest of this file. Replaces styles/ux-prototype.css classes on
+   THIS page only; that file stays imported for Digital Marketing/Training.
+   =================================================================== */
+$seo-black: #1b1d23; // softened from near-black #0c0c0e per user feedback — less harsh, still reads as "dark band"
+$seo-card-dark: #24262d;
+$seo-white: #ffffff;
+$seo-gray: #f6f6f4;
+$seo-ink: #101012;
+$seo-ink-dim: #6c6c72;
+$seo-line: rgba(12, 12, 14, 0.1);
+$seo-line-dark: rgba(255, 255, 255, 0.1);
+
+.seo-section {
+  padding: 100px 0;
+  background: $seo-white;
+  overflow: hidden;
+
+  &.seo-alt {
+    background: $seo-gray;
+  }
+
+  &.seo-dark {
+    background: $seo-black;
+  }
+
+  // fixed navbar overlays page content — every page's first section needs
+  // this clearance (same convention as .app-hero / .ux-first / hosting hero)
+  &.seo-first {
+    padding-top: 160px;
+  }
+
+  @media (max-width: 991px) {
+    padding: 70px 0;
+
+    &.seo-first {
+      padding-top: 130px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    padding: 52px 0;
+
+    &.seo-first {
+      padding-top: 110px;
+    }
+  }
+}
+
+.seo-head {
+  max-width: 640px;
+  margin-bottom: 44px;
+
+  &.seo-center {
+    max-width: 640px;
+    margin-inline: auto;
+    text-align: center;
+  }
+}
+
+.seo-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid $seo-line;
+  border-radius: 100px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $seo-ink;
+  margin-bottom: 20px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $main-color;
+    box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.18);
+  }
+}
+
+.seo-dark .seo-eyebrow {
+  border-color: $seo-line-dark;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.seo-h1 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: $seo-ink;
+  margin-bottom: 22px;
+}
+
+.seo-h2 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+  line-height: 1.25;
+  color: $seo-ink;
+  margin-bottom: 14px;
+}
+
+.seo-h3 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: $seo-ink;
+  margin-bottom: 8px;
+}
+
+.seo-dark .seo-h1,
+.seo-dark .seo-h2,
+.seo-dark .seo-h3 {
+  color: $seo-white;
+}
+
+.seo-p {
+  color: $seo-ink-dim;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+.seo-dark .seo-p {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.seo-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+
+  &.seo-center {
+    justify-content: center;
+  }
+}
+
+.seo-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: $seo-black;
+  color: $seo-white;
+  font-family: $body-font-family;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease,
+    filter 0.18s ease;
+
+  i {
+    font-size: 18px;
+    transition: transform 0.18s ease;
+  }
+
+  // brightness lift instead of an off-tone background swap (the old
+  // #26262c read as a muddy grey-brown, not a hover state) + a much
+  // smaller, tighter lift than the previous -3px/heavy-shadow combo
+  &:hover {
+    color: $seo-white;
+    filter: brightness(1.22);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+
+    i {
+      transform: translateX(-3px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    filter: brightness(1.1);
+  }
+
+  &.seo-btn-block {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.seo-btn-ghost {
+  background: transparent;
+  color: $seo-ink;
+  border: 1.5px solid $seo-line;
+
+  &:hover {
+    filter: none;
+    background: rgba(12, 12, 14, 0.045);
+    border-color: $seo-ink;
+    color: $seo-ink;
+    box-shadow: none;
+    transform: translateY(-1px);
+  }
+}
+
+.seo-dark .seo-btn-ghost {
+  color: $seo-white;
+  border-color: $seo-line-dark;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: $seo-white;
+  }
+}
+
+// Primary button on a dark band needs to invert (white fill) — plain
+// .seo-btn would be black-on-black.
+.seo-btn-invert {
+  background: $seo-white;
+  color: $seo-black;
+
+  &:hover {
+    filter: none;
+    background: $main-color;
+    color: $seo-black;
+    box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.4);
+  }
+}
+
+.seo-proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 6px;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: $seo-ink-dim;
+    border: 1px solid $seo-line;
+    border-radius: 100px;
+    padding: 8px 14px;
+
+    i {
+      color: $main-color;
+      font-size: 15px;
+    }
+  }
+}
+
+.seo-flag {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-inline-start: 3px solid #f5a524;
+  background: rgba(245, 165, 36, 0.08);
+  color: #7a5100;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+
+  strong {
+    color: #7a5100;
+  }
+
+  &.seo-flag-dark {
+    background: rgba(245, 165, 36, 0.12);
+    color: rgba(255, 224, 168, 0.92);
+
+    strong {
+      color: #ffd699;
+    }
+  }
+}
+
+// ---- split hero-style layout (Hero, AiSearch, Reporting) ----
+.seo-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.seo-media-panel {
+  background: $seo-gray;
+  border: 1px solid $seo-line;
+  border-radius: 22px;
+  padding: 34px;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seo-dark .seo-media-panel {
+  background: $seo-card-dark;
+  border-color: $seo-line-dark;
+}
+
+// ---- SERP mock illustration (Hero) ----
+.seo-serp-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+}
+
+.seo-serp-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid $seo-line;
+  border-radius: 100px;
+  padding: 9px 14px;
+  margin-bottom: 18px;
+  color: $seo-ink-dim;
+  font-size: 13px;
+
+  i {
+    color: $seo-ink-dim;
+  }
+}
+
+.seo-serp-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 12px 14px;
+  border-radius: 12px;
+  margin-bottom: 8px;
+
+  .seo-serp-lines {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 6px;
+  }
+
+  .seo-serp-line {
+    height: 8px;
+    border-radius: 4px;
+    background: $seo-line;
+
+    &.short {
+      width: 45%;
+    }
+  }
+
+  .seo-serp-rank {
+    font-family: "Cairo", sans-serif;
+    font-weight: 800;
+    font-size: 15px;
+    color: $seo-ink-dim;
+  }
+
+  &.is-top {
+    background: rgba(29, 211, 248, 0.08);
+    border: 1px solid rgba(29, 211, 248, 0.25);
+
+    .seo-serp-line {
+      background: rgba(29, 211, 248, 0.3);
+
+      &.short {
+        background: rgba(29, 211, 248, 0.2);
+      }
+    }
+
+    .seo-serp-rank {
+      color: $main-color;
+      display: flex;
+      align-items: center;
+      gap: 4px;
+    }
+  }
+}
+
+.seo-serp-badge {
+  position: absolute;
+  top: -14px;
+  inset-inline-end: 18px;
+  background: $seo-black;
+  color: $seo-white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 14px 26px -12px rgba(12, 12, 14, 0.5);
+  animation: seoBadgeFloat 3s ease-in-out infinite alternate;
+
+  i {
+    color: $main-color;
+  }
+}
+
+@keyframes seoBadgeFloat {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+// ---- stats row (Results) ----
+.seo-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.seo-stat {
+  flex: 1 1 170px;
+}
+
+.seo-stat-value {
+  display: block;
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 3.6vw, 2.5rem);
+  color: $seo-ink;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.seo-stat-label {
+  font-size: 14px;
+  color: $seo-ink-dim;
+}
+
+// pending-data state for a stat whose real figure doesn't exist yet — a
+// shimmering bar instead of a static "00", so it reads as "coming soon"
+// rather than "broken counter" (see Results.js)
+.seo-stat-pending {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.seo-stat-pending-bar {
+  display: block;
+  width: 64%;
+  height: 18px;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    $seo-line 25%,
+    rgba(29, 211, 248, 0.22) 50%,
+    $seo-line 75%
+  );
+  background-size: 200% 100%;
+  animation: seoShimmer 2.2s ease-in-out infinite;
+
+  // dark-card variant (CaseStudies) — the light-grey base would be
+  // invisible against $seo-card-dark
+  &.seo-stat-pending-bar-dark {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 25%,
+      rgba(29, 211, 248, 0.35) 50%,
+      rgba(255, 255, 255, 0.1) 75%
+    );
+    background-size: 200% 100%;
+  }
+}
+
+// ---- card grids (Pillars, Process, CaseStudies, Pricing) ----
+.seo-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+
+  &.seo-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    &.seo-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.seo-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 30px 26px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(12, 12, 14, 0.2);
+    box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+  }
+}
+
+.seo-alt .seo-card {
+  background: $seo-white;
+}
+
+.seo-card-dark {
+  background: $seo-card-dark;
+  border: 1px solid $seo-line-dark;
+  color: rgba(255, 255, 255, 0.85);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: none;
+  }
+
+  .seo-p {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .seo-stat-value {
+    color: $seo-white;
+  }
+
+  .seo-stat-label {
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+.seo-icon-well {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: rgba(12, 12, 14, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: $seo-ink;
+  margin-bottom: 18px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.seo-card:hover .seo-icon-well {
+  background: rgba(29, 211, 248, 0.14);
+  color: #0a90ac;
+}
+
+.seo-card-dark .seo-icon-well {
+  background: rgba(255, 255, 255, 0.06);
+  color: $seo-white;
+}
+
+.seo-card-dark:hover .seo-icon-well {
+  background: rgba(29, 211, 248, 0.16);
+  color: $main-color;
+}
+
+.seo-step-num {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: rgba(12, 12, 14, 0.32);
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+  display: block;
+}
+
+// connector chevron between Process cards, RTL-aware (points toward reading
+// direction — start of next card)
+.seo-process-grid {
+  position: relative;
+
+  .seo-card {
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      inset-inline-start: -30px;
+      width: 22px;
+      height: 22px;
+      transform: translateY(-50%);
+      background: $seo-white;
+      border: 1px solid $seo-line;
+      border-radius: 50%;
+      z-index: 2;
+
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+
+    // plain CSS chevron (no icon-font codepoint to guess wrong) — two
+    // borders rotated into an arrow, pointing toward the next card in
+    // reading order
+    &:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      inset-inline-start: -26px;
+      width: 8px;
+      height: 8px;
+      transform: translateY(-50%) rotate(45deg);
+      border-top: 1.5px solid $seo-ink-dim;
+      border-inline-end: 1.5px solid $seo-ink-dim;
+      z-index: 3;
+
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+  }
+}
+
+.seo-tag-row {
+  margin-bottom: 14px;
+}
+
+.seo-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.75);
+  border-radius: 100px;
+  padding: 5px 12px;
+}
+
+// ---- pricing cards ----
+.seo-plan {
+  &.is-popular {
+    background: $seo-black;
+    border-color: $seo-black;
+    color: $seo-white;
+
+    .seo-h3,
+    .seo-stat-value {
+      color: $seo-white;
+    }
+
+    .seo-p,
+    .seo-stat-label {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .seo-plan-badge {
+      display: inline-flex;
+    }
+
+    .seo-list li {
+      color: rgba(255, 255, 255, 0.85);
+
+      i {
+        color: $main-color;
+      }
+    }
+
+    .seo-btn {
+      background: $seo-white;
+      color: $seo-black;
+
+      &:hover {
+        background: $main-color;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      border-color: $seo-black;
+    }
+  }
+}
+
+.seo-plan-badge {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: rgba(29, 211, 248, 0.16);
+  color: $main-color;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 6px 13px;
+  margin-bottom: 14px;
+}
+
+.seo-plan-price {
+  padding: 16px 0;
+  border-bottom: 1px solid $seo-line;
+  margin-bottom: 16px;
+}
+
+.seo-plan.is-popular .seo-plan-price {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+.seo-list {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: $seo-ink-dim;
+    line-height: 1.6;
+  }
+
+  i {
+    color: $main-color;
+    font-size: 16px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+}
+
+// ---- FAQ ----
+.seo-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+
+  .accordion__item {
+    margin-bottom: 14px;
+    border-radius: 16px;
+    border: 1px solid $seo-line;
+    overflow: hidden;
+  }
+
+  .accordion__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: $seo-ink;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .seo-acc-sign {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(12, 12, 14, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  }
+
+  .accordion__button[aria-expanded="true"] .seo-acc-sign {
+    transform: rotate(45deg);
+    background: rgba(29, 211, 248, 0.16);
+    color: $main-color;
+  }
+
+  .accordion__panel {
+    padding: 0 24px 22px;
+
+    p {
+      color: $seo-ink-dim;
+      font-size: 15px;
+      line-height: 1.75;
+      margin: 0;
+    }
+  }
+}
+
+// ---- form (AuditForm) ----
+.seo-form-row {
+  display: flex;
+  gap: 14px;
+  flex-wrap: wrap;
+  align-items: flex-end;
+
+  @media (max-width: 767px) {
+    flex-direction: column;
+    align-items: stretch;
+  }
+}
+
+.seo-field {
+  flex: 1 1 200px;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.seo-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.seo-input {
+  border: 1px solid $seo-line-dark;
+  background: rgba(255, 255, 255, 0.04);
+  color: $seo-white;
+  border-radius: 12px;
+  padding: 13px 16px;
+  font-size: 15px;
+  transition: border-color 0.2s ease, background 0.2s ease;
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.35);
+  }
+
+  &:focus {
+    outline: none;
+    border-color: $main-color;
+    background: rgba(255, 255, 255, 0.06);
+  }
+
+  &.seo-input-error {
+    border-color: #ff6b6b;
+  }
+}
+
+.seo-error {
+  color: #ff8a8a;
+  font-size: 13px;
+}
+
+.seo-success {
+  background: rgba(29, 211, 248, 0.1);
+  border: 1px solid rgba(29, 211, 248, 0.3);
+  color: rgba(255, 255, 255, 0.92);
+  border-radius: 14px;
+  padding: 20px 22px;
+  font-size: 15px;
+  line-height: 1.7;
+
+  .seo-note {
+    margin-top: 8px;
+    font-size: 12px;
+    color: rgba(255, 255, 255, 0.5);
+  }
+}
+
+// ---- CtaBand ----
+.seo-cta-band {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+
+  .seo-h2 {
+    color: $seo-white;
+  }
+}
+
+// ---- shimmer skeleton (AiSearch mock) ----
+.seo-skel-card {
+  width: 100%;
+  max-width: 380px;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+}
+
+.seo-skel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(29, 211, 248, 0.12);
+  color: #0a90ac;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 5px 12px;
+  margin-bottom: 16px;
+}
+
+.seo-skel-line {
+  height: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background: linear-gradient(
+    90deg,
+    $seo-line 25%,
+    rgba(29, 211, 248, 0.18) 50%,
+    $seo-line 75%
+  );
+  background-size: 200% 100%;
+  animation: seoShimmer 2.2s ease-in-out infinite;
+
+  &.w80 {
+    width: 80%;
+  }
+  &.w60 {
+    width: 60%;
+  }
+  &.w40 {
+    width: 40%;
+  }
+}
+
+@keyframes seoShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+.seo-skel-cite {
+  margin-top: 16px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  border-top: 1px solid $seo-line;
+  padding-top: 14px;
+  font-size: 12px;
+  color: $seo-ink-dim;
+
+  i {
+    color: $main-color;
+  }
+}
+
+// ---- mini report chart (Reporting mock) ----
+.seo-report-card {
+  width: 100%;
+  max-width: 380px;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+}
+
+.seo-report-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 100px;
+  margin-bottom: 16px;
+}
+
+.seo-report-bar {
+  flex: 1;
+  background: rgba(29, 211, 248, 0.18);
+  border-radius: 6px 6px 0 0;
+  transform-origin: bottom;
+  animation: seoBarGrow 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  &:last-child {
+    background: $main-color;
+  }
+}
+
+@keyframes seoBarGrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.seo-report-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: $seo-ink-dim;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seo-serp-badge,
+  .seo-skel-line,
+  .seo-report-bar,
+  .seo-stat-pending-bar {
+    animation: none !important;
+  }
+}
+
+/* ===================================================================
+   Digital Marketing — visual pass on top of the UX-prototype layouts in
+   components/DigitalMarketing/*.js. Same design system as the SEO page
+   above (same color tokens, spacing, radius, shadow conventions) under a
+   `dm-` prefix so the two pages never fight over class names. Replaces
+   styles/ux-prototype.css classes on THIS page only; that file stays
+   imported for Training until its own pass lands.
+   =================================================================== */
+.dm-section {
+  padding: 100px 0;
+  background: $seo-white;
+  overflow: hidden;
+
+  &.dm-alt {
+    background: $seo-gray;
+  }
+
+  &.dm-dark {
+    background: $seo-black;
+  }
+
+  &.dm-first {
+    padding-top: 160px;
+  }
+
+  @media (max-width: 991px) {
+    padding: 70px 0;
+
+    &.dm-first {
+      padding-top: 130px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    padding: 52px 0;
+
+    &.dm-first {
+      padding-top: 110px;
+    }
+  }
+}
+
+.dm-head {
+  max-width: 640px;
+  margin-bottom: 44px;
+
+  &.dm-center {
+    max-width: 640px;
+    margin-inline: auto;
+    text-align: center;
+  }
+}
+
+.dm-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid $seo-line;
+  border-radius: 100px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $seo-ink;
+  margin-bottom: 20px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $main-color;
+    box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.18);
+  }
+}
+
+.dm-dark .dm-eyebrow {
+  border-color: $seo-line-dark;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.dm-h1 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: $seo-ink;
+  margin-bottom: 22px;
+}
+
+.dm-h2 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+  line-height: 1.25;
+  color: $seo-ink;
+  margin-bottom: 14px;
+}
+
+.dm-h3 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: $seo-ink;
+  margin-bottom: 8px;
+}
+
+.dm-dark .dm-h1,
+.dm-dark .dm-h2,
+.dm-dark .dm-h3 {
+  color: $seo-white;
+}
+
+.dm-p {
+  color: $seo-ink-dim;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+.dm-dark .dm-p {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.dm-note {
+  font-size: 12px;
+  color: $seo-ink-dim;
+  opacity: 0.7;
+  margin-top: 14px;
+}
+
+.dm-dark .dm-note {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.dm-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+
+  &.dm-center {
+    justify-content: center;
+  }
+}
+
+.dm-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: $seo-black;
+  color: $seo-white;
+  font-family: $body-font-family;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease,
+    filter 0.18s ease;
+
+  i {
+    font-size: 18px;
+    transition: transform 0.18s ease;
+  }
+
+  &:hover {
+    color: $seo-white;
+    filter: brightness(1.22);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+
+    i {
+      transform: translateX(-3px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    filter: brightness(1.1);
+  }
+
+  &.dm-btn-block {
+    width: 100%;
+    justify-content: center;
+  }
+}
+
+.dm-btn-ghost {
+  background: transparent;
+  color: $seo-ink;
+  border: 1.5px solid $seo-line;
+
+  &:hover {
+    filter: none;
+    background: rgba(12, 12, 14, 0.045);
+    border-color: $seo-ink;
+    color: $seo-ink;
+    box-shadow: none;
+    transform: translateY(-1px);
+  }
+}
+
+.dm-dark .dm-btn-ghost {
+  color: $seo-white;
+  border-color: $seo-line-dark;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: $seo-white;
+  }
+}
+
+.dm-btn-invert {
+  background: $seo-white;
+  color: $seo-black;
+
+  &:hover {
+    filter: none;
+    background: $main-color;
+    color: $seo-black;
+    box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.4);
+  }
+}
+
+.dm-proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 6px;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: $seo-ink-dim;
+    border: 1px solid $seo-line;
+    border-radius: 100px;
+    padding: 8px 14px;
+
+    i {
+      color: $main-color;
+      font-size: 15px;
+    }
+  }
+}
+
+.dm-flag {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-inline-start: 3px solid #f5a524;
+  background: rgba(245, 165, 36, 0.08);
+  color: #7a5100;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+
+  strong {
+    color: #7a5100;
+  }
+
+  &.dm-flag-dark {
+    background: rgba(245, 165, 36, 0.12);
+    color: rgba(255, 224, 168, 0.92);
+
+    strong {
+      color: #ffd699;
+    }
+  }
+}
+
+// ---- split hero-style layout (Hero, SocialMedia, Reporting) ----
+.dm-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.dm-media-panel {
+  background: $seo-gray;
+  border: 1px solid $seo-line;
+  border-radius: 22px;
+  padding: 34px;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.dm-alt .dm-media-panel {
+  background: $seo-white;
+}
+
+// ---- campaign performance mock (Hero) ----
+.dm-campaign-card {
+  position: relative;
+  width: 100%;
+  max-width: 380px;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+}
+
+.dm-campaign-badge {
+  position: absolute;
+  top: -14px;
+  inset-inline-end: 18px;
+  background: $seo-black;
+  color: $seo-white;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 8px 16px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  box-shadow: 0 14px 26px -12px rgba(12, 12, 14, 0.5);
+  animation: dmBadgeFloat 3s ease-in-out infinite alternate;
+
+  i {
+    color: $main-color;
+  }
+}
+
+@keyframes dmBadgeFloat {
+  from {
+    transform: translateY(0);
+  }
+  to {
+    transform: translateY(-7px);
+  }
+}
+
+.dm-campaign-bar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  border: 1px solid $seo-line;
+  border-radius: 100px;
+  padding: 9px 14px;
+  margin-bottom: 18px;
+  color: $seo-ink-dim;
+  font-size: 13px;
+
+  i {
+    color: $seo-ink-dim;
+  }
+}
+
+.dm-campaign-row {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 14px;
+
+  &:last-child {
+    margin-bottom: 0;
+  }
+}
+
+.dm-campaign-label {
+  flex: 0 0 132px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  color: $seo-ink-dim;
+
+  i {
+    font-size: 15px;
+    color: $seo-ink;
+  }
+}
+
+.dm-campaign-track {
+  flex: 1;
+  height: 8px;
+  border-radius: 4px;
+  background: $seo-line;
+  overflow: hidden;
+}
+
+.dm-campaign-fill {
+  display: block;
+  height: 100%;
+  border-radius: 4px;
+  background: $main-color;
+}
+
+// ---- trust strip ----
+.dm-strip-label {
+  text-align: center;
+  font-size: 13px;
+  color: $seo-ink-dim;
+  margin-bottom: 18px;
+}
+
+.dm-logo-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+.dm-logo-box {
+  width: 150px;
+  min-height: 72px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 12px;
+  font-size: 12px;
+  color: $seo-ink-dim;
+}
+
+// ---- card grids (Channels, WhyUs, Strategy, Results, Pricing) ----
+.dm-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+
+  &.dm-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    &.dm-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.dm-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 30px 26px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(12, 12, 14, 0.2);
+    box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+  }
+}
+
+.dm-alt .dm-card {
+  background: $seo-white;
+}
+
+.dm-card-dark {
+  background: $seo-card-dark;
+  border: 1px solid $seo-line-dark;
+  color: rgba(255, 255, 255, 0.85);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: none;
+  }
+
+  .dm-p {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .dm-stat-label {
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+.dm-icon-well {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: rgba(12, 12, 14, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: $seo-ink;
+  margin-bottom: 18px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.dm-card:hover .dm-icon-well {
+  background: rgba(29, 211, 248, 0.14);
+  color: #0a90ac;
+}
+
+.dm-card-dark .dm-icon-well {
+  background: rgba(255, 255, 255, 0.06);
+  color: $seo-white;
+}
+
+.dm-card-dark:hover .dm-icon-well {
+  background: rgba(29, 211, 248, 0.16);
+  color: $main-color;
+}
+
+.dm-inline-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 13px;
+  font-weight: 700;
+  color: $main-color;
+
+  i {
+    font-size: 16px;
+    transition: transform 0.18s ease;
+  }
+
+  &:hover {
+    color: $main-color;
+
+    i {
+      transform: translateX(-3px);
+    }
+  }
+}
+
+.dm-step-num {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: rgba(12, 12, 14, 0.32);
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+  display: block;
+}
+
+// connector chevron between Strategy steps, RTL-aware
+.dm-process-grid {
+  position: relative;
+
+  .dm-card {
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      inset-inline-start: -30px;
+      width: 22px;
+      height: 22px;
+      transform: translateY(-50%);
+      background: $seo-gray;
+      border: 1px solid $seo-line;
+      border-radius: 50%;
+      z-index: 2;
+
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+
+    &:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      inset-inline-start: -26px;
+      width: 8px;
+      height: 8px;
+      transform: translateY(-50%) rotate(45deg);
+      border-top: 1.5px solid $seo-ink-dim;
+      border-inline-end: 1.5px solid $seo-ink-dim;
+      z-index: 3;
+
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+  }
+}
+
+.dm-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin-top: 20px;
+}
+
+.dm-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid $seo-line;
+  color: $seo-ink-dim;
+  border-radius: 100px;
+  padding: 7px 13px;
+
+  i {
+    font-size: 14px;
+  }
+}
+
+.dm-dark .dm-tag,
+.dm-card-dark .dm-tag {
+  border-color: rgba(255, 255, 255, 0.18);
+  color: rgba(255, 255, 255, 0.75);
+}
+
+// ---- social post mock (SocialMedia) ----
+.dm-post-card {
+  width: 100%;
+  max-width: 340px;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 22px;
+  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+}
+
+.dm-skel-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  background: rgba(29, 211, 248, 0.12);
+  color: #0a90ac;
+  font-size: 11px;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 5px 12px;
+  margin-bottom: 16px;
+}
+
+.dm-post-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+
+  .dm-skel-line {
+    flex: 1;
+    height: 10px;
+    border-radius: 5px;
+    background: $seo-line;
+  }
+}
+
+.dm-post-avatar {
+  width: 32px;
+  height: 32px;
+  border-radius: 50%;
+  background: $seo-line;
+  flex-shrink: 0;
+}
+
+.dm-post-thumb {
+  height: 150px;
+  border-radius: 12px;
+  background: linear-gradient(135deg, rgba(29, 211, 248, 0.16), $seo-gray);
+  margin-bottom: 16px;
+}
+
+.dm-post-stats {
+  display: flex;
+  gap: 16px;
+  font-size: 12px;
+  color: $seo-ink-dim;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 5px;
+  }
+
+  i {
+    color: $main-color;
+    font-size: 15px;
+  }
+}
+
+.dm-list {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: $seo-ink-dim;
+    line-height: 1.6;
+  }
+
+  i {
+    color: $main-color;
+    font-size: 16px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+}
+
+// ---- stat / pending-data state (Results, Pricing) ----
+.dm-stat-value {
+  display: block;
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 3.6vw, 2.5rem);
+  color: $seo-ink;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.dm-stat-label {
+  font-size: 14px;
+  color: $seo-ink-dim;
+}
+
+.dm-stat-pending {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.dm-stat-pending-bar {
+  display: block;
+  width: 64%;
+  height: 18px;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    $seo-line 25%,
+    rgba(29, 211, 248, 0.22) 50%,
+    $seo-line 75%
+  );
+  background-size: 200% 100%;
+  animation: dmShimmer 2.2s ease-in-out infinite;
+
+  &.dm-stat-pending-bar-dark {
+    background: linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.1) 25%,
+      rgba(29, 211, 248, 0.35) 50%,
+      rgba(255, 255, 255, 0.1) 75%
+    );
+    background-size: 200% 100%;
+  }
+}
+
+@keyframes dmShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+// ---- pricing cards ----
+.dm-plan {
+  &.is-popular {
+    background: $seo-black;
+    border-color: $seo-black;
+    color: $seo-white;
+
+    .dm-h3,
+    .dm-stat-value {
+      color: $seo-white;
+    }
+
+    .dm-p,
+    .dm-stat-label {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .dm-plan-badge {
+      display: inline-flex;
+    }
+
+    .dm-list li {
+      color: rgba(255, 255, 255, 0.85);
+
+      i {
+        color: $main-color;
+      }
+    }
+
+    .dm-btn {
+      background: $seo-white;
+      color: $seo-black;
+
+      &:hover {
+        background: $main-color;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      border-color: $seo-black;
+    }
+  }
+}
+
+.dm-plan-badge {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: rgba(29, 211, 248, 0.16);
+  color: $main-color;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 6px 13px;
+  margin-bottom: 14px;
+}
+
+.dm-plan-price {
+  padding: 16px 0;
+  border-bottom: 1px solid $seo-line;
+  margin-bottom: 16px;
+}
+
+.dm-plan.is-popular .dm-plan-price {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+// ---- FAQ ----
+.dm-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+
+  .accordion__item {
+    margin-bottom: 14px;
+    border-radius: 16px;
+    border: 1px solid $seo-line;
+    overflow: hidden;
+  }
+
+  .accordion__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: $seo-ink;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .dm-acc-sign {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(12, 12, 14, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  }
+
+  .accordion__button[aria-expanded="true"] .dm-acc-sign {
+    transform: rotate(45deg);
+    background: rgba(29, 211, 248, 0.16);
+    color: $main-color;
+  }
+
+  .accordion__panel {
+    padding: 0 24px 22px;
+
+    p {
+      color: $seo-ink-dim;
+      font-size: 15px;
+      line-height: 1.75;
+      margin: 0;
+    }
+  }
+}
+
+// ---- CtaBand ----
+.dm-cta-band {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+
+  .dm-h2 {
+    color: $seo-white;
+  }
+}
+
+// ---- mini report chart (Reporting mock) ----
+.dm-report-card {
+  width: 100%;
+  max-width: 380px;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 24px;
+  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+}
+
+.dm-report-bars {
+  display: flex;
+  align-items: flex-end;
+  gap: 10px;
+  height: 100px;
+  margin-bottom: 16px;
+}
+
+.dm-report-bar {
+  flex: 1;
+  background: rgba(29, 211, 248, 0.18);
+  border-radius: 6px 6px 0 0;
+  transform-origin: bottom;
+  animation: dmBarGrow 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
+
+  &:last-child {
+    background: $main-color;
+  }
+}
+
+@keyframes dmBarGrow {
+  from {
+    transform: scaleY(0);
+  }
+  to {
+    transform: scaleY(1);
+  }
+}
+
+.dm-report-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: $seo-ink-dim;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-campaign-badge,
+  .dm-report-bar,
+  .dm-stat-pending-bar {
+    animation: none !important;
+  }
+}
+
+/* ===================================================================
+   Training — visual pass on top of the UX-prototype layouts in
+   components/Training/*.js. Same design system as SEO / Digital Marketing
+   above, under a `tr-` prefix. Replaces styles/ux-prototype.css classes on
+   THIS page only.
+   =================================================================== */
+.tr-section {
+  padding: 100px 0;
+  background: $seo-white;
+  overflow: hidden;
+
+  &.tr-alt {
+    background: $seo-gray;
+  }
+
+  &.tr-dark {
+    background: $seo-black;
+  }
+
+  &.tr-first {
+    padding-top: 160px;
+  }
+
+  @media (max-width: 991px) {
+    padding: 70px 0;
+
+    &.tr-first {
+      padding-top: 130px;
+    }
+  }
+
+  @media (max-width: 575px) {
+    padding: 52px 0;
+
+    &.tr-first {
+      padding-top: 110px;
+    }
+  }
+}
+
+.tr-head {
+  max-width: 640px;
+  margin-bottom: 44px;
+
+  &.tr-center {
+    max-width: 640px;
+    margin-inline: auto;
+    text-align: center;
+  }
+}
+
+.tr-eyebrow {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1px solid $seo-line;
+  border-radius: 100px;
+  padding: 7px 16px;
+  font-size: 13px;
+  font-weight: 600;
+  color: $seo-ink;
+  margin-bottom: 20px;
+
+  .dot {
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: $main-color;
+    box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.18);
+  }
+}
+
+.tr-dark .tr-eyebrow {
+  border-color: $seo-line-dark;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.tr-h1 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 4.2vw, 3.4rem);
+  line-height: 1.1;
+  letter-spacing: -0.01em;
+  color: $seo-ink;
+  margin-bottom: 22px;
+}
+
+.tr-h2 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+  line-height: 1.25;
+  color: $seo-ink;
+  margin-bottom: 14px;
+}
+
+.tr-h3 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: $seo-ink;
+  margin-bottom: 8px;
+}
+
+.tr-dark .tr-h1,
+.tr-dark .tr-h2,
+.tr-dark .tr-h3 {
+  color: $seo-white;
+}
+
+.tr-p {
+  color: $seo-ink-dim;
+  font-size: 16px;
+  line-height: 1.8;
+  margin-bottom: 0;
+}
+
+.tr-dark .tr-p {
+  color: rgba(255, 255, 255, 0.6);
+}
+
+.tr-fit {
+  font-size: 13px;
+  color: $seo-ink-dim;
+  opacity: 0.85;
+  margin: 0;
+}
+
+.tr-card-dark .tr-fit {
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.tr-note {
+  font-size: 12px;
+  color: $seo-ink-dim;
+  opacity: 0.7;
+  margin-top: 14px;
+}
+
+.tr-dark .tr-note {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+.tr-actions {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+  flex-wrap: wrap;
+  margin-top: 10px;
+
+  &.tr-center {
+    justify-content: center;
+  }
+}
+
+.tr-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: $seo-black;
+  color: $seo-white;
+  font-family: $body-font-family;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 28px;
+  border-radius: 100px;
+  border: none;
+  cursor: pointer;
+  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease,
+    filter 0.18s ease;
+
+  i {
+    font-size: 18px;
+    transition: transform 0.18s ease;
+  }
+
+  &:hover {
+    color: $seo-white;
+    filter: brightness(1.22);
+    transform: translateY(-1px);
+    box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+
+    i {
+      transform: translateX(-3px);
+    }
+  }
+
+  &:active {
+    transform: translateY(0);
+    filter: brightness(1.1);
+  }
+
+  &:disabled {
+    opacity: 0.4;
+    cursor: not-allowed;
+    filter: none;
+    transform: none;
+  }
+
+  &.tr-btn-block {
+    width: 100%;
+    justify-content: center;
+  }
+
+  &.tr-btn-sm {
+    padding: 8px 16px;
+    font-size: 13px;
+  }
+}
+
+.tr-btn-ghost {
+  background: transparent;
+  color: $seo-ink;
+  border: 1.5px solid $seo-line;
+
+  &:hover {
+    filter: none;
+    background: rgba(12, 12, 14, 0.045);
+    border-color: $seo-ink;
+    color: $seo-ink;
+    box-shadow: none;
+    transform: translateY(-1px);
+  }
+}
+
+.tr-dark .tr-btn-ghost {
+  color: $seo-white;
+  border-color: $seo-line-dark;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.06);
+    border-color: rgba(255, 255, 255, 0.4);
+    color: $seo-white;
+  }
+}
+
+.tr-proof-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  margin: 22px 0 6px;
+
+  span {
+    display: inline-flex;
+    align-items: center;
+    gap: 7px;
+    font-size: 13px;
+    color: $seo-ink-dim;
+    border: 1px solid $seo-line;
+    border-radius: 100px;
+    padding: 8px 14px;
+
+    i {
+      color: $main-color;
+      font-size: 15px;
+    }
+  }
+}
+
+.tr-flag {
+  display: inline-flex;
+  align-items: flex-start;
+  gap: 10px;
+  border-inline-start: 3px solid #f5a524;
+  background: rgba(245, 165, 36, 0.08);
+  color: #7a5100;
+  border-radius: 10px;
+  padding: 14px 18px;
+  font-size: 14px;
+  line-height: 1.6;
+  margin-bottom: 32px;
+
+  strong {
+    color: #7a5100;
+  }
+
+  &.tr-flag-dark {
+    background: rgba(245, 165, 36, 0.12);
+    color: rgba(255, 224, 168, 0.92);
+
+    strong {
+      color: #ffd699;
+    }
+  }
+}
+
+// ---- split hero/content layout (Hero, Certificate) ----
+.tr-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+
+  @media (max-width: 991px) {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+}
+
+.tr-media-panel {
+  background: $seo-gray;
+  border: 1px solid $seo-line;
+  border-radius: 22px;
+  padding: 34px;
+  min-height: 380px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.tr-alt .tr-media-panel {
+  background: $seo-white;
+}
+
+// ---- framed hero card (Hero) — from "app page inspiration/1st section.png" ----
+.tr-frame-card {
+  position: relative;
+  border-radius: 26px;
+  overflow: hidden;
+  background: linear-gradient(150deg, $seo-card-dark 0%, $seo-black 65%);
+  border: 1px solid $seo-line-dark;
+  box-shadow: 0 50px 90px -50px rgba(12, 12, 14, 0.45);
+}
+
+.tr-frame-visual {
+  position: relative;
+  min-height: 340px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-end;
+  padding: 22px;
+  background: radial-gradient(
+      120% 100% at 15% 15%,
+      rgba(29, 211, 248, 0.28) 0%,
+      transparent 55%
+    ),
+    radial-gradient(100% 90% at 85% 85%, rgba(29, 211, 248, 0.14) 0%, transparent 60%);
+}
+
+.tr-frame-num {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.tr-frame-caption {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 18px 22px;
+  background: rgba(0, 0, 0, 0.22);
+  border-top: 1px solid $seo-line-dark;
+  color: rgba(255, 255, 255, 0.85);
+  font-size: 14px;
+  font-weight: 600;
+
+  i {
+    color: $main-color;
+    font-size: 18px;
+  }
+}
+
+// ---- stats row (Stats) ----
+.tr-stats-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 32px;
+}
+
+.tr-stat {
+  flex: 1 1 170px;
+}
+
+.tr-stat-value {
+  display: block;
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2rem, 3.6vw, 2.5rem);
+  color: $seo-ink;
+  line-height: 1;
+  margin-bottom: 10px;
+}
+
+.tr-stat-label {
+  font-size: 14px;
+  color: $seo-ink-dim;
+}
+
+.tr-stat-pending {
+  display: block;
+  margin-bottom: 12px;
+}
+
+.tr-stat-pending-bar {
+  display: block;
+  width: 64%;
+  height: 18px;
+  border-radius: 8px;
+  background: linear-gradient(
+    90deg,
+    $seo-line 25%,
+    rgba(29, 211, 248, 0.22) 50%,
+    $seo-line 75%
+  );
+  background-size: 200% 100%;
+  animation: trShimmer 2.2s ease-in-out infinite;
+}
+
+@keyframes trShimmer {
+  from {
+    background-position: 200% 0;
+  }
+  to {
+    background-position: -200% 0;
+  }
+}
+
+// ---- card grids (Formats, LearningPath, Instructors, Outcomes, Pricing, Catalog) ----
+.tr-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+
+  &.tr-grid-4 {
+    grid-template-columns: repeat(4, 1fr);
+  }
+
+  @media (max-width: 991px) {
+    grid-template-columns: repeat(2, 1fr);
+
+    &.tr-grid-4 {
+      grid-template-columns: repeat(2, 1fr);
+    }
+  }
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr !important;
+  }
+}
+
+.tr-card {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 30px 26px;
+  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    border-color: rgba(12, 12, 14, 0.2);
+    box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+  }
+}
+
+.tr-alt .tr-card {
+  background: $seo-white;
+}
+
+.tr-card-dark {
+  background: $seo-card-dark;
+  border: 1px solid $seo-line-dark;
+  color: rgba(255, 255, 255, 0.85);
+
+  &:hover {
+    border-color: rgba(255, 255, 255, 0.24);
+    box-shadow: none;
+  }
+
+  .tr-p {
+    color: rgba(255, 255, 255, 0.6);
+  }
+
+  .tr-stat-label {
+    color: rgba(255, 255, 255, 0.55);
+  }
+}
+
+.tr-instructor-card,
+.tr-outcome-foot {
+  text-align: center;
+  align-items: center;
+}
+
+.tr-icon-well {
+  width: 46px;
+  height: 46px;
+  border-radius: 13px;
+  background: rgba(12, 12, 14, 0.05);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 20px;
+  color: $seo-ink;
+  margin-bottom: 18px;
+  transition: background 0.25s ease, color 0.25s ease;
+}
+
+.tr-card:hover .tr-icon-well {
+  background: rgba(29, 211, 248, 0.14);
+  color: #0a90ac;
+}
+
+.tr-avatar-circle {
+  width: 84px;
+  height: 84px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.06);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 34px;
+  color: rgba(255, 255, 255, 0.7);
+  margin: 0 auto 18px;
+
+  &.tr-avatar-sm {
+    width: 42px;
+    height: 42px;
+    font-size: 18px;
+    margin: 0;
+    background: rgba(12, 12, 14, 0.06);
+    color: $seo-ink-dim;
+  }
+}
+
+.tr-quote-icon {
+  font-size: 26px;
+  color: rgba(29, 211, 248, 0.35);
+  margin-bottom: 14px;
+}
+
+.tr-outcome-foot {
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  gap: 12px;
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.tr-step-num {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: 13px;
+  color: rgba(12, 12, 14, 0.32);
+  letter-spacing: 0.05em;
+  margin-bottom: 14px;
+  display: block;
+}
+
+// connector chevron between LearningPath steps, RTL-aware
+.tr-process-grid {
+  position: relative;
+
+  .tr-card {
+    position: relative;
+
+    &:not(:last-child)::after {
+      content: "";
+      position: absolute;
+      top: 50%;
+      inset-inline-start: -30px;
+      width: 22px;
+      height: 22px;
+      transform: translateY(-50%);
+      background: $seo-white;
+      border: 1px solid $seo-line;
+      border-radius: 50%;
+      z-index: 2;
+
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+
+    &:not(:last-child)::before {
+      content: "";
+      position: absolute;
+      top: 50%;
+      inset-inline-start: -26px;
+      width: 8px;
+      height: 8px;
+      transform: translateY(-50%) rotate(45deg);
+      border-top: 1.5px solid $seo-ink-dim;
+      border-inline-end: 1.5px solid $seo-ink-dim;
+      z-index: 3;
+
+      @media (max-width: 991px) {
+        display: none;
+      }
+    }
+  }
+}
+
+.tr-tag-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin-bottom: 14px;
+}
+
+.tr-tag {
+  display: inline-block;
+  font-size: 12px;
+  font-weight: 600;
+  border: 1px solid $seo-line;
+  color: $seo-ink-dim;
+  border-radius: 100px;
+  padding: 5px 12px;
+}
+
+.tr-list {
+  list-style: none;
+  margin: 0 0 22px;
+  padding: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+
+  li {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    font-size: 14px;
+    color: $seo-ink-dim;
+    line-height: 1.6;
+  }
+
+  i {
+    color: $main-color;
+    font-size: 16px;
+    margin-top: 1px;
+    flex-shrink: 0;
+  }
+}
+
+// ---- certificate mock (Certificate) ----
+.tr-cert-card {
+  width: 100%;
+  max-width: 340px;
+  text-align: center;
+  background: $seo-white;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+  padding: 30px 24px;
+  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+}
+
+.tr-cert-seal {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  background: rgba(29, 211, 248, 0.12);
+  color: $main-color;
+  font-size: 26px;
+  margin-bottom: 18px;
+}
+
+.tr-skel-line {
+  height: 10px;
+  border-radius: 5px;
+  margin-bottom: 10px;
+  background: linear-gradient(
+    90deg,
+    $seo-line 25%,
+    rgba(29, 211, 248, 0.18) 50%,
+    $seo-line 75%
+  );
+  background-size: 200% 100%;
+  animation: trShimmer 2.2s ease-in-out infinite;
+
+  &.w80 {
+    width: 80%;
+  }
+  &.w60 {
+    width: 60%;
+  }
+}
+
+.tr-cert-line {
+  height: 1px;
+  background: $seo-line;
+  margin: 18px 0;
+}
+
+.tr-cert-foot {
+  display: flex;
+  justify-content: space-between;
+  font-size: 11px;
+  color: $seo-ink-dim;
+}
+
+// ---- schedule table (Schedule) ----
+.tr-table-wrap {
+  overflow-x: auto;
+  border: 1px solid $seo-line;
+  border-radius: 18px;
+}
+
+.tr-table {
+  width: 100%;
+  border-collapse: collapse;
+  min-width: 620px;
+
+  th,
+  td {
+    padding: 16px 20px;
+    text-align: start;
+    font-size: 14px;
+  }
+
+  thead th {
+    background: $seo-gray;
+    color: $seo-ink;
+    font-family: "Cairo", sans-serif;
+    font-weight: 700;
+    font-size: 13px;
+    border-bottom: 1px solid $seo-line;
+  }
+
+  tbody td {
+    color: $seo-ink-dim;
+    border-bottom: 1px solid $seo-line;
+  }
+
+  tbody tr:last-child td {
+    border-bottom: none;
+  }
+
+  tbody tr:hover td {
+    background: rgba(29, 211, 248, 0.04);
+  }
+}
+
+// ---- pricing cards ----
+.tr-plan {
+  &.is-popular {
+    background: $seo-black;
+    border-color: $seo-black;
+    color: $seo-white;
+
+    .tr-h3,
+    .tr-stat-value {
+      color: $seo-white;
+    }
+
+    .tr-p,
+    .tr-stat-label {
+      color: rgba(255, 255, 255, 0.6);
+    }
+
+    .tr-plan-badge {
+      display: inline-flex;
+    }
+
+    .tr-list li {
+      color: rgba(255, 255, 255, 0.85);
+
+      i {
+        color: $main-color;
+      }
+    }
+
+    .tr-btn {
+      background: $seo-white;
+      color: $seo-black;
+
+      &:hover {
+        background: $main-color;
+      }
+    }
+
+    &:hover {
+      transform: translateY(-5px);
+      border-color: $seo-black;
+    }
+  }
+}
+
+.tr-plan-badge {
+  display: none;
+  align-items: center;
+  gap: 6px;
+  align-self: flex-start;
+  background: rgba(29, 211, 248, 0.16);
+  color: $main-color;
+  font-size: 12px;
+  font-weight: 700;
+  border-radius: 100px;
+  padding: 6px 13px;
+  margin-bottom: 14px;
+}
+
+.tr-plan-price {
+  padding: 16px 0;
+  border-bottom: 1px solid $seo-line;
+  margin-bottom: 16px;
+}
+
+.tr-plan.is-popular .tr-plan-price {
+  border-color: rgba(255, 255, 255, 0.14);
+}
+
+// ---- catalog filters (Catalog) ----
+.tr-filters {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: flex-end;
+  gap: 14px;
+  margin-bottom: 20px;
+}
+
+.tr-field {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.tr-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: $seo-ink;
+}
+
+.tr-select {
+  border: 1px solid $seo-line;
+  background: $seo-white;
+  color: $seo-ink;
+  border-radius: 12px;
+  padding: 11px 16px;
+  font-size: 14px;
+  min-width: 150px;
+
+  &:focus {
+    outline: none;
+    border-color: $main-color;
+  }
+}
+
+.tr-filter-count {
+  font-size: 13px;
+  color: $seo-ink-dim;
+  margin-bottom: 22px;
+}
+
+.tr-empty {
+  text-align: center;
+  border: 1px dashed $seo-line;
+  border-radius: 16px;
+  padding: 44px 24px;
+  color: $seo-ink-dim;
+  font-size: 15px;
+
+  .tr-note {
+    margin-top: 8px;
+  }
+}
+
+// ---- FAQ ----
+.tr-accordion {
+  max-width: 800px;
+  margin: 0 auto;
+
+  .accordion__item {
+    margin-bottom: 14px;
+    border-radius: 16px;
+    border: 1px solid $seo-line;
+    overflow: hidden;
+  }
+
+  .accordion__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    font-weight: 600;
+    font-size: 16px;
+    color: $seo-ink;
+
+    &::before {
+      display: none;
+    }
+  }
+
+  .tr-acc-sign {
+    flex-shrink: 0;
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(12, 12, 14, 0.06);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 18px;
+    line-height: 1;
+    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  }
+
+  .accordion__button[aria-expanded="true"] .tr-acc-sign {
+    transform: rotate(45deg);
+    background: rgba(29, 211, 248, 0.16);
+    color: $main-color;
+  }
+
+  .accordion__panel {
+    padding: 0 24px 22px;
+
+    p {
+      color: $seo-ink-dim;
+      font-size: 15px;
+      line-height: 1.75;
+      margin: 0;
+    }
+  }
+}
+
+// ---- CtaBand ----
+.tr-cta-band {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .tr-stat-pending-bar,
+  .tr-skel-line {
+    animation: none !important;
   }
 }

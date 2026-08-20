@@ -1,7 +1,10 @@
 import React from "react";
+import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
+import { motion } from "framer-motion";
 
-// UX PROTOTYPE. These four steps are NOT invented — they are already written
-// in components/Services/digital-service.js and reused verbatim.
+// Visual pass — four-step process, same connector treatment as
+// components/Seo/Process.js. Steps are unchanged, reused verbatim from
+// components/Services/digital-service.js.
 const steps = [
   {
     title: "دراسة السوق والمنافسين",
@@ -23,28 +26,42 @@ const steps = [
 
 const Strategy = () => {
   return (
-    <section className="ux-section ux-alt" id="strategy">
+    <section className="dm-section dm-alt" id="strategy">
       <div className="container">
-        <div className="ux-head ux-center">
-          <span className="ux-eyebrow">الاستراتيجية</span>
-          <h2 className="ux-h2">نبدأ كل مشروع بفهم عميق لأهدافك</h2>
-        </div>
+        <Reveal>
+          <div className="dm-head dm-center">
+            <span className="dm-eyebrow">
+              <span className="dot"></span>
+              الاستراتيجية
+            </span>
+            <h2 className="dm-h2">نبدأ كل مشروع بفهم عميق لأهدافك</h2>
+          </div>
+        </Reveal>
 
-        <div className="ux-grid ux-grid-4">
+        <motion.div
+          className="dm-grid dm-grid-4 dm-process-grid"
+          variants={staggerParent(0.08)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {steps.map((step, i) => (
-            <div className="ux-card" key={step.title}>
-              <span className="ux-step-num">
+            <motion.div className="dm-card" key={step.title} variants={staggerItem()}>
+              <span className="dm-step-num">
                 {String(i + 1).padStart(2, "0")}
               </span>
-              <h3 className="ux-h3">{step.title}</h3>
-              <p className="ux-p">{step.text}</p>
-            </div>
+              <h3 className="dm-h3">{step.title}</h3>
+              <p className="dm-p">{step.text}</p>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
 
-        <p className="ux-note">
-          عناوين الخطوات مكتوبة فعليًا في components/Services/digital-service.js
-        </p>
+        <Reveal delay={0.1}>
+          <p className="dm-note">
+            عناوين الخطوات مكتوبة فعليًا في
+            components/Services/digital-service.js
+          </p>
+        </Reveal>
       </div>
     </section>
   );

@@ -1,41 +1,63 @@
 import React from "react";
+import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
+import { motion } from "framer-motion";
 
-// UX PROTOTYPE. Field structure follows WebFX's case-study cards (industry →
-// challenge → what was done → the metric that moved). Values stay blank.
+// Visual pass — from "seo page inspiration/cards.png" (dark, 3-card grid).
+// Field structure follows WebFX's case-study cards (industry → challenge →
+// what was done → the metric that moved). Values stay blank — no client
+// case studies exist yet, see the flag.
 const cases = [1, 2, 3];
 
 const CaseStudies = () => {
   return (
-    <section className="ux-section">
+    <section className="seo-section seo-dark">
       <div className="container">
-        <div className="ux-head ux-center">
-          <h2 className="ux-h2">نتائج عملاء</h2>
-        </div>
+        <Reveal>
+          <div className="seo-head seo-center" style={{ maxWidth: 640, marginInline: "auto" }}>
+            <h2 className="seo-h2">نتائج عملاء</h2>
+          </div>
+        </Reveal>
 
-        <div className="ux-flag">
-          <strong>مطلوب من العميل:</strong> دراسات حالة حقيقية — المجال،
-          المشكلة، ما نُفّذ، والرقم الذي تغيّر. لا يمكن كتابة هذا القسم بدونها.
-        </div>
+        <Reveal delay={0.05}>
+          <div
+            className="seo-flag seo-flag-dark"
+            style={{ display: "flex", marginInline: "auto", maxWidth: 640 }}
+          >
+            <div>
+              <strong>مطلوب من العميل:</strong> دراسات حالة حقيقية — المجال،
+              المشكلة، ما نُفّذ، والرقم الذي تغيّر. لا يمكن كتابة هذا القسم
+              بدونها.
+            </div>
+          </div>
+        </Reveal>
 
-        <div className="ux-grid ux-grid-3">
+        <motion.div
+          className="seo-grid"
+          variants={staggerParent(0.1)}
+          initial="hidden"
+          whileInView="show"
+          viewport={{ once: true, margin: "-80px" }}
+        >
           {cases.map((n) => (
-            <div className="ux-card" key={n}>
-              <div className="ux-tag-row">
-                <span className="ux-tag">المجال</span>
+            <motion.div className="seo-card seo-card-dark" key={n} variants={staggerItem()}>
+              <div className="seo-tag-row">
+                <span className="seo-tag">المجال</span>
               </div>
 
-              <h3 className="ux-h3">اسم العميل أو القطاع</h3>
-              <p className="ux-p">
+              <h3 className="seo-h3">اسم العميل أو القطاع</h3>
+              <p className="seo-p">
                 وصف مختصر للوضع قبل البدء والمشكلة التي كانت تمنع الظهور.
               </p>
 
-              <div style={{ marginTop: "auto", paddingTop: 16 }}>
-                <span className="ux-stat-value">+00%</span>
-                <span className="ux-stat-label">النتيجة خلال 00 شهرًا</span>
+              <div style={{ marginTop: "auto", paddingTop: 20 }}>
+                <span className="seo-stat-pending" aria-label="بيانات قادمة">
+                  <span className="seo-stat-pending-bar seo-stat-pending-bar-dark"></span>
+                </span>
+                <span className="seo-stat-label">النتيجة خلال 00 شهرًا</span>
               </div>
-            </div>
+            </motion.div>
           ))}
-        </div>
+        </motion.div>
       </div>
     </section>
   );

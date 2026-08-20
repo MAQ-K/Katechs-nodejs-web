@@ -1,9 +1,9 @@
 import React, { useState } from "react";
+import Reveal from "../Common/Reveal";
+import Magnetic from "../Common/Magnetic";
 
-// UX PROTOTYPE — this one is genuinely interactive, because the interaction IS
-// the thing being reviewed: validation, error state, and what the user sees
-// after submitting. Nothing is sent anywhere yet; where it should submit is
-// open question 4 in data/seo/structure.md.
+// Visual pass. Interaction logic unchanged from the UX prototype — only the
+// skin moved from .ux-* to .seo-* (dark section, so a dark form skin).
 const AuditForm = () => {
   const [site, setSite] = useState("");
   const [email, setEmail] = useState("");
@@ -27,67 +27,80 @@ const AuditForm = () => {
   };
 
   return (
-    <section className="ux-section ux-alt" id="audit">
+    <section className="seo-section seo-dark" id="audit">
       <div className="container">
-        <div className="ux-head ux-center">
-          <h2 className="ux-h2">تحليل مجاني لموقعك</h2>
-          <p className="ux-p">
-            أرسل رابط موقعك ونرسل لك تقريرًا يوضح أهم ما يمنعه من الظهور، دون
-            التزام.
-          </p>
-        </div>
-
-        <div style={{ maxWidth: 640, marginInline: "auto" }}>
-          {sent ? (
-            <div className="ux-success" role="status">
-              تم استلام طلبك — سنرسل التقرير إلى {email} خلال يوم عمل.
-              <div className="ux-note">
-                (نموذج تجريبي: لا يُرسل فعليًا بعد — راجع السؤال 4 في
-                data/seo/structure.md)
-              </div>
-            </div>
-          ) : (
-            <form className="ux-form-row" onSubmit={handleSubmit} noValidate>
-              <div className="ux-field">
-                <label className="ux-label" htmlFor="ux-audit-site">
-                  رابط الموقع
-                </label>
-                <input
-                  id="ux-audit-site"
-                  className={`ux-input${error && !site.trim() ? " ux-input-error" : ""}`}
-                  type="text"
-                  placeholder="example.com"
-                  value={site}
-                  onChange={(e) => setSite(e.target.value)}
-                />
-              </div>
-
-              <div className="ux-field">
-                <label className="ux-label" htmlFor="ux-audit-email">
-                  البريد الإلكتروني
-                </label>
-                <input
-                  id="ux-audit-email"
-                  className="ux-input"
-                  type="email"
-                  placeholder="you@company.com"
-                  value={email}
-                  onChange={(e) => setEmail(e.target.value)}
-                />
-              </div>
-
-              <button type="submit" className="ux-btn">
-                أرسل التقرير
-              </button>
-            </form>
-          )}
-
-          {error && (
-            <p className="ux-error" style={{ marginTop: 10 }} role="alert">
-              {error}
+        <Reveal>
+          <div className="seo-head seo-center">
+            <span className="seo-eyebrow">
+              <span className="dot"></span>
+              مجاني وبدون التزام
+            </span>
+            <h2 className="seo-h2">تحليل مجاني لموقعك</h2>
+            <p className="seo-p">
+              أرسل رابط موقعك ونرسل لك تقريرًا يوضح أهم ما يمنعه من الظهور،
+              دون التزام.
             </p>
-          )}
-        </div>
+          </div>
+        </Reveal>
+
+        <Reveal delay={0.1}>
+          <div style={{ maxWidth: 640, marginInline: "auto" }}>
+            {sent ? (
+              <div className="seo-success" role="status">
+                تم استلام طلبك — سنرسل التقرير إلى {email} خلال يوم عمل.
+                <div className="seo-note">
+                  (نموذج تجريبي: لا يُرسل فعليًا بعد — راجع السؤال 4 في
+                  data/seo/structure.md)
+                </div>
+              </div>
+            ) : (
+              <form className="seo-form-row" onSubmit={handleSubmit} noValidate>
+                <div className="seo-field">
+                  <label className="seo-label" htmlFor="seo-audit-site">
+                    رابط الموقع
+                  </label>
+                  <input
+                    id="seo-audit-site"
+                    className={`seo-input${
+                      error && !site.trim() ? " seo-input-error" : ""
+                    }`}
+                    type="text"
+                    placeholder="example.com"
+                    value={site}
+                    onChange={(e) => setSite(e.target.value)}
+                  />
+                </div>
+
+                <div className="seo-field">
+                  <label className="seo-label" htmlFor="seo-audit-email">
+                    البريد الإلكتروني
+                  </label>
+                  <input
+                    id="seo-audit-email"
+                    className="seo-input"
+                    type="email"
+                    placeholder="you@company.com"
+                    value={email}
+                    onChange={(e) => setEmail(e.target.value)}
+                  />
+                </div>
+
+                <Magnetic>
+                  <button type="submit" className="seo-btn seo-btn-invert">
+                    أرسل التقرير
+                    <i className="bx bx-left-arrow-alt"></i>
+                  </button>
+                </Magnetic>
+              </form>
+            )}
+
+            {error && (
+              <p className="seo-error" style={{ marginTop: 10 }} role="alert">
+                {error}
+              </p>
+            )}
+          </div>
+        </Reveal>
       </div>
     </section>
   );

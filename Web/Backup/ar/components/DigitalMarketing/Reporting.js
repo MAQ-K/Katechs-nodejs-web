@@ -1,8 +1,8 @@
 import React from "react";
+import Reveal from "../Common/Reveal";
 
-// UX PROTOTYPE. Kills the "where did my ad budget actually go" objection —
-// every 2026 source lists real-time dashboards and ROI tracking as expected,
-// not as a bonus.
+// Visual pass — split layout with a performance-dashboard mock, same
+// pattern as components/Seo/Reporting.js. Copy unchanged.
 const items = [
   "كم أُنفق على كل قناة، وكم عميلًا جاء منها",
   "تكلفة العميل الواحد، ومن أي حملة بالضبط",
@@ -11,28 +11,58 @@ const items = [
 
 const Reporting = () => {
   return (
-    <section className="ux-section ux-alt">
+    <section className="dm-section dm-alt">
       <div className="container">
-        <div className="ux-split">
+        <div className="dm-split">
           <div>
-            <h2 className="ux-h2">تعرف أين ذهبت ميزانيتك وماذا أعادت</h2>
+            <Reveal delay={0.05}>
+              <h2 className="dm-h2">
+                تعرف أين ذهبت ميزانيتك وماذا أعادت
+              </h2>
+            </Reveal>
 
-            <p className="ux-p">
-              أكبر شكوى من التسويق الرقمي أن صاحب العمل لا يعرف ما الذي حدث
-              بأمواله. نحل ذلك بتقرير واضح ولوحة متابعة.
-            </p>
+            <Reveal delay={0.1}>
+              <p className="dm-p">
+                أكبر شكوى من التسويق الرقمي أن صاحب العمل لا يعرف ما الذي
+                حدث بأمواله. نحل ذلك بتقرير واضح ولوحة متابعة.
+              </p>
+            </Reveal>
 
-            <ul className="ux-list">
-              {items.map((text) => (
-                <li key={text}>{text}</li>
-              ))}
-            </ul>
+            <Reveal delay={0.15}>
+              <ul className="dm-list" style={{ marginTop: 20 }}>
+                {items.map((text) => (
+                  <li key={text}>
+                    <i className="bx bx-check"></i>
+                    {text}
+                  </li>
+                ))}
+              </ul>
+            </Reveal>
           </div>
 
           <div>
-            <div className="ux-media">
-              مساحة صورة — لوحة الأداء (إنفاق، تحويلات، عائد)
-            </div>
+            <Reveal>
+              <div className="dm-media-panel">
+                <div className="dm-report-card">
+                  <span className="dm-skel-badge">
+                    <i className="bx bx-pie-chart-alt-2"></i>
+                    لوحة الأداء
+                  </span>
+                  <div className="dm-report-bars">
+                    <div className="dm-report-bar" style={{ height: "40%", animationDelay: "0s" }}></div>
+                    <div className="dm-report-bar" style={{ height: "55%", animationDelay: ".05s" }}></div>
+                    <div className="dm-report-bar" style={{ height: "38%", animationDelay: ".1s" }}></div>
+                    <div className="dm-report-bar" style={{ height: "70%", animationDelay: ".15s" }}></div>
+                    <div className="dm-report-bar" style={{ height: "50%", animationDelay: ".2s" }}></div>
+                    <div className="dm-report-bar" style={{ height: "85%", animationDelay: ".25s" }}></div>
+                  </div>
+                  <div className="dm-report-foot">
+                    <span>إنفاق</span>
+                    <span>تحويلات</span>
+                  </div>
+                </div>
+              </div>
+            </Reveal>
           </div>
         </div>
       </div>
