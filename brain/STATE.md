@@ -36,11 +36,12 @@
 |-----|-------|------|-------|
 | Manager | Go-ahead on the `offers.js` build fix (T-022) — which gtag block to keep | User | 2026-08-24 |
 | Manager | SendGrid key rotation (T-004) | User | 2026-08-24 |
-| `/ui-search` | Which page to start the library pass on (T-010) | User | 2026-08-24 |
+| Manager | Pick a Hero direction from the 4 filed `seo-hero-*.md` entries (T-010 trial), or confirm the "9 prior entries" discrepancy | User | 2026-08-24 |
 
 ## Freshly landed on `main`
 | When | Agent | What |
 |------|-------|------|
+| 2026-08-24 | UI Library Searcher | 4 SEO Hero references filed (Dribbble, T-010 trial) — `brain/ui-library/inspiration/seo-hero-*.md` |
 | 2026-08-24 | Manager | `brain/` + `.claude/agents` + `.claude/commands` (T-001) |
 | 2026-08-24 | Manager | Design/motion database wired into the agents + `SOURCES.md` (T-005) |
 | 2026-08-24 | Manager | Live Lab at `/lab/` — 63 components, 10 motion specimens (T-006) |

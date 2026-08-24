@@ -87,7 +87,7 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-006 | Live Lab at `/lab/` — motion, components, inspiration | Manager | DONE | `pages/lab/`, `components/Lab/` | Dev only, 404s in production |
 | T-007 | Parallel-agent workflow (worktrees, ports, SCSS lock) | Manager | DONE | `brain/PARALLEL.md` | 3 slots: 2 on PC1, 1 on PC2 |
 | **G1 — last three service pages** |
-| T-010 | UI library for SEO / Digital Marketing / Training | `/ui-search` | TODO | `brain/ui-library/` | One entry per page section. Cite `ui-ux-pro-max` rows |
+| T-010 | UI library for SEO / Digital Marketing / Training | `/ui-search` | IN PROGRESS | `brain/ui-library/` | Trial run 2026-08-24: SEO **Hero only**, 4 Dribbble-sourced entries filed (`seo-hero-*.md`). Remaining SEO sections + all of DM/Training still TODO. No prior "9 entries" found on this clone — see log 15:50 |
 | T-011 | Implement UI for those 3 pages | `/ui-build` | TODO | `components/{Seo,DigitalMarketing,Training}/**` + SCSS lock | Rebuild the `seo-`/`dm-`/`tr-` blocks **in place** |
 | T-012 | Animations + interactivity for those 3 pages | `/anim` | TODO | motion layer | After T-011 per page, not before |
 | T-017 | Delete `styles/ux-prototype.css` + its `_app.js` import | `/ui-build` | TODO | `styles/`, `pages/_app.js` | Only once all of T-011 has landed |
@@ -158,7 +158,7 @@ Live claims. **One zone, one agent, at a time.** Claiming = creating `brain/lock
 
 | Zone (path glob) | Agent | Device | Branch | Since | Task |
 |------------------|-------|--------|--------|-------|------|
-| `brain/ui-library/**` | UI Library Searcher | Mohamed-PC | `agent/ui-search/seo-hero-refs` | 2026-08-24T12:39 | T-010 (SEO Hero trial) |
+| _(none yet)_ | | | | | |
 
 **Zones are paths, not pages.** Standard split so two agents can work the same page at once:
 - `components/<Page>/**` + `styles/style.scss` → UI Implementer
