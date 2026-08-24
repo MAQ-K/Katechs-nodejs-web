@@ -10709,53 +10709,97 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
-// ---- form (AuditForm) ----
-.seo-form-row {
+// ---- form (AuditForm) — one bordered bar, from
+// brain/ui-library/inspiration/seo page/2ndsec.png ----
+.seo-audit-bar {
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: stretch;
+  border: 1px solid $seo-line-dark;
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+
+  &:focus-within {
+    border-color: $main-color;
+  }
+
+  &.seo-audit-bar-error {
+    border-color: #ff6b6b;
+  }
 
   @media (max-width: 767px) {
     flex-direction: column;
-    align-items: stretch;
+    border-radius: 16px;
   }
 }
 
-.seo-field {
-  flex: 1 1 200px;
-  display: flex;
-  flex-direction: column;
+.seo-audit-bar-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  border-inline-start: 1px solid $seo-line-dark;
+
+  &:first-child {
+    border-inline-start: none;
+  }
+
+  @media (max-width: 767px) {
+    border-inline-start: none;
+    border-top: 1px solid $seo-line-dark;
+
+    &:first-child {
+      border-top: none;
+    }
+  }
+
+  input {
+    width: 100%;
+    border: none;
+    background: transparent;
+    color: $seo-white;
+    padding: 17px 20px;
+    font-size: 15px;
+
+    &::placeholder {
+      color: rgba(255, 255, 255, 0.4);
+    }
+
+    &:focus {
+      outline: none;
+    }
+  }
+}
+
+.seo-audit-bar-submit {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
   gap: 8px;
-}
-
-.seo-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
-}
-
-.seo-input {
-  border: 1px solid $seo-line-dark;
-  background: rgba(255, 255, 255, 0.04);
-  color: $seo-white;
-  border-radius: 12px;
-  padding: 13px 16px;
+  border: none;
+  background: $seo-white;
+  color: $seo-black;
+  font-weight: 700;
   font-size: 15px;
-  transition: border-color 0.2s ease, background 0.2s ease;
+  padding: 0 26px;
+  cursor: pointer;
+  transition: filter 0.18s ease;
 
-  &::placeholder {
-    color: rgba(255, 255, 255, 0.35);
+  i {
+    font-size: 18px;
+    transition: transform 0.18s ease;
   }
 
-  &:focus {
-    outline: none;
-    border-color: $main-color;
-    background: rgba(255, 255, 255, 0.06);
+  &:hover {
+    filter: brightness(0.94);
+
+    i {
+      transform: translateX(-3px);
+    }
   }
 
-  &.seo-input-error {
-    border-color: #ff6b6b;
+  @media (max-width: 767px) {
+    padding: 16px 20px;
+    justify-content: center;
   }
 }
 

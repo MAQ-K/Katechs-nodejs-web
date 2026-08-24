@@ -2,8 +2,10 @@ import React, { useState } from "react";
 import Reveal from "../Common/Reveal";
 import Magnetic from "../Common/Magnetic";
 
-// Visual pass. Interaction logic unchanged from the UX prototype — only the
-// skin moved from .ux-* to .seo-* (dark section, so a dark form skin).
+// Visual pass — from brain/ui-library/inspiration/seo page/2ndsec.png: one
+// bordered bar holding the field(s) and the submit button, not separate
+// labelled fields stacked above a detached button. Interaction logic
+// unchanged from the UX prototype.
 const AuditForm = () => {
   const [site, setSite] = useState("");
   const [email, setEmail] = useState("");
@@ -54,30 +56,32 @@ const AuditForm = () => {
                 </div>
               </div>
             ) : (
-              <form className="seo-form-row" onSubmit={handleSubmit} noValidate>
-                <div className="seo-field">
-                  <label className="seo-label" htmlFor="seo-audit-site">
+              <form
+                className={`seo-audit-bar${
+                  error ? " seo-audit-bar-error" : ""
+                }`}
+                onSubmit={handleSubmit}
+                noValidate
+              >
+                <div className="seo-audit-bar-field">
+                  <label className="visually-hidden" htmlFor="seo-audit-site">
                     رابط الموقع
                   </label>
                   <input
                     id="seo-audit-site"
-                    className={`seo-input${
-                      error && !site.trim() ? " seo-input-error" : ""
-                    }`}
                     type="text"
-                    placeholder="example.com"
+                    placeholder="رابط موقعك — example.com"
                     value={site}
                     onChange={(e) => setSite(e.target.value)}
                   />
                 </div>
 
-                <div className="seo-field">
-                  <label className="seo-label" htmlFor="seo-audit-email">
+                <div className="seo-audit-bar-field">
+                  <label className="visually-hidden" htmlFor="seo-audit-email">
                     البريد الإلكتروني
                   </label>
                   <input
                     id="seo-audit-email"
-                    className="seo-input"
                     type="email"
                     placeholder="you@company.com"
                     value={email}
@@ -86,7 +90,7 @@ const AuditForm = () => {
                 </div>
 
                 <Magnetic>
-                  <button type="submit" className="seo-btn seo-btn-invert">
+                  <button type="submit" className="seo-audit-bar-submit">
                     أرسل التقرير
                     <i className="bx bx-left-arrow-alt"></i>
                   </button>

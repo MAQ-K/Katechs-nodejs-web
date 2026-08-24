@@ -9571,51 +9571,89 @@ marquee, the beam and the ambient hero glow.
   margin: 0;
 }
 
-.seo-form-row {
+.seo-audit-bar {
   display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  align-items: flex-end;
+  align-items: stretch;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 16px;
+  background: rgba(255, 255, 255, 0.04);
+  overflow: hidden;
+  transition: border-color 0.2s ease;
+}
+.seo-audit-bar:focus-within {
+  border-color: #1dd3f8;
+}
+.seo-audit-bar.seo-audit-bar-error {
+  border-color: #ff6b6b;
 }
 @media (max-width: 767px) {
-  .seo-form-row {
+  .seo-audit-bar {
     flex-direction: column;
-    align-items: stretch;
+    border-radius: 16px;
   }
 }
 
-.seo-field {
-  flex: 1 1 200px;
-  display: flex;
-  flex-direction: column;
-  gap: 8px;
+.seo-audit-bar-field {
+  flex: 1 1 auto;
+  min-width: 0;
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.1);
 }
-
-.seo-label {
-  font-size: 13px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.75);
+.seo-audit-bar-field:first-child {
+  border-inline-start: none;
 }
-
-.seo-input {
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  background: rgba(255, 255, 255, 0.04);
+@media (max-width: 767px) {
+  .seo-audit-bar-field {
+    border-inline-start: none;
+    border-top: 1px solid rgba(255, 255, 255, 0.1);
+  }
+  .seo-audit-bar-field:first-child {
+    border-top: none;
+  }
+}
+.seo-audit-bar-field input {
+  width: 100%;
+  border: none;
+  background: transparent;
   color: #ffffff;
-  border-radius: 12px;
-  padding: 13px 16px;
+  padding: 17px 20px;
   font-size: 15px;
-  transition: border-color 0.2s ease, background 0.2s ease;
 }
-.seo-input::placeholder {
-  color: rgba(255, 255, 255, 0.35);
+.seo-audit-bar-field input::placeholder {
+  color: rgba(255, 255, 255, 0.4);
 }
-.seo-input:focus {
+.seo-audit-bar-field input:focus {
   outline: none;
-  border-color: #1dd3f8;
-  background: rgba(255, 255, 255, 0.06);
 }
-.seo-input.seo-input-error {
-  border-color: #ff6b6b;
+
+.seo-audit-bar-submit {
+  flex: 0 0 auto;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: none;
+  background: #ffffff;
+  color: #1b1d23;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 0 26px;
+  cursor: pointer;
+  transition: filter 0.18s ease;
+}
+.seo-audit-bar-submit i {
+  font-size: 18px;
+  transition: transform 0.18s ease;
+}
+.seo-audit-bar-submit:hover {
+  filter: brightness(0.94);
+}
+.seo-audit-bar-submit:hover i {
+  transform: translateX(-3px);
+}
+@media (max-width: 767px) {
+  .seo-audit-bar-submit {
+    padding: 16px 20px;
+    justify-content: center;
+  }
 }
 
 .seo-error {
