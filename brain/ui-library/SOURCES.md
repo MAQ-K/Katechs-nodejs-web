@@ -49,3 +49,19 @@ GSAP / ScrollTrigger / R3F installs are a **Manager decision**. Presets **#9 (Sp
 - `brain/components/REGISTRY.md` — what already exists
 - `public/images/seo page inspiration/`, `public/images/app page inspiration/` — reference screenshots already collected
 - The live Lab: `http://localhost:3000/lab/` (dev only)
+
+## Standing rule (2026-08-24, user) — external visual references
+
+In addition to the local databases above, **21st.dev** and **dribbble.com** are approved visual-inspiration
+sources for every `/ui-search` pass. How to use them:
+
+- **Design/layout only — never copy code.** These sites are for the visual mechanic (composition, hierarchy,
+  density, motion feel), not for lifting markup or CSS.
+- **Work section by section**, matched against the page's *existing* structure — hero-for-hero,
+  pricing-for-pricing, etc. Not a full-page redesign pass.
+- **Find more than one candidate per section.** File multiple `Proposed` options so the Manager/user has a
+  real choice, not a single take-it-or-leave-it pick.
+- **Screenshot the design**, save to `brain/ui-library/inspiration/assets/`, and file a normal entry via
+  `_TEMPLATE.md` (source URL + screenshot + why it fits + stack translation, same as any other entry).
+- Every entry filed this way must **surface on `/lab/ui-library/`** so it's visible in the live Lab, not
+  just in the markdown index.

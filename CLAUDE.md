@@ -1,5 +1,8 @@
 # Katechs — read this first
 
+**How to work here without breaking things: `brain/WORKFLOW.md`.** Start there if git feels slow, if you're
+about to commit, or if you're not sure who owns a file.
+
 **Before doing anything in this repo:**
 1. `git pull --rebase origin main`
 2. Read `brain/MANAGEMENT.md` — brief, goals, tasks, history, agents, work assigned
