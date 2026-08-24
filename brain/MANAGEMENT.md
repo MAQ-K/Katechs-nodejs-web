@@ -158,7 +158,7 @@ Live claims. **One zone, one agent, at a time.** Claiming = creating `brain/lock
 
 | Zone (path glob) | Agent | Device | Branch | Since | Task |
 |------------------|-------|--------|--------|-------|------|
-| _(none yet)_ | | | | | |
+| `brain/ui-library/**` | UI Library Searcher | Mohamed-PC | `agent/ui-search/seo-hero-refs` | 2026-08-24T12:39 | T-010 (SEO Hero trial) |
 
 **Zones are paths, not pages.** Standard split so two agents can work the same page at once:
 - `components/<Page>/**` + `styles/style.scss` → UI Implementer
