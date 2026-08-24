@@ -10033,6 +10033,37 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// plain-text secondary action — from 1stsec.png's "See examples" link
+// (no border, sits beside the filled button)
+.seo-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: $seo-ink;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 6px;
+
+  i {
+    font-size: 18px;
+    transition: transform 0.18s ease;
+  }
+
+  &:hover {
+    color: $seo-ink;
+    text-decoration: underline;
+    text-underline-offset: 3px;
+
+    i {
+      transform: translateX(-3px);
+    }
+  }
+}
+
+.seo-dark .seo-link-btn {
+  color: $seo-white;
+}
+
 .seo-proof-row {
   display: flex;
   flex-wrap: wrap;

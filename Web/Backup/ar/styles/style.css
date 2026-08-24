@@ -8970,6 +8970,32 @@ marquee, the beam and the ambient hero glow.
   box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.4);
 }
 
+.seo-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: #101012;
+  font-weight: 700;
+  font-size: 15px;
+  padding: 14px 6px;
+}
+.seo-link-btn i {
+  font-size: 18px;
+  transition: transform 0.18s ease;
+}
+.seo-link-btn:hover {
+  color: #101012;
+  text-decoration: underline;
+  text-underline-offset: 3px;
+}
+.seo-link-btn:hover i {
+  transform: translateX(-3px);
+}
+
+.seo-dark .seo-link-btn {
+  color: #ffffff;
+}
+
 .seo-proof-row {
   display: flex;
   flex-wrap: wrap;

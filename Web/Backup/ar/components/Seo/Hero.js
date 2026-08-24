@@ -107,8 +107,9 @@ const Hero = () => {
                     <i className="bx bx-left-arrow-alt"></i>
                   </Link>
                 </Magnetic>
-                <Link href="#pricing" className="seo-btn seo-btn-ghost">
+                <Link href="#pricing" className="seo-link-btn">
                   شاهد الباقات
+                  <i className="bx bx-left-arrow-alt"></i>
                 </Link>
               </div>
             </Reveal>
