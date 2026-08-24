@@ -11419,5 +11419,62 @@ marquee, the beam and the ambient hero glow.
     animation: none !important;
   }
 }
+/* ===================================================================
+   Seo: Results + CaseStudies refinement (T-011)
+   Two fidelity gaps found against the SEO page inspiration set during a
+   review pass on an already-solid `seo-` system (see the SEO PAGE banner
+   above, ~line 9804): the stats row had no card treatment
+   ("numbers section 2nd.png" shows the number row inside a bordered white
+   card, not loose on the section background), and CaseStudies reused
+   Pillars' left-aligned card instead of the centered icon-first treatment
+   in "cards.png". Everything else in that system already matched its
+   inspiration closely enough not to touch.
+   =================================================================== */
+.seo-stats-card {
+  background: #ffffff;
+  border: 1px solid rgba(12, 12, 14, 0.1);
+  border-radius: 22px;
+  padding: 52px 40px;
+  box-shadow: 0 40px 70px -50px rgba(12, 12, 14, 0.25);
+}
+
+.seo-stats-card .seo-stats-row {
+  justify-content: space-between;
+  text-align: center;
+}
+
+.seo-stats-card .seo-stat {
+  flex: 1 1 140px;
+}
+
+@media (max-width: 575px) {
+  .seo-stats-card {
+    padding: 34px 22px;
+  }
+  .seo-stats-card .seo-stats-row {
+    justify-content: center;
+    gap: 28px 22px;
+  }
+}
+.seo-card-centered {
+  align-items: center;
+  text-align: center;
+}
+.seo-card-centered .seo-icon-well {
+  background: rgba(255, 255, 255, 0.06);
+}
+.seo-card-centered .seo-tag-row {
+  display: flex;
+  justify-content: center;
+}
+
+.seo-card-metric {
+  margin-top: auto;
+  padding-top: 20px;
+  width: 100%;
+}
+.seo-card-metric .seo-stat-pending-bar {
+  margin-inline: auto;
+}
 
 /*# sourceMappingURL=style.css.map */

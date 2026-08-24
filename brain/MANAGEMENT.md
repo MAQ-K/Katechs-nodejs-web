@@ -88,7 +88,7 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-007 | Parallel-agent workflow (worktrees, ports, SCSS lock) | Manager | DONE | `brain/PARALLEL.md` | 3 slots: 2 on PC1, 1 on PC2 |
 | **G1 — last three service pages** |
 | T-010 | UI library for SEO / Digital Marketing / Training | `/ui-search` | TODO | `brain/ui-library/` | One entry per page section. Cite `ui-ux-pro-max` rows |
-| T-011 | Implement UI for those 3 pages | `/ui-build` | IN PROGRESS | `components/{Seo,DigitalMarketing,Training}/**` + SCSS lock | Rebuild the `seo-`/`dm-`/`tr-` blocks **in place**. SEO page section started 2026-08-24 |
+| T-011 | Implement UI for those 3 pages | `/ui-build` | REVIEW | `components/{Seo,DigitalMarketing,Training}/**` + SCSS lock | SEO page reviewed 2026-08-24 against both inspiration sets — the `seo-` system was already a real (non-ad-hoc) build; closed two fidelity gaps (Results stats card, CaseStudies centered cards). See `brain/logs/2026-08-24.md`. Digital Marketing + Training still TODO. |
 | T-012 | Animations + interactivity for those 3 pages | `/anim` | TODO | motion layer | After T-011 per page, not before |
 | T-017 | Delete `styles/ux-prototype.css` + its `_app.js` import | `/ui-build` | TODO | `styles/`, `pages/_app.js` | Only once all of T-011 has landed |
 | **G2 — web services page** (`pages/services/index.js`) |
@@ -158,7 +158,7 @@ Live claims. **One zone, one agent, at a time.** Claiming = creating `brain/lock
 
 | Zone (path glob) | Agent | Device | Branch | Since | Task |
 |------------------|-------|--------|--------|-------|------|
-| `components/Seo/**`, `pages/services/seo/index.js`, `data/seo/**`, `styles/style.scss` | UI Implementer | Mohamed-PC | main | 2026-08-24 | T-011 |
+| _(none yet)_ | | | | | |
 
 **Zones are paths, not pages.** Standard split so two agents can work the same page at once:
 - `components/<Page>/**` + `styles/style.scss` → UI Implementer

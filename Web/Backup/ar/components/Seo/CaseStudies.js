@@ -2,10 +2,11 @@ import React from "react";
 import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
 import { motion } from "framer-motion";
 
-// Visual pass — from "seo page inspiration/cards.png" (dark, 3-card grid).
-// Field structure follows WebFX's case-study cards (industry → challenge →
-// what was done → the metric that moved). Values stay blank — no client
-// case studies exist yet, see the flag.
+// From "seo page inspiration/cards.png" — dark, 3-card grid, content
+// centered under a top badge/icon (not left-aligned like Pillars' 6-card
+// grid from "3rd section.png"). Field structure follows WebFX's case-study
+// cards (industry → challenge → what was done → the metric that moved).
+// Values stay blank — no client case studies exist yet, see the flag.
 const cases = [1, 2, 3];
 
 const CaseStudies = () => {
@@ -39,7 +40,15 @@ const CaseStudies = () => {
           viewport={{ once: true, margin: "-80px" }}
         >
           {cases.map((n) => (
-            <motion.div className="seo-card seo-card-dark" key={n} variants={staggerItem()}>
+            <motion.div
+              className="seo-card seo-card-dark seo-card-centered"
+              key={n}
+              variants={staggerItem()}
+            >
+              <span className="seo-icon-well">
+                <i className="bx bx-line-chart"></i>
+              </span>
+
               <div className="seo-tag-row">
                 <span className="seo-tag">المجال</span>
               </div>
@@ -49,7 +58,7 @@ const CaseStudies = () => {
                 وصف مختصر للوضع قبل البدء والمشكلة التي كانت تمنع الظهور.
               </p>
 
-              <div style={{ marginTop: "auto", paddingTop: 20 }}>
+              <div className="seo-card-metric">
                 <span className="seo-stat-pending" aria-label="بيانات قادمة">
                   <span className="seo-stat-pending-bar seo-stat-pending-bar-dark"></span>
                 </span>

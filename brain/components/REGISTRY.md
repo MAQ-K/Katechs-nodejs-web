@@ -23,6 +23,7 @@
 | Emails Hero | `Emails/Hero.js` | — | — | Shipped — soft-emboss card, 16px radius |
 | Emails Option Cards + Tabs | `Emails/PricingFlow.js` | — | — | Shipped — synced tab bar ↔ plan cards |
 | Emails Features / FAQ | `Emails/FeaturesPlaceholder.js`, `Emails/FaqPlaceholder.js` | — | — | **Placeholder** — real UI pending |
+| SEO page (11 sections) | `Seo/Hero.js`, `AuditForm.js`, `Results.js`, `Pillars.js`, `AiSearch.js`, `Process.js`, `CaseStudies.js`, `Reporting.js`, `Pricing.js`, `Faq.js`, `CtaBand.js` | Copy inline in components (no `data/seo/data.js` yet — flagged as open questions in `data/seo/structure.md`) | Reveal + Magnetic | Shipped — flat black/white editorial system (`seo-` SCSS prefix, ~style.scss:9804), alternating light/dark bands, built from `public/images/seo page inspiration/*.png`. T-011 (2026-08-24) reviewed it against both inspiration sets and closed two gaps: `Results.js` stats now sit in a bordered `.seo-stats-card` (was loose numbers), `CaseStudies.js` cards use a centered icon-first `.seo-card-centered` variant instead of reusing Pillars' left-aligned card. Results/CaseStudies show shimmer "pending" placeholders, not real numbers — real client figures still needed (see structure.md). Pricing has no real prices yet — model unconfirmed. |
 
 ## Motion / interaction primitives (see `brain/animation/LAB.md`)
 | Component | Path | Notes |

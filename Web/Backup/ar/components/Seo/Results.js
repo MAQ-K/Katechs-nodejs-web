@@ -2,7 +2,8 @@ import React from "react";
 import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
 import { motion } from "framer-motion";
 
-// Visual pass — from "seo page inspiration/numbers section 2nd.png".
+// From "seo page inspiration/numbers section 2nd.png" — a bordered white
+// card holding the number row, not the numbers loose on the section bg.
 // No real client numbers exist yet (see flag) — a static "00" read as a
 // broken counter rather than a deliberate pending state, so this shows a
 // shimmering placeholder bar instead. Swap seo-stat-pending for a real
@@ -33,22 +34,24 @@ const Results = () => {
           </div>
         </Reveal>
 
-        <motion.div
-          className="seo-stats-row"
-          variants={staggerParent(0.1)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-        >
-          {stats.map((label) => (
-            <motion.div className="seo-stat" key={label} variants={staggerItem()}>
-              <span className="seo-stat-pending" aria-label="بيانات قادمة">
-                <span className="seo-stat-pending-bar"></span>
-              </span>
-              <span className="seo-stat-label">{label}</span>
-            </motion.div>
-          ))}
-        </motion.div>
+        <div className="seo-stats-card">
+          <motion.div
+            className="seo-stats-row"
+            variants={staggerParent(0.1)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+          >
+            {stats.map((label) => (
+              <motion.div className="seo-stat" key={label} variants={staggerItem()}>
+                <span className="seo-stat-pending" aria-label="بيانات قادمة">
+                  <span className="seo-stat-pending-bar"></span>
+                </span>
+                <span className="seo-stat-label">{label}</span>
+              </motion.div>
+            ))}
+          </motion.div>
+        </div>
       </div>
     </section>
   );
