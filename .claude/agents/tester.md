@@ -14,11 +14,14 @@ First read `.claude/agents/_SHARED-PROTOCOL.md` and follow it exactly.
 `brain/agents/reports/<date>-<target>.md`. You do not touch app code — not even a one-line "obvious" fix.
 A tester who patches becomes a tester who can't see their own bugs.
 
-## Your checklist source
-`~/.claude/skills/ui-ux-pro-max/data/ux-guidelines.csv` — 98 UX rules. Audit against it and **cite the rule**
-in each finding, so a finding is a rule violation rather than your taste. Also
-`data/react-performance.csv` for perf findings and `data/stacks/nextjs.csv` for Pages Router correctness.
-Motion findings cite the relevant `data/motion.csv` row (its Do/Don't/Performance columns).
+## Your checklist source — query it, don't read it
+98 UX rules live in the design database. **Never read the CSVs** (1.16 MB); query them, 0.4s each:
+```bash
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<area>" --domain ux --max-results 5
+```
+**Cite the rule** in each finding, so a finding is a rule violation rather than your taste.
+`--stack nextjs` for Pages Router correctness, `--domain gsap` for motion findings (Do/Don't/Performance).
+Budget 3–5 calls — your own sweep below finds more than the database will.
 
 ## The sweep — run all of it, every time
 1. **Build** — `npm run build` from `Web/Backup/ar`. Warnings count. Note that `next.config.js` sets

@@ -35,6 +35,47 @@ Then stop feeding it:
 
 ---
 
+## Part 1b — Why agents were slow, and what changed (2026-08-24)
+
+Three self-inflicted causes, all now fixed in `.claude/agents/`:
+
+**1. Agents were reading the design database instead of querying it.**
+The `ui-ux-pro-max` CSVs total **1.16 MB** — `google-fonts.csv` alone is 745 KB. The old agent definitions
+said "consult styles.csv, colors.csv, google-fonts.csv, typography.csv, products.csv, ui-reasoning.csv,
+ux-guidelines.csv, landing.csv, icons.csv". That's ~290k tokens of input before a single word of output.
+
+The skill ships a search tool. Measured: **0.14s / 4.7 KB** for a domain lookup, **0.4s / 7.2 KB** for a full
+design-system pass. Roughly 250× less input, better structured.
+
+```bash
+# page-level direction, one call
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<page type> <industry> arabic rtl" --design-system
+
+# one lookup
+python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --domain <domain> --max-results 3
+```
+Domains: `style` `color` `chart` `landing` `product` `ux` `typography` `icons` `gsap` `react` `web` `google-fonts`.
+`--domain gsap` is the motion presets. `--stack nextjs|threejs|react` for stack-specific rows.
+**Never `cat`/`Read`/`Grep` a `.csv` in that skill.** Budget 3–5 calls per task.
+
+**2. Every agent ran git at the start and the end.** In a 1.6 GB repo. Pull, lock commit, push, final commit,
+push — minutes of waiting per run, for agents that often touch nothing but `brain/`.
+
+**🚫 Agents now run no git at all** — not pull, push, add, commit, status, checkout, branch, merge, log or
+diff. They write files and report the paths they touched; **the user pushes manually**. The only place git
+runs is `/sync`, which the user invokes deliberately.
+
+Two side effects worth knowing: locks no longer need a commit to be visible (two sessions in the same folder
+see each other's files instantly), and two agents can now share one folder — the `.git/index.lock` fight that
+used to force separate worktrees is gone.
+
+**3. Output was too long.** Entries ran 60+ lines of prose. Now capped at **≤ 25 lines** — the Manager needs
+to choose, not to read an essay. Web references capped at 2 per section, screenshots at 1–2.
+
+Skip fonts entirely: typography is already decided (Cairo for new headings, existing theme body).
+
+---
+
 ## Part 2 — Fix these two things before anything else
 
 ### 🔴 `.gitignore` is corrupted, and a live API key is exposed by it
@@ -68,26 +109,31 @@ library (T-023) exist **only on this machine**.
 
 ## Part 3 — The daily rhythm
 
-**Start**
-1. `git pull --rebase origin main`
-2. Read `brain/STATE.md` (Broadcast + Active) and `ls brain/locks/`
-3. Skim today's `brain/logs/`
+### Agents do no git. You push. That's the split.
 
-**Before touching app code** — claim it:
-- write `brain/locks/<zone>.lock.md`, add your row to *Work Assigned* in `MANAGEMENT.md`
-- commit and push **that alone**, immediately. An unpushed lock is not a lock.
+**Agent start**
+1. Read `brain/STATE.md` (Broadcast) and `ls brain/locks/`
+2. Read `brain/MANAGEMENT.md` for the brief and gotchas
 
-**While working**
-- Stay in your zone. Small commits. `[<agent>] <what> (T-0xx)`.
-- **Never `git add .`** in `Web/Backup/ar` — see the `.gitignore` problem above. Stage explicit paths.
+**Agent, if the run is concurrent and zones overlap** — claim it: write `brain/locks/<zone>.lock.md` and add
+a row to *Work Assigned*. No commit needed; sessions in the same folder see the file instantly.
 
-**Finish**
+**Agent finish**
 1. Append to `brain/logs/<today>.md` — what changed, why, what's left, what bit you
-2. Update your task row in `MANAGEMENT.md` and the board in `STATE.md`
-3. Delete your lock and your *Work Assigned* row
-4. Commit, push
+2. Update the task row in `MANAGEMENT.md`; add to `STATE.md` → Broadcast only if someone must know
+3. Delete the lock and the *Work Assigned* row
+4. **Report every path created or changed** — that list is what replaces the commit
 
-The unglamorous step 4 is the whole system. Everything else is recoverable; unpushed work on one machine is not.
+**You, when it suits you** (batch several agent runs into one pass):
+```bash
+git add <the paths the agents reported>     # never git add .
+git commit -m "[<agent>] <what> (T-0xx)"
+git push origin main
+```
+Stage explicit paths — `sendgrid.env` is not actually ignored and holds a live key (Part 2).
+
+**The one risk of this arrangement:** work sits uncommitted longer. Uncommitted work is the only kind that
+can actually be lost. So push at the end of a working session, not at the end of the week.
 
 ---
 

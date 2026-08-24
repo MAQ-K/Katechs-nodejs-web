@@ -83,12 +83,14 @@ export const readUiLibrary = () => {
         const verdict = (md.match(/\*\*Verdict:\*\*\s*(.+)/) || [])[1] || "Proposed";
         const type = (md.match(/\*\*Type:\*\*\s*(.+)/) || [])[1] || "";
         const forPage = (md.match(/\*\*For page:\*\*\s*(.+)/) || [])[1] || "";
+        const shot = (md.match(/Screenshot:\s*`assets\/([^`]+)`/) || [])[1] || "";
         return {
           file: f,
           title: (md.match(/^#\s*(.+)/m) || [])[1] || f.replace(/\.md$/, ""),
           verdict: verdict.trim(),
           type: type.trim(),
           forPage: forPage.trim(),
+          image: shot ? `/brain-ui-library/${shot.trim()}` : "",
         };
       });
   } catch {

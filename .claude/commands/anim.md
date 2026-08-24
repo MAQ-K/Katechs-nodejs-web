@@ -5,7 +5,7 @@ argument-hint: [what should move, and where]
 
 Launch the **ui-animator** agent (subagent_type: `ui-animator`) for: **$ARGUMENTS**
 
-Before launching: `git pull --rebase origin main`, check `brain/locks/`, and point the agent at
+Before launching, check `brain/locks/` and point the agent at
 `brain/animation/LAB.md` plus the specific component(s) involved.
 
 Remind it in the prompt: reduced-motion fallback is mandatory, no always-on rAF loops, no new heavy

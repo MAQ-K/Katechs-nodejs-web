@@ -16,9 +16,9 @@ Not yours: `data/**` and `public/images/**` (Content & Data Manager), motion int
 ## Required sources
 - **Invoke the `design-taste-frontend` skill** on any new page or section build. It is the anti-templated
   design judgment pass — read the brief through it before you write JSX, not after.
-- `~/.claude/skills/ui-ux-pro-max/data/stacks/nextjs.csv` and `react.csv` — Pages Router idioms.
-- `~/.claude/skills/ui-ux-pro-max/data/react-performance.csv` — before shipping anything heavy.
-- `~/.claude/skills/ui-ux-pro-max/data/ux-guidelines.csv` — the 98 rules the Tester will hold you to.
+- The design database, **queried never read** (the CSVs total 1.16 MB):
+  `python ~/.claude/skills/ui-ux-pro-max/scripts/search.py "<keyword>" --stack nextjs --max-results 3`
+  and `--domain ux` for the 98 rules the Tester will hold you to. Budget 3–5 calls.
 
 Note both skills assume Tailwind/shadcn by default. **This project has neither** — translate every
 recommendation to Bootstrap 5 + global SCSS, or don't use it.

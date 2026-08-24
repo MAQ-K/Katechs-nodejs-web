@@ -1,11 +1,23 @@
-# Running 3 agents at the same time
+# Running several agents at the same time
 
-Two Claude Code sessions **cannot share one working tree** — they'd overwrite each other's files and fight
-over port 3000. **Git worktrees** fix it: separate folders, separate branches, one shared git history.
+**Start here: most of the time you don't need a worktree.**
+
+Agents run no git (see `_SHARED-PROTOCOL.md`), so the thing that used to force separate folders — two
+sessions fighting over `.git/index.lock` — is gone. Two sessions in the **same folder** now work fine and see
+each other's files instantly, which makes locks and Broadcast lines work with zero setup.
+
+| Situation | What you need |
+|---|---|
+| Two researchers (`/ui-search`), or anything writing only to `brain/` | **Same folder.** Nothing to set up |
+| Agents editing *different* files, no dev server needed | **Same folder** |
+| Two agents that each need `npm run dev` | Separate folders — different ports |
+| Two agents editing the *same* files | Don't. Re-split the work by page |
+
+Only set up a worktree when the table says so. It costs a clone-sized copy and a second `npm install`.
 
 ---
 
-## One-time setup on PC1
+## Worktree setup — only if you actually need one
 
 ```bash
 cd d:/Work/katechs-nodejs-web
@@ -63,7 +75,24 @@ hand-merged safely.
   never re-sort, never touch another banner's block.
 - Recompile to `.css` / `.css.map`. If those conflict: **discard both sides and recompile from the merged
   `.scss`.** Never hand-merge compiled CSS.
-- Don't hold it while you think. Take it, write the block, recompile, push, release.
+- Don't hold it while you think. Take it, write the block, recompile, release.
+
+### Two agents of the *same* kind (e.g. two Searchers)
+
+The zone system assumes different agents own different paths. Two Searchers both write to
+`brain/ui-library/` — same zone. Locks can't help. What works instead:
+
+1. **Split by page, never by section.** One page, one researcher. Splitting a page between two produces two
+   design directions stitched together, which is worse than either one alone.
+2. **Files, not tables.** Nobody edits `brain/ui-library/README.md`. `/lab/ui-library/` reads the entry files
+   directly, so saving a file publishes it. Two agents appending rows to one table conflict every run.
+3. **Prefix everything with the page** — `<page>-<section>-<slug>.md` and `<page>-<section>-<source>.png`.
+   Disjoint names can't collide. **Screenshots especially: binaries cannot be merged**, so a name collision
+   silently destroys one.
+4. **Neither one runs git.** They write files and report paths; the user pushes. This is also why they can
+   share one folder — there is no `.git/index.lock` to fight over.
+5. **Cross-brief them.** Each reads the other's filed entries for the sibling page before starting, so the
+   pages feel like one site.
 
 ### Never
 - Two agents on the same `pages/<route>.js`.
@@ -75,18 +104,16 @@ hand-merged safely.
 
 ## Keeping the brain in sync across the slots
 
-`brain/` is duplicated in every worktree and on every machine. There is no shared live file — so the
-protocol *is* the sync:
+**Agents run no git.** The user pushes manually. That changes how sync works, and mostly simplifies it:
 
-1. **`/sync` at the start of every slot.** `git pull --rebase origin main`, read `STATE.md` + `locks/`.
-2. **Claim → commit → push immediately**, on its own commit, before writing any code. An unpushed lock is
-   not a lock; the other slot cannot see it.
-3. Broadcast anything cross-cutting (a data-shape change, a renamed component, a moved image) to
-   `brain/STATE.md` → *Broadcast*, push, **then** act.
-4. **Release → commit → push** the moment you finish. A forgotten lock blocks a teammate for hours.
-5. Manager merges to `main` after the Tester's report. Slots never merge each other's branches.
-
-Re-pull before every push (`git pull --rebase origin main`) — three slots means `main` moves while you work.
+- **Same folder, two sessions** — they see each other's files *instantly*. Locks, Broadcast lines and filed
+  entries need no git at all. This is the cheapest way to run two agents and should be the default.
+- **Separate worktrees or separate machines** — they only see each other after the user commits and pushes.
+  So don't run overlapping zones across machines; give each machine whole, separate pages.
+- **Broadcast still matters**: a data-shape change or a renamed component goes into `brain/STATE.md` →
+  *Broadcast* before you act, so whoever reads it next isn't surprised.
+- **The user pushes at the end of a working session**, batching several agent runs into one commit. Uncommitted
+  work is the only kind that can be lost, so don't let it sit for days.
 
 ---
 
@@ -105,8 +132,8 @@ touch the others, and `rm -rf .next/cache` is always safe to do in your own slot
 
 ## Sanity check before you trust it
 
-```bash
-git worktree list                 # 3 lines, 3 different branches
-```
-Run slot 1 on 3000 and slot 2 on `$env:port=3001` at the same time — both serve independently.
-Take a lock in each, push, and confirm the other slot sees it after `/sync`.
+**Same folder (the normal case):** start both agents, have each write one file with its own prefix, and
+confirm both files exist and neither overwrote the other.
+
+**Worktrees:** run slot 1 on 3000 and slot 2 on `$env:port=3001` at the same time and confirm both serve
+independently. `git worktree list` should show one line per slot.

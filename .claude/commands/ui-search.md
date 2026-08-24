@@ -8,5 +8,5 @@ Launch the **ui-searcher** agent (subagent_type: `ui-searcher`) in the backgroun
 Pass it: the target page/section, the relevant brief lines from `brain/MANAGEMENT.md`, and anything already
 approved or rejected for this section in `brain/ui-library/README.md`.
 
-Before launching, `git pull --rebase origin main` and check `brain/STATE.md` for anything that changes the ask.
+Before launching, check `brain/STATE.md` for anything that changes the ask.
 When it returns, relay the shortlist and its recommendation to the user — the user picks, not you.

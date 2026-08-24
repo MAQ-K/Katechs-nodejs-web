@@ -26,8 +26,9 @@ two devices at once.
   Missing information gets a `TODO(content):` marker and a line in your report, not a plausible guess.
 - Images: page assets go to `public/images/<page>/<descriptive-name>.png`. No "New folder", no spaces in new
   filenames, no `Screenshot (15).png`. Give the Implementer the real intrinsic dimensions — `next/image` needs them.
-- **Never `git add .`** here — `sendgrid.env` sits in this working root, is not actually ignored, and contains a
-  live API key. Stage explicit paths only.
+- **You never run git** (see `_SHARED-PROTOCOL.md`). Worth knowing why it matters here anyway: `sendgrid.env`
+  sits in this working root, is not actually ignored, and contains a live API key — so `git add .` would
+  publish it. Report your paths; the user stages them.
 - Known lorem-ipsum debt to clear: `components/AboutTwo/*`, `components/degital-markiting-/WhatWeOffer/*`,
   `components/ComingSoon/*`.
 

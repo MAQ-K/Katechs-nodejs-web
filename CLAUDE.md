@@ -3,11 +3,14 @@
 **How to work here without breaking things: `brain/WORKFLOW.md`.** Start there if git feels slow, if you're
 about to commit, or if you're not sure who owns a file.
 
+**🚫 Agents never run git here.** No pull, push, add, commit, status, checkout, branch, merge, log or diff.
+`.git` is 1.6 GB and every call is slow. Write files, report the paths you touched — **the user pushes
+manually.** The only exception is the user invoking `/sync` themselves.
+
 **Before doing anything in this repo:**
-1. `git pull --rebase origin main`
-2. Read `brain/MANAGEMENT.md` — brief, goals, tasks, history, agents, work assigned
-3. Read `brain/STATE.md` — what is happening right now, and the Broadcast section
-4. Read `brain/README.md` — the working protocol (claim → work → record → release)
+1. Read `brain/MANAGEMENT.md` — brief, goals, tasks, history, agents, work assigned
+2. Read `brain/STATE.md` — the Broadcast section
+3. Read `brain/README.md` — the working protocol (read → work → record → report)
 
 `brain/` is the shared memory for the Manager and all agents, across every device, synced through GitHub.
 Nothing is remembered anywhere else. If it isn't written to `brain/`, the next session and the other device
@@ -28,8 +31,8 @@ will not know it happened.
 Definitions: `.claude/agents/`. Shared rules every agent inherits: `.claude/agents/_SHARED-PROTOCOL.md`.
 
 ## Two rules that protect everyone
-- **Claim before you write.** `brain/locks/<zone>.lock.md` + a row in *Work Assigned*, pushed on its own,
-  before touching app code. Release when done.
+- **Claim before you write, when a run is concurrent.** `brain/locks/<zone>.lock.md` + a row in
+  *Work Assigned*. No git needed — sessions in the same folder see each other's files instantly.
 - **Never `git add .` inside `Web/Backup/ar`** — `sendgrid.env` is not actually ignored and contains a live
   API key. Stage explicit paths until that is fixed (`brain/MANAGEMENT.md` → Known Issues #1, #2).
 
