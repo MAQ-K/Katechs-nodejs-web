@@ -1,5 +1,10 @@
 # Katechs (AR) — Project Management File
 
+> **ARCHIVED — 2026-08-24.** This file is no longer the source of truth. It is kept as the pre-brain
+> history archive. All current context, tasks, assignments and history now live in `brain/` at the repo root:
+> start with `brain/MANAGEMENT.md`, then `brain/STATE.md`, then `brain/README.md` (the working protocol).
+> **Do not write new entries here.** New history goes to `brain/logs/<date>.md`.
+
 > Read this file first in any new chat about this project. Keep it updated as work progresses — it's the single source of truth for context across sessions.
 
 ## Brief
