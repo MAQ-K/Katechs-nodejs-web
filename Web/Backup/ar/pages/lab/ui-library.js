@@ -25,27 +25,34 @@ const UiLibraryLab = ({ library, groups }) => {
     >
       <h2 className="lab-section-title">Filed ideas — brain/ui-library/</h2>
       {hasEntries ? (
-        <div className="lab-lib-list">
+        <div className="lab-lib-shots">
           {library.entries.map((e) => (
-            <div key={e.file} className="lab-lib-row">
-              <span className={`lab-verdict ${VERDICT_TONE[e.verdict.toLowerCase()] || "wait"}`}>
-                {e.verdict}
-              </span>
-              <div>
+            <figure key={e.file} className="lab-lib-card" onClick={() => e.image && setZoom(e.image)}>
+              {e.image ? (
+                <img src={e.image} alt={e.title} loading="lazy" />
+              ) : (
+                <div className="lab-lib-noimg">
+                  <i className="bx bx-image-alt"></i>
+                </div>
+              )}
+              <figcaption>
+                <span className={`lab-verdict ${VERDICT_TONE[e.verdict.toLowerCase()] || "wait"}`}>
+                  {e.verdict}
+                </span>
                 <strong>{e.title}</strong>
                 <small>
                   {[e.type, e.forPage].filter(Boolean).join(" · ") || "—"}
                   {" · "}
                   <code>brain/ui-library/inspiration/{e.file}</code>
                 </small>
-              </div>
-            </div>
+              </figcaption>
+            </figure>
           ))}
         </div>
       ) : (
         <p className="lab-empty">
           <i className="bx bx-folder-open"></i>
-          Nothing filed yet. Run <code>/ui-search</code> — task <b>T-010</b> is the UI library for SEO,
+          Nothing filed yet. Run <code>/ag-ui-search</code> — task <b>T-010</b> is the UI library for SEO,
           Digital Marketing and Training.
         </p>
       )}
@@ -85,27 +92,49 @@ const UiLibraryLab = ({ library, groups }) => {
       ) : null}
 
       <style jsx global>{`
-        .lab-lib-list {
-          display: flex;
-          flex-direction: column;
-          gap: 8px;
+        .lab-lib-shots {
+          display: grid;
+          grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+          gap: 14px;
         }
-        .lab-lib-row {
-          display: flex;
-          align-items: center;
-          gap: 12px;
+        .lab-lib-card {
+          margin: 0;
           background: var(--lab-panel);
           border: 1px solid var(--lab-line);
-          border-radius: 8px;
-          padding: 10px 14px;
+          border-radius: 10px;
+          overflow: hidden;
+          cursor: zoom-in;
         }
-        .lab-lib-row strong {
+        .lab-lib-card img {
+          display: block;
+          width: 100%;
+          height: 170px;
+          object-fit: cover;
+          object-position: top center;
+          background: var(--lab-bg);
+        }
+        .lab-lib-noimg {
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          height: 170px;
+          font-size: 26px;
+          color: var(--lab-dim);
+          background: var(--lab-bg);
+        }
+        .lab-lib-card figcaption {
+          padding: 10px 14px;
+          border-top: 1px solid var(--lab-line);
+        }
+        .lab-lib-card strong {
           display: block;
           font-size: 14px;
+          margin: 4px 0 2px;
         }
-        .lab-lib-row small {
+        .lab-lib-card small {
           color: var(--lab-dim);
           font-size: 12px;
+          word-break: break-word;
         }
         .lab-verdict {
           font-size: 11px;

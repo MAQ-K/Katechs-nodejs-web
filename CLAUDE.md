@@ -5,7 +5,7 @@ about to commit, or if you're not sure who owns a file.
 
 **🚫 Agents never run git here.** No pull, push, add, commit, status, checkout, branch, merge, log or diff.
 `.git` is 1.6 GB and every call is slow. Write files, report the paths you touched — **the user pushes
-manually.** The only exception is the user invoking `/sync` themselves.
+manually.** The only exception is the user invoking `/ag-sync` themselves.
 
 **Before doing anything in this repo:**
 1. Read `brain/MANAGEMENT.md` — brief, goals, tasks, history, agents, work assigned
@@ -19,14 +19,14 @@ will not know it happened.
 ## Agents & shortcuts
 | Shortcut | Agent |
 |----------|-------|
-| `/board` | Manager status report |
-| `/sync` | Pull + reconcile the brain + broadcast |
-| `/ui-search` | UI Library Searcher — section ideas → `brain/ui-library/` |
-| `/ui-build` | UI Implementer — components, pages, SCSS |
-| `/anim` | UI Animator — motion, 3D, hover, interactivity |
-| `/content` | Content & Data Manager — copy, `data/**`, images |
-| `/test` | Tester — strict QA report (never fixes) |
-| `/seo` | SEO Manager — technical SEO surface only |
+| `/ag-board` | Manager status report |
+| `/ag-sync` | Pull + reconcile the brain + broadcast |
+| `/ag-ui-search` | UI Library Searcher — section ideas → `brain/ui-library/` |
+| `/ag-ui-build` | UI Implementer — components, pages, SCSS |
+| `/ag-anim` | UI Animator — motion, 3D, hover, interactivity |
+| `/ag-content` | Content & Data Manager — copy, `data/**`, images |
+| `/ag-test` | Tester — strict QA report (never fixes) |
+| `/ag-seo` | SEO Manager — technical SEO surface only |
 
 Definitions: `.claude/agents/`. Shared rules every agent inherits: `.claude/agents/_SHARED-PROTOCOL.md`.
 

@@ -8,7 +8,7 @@ each other's files instantly, which makes locks and Broadcast lines work with ze
 
 | Situation | What you need |
 |---|---|
-| Two researchers (`/ui-search`), or anything writing only to `brain/` | **Same folder.** Nothing to set up |
+| Two researchers (`/ag-ui-search`), or anything writing only to `brain/` | **Same folder.** Nothing to set up |
 | Agents editing *different* files, no dev server needed | **Same folder** |
 | Two agents that each need `npm run dev` | Separate folders — different ports |
 | Two agents editing the *same* files | Don't. Re-split the work by page |
@@ -36,9 +36,9 @@ Then open a Claude Code session in each folder. Each one is a separate agent slo
 
 | Slot | Machine | Folder | Agent | Dev port |
 |------|---------|--------|-------|----------|
-| 1 | PC1 | `katechs-nodejs-web` (main clone) | `/ui-build` | **3000** |
-| 2 | PC1 | `../katechs-ui` (worktree) | `/anim` | **3001** |
-| 3 | PC2 | normal clone | `/content` | **3002** |
+| 1 | PC1 | `katechs-nodejs-web` (main clone) | `/ag-ui-build` | **3000** |
+| 2 | PC1 | `../katechs-ui` (worktree) | `/ag-anim` | **3001** |
+| 3 | PC2 | normal clone | `/ag-content` | **3002** |
 
 ### ⚠️ Port gotcha — verified, costs an hour if you miss it
 `server.js` reads **`process.env.port`** — *lowercase*. `PORT=3001` does nothing; you get a silent

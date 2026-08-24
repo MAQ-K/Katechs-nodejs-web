@@ -63,7 +63,7 @@ push — minutes of waiting per run, for agents that often touch nothing but `br
 
 **🚫 Agents now run no git at all** — not pull, push, add, commit, status, checkout, branch, merge, log or
 diff. They write files and report the paths they touched; **the user pushes manually**. The only place git
-runs is `/sync`, which the user invokes deliberately.
+runs is `/ag-sync`, which the user invokes deliberately.
 
 Two side effects worth knowing: locks no longer need a commit to be visible (two sessions in the same folder
 see each other's files instantly), and two agents can now share one folder — the `.git/index.lock` fight that

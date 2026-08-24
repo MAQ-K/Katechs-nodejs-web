@@ -28,7 +28,7 @@ No `pull`, `push`, `add`, `commit`, `status`, `checkout`, `branch`, `merge`, `lo
 for any reason. `.git` here is **1.6 GB** and every call is slow enough to make an agent feel useless.
 Agents write files and report the paths they touched. The user stages and pushes when it suits them.
 
-The only exception is `/sync`, which the user invokes deliberately.
+The only exception is `/ag-sync`, which the user invokes deliberately.
 
 ## The 5-step loop — every agent, every session
 

@@ -90,7 +90,7 @@ export const readUiLibrary = () => {
           verdict: verdict.trim(),
           type: type.trim(),
           forPage: forPage.trim(),
-          image: shot ? `/brain-ui-library/${shot.trim()}` : "",
+          image: shot ? `/api/lab/ui-library-asset/${encodeURIComponent(shot.trim())}` : "",
         };
       });
   } catch {

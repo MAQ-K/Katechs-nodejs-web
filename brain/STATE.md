@@ -18,7 +18,7 @@
   (motion · components · ui-library). Real components, real motion, viewport + RTL + freeze toggles.
   Dev only — 404s in production. **Look here before rebuilding anything.**
 - **2026-08-24 · Manager — the design database is wired in.** `ui-ux-pro-max` + `design-taste-frontend` are
-  now **required sources** for `/anim`, `/ui-search`, `/ui-build` and `/test`. See `brain/ui-library/SOURCES.md`.
+  now **required sources** for `/ag-anim`, `/ag-ui-search`, `/ag-ui-build` and `/ag-test`. See `brain/ui-library/SOURCES.md`.
   ⚠️ motion.csv snippets are **GSAP; GSAP is not installed** — translate to framer-motion. Presets #9 and
   #12 need paid plugins → unavailable.
 - **2026-08-24 · Manager — 3 agents can now run at once.** Read `brain/PARALLEL.md` before starting a second

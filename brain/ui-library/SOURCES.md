@@ -53,7 +53,7 @@ GSAP / ScrollTrigger / R3F installs are a **Manager decision**. Presets **#9 (Sp
 ## Standing rule (2026-08-24, user) — external visual references
 
 In addition to the local databases above, **21st.dev** and **dribbble.com** are approved visual-inspiration
-sources for every `/ui-search` pass. How to use them:
+sources for every `/ag-ui-search` pass. How to use them:
 
 - **Design/layout only — never copy code.** These sites are for the visual mechanic (composition, hierarchy,
   density, motion feel), not for lifting markup or CSS.

@@ -87,27 +87,27 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-006 | Live Lab at `/lab/` — motion, components, inspiration | Manager | DONE | `pages/lab/`, `components/Lab/` | Dev only, 404s in production |
 | T-007 | Parallel-agent workflow (worktrees, ports, SCSS lock) | Manager | DONE | `brain/PARALLEL.md` | 3 slots: 2 on PC1, 1 on PC2 |
 | **G1 — last three service pages** |
-| T-010 | UI library for SEO / Digital Marketing / Training | `/ui-search` | IN PROGRESS | `brain/ui-library/` | Trial run 2026-08-24: SEO **Hero only**, 4 Dribbble-sourced entries filed (`seo-hero-*.md`). Remaining SEO sections + all of DM/Training still TODO. No prior "9 entries" found on this clone — see log 15:50 |
-| T-011 | Implement UI for those 3 pages | `/ui-build` | TODO | `components/{Seo,DigitalMarketing,Training}/**` + SCSS lock | Rebuild the `seo-`/`dm-`/`tr-` blocks **in place** |
-| T-012 | Animations + interactivity for those 3 pages | `/anim` | TODO | motion layer | After T-011 per page, not before |
-| T-017 | Delete `styles/ux-prototype.css` + its `_app.js` import | `/ui-build` | TODO | `styles/`, `pages/_app.js` | Only once all of T-011 has landed |
+| T-010 | UI library for SEO / Digital Marketing / Training | `/ag-ui-search` | IN PROGRESS | `brain/ui-library/` | Trial run 2026-08-24: SEO **Hero only**, 4 Dribbble-sourced entries filed (`seo-hero-*.md`). Remaining SEO sections + all of DM/Training still TODO. No prior "9 entries" found on this clone — see log 15:50 |
+| T-011 | Implement UI for those 3 pages | `/ag-ui-build` | TODO | `components/{Seo,DigitalMarketing,Training}/**` + SCSS lock | Rebuild the `seo-`/`dm-`/`tr-` blocks **in place** |
+| T-012 | Animations + interactivity for those 3 pages | `/ag-anim` | TODO | motion layer | After T-011 per page, not before |
+| T-017 | Delete `styles/ux-prototype.css` + its `_app.js` import | `/ag-ui-build` | TODO | `styles/`, `pages/_app.js` | Only once all of T-011 has landed |
 | **G2 — web services page** (`pages/services/index.js`) |
-| T-014a | Finish the page's UX design | Manager + `/ui-search` | TODO | — | Acceptance test = the 5-second rule in `web services page ins.md` |
-| T-014b | Implement the UX (structure, still grey) | `/ui-build` | TODO | `pages/services/index.js` | Currently a grey-box wireframe |
-| T-014c | Prepare the UI library for the page | `/ui-search` | TODO | `brain/ui-library/` | |
-| T-014d | Prepare the animation / 3D / motion library for the page | `/anim` | TODO | `brain/animation/presets/` | |
-| T-014e | Implement the UI design | `/ui-build` | TODO | `components/Services*/` + SCSS lock | |
-| T-014f | Implement animations and everything on top | `/anim` | TODO | motion layer | |
+| T-014a | Finish the page's UX design | Manager + `/ag-ui-search` | TODO | — | Acceptance test = the 5-second rule in `web services page ins.md` |
+| T-014b | Implement the UX (structure, still grey) | `/ag-ui-build` | TODO | `pages/services/index.js` | Currently a grey-box wireframe |
+| T-014c | Prepare the UI library for the page | `/ag-ui-search` | TODO | `brain/ui-library/` | |
+| T-014d | Prepare the animation / 3D / motion library for the page | `/ag-anim` | TODO | `brain/animation/presets/` | |
+| T-014e | Implement the UI design | `/ag-ui-build` | TODO | `components/Services*/` + SCSS lock | |
+| T-014f | Implement animations and everything on top | `/ag-anim` | TODO | motion layer | |
 | **G3–G5** |
-| T-013 | Main components UI — header, plan cards, buttons, font | `/ui-build` | TODO | `components/Layouts/**`, `Common/**` | ⚠️ **Shared. Manager-gated. Runs alone** |
-| T-015 | Sub-pages — design, UX, content | `/ui-build` + `/content` | TODO | per page | |
-| T-016 | Refactor pattern — all common components look the same | `/ui-build` | TODO | `components/Common/**` | ⚠️ **Audit first. Runs alone** |
-| T-018 | Homepage | `/ui-build` | TODO | `components/HomeOne/**` | After G4 — it consumes the common components |
+| T-013 | Main components UI — header, plan cards, buttons, font | `/ag-ui-build` | TODO | `components/Layouts/**`, `Common/**` | ⚠️ **Shared. Manager-gated. Runs alone** |
+| T-015 | Sub-pages — design, UX, content | `/ag-ui-build` + `/ag-content` | TODO | per page | |
+| T-016 | Refactor pattern — all common components look the same | `/ag-ui-build` | TODO | `components/Common/**` | ⚠️ **Audit first. Runs alone** |
+| T-018 | Homepage | `/ag-ui-build` | TODO | `components/HomeOne/**` | After G4 — it consumes the common components |
 | **G6–G7** |
-| T-019 | Full-site strict test sweep | `/test` | TODO | — | After G1–G5 |
-| T-020 | Content sweep — kill remaining lorem ipsum, all copy data-driven | `/content` | TODO | `data/**` | Known: `AboutTwo/*`, `degital-markiting-/WhatWeOffer/*`, `ComingSoon/*` |
+| T-019 | Full-site strict test sweep | `/ag-test` | TODO | — | After G1–G5 |
+| T-020 | Content sweep — kill remaining lorem ipsum, all copy data-driven | `/ag-content` | TODO | `data/**` | Known: `AboutTwo/*`, `degital-markiting-/WhatWeOffer/*`, `ComingSoon/*` |
 | T-022 | **Fix the broken production build** — `pages/offers.js` raw `<script>` in JSX | Manager | **BLOCKED** | `pages/offers.js` | Live conversion tracking. Needs the user to say which gtag block to keep |
-| T-021 | `robots.txt` — disallow `/lab/`, exclude from sitemap | `/seo` | TODO | `public/`, sitemap | Small; do it with the next SEO pass |
+| T-021 | `robots.txt` — disallow `/lab/`, exclude from sitemap | `/ag-seo` | TODO | `public/`, sitemap | Small; do it with the next SEO pass |
 
 > **Scheduling rule:** T-013 and T-016 touch shared components and can break every page at once — they run
 > **alone**, never in parallel with page work. Everything else follows `brain/PARALLEL.md`.
@@ -139,12 +139,12 @@ Only **milestones** go here.
 | Shortcut | Agent | Owns | Never touches |
 |----------|-------|------|---------------|
 | *(this chat)* | **Manager** | Planning, assigning, merging, the brain itself, final say | — |
-| `/ui-search` | **UI Library Searcher** | Section ideas, references, patterns → `brain/ui-library/` | Never writes app code |
-| `/ui-build` | **UI Implementer** | Page + component code, SCSS → `components/`, `pages/`, `styles/` | Animation internals, content copy |
-| `/anim` | **UI Animator** | Motion, 3D, hover, interactivity → `brain/animation/`, motion components | Layout/structure decisions |
-| `/content` | **Content & Data Manager** | Copy, Arabic text, `data/**`, images, assets | Never edits JSX layout or SCSS |
-| `/test` | **Tester** | Strict reports: build, render, RTL, responsive, a11y, console, links | Never fixes — reports only |
-| `/seo` | **SEO Manager** | Meta/head plumbing, sitemap, structured data, perf, handing the real SEO specialist a clean surface | Never writes keyword strategy — a human does that |
+| `/ag-ui-search` | **UI Library Searcher** | Section ideas, references, patterns → `brain/ui-library/` | Never writes app code |
+| `/ag-ui-build` | **UI Implementer** | Page + component code, SCSS → `components/`, `pages/`, `styles/` | Animation internals, content copy |
+| `/ag-anim` | **UI Animator** | Motion, 3D, hover, interactivity → `brain/animation/`, motion components | Layout/structure decisions |
+| `/ag-content` | **Content & Data Manager** | Copy, Arabic text, `data/**`, images, assets | Never edits JSX layout or SCSS |
+| `/ag-test` | **Tester** | Strict reports: build, render, RTL, responsive, a11y, console, links | Never fixes — reports only |
+| `/ag-seo` | **SEO Manager** | Meta/head plumbing, sitemap, structured data, perf, handing the real SEO specialist a clean surface | Never writes keyword strategy — a human does that |
 
 Full role definitions: `.claude/agents/*.md`. Shortcut commands: `.claude/commands/*.md`.
 

@@ -93,9 +93,9 @@ const Hub = () => {
         {count} components in the gallery. Everything else lives in <code>brain/</code> at the repo root —
         <code>MANAGEMENT.md</code> (goals, tasks, assignments), <code>STATE.md</code> (who is working right
         now), <code>PARALLEL.md</code> (running three agents at once), <code>animation/LAB.md</code> and{" "}
-        <code>components/REGISTRY.md</code>. Shortcuts: <code>/board</code> <code>/sync</code>{" "}
-        <code>/ui-search</code> <code>/ui-build</code> <code>/anim</code> <code>/content</code>{" "}
-        <code>/test</code> <code>/seo</code>.
+        <code>components/REGISTRY.md</code>. Shortcuts: <code>/ag-board</code> <code>/ag-sync</code>{" "}
+        <code>/ag-ui-search</code> <code>/ag-ui-build</code> <code>/ag-anim</code> <code>/ag-content</code>{" "}
+        <code>/ag-test</code> <code>/ag-seo</code>.
       </p>
 
       <style jsx global>{`
