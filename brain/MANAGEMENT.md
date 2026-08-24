@@ -128,7 +128,7 @@ Only **milestones** go here.
 | 2026-08-19 | Emails page: wireframe pass then real UI (hero, option cards, synced tab bar, plan cards) |
 | 2026-08-24 | `brain/` + 6-agent system created. `Web/Backup/ar/PROJECT.md` history retained as the pre-brain archive |
 | 2026-08-24 | `ui-ux-pro-max` + `design-taste-frontend` wired in as required agent sources (`brain/ui-library/SOURCES.md`); all 16 motion presets indexed in `animation/LAB.md` |
-| 2026-08-24 | Live Lab shipped at `/lab/` — 63 real components + 10 motion specimens, dev only |
+| 2026-08-24 | Live Lab shipped at `/lab/` — 51 real components + 10 motion specimens, dev only |
 | 2026-08-24 | `brain/PARALLEL.md` — three agents at once (2 on PC1 via git worktree, 1 on PC2) |
 | 2026-08-24 | Discovered the production build has been broken since 2026-08-19 (`pages/offers.js`) — T-022 |
 
@@ -158,7 +158,7 @@ Live claims. **One zone, one agent, at a time.** Claiming = creating `brain/lock
 
 | Zone (path glob) | Agent | Device | Branch | Since | Task |
 |------------------|-------|--------|--------|-------|------|
-| _(none yet)_ | | | | | |
+| `brain/ui-library/**` | UI Library Searcher | Mohamed-PC | `agent/ui-search/seo-page-library` | 2026-08-24 | T-010 |
 
 **Zones are paths, not pages.** Standard split so two agents can work the same page at once:
 - `components/<Page>/**` + `styles/style.scss` → UI Implementer
