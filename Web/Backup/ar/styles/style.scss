@@ -10112,8 +10112,21 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   border-color: $seo-line-dark;
 }
 
-// ---- SERP mock illustration (Hero) ----
-.seo-serp-card {
+// ---- layered hero visual (Hero) — two overlapping tilted cards, from
+// brain/ui-library/inspiration/seo page/1stsec.png ----
+.seo-hero-visual {
+  position: relative;
+  min-height: 420px;
+  padding-bottom: 46px;
+  padding-inline-start: 30px;
+
+  @media (max-width: 575px) {
+    padding-bottom: 70px;
+    padding-inline-start: 16px;
+  }
+}
+
+.seo-hero-visual-main {
   position: relative;
   width: 100%;
   max-width: 380px;
@@ -10122,6 +10135,63 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   border-radius: 18px;
   padding: 22px;
   box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  transform: rotate(-2.5deg);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-hero-visual-accent {
+  position: absolute;
+  bottom: 0;
+  inset-inline-start: 0;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 6px;
+  width: 168px;
+  background: $seo-black;
+  color: $seo-white;
+  border-radius: 16px;
+  padding: 18px 20px;
+  box-shadow: 0 24px 40px -18px rgba(12, 12, 14, 0.45);
+  transform: rotate(3.5deg);
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-hero-visual:hover {
+  .seo-hero-visual-main {
+    transform: rotate(-1deg);
+  }
+
+  .seo-hero-visual-accent {
+    transform: rotate(2deg);
+  }
+}
+
+.seo-hero-visual-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.12);
+  color: $main-color;
+  font-size: 16px;
+  margin-bottom: 2px;
+}
+
+.seo-hero-visual-value {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: 26px;
+  line-height: 1;
+}
+
+.seo-hero-visual-label {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.65);
+  line-height: 1.4;
 }
 
 .seo-serp-bar {
