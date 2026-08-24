@@ -87,7 +87,7 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-006 | Live Lab at `/lab/` — motion, components, inspiration | Manager | DONE | `pages/lab/`, `components/Lab/` | Dev only, 404s in production |
 | T-007 | Parallel-agent workflow (worktrees, ports, SCSS lock) | Manager | DONE | `brain/PARALLEL.md` | 3 slots: 2 on PC1, 1 on PC2 |
 | **G1 — last three service pages** |
-| T-010 | UI library for SEO / Digital Marketing / Training | `/ui-search` | TODO | `brain/ui-library/` | One entry per page section. Cite `ui-ux-pro-max` rows |
+| T-010 | UI library for SEO / Digital Marketing / Training | `/ui-search` | IN PROGRESS | `brain/ui-library/` | SEO pass done — 9 entries filed, `Proposed`. DM + Training not started (separate passes) |
 | T-011 | Implement UI for those 3 pages | `/ui-build` | TODO | `components/{Seo,DigitalMarketing,Training}/**` + SCSS lock | Rebuild the `seo-`/`dm-`/`tr-` blocks **in place** |
 | T-012 | Animations + interactivity for those 3 pages | `/anim` | TODO | motion layer | After T-011 per page, not before |
 | T-017 | Delete `styles/ux-prototype.css` + its `_app.js` import | `/ui-build` | TODO | `styles/`, `pages/_app.js` | Only once all of T-011 has landed |
@@ -99,6 +99,7 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-014e | Implement the UI design | `/ui-build` | TODO | `components/Services*/` + SCSS lock | |
 | T-014f | Implement animations and everything on top | `/anim` | TODO | motion layer | |
 | **G3–G5** |
+| T-023 | Interaction library — 12 motion/3D primitives in `components/Common/motion/` | Manager | DONE | `components/Common/motion/` | Zero new deps. See the note below the table |
 | T-013 | Main components UI — header, plan cards, buttons, font | `/ui-build` | TODO | `components/Layouts/**`, `Common/**` | ⚠️ **Shared. Manager-gated. Runs alone** |
 | T-015 | Sub-pages — design, UX, content | `/ui-build` + `/content` | TODO | per page | |
 | T-016 | Refactor pattern — all common components look the same | `/ui-build` | TODO | `components/Common/**` | ⚠️ **Audit first. Runs alone** |
@@ -108,6 +109,22 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-020 | Content sweep — kill remaining lorem ipsum, all copy data-driven | `/content` | TODO | `data/**` | Known: `AboutTwo/*`, `degital-markiting-/WhatWeOffer/*`, `ComingSoon/*` |
 | T-022 | **Fix the broken production build** — `pages/offers.js` raw `<script>` in JSX | Manager | **BLOCKED** | `pages/offers.js` | Live conversion tracking. Needs the user to say which gtag block to keep |
 | T-021 | `robots.txt` — disallow `/lab/`, exclude from sitemap | `/seo` | TODO | `public/`, sitemap | Small; do it with the next SEO pass |
+
+### 📌 Note on the interaction library (T-023, 2026-08-24)
+Built at the user's request — "there is way more animations and 3d stuff, add anything can give the page more
+interactivness". Twelve reusable primitives now live in `components/Common/motion/`: TextReveal, StaggerGrid,
+ScrollProgress, Parallax, ScrollScrub, Spotlight, Ripple, Cursor, CountUp, FlipCard, Orbit3D, Waves.
+All of them run at **http://localhost:3000/lab/motion/**. Full notes: `brain/animation/LAB.md` → Interaction library.
+
+**Zero new dependencies.** Everything is framer-motion (already installed), CSS transforms, or hand-rolled
+canvas — no GSAP, no ScrollTrigger, no React Three Fiber, no paid plugins. That was a deliberate constraint:
+those installs stay a Manager decision, and most of what they're wanted for turned out to be reachable
+without them. `ScrollScrub` reproduces motion.csv's pin+scrub preset (#6) with `position: sticky`, and
+`TextReveal` reproduces #9 without the paid SplitText plugin.
+
+**These are a library, not a decision.** Nothing is applied to a page yet. The Animator picks per section
+under T-012 (the three service pages) and T-014f (web services) — more motion is not automatically better,
+and every one of these has a reduced-motion path that must stay honoured.
 
 > **Scheduling rule:** T-013 and T-016 touch shared components and can break every page at once — they run
 > **alone**, never in parallel with page work. Everything else follows `brain/PARALLEL.md`.
@@ -158,7 +175,6 @@ Live claims. **One zone, one agent, at a time.** Claiming = creating `brain/lock
 
 | Zone (path glob) | Agent | Device | Branch | Since | Task |
 |------------------|-------|--------|--------|-------|------|
-| `brain/ui-library/**` | UI Library Searcher | Mohamed-PC | `agent/ui-search/seo-page-library` | 2026-08-24 | T-010 |
 
 **Zones are paths, not pages.** Standard split so two agents can work the same page at once:
 - `components/<Page>/**` + `styles/style.scss` → UI Implementer

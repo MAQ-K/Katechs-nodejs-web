@@ -109,6 +109,29 @@ Full source table: `~/.claude/skills/ui-ux-pro-max/data/motion.csv` (see `brain/
 Rule #13/#14 carry a hard constraint worth repeating: **parallax goes on decorative layers only, never on text.**
 Rule #15/#16: kill the loop the moment real content mounts — no orphaned infinite tweens.
 
+## The interaction library — `components/Common/motion/`
+
+Twelve reusable primitives, built 2026-08-24. **Zero new dependencies** — framer-motion (already installed),
+CSS transforms, and hand-rolled canvas. Every one is reduced-motion safe, SSR-safe and RTL-aware.
+
+| Component | What it does | Preset | Notes that matter |
+|---|---|---|---|
+| `TextReveal` | Word-by-word headline reveal | #9 | **Words, never characters** — Arabic is cursive and per-character splitting breaks the joining forms. Covers #9 without the paid SplitText plugin |
+| `StaggerGrid` | Bento/grid entrance with overshoot | #8 | `.Item` per cell. Low-damping spring replaces `back.out(1.4)` |
+| `ScrollProgress` | Reading progress bar | — | `transformOrigin` follows document direction — fills from the **right** in RTL. Accepts a `containerRef` for scoped scrollers |
+| `Parallax` | Layered scroll parallax | #13 / #14 | **Decorative layers only, never text.** Springs the value — raw scroll mapping judders on trackpads |
+| `ScrollScrub` | Pinned, scroll-scrubbed section | #6 | `position: sticky` + framer scroll progress instead of GSAP ScrollTrigger. Render prop gives `(progress, isStatic)` |
+| `Spotlight` | Cursor-following radial glow | — | Motion values drive the gradient directly — **zero React re-renders** on mousemove |
+| `Ripple` | Click ripple | — | Wraps, doesn't replace. Ripples are keyed and self-removing or the DOM leaks all session |
+| `Cursor` | Trailing custom cursor | — | Scoped to its container. `pointer: fine` only, off under reduced motion. Grows over `data-cursor="grow"` |
+| `CountUp` | Scroll-triggered counter | Tier B | Latin digits + `tabular-nums` — every other number on the site is Latin, and tabular stops the row jittering |
+| `FlipCard` | Two-sided 3D card | — | Flips on hover **and** click/keyboard — hover-only is dead on a phone. Real button, `aria-pressed`, one face readable at a time |
+| `Orbit3D` | Items on a tilted 3D ring | — | Generalised from `AppDev/AppOrbit.js`. Items counter-rotate so they stay upright — that counter-spin is the whole trick |
+| `Waves` | Canvas wave background | — | Stops off screen. Under reduced motion draws **one static frame**, so the section still looks designed. DPR capped at 2 |
+
+**Applying these to real pages is T-012 (the three service pages) and T-014f (web services).** They are a
+library, not a decision — the Animator picks per section, and more motion is not automatically better.
+
 ## See it running
 `npm run dev` → **http://localhost:3000/lab/motion/** — every primitive above, live, with a
 reduced-motion toggle, an RTL switch and viewport widths. Dev only; `/lab/` 404s in production.

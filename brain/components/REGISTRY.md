@@ -24,6 +24,24 @@
 | Emails Option Cards + Tabs | `Emails/PricingFlow.js` | — | — | Shipped — synced tab bar ↔ plan cards |
 | Emails Features / FAQ | `Emails/FeaturesPlaceholder.js`, `Emails/FaqPlaceholder.js` | — | — | **Placeholder** — real UI pending |
 
+## Interaction library — `components/Common/motion/` (built 2026-08-24)
+Twelve reusable primitives, zero new dependencies. Full notes: `brain/animation/LAB.md` → Interaction library.
+
+| Component | Path | One-line |
+|-----------|------|----------|
+| TextReveal | `Common/motion/TextReveal.js` | Word-by-word headline reveal. Words, never chars — Arabic joining forms |
+| StaggerGrid | `Common/motion/StaggerGrid.js` | Grid entrance with spring overshoot. Use `.Item` per cell |
+| ScrollProgress | `Common/motion/ScrollProgress.js` | Progress bar; fills from the right in RTL |
+| Parallax | `Common/motion/Parallax.js` | Scroll parallax. **Decorative layers only, never text** |
+| ScrollScrub | `Common/motion/ScrollScrub.js` | Pinned scrub section without GSAP ScrollTrigger |
+| Spotlight | `Common/motion/Spotlight.js` | Cursor glow. Zero React re-renders on mousemove |
+| Ripple | `Common/motion/Ripple.js` | Click ripple wrapper; self-removing |
+| Cursor | `Common/motion/Cursor.js` | Scoped trailing cursor. `pointer:fine` only |
+| CountUp | `Common/motion/CountUp.js` | Scroll counter. Latin digits + tabular-nums |
+| FlipCard | `Common/motion/FlipCard.js` | 3D flip; hover **and** click/keyboard |
+| Orbit3D | `Common/motion/Orbit3D.js` | Tilted 3D ring; items counter-rotate to stay upright |
+| Waves | `Common/motion/Waves.js` | Canvas waves. Static frame under reduced motion |
+
 ## Motion / interaction primitives (see `brain/animation/LAB.md`)
 | Component | Path | Notes |
 |-----------|------|-------|
