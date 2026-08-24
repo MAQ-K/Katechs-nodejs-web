@@ -56,7 +56,7 @@ const Ripple = ({ children, className, color = "rgba(255,255,255,0.45)", duratio
               borderRadius: "50%",
               background: color,
               pointerEvents: "none",
-􀀀            }}
+            }}
           />
         ))}
       </AnimatePresence>

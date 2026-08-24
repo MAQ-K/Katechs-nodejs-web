@@ -56,6 +56,7 @@ const LabCell = ({
   const [nonce, setNonce] = useState(0);
   const [mounted, setMounted] = useState(!heavy);
   const [copied, setCopied] = useState(false);
+  const [expanded, setExpanded] = useState(false);
 
   const framed = width !== "full" && bareHref;
 
@@ -92,6 +93,12 @@ const LabCell = ({
               <i className="bx bx-revision"></i> Replay
             </button>
           ) : null}
+          {!framed ? (
+            <button className={`lab-btn ${expanded ? "on" : ""}`} onClick={() => setExpanded((v) => !v)}>
+              <i className={`bx ${expanded ? "bx-collapse-vertical" : "bx-expand-vertical"}`}></i>
+              {expanded ? "Collapse" : "Expand"}
+            </button>
+          ) : null}
           {bareHref ? (
             <a className="lab-btn" href={bareHref} target="_blank" rel="noreferrer">
               <i className="bx bx-link-external"></i> Isolate
@@ -102,7 +109,11 @@ const LabCell = ({
 
       {note ? <p className="lab-cell-note">{note}</p> : null}
 
-      <div className={`lab-stage ${freeze ? "lab-freeze" : ""}`} dir={dir}>
+      <div
+        className={`lab-stage ${freeze ? "lab-freeze" : ""} ${expanded ? "is-expanded" : ""}`}
+        dir={dir}
+        id={`cell-${id}`}
+      >
         {framed ? (
           <iframe
             key={`${width}-${dir}-${nonce}`}
@@ -188,12 +199,20 @@ const LabCell = ({
           background: var(--lab-bg);
           border-bottom: 1px solid var(--lab-line);
         }
+        /* Every cell previews at the same height so the page has a rhythm —
+           a full page section and a 60px button demo otherwise sit in wildly
+           different boxes and the tab stops reading as a gallery. Expand
+           lifts the cap for the one you're actually looking at. */
         .lab-stage {
           position: relative;
           overflow: auto;
           background: var(--lab-panel);
           display: flex;
           justify-content: center;
+          max-height: 520px;
+        }
+        .lab-stage.is-expanded {
+          max-height: none;
         }
         .lab-stage > * {
           width: 100%;

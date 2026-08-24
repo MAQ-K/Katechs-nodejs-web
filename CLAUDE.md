@@ -1,5 +1,24 @@
 # Katechs — read this first
 
+## Picking up where you left off
+
+**Same machine** — chats are saved automatically to `~/.claude/projects/d--Work-katechs-nodejs-web/`:
+```bash
+claude --continue        # continue the most recent chat in this folder
+claude --resume          # picker of every past chat here (accepts a search term)
+claude --resume <id>     # one specific chat, by session id
+claude --resume <id> --fork-session   # branch off it instead of continuing in place
+```
+
+**Another machine** — chat transcripts are local files and do **not** sync. Don't chase them.
+`git pull` and start a fresh chat: `brain/` is the handoff, and it's designed to make the transcript
+unnecessary. Read `brain/MANAGEMENT.md` → `brain/STATE.md` → today's `brain/logs/`, and you have every
+decision, constraint and next step without replaying a conversation.
+
+**This only works if the brain is pushed.** Claim/finish → commit → push, every time. An unpushed brain is
+a brain the other machine cannot see.
+
+
 **Before doing anything in this repo:**
 1. `git pull --rebase origin main`
 2. Read `brain/MANAGEMENT.md` — brief, goals, tasks, history, agents, work assigned

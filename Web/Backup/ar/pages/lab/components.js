@@ -2,6 +2,7 @@ import React from "react";
 import Head from "next/head";
 import LabShell from "../../components/Lab/LabShell";
 import LabCell from "../../components/Lab/LabCell";
+import LabIndex, { slug } from "../../components/Lab/LabIndex";
 import SPECIMENS, { findSpecimen } from "../../components/Lab/specimens";
 import { readRegistry, labGuard } from "../../utils/labData";
 
@@ -40,9 +41,13 @@ const ComponentsLab = ({ only, dir, ground, registry }) => {
       title="Component gallery"
       subtitle={`${total} real components rendered in isolation, straight from components/**. Not screenshots — this is the same code the live pages run. Status and data source come from brain/components/REGISTRY.md.`}
     >
+      <LabIndex groups={SPECIMENS} />
+
       {SPECIMENS.map((group) => (
         <div key={group.group}>
-          <h2 className="lab-section-title">{group.group}</h2>
+          <h2 className="lab-section-title lab-anchor" id={slug(group.group)}>
+            {group.group}
+          </h2>
           {group.warn ? <p className="lab-group-warn">{group.warn}</p> : null}
 
           <div className="lab-grid">
