@@ -7810,13 +7810,42 @@ sections read as one system.)
     }
   }
 
+  // Orbit sits to the right of the cards (RTL: first flex child lands on the
+  // right without needing row-reverse); cards run as a compact stacked list
+  // beside it rather than a 3-up grid, since the column is narrower now.
+  .app-platforms-body {
+    display: flex;
+    align-items: center;
+    gap: 36px;
+  }
+
+  .app-platforms-orbit {
+    flex: 0 0 250px;
+    max-width: 250px;
+    overflow: hidden;
+  }
+
+  .app-platforms-cards {
+    flex: 1 1 auto;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+    min-width: 0;
+  }
+
   .app-platform-card {
-    margin-bottom: 30px;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-bottom: 0;
   }
 
   .app-platform-media {
     position: relative;
-    aspect-ratio: 4 / 5;
+    flex: 0 0 76px;
+    width: 76px;
+    height: 76px;
+    aspect-ratio: 1 / 1;
     border-radius: 12px;
     overflow: hidden;
     display: flex;
@@ -7826,14 +7855,14 @@ sections read as one system.)
     transition: transform 0.5s ease, box-shadow 0.5s ease;
 
     i {
-      font-size: 96px;
+      font-size: 34px;
       color: rgba(17, 24, 39, 0.5);
       transition: color 0.5s ease;
     }
   }
 
   .app-platform-card:hover .app-platform-media {
-    transform: translateY(-8px);
+    transform: translateY(-4px);
     box-shadow: 0 24px 40px -20px rgba(29, 211, 248, 0.45);
 
     i {
@@ -7843,22 +7872,24 @@ sections read as one system.)
 
   .app-platform-meta {
     display: flex;
-    align-items: flex-end;
+    align-items: center;
     justify-content: space-between;
     gap: 14px;
-    padding-top: 18px;
+    flex: 1 1 auto;
+    min-width: 0;
+    padding-top: 0;
 
     h3 {
       font-family: "Cairo", sans-serif;
-      font-size: 18px;
+      font-size: 15px;
       font-weight: 700;
       color: $white-color;
-      margin-bottom: 5px;
+      margin-bottom: 3px;
     }
 
     span {
       display: block;
-      font-size: 13px;
+      font-size: 11.5px;
       color: rgba(255, 255, 255, 0.45);
     }
 
@@ -7867,13 +7898,13 @@ sections read as one system.)
       align-items: center;
       gap: 6px;
       flex-shrink: 0;
-      font-size: 13px;
+      font-size: 12px;
       font-weight: 600;
       color: rgba(255, 255, 255, 0.55);
       transition: $transition;
 
       i {
-        font-size: 17px;
+        font-size: 16px;
         line-height: 1;
       }
 
@@ -7901,6 +7932,18 @@ sections read as one system.)
         padding-top: 0;
       }
     }
+
+    .app-platforms-body {
+      flex-direction: column;
+      align-items: stretch;
+      gap: 30px;
+    }
+
+    .app-platforms-orbit {
+      flex: 0 0 auto;
+      max-width: 100%;
+      align-self: center;
+    }
   }
 
   @media (max-width: 767px) {
@@ -7912,8 +7955,14 @@ sections read as one system.)
       }
     }
 
+    .app-platform-media {
+      flex-basis: 62px;
+      width: 62px;
+      height: 62px;
+    }
+
     .app-platform-media i {
-      font-size: 74px;
+      font-size: 28px;
     }
   }
 }
@@ -9167,8 +9216,8 @@ Three ground rules held throughout:
 .app-platforms {
   .app-orbit {
     position: relative;
-    height: 430px;
-    margin-bottom: 60px;
+    height: 230px;
+    margin-bottom: 0;
   }
 
   .app-orbit-glow {
@@ -9204,6 +9253,9 @@ Three ground rules held throughout:
     // Viewed slightly from above, so the ring reads as a ring and not a row.
     perspective: 1300px;
     perspective-origin: 50% 38%;
+    // The ring's geometry (RADIUS in the component) is built for a full-width
+    // stage; scaled down here so it fits the narrower column beside the cards.
+    transform: scale(0.46);
   }
 
   .app-orbit-stage.is-dragging {
@@ -9395,7 +9447,9 @@ Three ground rules held throughout:
 
   // The ring's radius is set in px from the component, so narrow screens scale
   // the whole perspective stage down rather than re-computing the geometry.
-  @media (max-width: 1199px) {
+  // Below 991px the orbit stacks above the cards at full width again, so it
+  // can afford to be a little larger than the beside-the-cards layout.
+  @media (max-width: 991px) {
     .app-orbit-stage {
       transform: scale(0.82);
     }
@@ -9403,8 +9457,8 @@ Three ground rules held throughout:
 
   @media (max-width: 767px) {
     .app-orbit {
-      height: 300px;
-      margin-bottom: 45px;
+      height: 260px;
+      margin-bottom: 20px;
     }
 
     .app-orbit-stage {
@@ -9893,7 +9947,9 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .seo-h1 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  // AppDev heading weight (700) — was 800, which read heavier than every
+  // other service page on the shared shell.
+  font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -9903,7 +9959,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .seo-h2 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   line-height: 1.25;
   color: $seo-ink;
@@ -9956,8 +10012,10 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   font-family: $body-font-family;
   font-weight: 700;
   font-size: 15px;
-  padding: 14px 28px;
-  border-radius: 100px;
+  padding: 16px 30px;
+  // AppDev CTA shape: rounded-rectangle, not a full pill (.default-btn /
+  // .app-hero-ghost-btn are both 10px).
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease,
@@ -9996,13 +10054,17 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 .seo-btn-ghost {
   background: transparent;
   color: $seo-ink;
-  border: 1.5px solid $seo-line;
+  border: 1px solid $seo-line;
 
+  // AppDev's ghost CTA (.app-hero-ghost-btn) lifts to the accent color on
+  // hover instead of darkening toward ink — brings the outlined button in
+  // line with the rest of the page's cyan accent (icon wells, SERP rank,
+  // dots) instead of reading as a plain grey outline.
   &:hover {
     filter: none;
-    background: rgba(12, 12, 14, 0.045);
-    border-color: $seo-ink;
-    color: $seo-ink;
+    background: transparent;
+    border-color: $main-color;
+    color: $main-color;
     box-shadow: none;
     transform: translateY(-1px);
   }
@@ -10096,20 +10158,26 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// Outer plate, same role as AppDev's .app-hero-frame — radius bumped to
+// match (24px) and border swapped for the same soft ambient shadow.
 .seo-media-panel {
   background: $seo-gray;
-  border: 1px solid $seo-line;
-  border-radius: 22px;
+  border-radius: 24px;
   padding: 34px;
   min-height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow:
+    0px 24px 48px -20px rgba(15, 23, 42, 0.14),
+    0px 8px 16px -10px rgba(15, 23, 42, 0.08);
 }
 
 .seo-dark .seo-media-panel {
   background: $seo-card-dark;
-  border-color: $seo-line-dark;
+  box-shadow:
+    0px 24px 48px -20px rgba(0, 0, 0, 0.5),
+    0px 8px 16px -10px rgba(0, 0, 0, 0.3);
 }
 
 // ---- SERP mock illustration (Hero) ----
@@ -10118,10 +10186,13 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   width: 100%;
   max-width: 380px;
   background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
 .seo-serp-bar {
@@ -10238,7 +10309,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 .seo-stat-value {
   display: block;
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  // matches .app-stat-num's weight
+  font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
   color: $seo-ink;
   line-height: 1;
@@ -10308,20 +10380,32 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// Card recipe lifted from AppDev's .app-plan-card / .app-feature-card: no
+// visible border, a layered "soft emboss" shadow (ambient shadow + a hairline
+// inset highlight/shadow pair) instead, radius 16px, lift-on-hover with a
+// stronger version of the same shadow. Replaces the old border+flat-shadow
+// editorial treatment.
 .seo-card {
   display: flex;
   flex-direction: column;
   height: 100%;
   background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 30px 26px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 
   &:hover {
-    transform: translateY(-5px);
-    border-color: rgba(12, 12, 14, 0.2);
-    box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+    transform: translateY(-6px);
+    box-shadow:
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
   }
 }
 
@@ -10331,12 +10415,23 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .seo-card-dark {
   background: $seo-card-dark;
-  border: 1px solid $seo-line-dark;
   color: rgba(255, 255, 255, 0.85);
+  // Same emboss recipe on the dark card — this is exactly how AppDev treats
+  // its own dark "is-popular" plan card (.app-plan-card.is-popular): the
+  // light-based inset highlight still reads correctly on a navy/charcoal fill.
+  box-shadow:
+    0px 7.77px 16px 0px rgba(0, 0, 0, 0.22),
+    0px 3px 3px 0px rgba(0, 0, 0, 0.18),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.12) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.06) inset;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.24);
-    box-shadow: none;
+    transform: translateY(-6px);
+    box-shadow:
+      0px 22px 38px -16px rgba(0, 0, 0, 0.34),
+      0px 3px 3px 0px rgba(0, 0, 0, 0.18),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.12) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.06) inset;
   }
 
   .seo-p {
@@ -10355,7 +10450,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 .seo-icon-well {
   width: 46px;
   height: 46px;
-  border-radius: 13px;
+  // AppDev icon wells (.app-plan-icon) use 14px.
+  border-radius: 14px;
   background: rgba(12, 12, 14, 0.05);
   display: flex;
   align-items: center;
@@ -10552,10 +10648,14 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   max-width: 800px;
   margin: 0 auto;
 
+  // Border swapped for AppDev's faq accordion shadow (.app-faq-accordion
+  // .accordion__item) — same radius (16px) already matched.
   .accordion__item {
     margin-bottom: 14px;
     border-radius: 16px;
-    border: 1px solid $seo-line;
+    box-shadow:
+      0px 5px 11px 0px rgba(15, 23, 42, 0.05),
+      0px 2px 2px 0px rgba(15, 23, 42, 0.07);
     overflow: hidden;
   }
 
@@ -10695,10 +10795,13 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   width: 100%;
   max-width: 380px;
   background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
 .seo-skel-badge {
@@ -10767,10 +10870,13 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   width: 100%;
   max-width: 380px;
   background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
 .seo-report-bars {
@@ -10820,23 +10926,37 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 /* ===================================================================
    Digital Marketing — visual pass on top of the UX-prototype layouts in
-   components/DigitalMarketing/*.js. Same design system as the SEO page
-   above (same color tokens, spacing, radius, shadow conventions) under a
-   `dm-` prefix so the two pages never fight over class names. Replaces
+   components/DigitalMarketing/*.js, under a `dm-` prefix so the page never
+   fights over class names with SEO/Training. T-011: reskinned in place to
+   match the App Development page's visual system exactly (components/AppDev
+   + its style.scss blocks) — 16px card radius, rgba(15,23,42,.08) hairline
+   borders, Cairo 700 headings, $main-color cyan accents, .default-btn-style
+   filled buttons and the soft-emboss pricing-card recipe. The $dm-* tokens
+   below are AppDev's own values, not approximations. Replaces
    styles/ux-prototype.css classes on THIS page only; that file stays
    imported for Training until its own pass lands.
    =================================================================== */
+$dm-line: rgba(15, 23, 42, 0.08); // AppDev hairline border (.app-feature-card)
+$dm-line-dark: rgba(255, 255, 255, 0.12);
+$dm-ink: $heading-color; // AppDev heading color (#212121)
+$dm-ink-dim: $body-color; // AppDev body color (#4d4d4d)
+$dm-surface-alt: #f5f6f8; // AppDev section alt ground (.app-hero/.app-pricing)
+$dm-dark: #0b0b0d; // AppDev dark band (.app-platforms / .app-hero-media)
+$dm-navy: #0a1f44; // AppDev "most popular" plan (.app-plan-card.is-popular)
+$dm-radius: 16px; // AppDev card radius
+$dm-radius-sm: 10px; // AppDev button/icon radius
+
 .dm-section {
   padding: 100px 0;
-  background: $seo-white;
+  background: $white-color;
   overflow: hidden;
 
   &.dm-alt {
-    background: $seo-gray;
+    background: $dm-surface-alt;
   }
 
   &.dm-dark {
-    background: $seo-black;
+    background: $dm-dark;
   }
 
   &.dm-first {
@@ -10875,12 +10995,13 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid $seo-line;
+  border: 1px solid $dm-line;
   border-radius: 100px;
   padding: 7px 16px;
+  font-family: "Cairo", sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: $seo-ink;
+  color: $dm-ink;
   margin-bottom: 20px;
 
   .dot {
@@ -10893,26 +11014,27 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 }
 
 .dm-dark .dm-eyebrow {
-  border-color: $seo-line-dark;
+  border-color: $dm-line-dark;
   color: rgba(255, 255, 255, 0.88);
 }
 
+// Weight/scale match .app-hero-text h1 / .app-pricing-head h2 / .app-plan-card h3.
 .dm-h1 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
-  line-height: 1.1;
+  line-height: 1.28;
   letter-spacing: -0.01em;
-  color: $seo-ink;
+  color: $dm-ink;
   margin-bottom: 22px;
 }
 
 .dm-h2 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
-  line-height: 1.25;
-  color: $seo-ink;
+  line-height: 1.4;
+  color: $dm-ink;
   margin-bottom: 14px;
 }
 
@@ -10920,20 +11042,20 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   font-family: "Cairo", sans-serif;
   font-weight: 700;
   font-size: 17px;
-  color: $seo-ink;
+  color: $dm-ink;
   margin-bottom: 8px;
 }
 
 .dm-dark .dm-h1,
 .dm-dark .dm-h2,
 .dm-dark .dm-h3 {
-  color: $seo-white;
+  color: $white-color;
 }
 
 .dm-p {
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.9;
   margin-bottom: 0;
 }
 
@@ -10943,7 +11065,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .dm-note {
   font-size: 12px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
   opacity: 0.7;
   margin-top: 14px;
 }
@@ -10964,17 +11086,20 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// Filled CTA — same fill/radius/weight as .default-btn (bg $main-color,
+// 10px radius); keeps its own lift-on-hover instead of the shine sweep
+// since .default-btn's ::before/::after shine is tuned for its own padding.
 .dm-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: $seo-black;
-  color: $seo-white;
+  background: $main-color;
+  color: $white-color;
   font-family: $body-font-family;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
-  padding: 14px 28px;
-  border-radius: 100px;
+  padding: 16px 31px;
+  border-radius: $dm-radius-sm;
   border: none;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease,
@@ -10986,10 +11111,10 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 
   &:hover {
-    color: $seo-white;
-    filter: brightness(1.22);
+    color: $white-color;
+    filter: brightness(1.08);
     transform: translateY(-1px);
-    box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+    box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.5);
 
     i {
       transform: translateX(-3px);
@@ -10998,7 +11123,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
   &:active {
     transform: translateY(0);
-    filter: brightness(1.1);
+    filter: brightness(1.02);
   }
 
   &.dm-btn-block {
@@ -11007,40 +11132,42 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// Outlined counterpart — same size/radius as .app-hero-ghost-btn, no fill.
 .dm-btn-ghost {
-  background: transparent;
-  color: $seo-ink;
-  border: 1.5px solid $seo-line;
+  background: $white-color;
+  color: $dm-ink;
+  border: 1px solid #d9dde3;
 
   &:hover {
     filter: none;
-    background: rgba(12, 12, 14, 0.045);
-    border-color: $seo-ink;
-    color: $seo-ink;
+    background: $white-color;
+    border-color: $main-color;
+    color: $main-color;
     box-shadow: none;
     transform: translateY(-1px);
   }
 }
 
 .dm-dark .dm-btn-ghost {
-  color: $seo-white;
-  border-color: $seo-line-dark;
+  background: transparent;
+  color: $white-color;
+  border-color: $dm-line-dark;
 
   &:hover {
     background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: $seo-white;
+    border-color: $main-color;
+    color: $main-color;
   }
 }
 
 .dm-btn-invert {
-  background: $seo-white;
-  color: $seo-black;
+  background: $white-color;
+  color: $dm-ink;
 
   &:hover {
     filter: none;
     background: $main-color;
-    color: $seo-black;
+    color: $white-color;
     box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.4);
   }
 }
@@ -11056,8 +11183,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     align-items: center;
     gap: 7px;
     font-size: 13px;
-    color: $seo-ink-dim;
-    border: 1px solid $seo-line;
+    color: $dm-ink-dim;
+    border: 1px solid $dm-line;
     border-radius: 100px;
     padding: 8px 14px;
 
@@ -11109,9 +11236,9 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 }
 
 .dm-media-panel {
-  background: $seo-gray;
-  border: 1px solid $seo-line;
-  border-radius: 22px;
+  background: $dm-surface-alt;
+  border: 1px solid $dm-line;
+  border-radius: $dm-radius;
   padding: 34px;
   min-height: 380px;
   display: flex;
@@ -11120,27 +11247,34 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 }
 
 .dm-alt .dm-media-panel {
-  background: $seo-white;
+  background: $white-color;
 }
 
-// ---- campaign performance mock (Hero) ----
+// ---- campaign performance mock (Hero) — outer plate matches the
+// soft-emboss recipe of .app-hero-frame ----
 .dm-campaign-card {
   position: relative;
   width: 100%;
   max-width: 380px;
-  background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  background: $white-color;
+  border: 1px solid $dm-line;
+  border-radius: $dm-radius;
   padding: 22px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow:
+    0px 24px 48px -20px rgba(15, 23, 42, 0.18),
+    0px 8px 16px -10px rgba(15, 23, 42, 0.1),
+    0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset,
+    0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
+// Small dark floating chip — closest AppDev analog is the feature-card
+// support bubble (.app-fv-bubble, bg #111318).
 .dm-campaign-badge {
   position: absolute;
   top: -14px;
   inset-inline-end: 18px;
-  background: $seo-black;
-  color: $seo-white;
+  background: #111318;
+  color: $white-color;
   font-size: 12px;
   font-weight: 700;
   border-radius: 100px;
@@ -11169,15 +11303,15 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid $seo-line;
+  border: 1px solid $dm-line;
   border-radius: 100px;
   padding: 9px 14px;
   margin-bottom: 18px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
   font-size: 13px;
 
   i {
-    color: $seo-ink-dim;
+    color: $dm-ink-dim;
   }
 }
 
@@ -11198,11 +11332,11 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
 
   i {
     font-size: 15px;
-    color: $seo-ink;
+    color: $dm-ink;
   }
 }
 
@@ -11210,7 +11344,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   flex: 1;
   height: 8px;
   border-radius: 4px;
-  background: $seo-line;
+  background: $dm-line;
   overflow: hidden;
 }
 
@@ -11225,7 +11359,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 .dm-strip-label {
   text-align: center;
   font-size: 13px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
   margin-bottom: 18px;
 }
 
@@ -11242,11 +11376,11 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   justify-content: center;
-  background: $seo-white;
-  border: 1px solid $seo-line;
+  background: $white-color;
+  border: 1px solid $dm-line;
   border-radius: 12px;
   font-size: 12px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
 }
 
 // ---- card grids (Channels, WhyUs, Strategy, Results, Pricing) ----
@@ -11272,30 +11406,32 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// Chrome matches .app-feature-card exactly: flat white, 16px radius, 1px
+// hairline border, no lift on hover — only the shadow deepens.
 .dm-card {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  background: $white-color;
+  border: 1px solid $dm-line;
+  border-radius: $dm-radius;
   padding: 30px 26px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: $transition;
 
   &:hover {
-    transform: translateY(-5px);
-    border-color: rgba(12, 12, 14, 0.2);
-    box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+    box-shadow: 0 16px 30px -20px rgba(15, 23, 42, 0.18);
   }
 }
 
 .dm-alt .dm-card {
-  background: $seo-white;
+  background: $white-color;
 }
 
+// No AppDev equivalent for a dark card — nearest AppDev tone (#111318, the
+// feature-card's own dark support-bubble color) rather than inventing a new one.
 .dm-card-dark {
-  background: $seo-card-dark;
-  border: 1px solid $seo-line-dark;
+  background: #111318;
+  border: 1px solid $dm-line-dark;
   color: rgba(255, 255, 255, 0.85);
 
   &:hover {
@@ -11312,28 +11448,24 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// Same size/radius/fill as .app-feature-icon; cyan at rest, not just on hover.
 .dm-icon-well {
-  width: 46px;
-  height: 46px;
-  border-radius: 13px;
-  background: rgba(12, 12, 14, 0.05);
+  width: 40px;
+  height: 40px;
+  border-radius: $dm-radius-sm;
+  background: #eef7fb;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  color: $seo-ink;
+  font-size: 21px;
+  color: $main-color;
   margin-bottom: 18px;
-  transition: background 0.25s ease, color 0.25s ease;
-}
-
-.dm-card:hover .dm-icon-well {
-  background: rgba(29, 211, 248, 0.14);
-  color: #0a90ac;
+  transition: $transition;
 }
 
 .dm-card-dark .dm-icon-well {
   background: rgba(255, 255, 255, 0.06);
-  color: $seo-white;
+  color: $main-color;
 }
 
 .dm-card-dark:hover .dm-icon-well {
@@ -11365,9 +11497,9 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .dm-step-num {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 13px;
-  color: rgba(12, 12, 14, 0.32);
+  color: rgba(15, 23, 42, 0.32);
   letter-spacing: 0.05em;
   margin-bottom: 14px;
   display: block;
@@ -11388,8 +11520,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
       width: 22px;
       height: 22px;
       transform: translateY(-50%);
-      background: $seo-gray;
-      border: 1px solid $seo-line;
+      background: $dm-surface-alt;
+      border: 1px solid $dm-line;
       border-radius: 50%;
       z-index: 2;
 
@@ -11406,8 +11538,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
       width: 8px;
       height: 8px;
       transform: translateY(-50%) rotate(45deg);
-      border-top: 1.5px solid $seo-ink-dim;
-      border-inline-end: 1.5px solid $seo-ink-dim;
+      border-top: 1.5px solid $dm-ink-dim;
+      border-inline-end: 1.5px solid $dm-ink-dim;
       z-index: 3;
 
       @media (max-width: 991px) {
@@ -11430,8 +11562,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid $seo-line;
-  color: $seo-ink-dim;
+  border: 1px solid $dm-line;
+  color: $dm-ink-dim;
   border-radius: 100px;
   padding: 7px 13px;
 
@@ -11450,11 +11582,15 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 .dm-post-card {
   width: 100%;
   max-width: 340px;
-  background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  background: $white-color;
+  border: 1px solid $dm-line;
+  border-radius: $dm-radius;
   padding: 22px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow:
+    0px 24px 48px -20px rgba(15, 23, 42, 0.18),
+    0px 8px 16px -10px rgba(15, 23, 42, 0.1),
+    0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset,
+    0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .dm-skel-badge {
@@ -11480,7 +11616,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     flex: 1;
     height: 10px;
     border-radius: 5px;
-    background: $seo-line;
+    background: $dm-line;
   }
 }
 
@@ -11488,14 +11624,14 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: $seo-line;
+  background: $dm-line;
   flex-shrink: 0;
 }
 
 .dm-post-thumb {
   height: 150px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(29, 211, 248, 0.16), $seo-gray);
+  background: linear-gradient(135deg, rgba(29, 211, 248, 0.16), $dm-surface-alt);
   margin-bottom: 16px;
 }
 
@@ -11503,7 +11639,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: flex;
   gap: 16px;
   font-size: 12px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
 
   span {
     display: inline-flex;
@@ -11517,28 +11653,36 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
+// Icon badge matches .app-plan-features li i exactly (20px circle, tinted fill).
 .dm-list {
   list-style: none;
   margin: 0 0 22px;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 
   li {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
     font-size: 14px;
-    color: $seo-ink-dim;
-    line-height: 1.6;
+    color: $dm-ink-dim;
+    line-height: 1.8;
   }
 
   i {
-    color: $main-color;
-    font-size: 16px;
-    margin-top: 1px;
     flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background-color: rgba(29, 211, 248, 0.14);
+    color: $main-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
   }
 }
 
@@ -11546,16 +11690,16 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 .dm-stat-value {
   display: block;
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
-  color: $seo-ink;
+  color: $dm-ink;
   line-height: 1;
   margin-bottom: 10px;
 }
 
 .dm-stat-label {
   font-size: 14px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
 }
 
 .dm-stat-pending {
@@ -11570,9 +11714,9 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   background: linear-gradient(
     90deg,
-    $seo-line 25%,
+    $dm-line 25%,
     rgba(29, 211, 248, 0.22) 50%,
-    $seo-line 75%
+    $dm-line 75%
   );
   background-size: 200% 100%;
   animation: dmShimmer 2.2s ease-in-out infinite;
@@ -11597,21 +11741,39 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   }
 }
 
-// ---- pricing cards ----
+// ---- pricing cards — box-shadow/hover recipe matches .app-plan-card exactly
+// (soft-emboss, no border, lifts on hover instead of just shadowing) ----
 .dm-plan {
+  border: none;
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  }
+
+  // "Most popular" treatment matches .app-plan-card.is-popular's navy #0a1f44 exactly.
   &.is-popular {
-    background: $seo-black;
-    border-color: $seo-black;
-    color: $seo-white;
+    background: $dm-navy;
+    color: $white-color;
 
     .dm-h3,
     .dm-stat-value {
-      color: $seo-white;
+      color: $white-color;
     }
 
     .dm-p,
     .dm-stat-label {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.65);
     }
 
     .dm-plan-badge {
@@ -11622,22 +11784,19 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
       color: rgba(255, 255, 255, 0.85);
 
       i {
+        background-color: rgba(29, 211, 248, 0.2);
         color: $main-color;
       }
     }
 
     .dm-btn {
-      background: $seo-white;
-      color: $seo-black;
+      background: $white-color;
+      color: $dm-navy;
 
       &:hover {
         background: $main-color;
+        color: $white-color;
       }
-    }
-
-    &:hover {
-      transform: translateY(-5px);
-      border-color: $seo-black;
     }
   }
 }
@@ -11647,10 +11806,11 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  background: rgba(29, 211, 248, 0.16);
-  color: $main-color;
-  font-size: 12px;
-  font-weight: 700;
+  background: $main-color;
+  color: $white-color;
+  font-family: "Cairo", sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
   border-radius: 100px;
   padding: 6px 13px;
   margin-bottom: 14px;
@@ -11658,7 +11818,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .dm-plan-price {
   padding: 16px 0;
-  border-bottom: 1px solid $seo-line;
+  border-bottom: 1px solid $dm-line;
   margin-bottom: 16px;
 }
 
@@ -11666,7 +11826,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   border-color: rgba(255, 255, 255, 0.14);
 }
 
-// ---- FAQ ----
+// ---- FAQ — .accordion__item chrome matches .app-faq-accordion exactly:
+// box-shadow instead of a border, icon tinted cyan at rest ----
 .dm-accordion {
   max-width: 800px;
   margin: 0 auto;
@@ -11674,8 +11835,16 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   .accordion__item {
     margin-bottom: 14px;
     border-radius: 16px;
-    border: 1px solid $seo-line;
+    background-color: $white-color;
+    box-shadow:
+      0px 5px 11px 0px rgba(15, 23, 42, 0.05),
+      0px 2px 2px 0px rgba(15, 23, 42, 0.07);
     overflow: hidden;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 16px 28px -20px rgba(15, 23, 42, 0.35);
+    }
   }
 
   .accordion__button {
@@ -11688,40 +11857,40 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     font-family: "Cairo", sans-serif;
     font-weight: 600;
     font-size: 16px;
-    color: $seo-ink;
+    color: $dm-ink;
 
     &::before {
       display: none;
     }
   }
 
+  // Cyan-tinted circle at rest, matching .app-faq-accordion .accordion__button i.
   .dm-acc-sign {
     flex-shrink: 0;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(12, 12, 14, 0.06);
+    background: rgba(29, 211, 248, 0.12);
+    color: $main-color;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 18px;
     line-height: 1;
-    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+    transition: $transition;
   }
 
   .accordion__button[aria-expanded="true"] .dm-acc-sign {
     transform: rotate(45deg);
-    background: rgba(29, 211, 248, 0.16);
-    color: $main-color;
   }
 
   .accordion__panel {
     padding: 0 24px 22px;
 
     p {
-      color: $seo-ink-dim;
+      color: $dm-ink-dim;
       font-size: 15px;
-      line-height: 1.75;
+      line-height: 1.9;
       margin: 0;
     }
   }
@@ -11734,7 +11903,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   margin: 0 auto;
 
   .dm-h2 {
-    color: $seo-white;
+    color: $white-color;
   }
 }
 
@@ -11742,11 +11911,15 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 .dm-report-card {
   width: 100%;
   max-width: 380px;
-  background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  background: $white-color;
+  border: 1px solid $dm-line;
+  border-radius: $dm-radius;
   padding: 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow:
+    0px 24px 48px -20px rgba(15, 23, 42, 0.18),
+    0px 8px 16px -10px rgba(15, 23, 42, 0.1),
+    0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset,
+    0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .dm-report-bars {
@@ -11782,7 +11955,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  color: $seo-ink-dim;
+  color: $dm-ink-dim;
 }
 
 @media (prefers-reduced-motion: reduce) {

@@ -41,12 +41,14 @@ const Platforms = () => {
           </Reveal>
         </div>
 
-        <AppOrbit />
+        <div className="app-platforms-body">
+          <div className="app-platforms-orbit">
+            <AppOrbit />
+          </div>
 
-        <div className="row">
-          {platforms.map((item, i) => (
-            <div className="col-lg-4 col-md-6" key={item.title}>
-              <Reveal className="app-platform-card" delay={0.08 * i}>
+          <div className="app-platforms-cards">
+            {platforms.map((item, i) => (
+              <Reveal className="app-platform-card" delay={0.08 * i} key={item.title}>
                 <Tilt3D className="app-platform-tilt" max={9} glare={false}>
                   <div className="app-platform-media">
                     <span className="app-platform-sheen" aria-hidden="true"></span>
@@ -70,8 +72,8 @@ const Platforms = () => {
                   </Link>
                 </div>
               </Reveal>
-            </div>
-          ))}
+            ))}
+          </div>
         </div>
       </div>
     </section>

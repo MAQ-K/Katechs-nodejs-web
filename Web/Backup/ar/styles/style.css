@@ -7122,12 +7122,34 @@ sections read as one system.)
   margin-bottom: 0;
   padding-top: 8px;
 }
+.app-platforms .app-platforms-body {
+  display: flex;
+  align-items: center;
+  gap: 36px;
+}
+.app-platforms .app-platforms-orbit {
+  flex: 0 0 320px;
+  max-width: 320px;
+}
+.app-platforms .app-platforms-cards {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
 .app-platforms .app-platform-card {
-  margin-bottom: 30px;
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  margin-bottom: 0;
 }
 .app-platforms .app-platform-media {
   position: relative;
-  aspect-ratio: 4/5;
+  flex: 0 0 76px;
+  width: 76px;
+  height: 76px;
+  aspect-ratio: 1/1;
   border-radius: 12px;
   overflow: hidden;
   display: flex;
@@ -7137,12 +7159,12 @@ sections read as one system.)
   transition: transform 0.5s ease, box-shadow 0.5s ease;
 }
 .app-platforms .app-platform-media i {
-  font-size: 96px;
+  font-size: 34px;
   color: rgba(17, 24, 39, 0.5);
   transition: color 0.5s ease;
 }
 .app-platforms .app-platform-card:hover .app-platform-media {
-  transform: translateY(-8px);
+  transform: translateY(-4px);
   box-shadow: 0 24px 40px -20px rgba(29, 211, 248, 0.45);
 }
 .app-platforms .app-platform-card:hover .app-platform-media i {
@@ -7150,21 +7172,23 @@ sections read as one system.)
 }
 .app-platforms .app-platform-meta {
   display: flex;
-  align-items: flex-end;
+  align-items: center;
   justify-content: space-between;
   gap: 14px;
-  padding-top: 18px;
+  flex: 1 1 auto;
+  min-width: 0;
+  padding-top: 0;
 }
 .app-platforms .app-platform-meta h3 {
   font-family: "Cairo", sans-serif;
-  font-size: 18px;
+  font-size: 15px;
   font-weight: 700;
   color: #ffffff;
-  margin-bottom: 5px;
+  margin-bottom: 3px;
 }
 .app-platforms .app-platform-meta span {
   display: block;
-  font-size: 13px;
+  font-size: 11.5px;
   color: rgba(255, 255, 255, 0.45);
 }
 .app-platforms .app-platform-meta .app-platform-link {
@@ -7172,13 +7196,13 @@ sections read as one system.)
   align-items: center;
   gap: 6px;
   flex-shrink: 0;
-  font-size: 13px;
+  font-size: 12px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.55);
   transition: all 0.6s ease;
 }
 .app-platforms .app-platform-meta .app-platform-link i {
-  font-size: 17px;
+  font-size: 16px;
   line-height: 1;
 }
 .app-platforms .app-platform-meta .app-platform-link:hover {
@@ -7201,6 +7225,16 @@ sections read as one system.)
     max-width: 100%;
     padding-top: 0;
   }
+  .app-platforms .app-platforms-body {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 30px;
+  }
+  .app-platforms .app-platforms-orbit {
+    flex: 0 0 auto;
+    max-width: 100%;
+    align-self: center;
+  }
 }
 @media (max-width: 767px) {
   .app-platforms .app-platforms-head h2 {
@@ -7209,8 +7243,13 @@ sections read as one system.)
   .app-platforms .app-platforms-head h2 br {
     display: none;
   }
+  .app-platforms .app-platform-media {
+    flex-basis: 62px;
+    width: 62px;
+    height: 62px;
+  }
   .app-platforms .app-platform-media i {
-    font-size: 74px;
+    font-size: 28px;
   }
 }
 
@@ -8284,8 +8323,8 @@ Three ground rules held throughout:
 /* ---------- Platforms: 3D phone orbit + card tilt ---------- */
 .app-platforms .app-orbit {
   position: relative;
-  height: 430px;
-  margin-bottom: 60px;
+  height: 300px;
+  margin-bottom: 0;
 }
 .app-platforms .app-orbit-glow {
   position: absolute;
@@ -8311,6 +8350,7 @@ Three ground rules held throughout:
   user-select: none;
   perspective: 1300px;
   perspective-origin: 50% 38%;
+  transform: scale(0.62);
 }
 .app-platforms .app-orbit-stage.is-dragging {
   cursor: grabbing;
@@ -8458,15 +8498,15 @@ Three ground rules held throughout:
   opacity: 1;
   background-position: -130% 0;
 }
-@media (max-width: 1199px) {
+@media (max-width: 991px) {
   .app-platforms .app-orbit-stage {
     transform: scale(0.82);
   }
 }
 @media (max-width: 767px) {
   .app-platforms .app-orbit {
-    height: 300px;
-    margin-bottom: 45px;
+    height: 260px;
+    margin-bottom: 20px;
   }
   .app-platforms .app-orbit-stage {
     transform: scale(0.56);
@@ -8845,7 +8885,7 @@ marquee, the beam and the ambient hero glow.
 
 .seo-h1 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
@@ -8855,7 +8895,7 @@ marquee, the beam and the ambient hero glow.
 
 .seo-h2 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   line-height: 1.25;
   color: #101012;
@@ -8907,8 +8947,8 @@ marquee, the beam and the ambient hero glow.
   font-family: "Droid Arabic Kufi", serif;
   font-weight: 700;
   font-size: 15px;
-  padding: 14px 28px;
-  border-radius: 100px;
+  padding: 16px 30px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, filter 0.18s ease;
@@ -8938,13 +8978,13 @@ marquee, the beam and the ambient hero glow.
 .seo-btn-ghost {
   background: transparent;
   color: #101012;
-  border: 1.5px solid rgba(12, 12, 14, 0.1);
+  border: 1px solid rgba(12, 12, 14, 0.1);
 }
 .seo-btn-ghost:hover {
   filter: none;
-  background: rgba(12, 12, 14, 0.045);
-  border-color: #101012;
-  color: #101012;
+  background: transparent;
+  border-color: #1dd3f8;
+  color: #1dd3f8;
   box-shadow: none;
   transform: translateY(-1px);
 }
@@ -9030,18 +9070,18 @@ marquee, the beam and the ambient hero glow.
 
 .seo-media-panel {
   background: #f6f6f4;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 22px;
+  border-radius: 24px;
   padding: 34px;
   min-height: 380px;
   display: flex;
   align-items: center;
   justify-content: center;
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.14), 0px 8px 16px -10px rgba(15, 23, 42, 0.08);
 }
 
 .seo-dark .seo-media-panel {
   background: #24262d;
-  border-color: rgba(255, 255, 255, 0.1);
+  box-shadow: 0px 24px 48px -20px rgba(0, 0, 0, 0.5), 0px 8px 16px -10px rgba(0, 0, 0, 0.3);
 }
 
 .seo-serp-card {
@@ -9049,10 +9089,9 @@ marquee, the beam and the ambient hero glow.
   width: 100%;
   max-width: 380px;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
 .seo-serp-bar {
@@ -9157,7 +9196,7 @@ marquee, the beam and the ambient hero glow.
 .seo-stat-value {
   display: block;
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
   color: #101012;
   line-height: 1;
@@ -9215,15 +9254,14 @@ marquee, the beam and the ambient hero glow.
   flex-direction: column;
   height: 100%;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 30px 26px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 .seo-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(12, 12, 14, 0.2);
-  box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+  transform: translateY(-6px);
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
 .seo-alt .seo-card {
@@ -9232,12 +9270,12 @@ marquee, the beam and the ambient hero glow.
 
 .seo-card-dark {
   background: #24262d;
-  border: 1px solid rgba(255, 255, 255, 0.1);
   color: rgba(255, 255, 255, 0.85);
+  box-shadow: 0px 7.77px 16px 0px rgba(0, 0, 0, 0.22), 0px 3px 3px 0px rgba(0, 0, 0, 0.18), 0px -8px 0px 0px rgba(0, 0, 0, 0.12) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.06) inset;
 }
 .seo-card-dark:hover {
-  border-color: rgba(255, 255, 255, 0.24);
-  box-shadow: none;
+  transform: translateY(-6px);
+  box-shadow: 0px 22px 38px -16px rgba(0, 0, 0, 0.34), 0px 3px 3px 0px rgba(0, 0, 0, 0.18), 0px -8px 0px 0px rgba(0, 0, 0, 0.12) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.06) inset;
 }
 .seo-card-dark .seo-p {
   color: rgba(255, 255, 255, 0.6);
@@ -9252,7 +9290,7 @@ marquee, the beam and the ambient hero glow.
 .seo-icon-well {
   width: 46px;
   height: 46px;
-  border-radius: 13px;
+  border-radius: 14px;
   background: rgba(12, 12, 14, 0.05);
   display: flex;
   align-items: center;
@@ -9432,7 +9470,7 @@ marquee, the beam and the ambient hero glow.
 .seo-accordion .accordion__item {
   margin-bottom: 14px;
   border-radius: 16px;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  box-shadow: 0px 5px 11px 0px rgba(15, 23, 42, 0.05), 0px 2px 2px 0px rgba(15, 23, 42, 0.07);
   overflow: hidden;
 }
 .seo-accordion .accordion__button {
@@ -9558,10 +9596,9 @@ marquee, the beam and the ambient hero glow.
   width: 100%;
   max-width: 380px;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
 .seo-skel-badge {
@@ -9621,10 +9658,9 @@ marquee, the beam and the ambient hero glow.
   width: 100%;
   max-width: 380px;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
 .seo-report-bars {

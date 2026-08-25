@@ -9,6 +9,13 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-08-25 · UI Implementer — SEO page's `.seo-*` visual system reskinned to match AppDev.**
+  Cards/media panels/faq accordion dropped their `1px solid $seo-line` borders for AppDev's
+  layered emboss box-shadow (radius 18px → 16px), `.seo-btn`/`.seo-btn-ghost` went from a full
+  pill (100px) to AppDev's 10px rounded-rect, headings 800 → 700. Full diff in
+  `brain/logs/2026-08-25.md`. Section list/copy/data untouched — visual only. Anyone touching
+  `components/Seo/**` or the `.seo-*` SCSS block next should read that log first so it isn't
+  reverted by accident.
 - **2026-08-24 · Manager — 🔴 THE PRODUCTION BUILD IS BROKEN.** `npm run build` fails on
   `pages/offers.js`: a raw Google Ads `<script>` block pasted into JSX after a correct `<Script>` block.
   Committed 2026-08-19 (`08a0d78`) — **the site has not been buildable since**. Task **T-022**. Nothing can
