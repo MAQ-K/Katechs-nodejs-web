@@ -12159,21 +12159,38 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
 /* ===================================================================
    Training — visual pass on top of the UX-prototype layouts in
-   components/Training/*.js. Same design system as SEO / Digital Marketing
-   above, under a `tr-` prefix. Replaces styles/ux-prototype.css classes on
-   THIS page only.
+   components/Training/*.js, under a `tr-` prefix so the page never fights
+   over class names with SEO/DM. T-011: reskinned in place to match the App
+   Development page's visual system exactly (components/AppDev + its
+   style.scss blocks) — 16px card radius, rgba(15,23,42,.08) hairline
+   borders, Cairo 700 headings, $main-color cyan accents, .default-btn-style
+   filled buttons and the soft-emboss card/plan recipe — same pass already
+   applied to `.seo-*` and `.dm-*` above. The $tr-* tokens below are
+   AppDev's own values, not approximations. Replaces
+   styles/ux-prototype.css classes on THIS page only; with this landing all
+   three service pages (SEO/DM/Training) share one visual system (T-017 can
+   now delete ux-prototype.css).
    =================================================================== */
+$tr-line: rgba(15, 23, 42, 0.08); // AppDev hairline border (.app-feature-card)
+$tr-line-dark: rgba(255, 255, 255, 0.12);
+$tr-ink: $heading-color; // AppDev heading color (#212121)
+$tr-ink-dim: $body-color; // AppDev body color (#4d4d4d)
+$tr-surface-alt: #f5f6f8; // AppDev section alt ground (.app-hero/.app-pricing)
+$tr-navy: #0a1f44; // AppDev "most popular" plan / dark band (.app-plan-card.is-popular, .app-hero-media)
+$tr-radius: 16px; // AppDev card radius
+$tr-radius-sm: 10px; // AppDev button/icon radius
+
 .tr-section {
   padding: 100px 0;
-  background: $seo-white;
+  background: $white-color;
   overflow: hidden;
 
   &.tr-alt {
-    background: $seo-gray;
+    background: $tr-surface-alt;
   }
 
   &.tr-dark {
-    background: $seo-black;
+    background: $tr-navy;
   }
 
   &.tr-first {
@@ -12212,12 +12229,13 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid $seo-line;
+  border: 1px solid $tr-line;
   border-radius: 100px;
   padding: 7px 16px;
+  font-family: "Cairo", sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: $seo-ink;
+  color: $tr-ink;
   margin-bottom: 20px;
 
   .dot {
@@ -12230,26 +12248,27 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 }
 
 .tr-dark .tr-eyebrow {
-  border-color: $seo-line-dark;
+  border-color: $tr-line-dark;
   color: rgba(255, 255, 255, 0.88);
 }
 
+// Weight/scale match .app-hero-text h1 / .app-pricing-head h2 / .app-plan-card h3.
 .tr-h1 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
-  line-height: 1.1;
+  line-height: 1.28;
   letter-spacing: -0.01em;
-  color: $seo-ink;
+  color: $tr-ink;
   margin-bottom: 22px;
 }
 
 .tr-h2 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
-  line-height: 1.25;
-  color: $seo-ink;
+  line-height: 1.4;
+  color: $tr-ink;
   margin-bottom: 14px;
 }
 
@@ -12257,20 +12276,20 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   font-family: "Cairo", sans-serif;
   font-weight: 700;
   font-size: 17px;
-  color: $seo-ink;
+  color: $tr-ink;
   margin-bottom: 8px;
 }
 
 .tr-dark .tr-h1,
 .tr-dark .tr-h2,
 .tr-dark .tr-h3 {
-  color: $seo-white;
+  color: $white-color;
 }
 
 .tr-p {
-  color: $seo-ink-dim;
+  color: $tr-ink-dim;
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.9;
   margin-bottom: 0;
 }
 
@@ -12280,18 +12299,18 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
 .tr-fit {
   font-size: 13px;
-  color: $seo-ink-dim;
+  color: $tr-ink-dim;
   opacity: 0.85;
   margin: 0;
 }
 
 .tr-card-dark .tr-fit {
-  color: rgba(255, 255, 255, 0.55);
+  color: $tr-ink-dim;
 }
 
 .tr-note {
   font-size: 12px;
-  color: $seo-ink-dim;
+  color: $tr-ink-dim;
   opacity: 0.7;
   margin-top: 14px;
 }
@@ -12312,17 +12331,20 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 }
 
+// Filled CTA — same fill/radius/weight as .default-btn (bg $main-color,
+// 10px radius); keeps its own lift-on-hover instead of the shine sweep
+// since .default-btn's ::before/::after shine is tuned for its own padding.
 .tr-btn {
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: $seo-black;
-  color: $seo-white;
+  background: $main-color;
+  color: $white-color;
   font-family: $body-font-family;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
-  padding: 14px 28px;
-  border-radius: 100px;
+  padding: 16px 31px;
+  border-radius: $tr-radius-sm;
   border: none;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease,
@@ -12334,10 +12356,10 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 
   &:hover {
-    color: $seo-white;
-    filter: brightness(1.22);
+    color: $white-color;
+    filter: brightness(1.08);
     transform: translateY(-1px);
-    box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+    box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.5);
 
     i {
       transform: translateX(-3px);
@@ -12346,7 +12368,7 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
   &:active {
     transform: translateY(0);
-    filter: brightness(1.1);
+    filter: brightness(1.02);
   }
 
   &:disabled {
@@ -12367,29 +12389,31 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 }
 
+// Outlined counterpart — same size/radius as .app-hero-ghost-btn, no fill.
 .tr-btn-ghost {
-  background: transparent;
-  color: $seo-ink;
-  border: 1.5px solid $seo-line;
+  background: $white-color;
+  color: $tr-ink;
+  border: 1px solid #d9dde3;
 
   &:hover {
     filter: none;
-    background: rgba(12, 12, 14, 0.045);
-    border-color: $seo-ink;
-    color: $seo-ink;
+    background: $white-color;
+    border-color: $main-color;
+    color: $main-color;
     box-shadow: none;
     transform: translateY(-1px);
   }
 }
 
 .tr-dark .tr-btn-ghost {
-  color: $seo-white;
-  border-color: $seo-line-dark;
+  background: transparent;
+  color: $white-color;
+  border-color: $tr-line-dark;
 
   &:hover {
     background: rgba(255, 255, 255, 0.06);
-    border-color: rgba(255, 255, 255, 0.4);
-    color: $seo-white;
+    border-color: $main-color;
+    color: $main-color;
   }
 }
 
@@ -12404,8 +12428,8 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
     align-items: center;
     gap: 7px;
     font-size: 13px;
-    color: $seo-ink-dim;
-    border: 1px solid $seo-line;
+    color: $tr-ink-dim;
+    border: 1px solid $tr-line;
     border-radius: 100px;
     padding: 8px 14px;
 
@@ -12457,9 +12481,9 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 }
 
 .tr-media-panel {
-  background: $seo-gray;
-  border: 1px solid $seo-line;
-  border-radius: 22px;
+  background: $tr-surface-alt;
+  border: 1px solid $tr-line;
+  border-radius: $tr-radius;
   padding: 34px;
   min-height: 380px;
   display: flex;
@@ -12468,17 +12492,22 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 }
 
 .tr-alt .tr-media-panel {
-  background: $seo-white;
+  background: $white-color;
 }
 
-// ---- framed hero card (Hero) — from "app page inspiration/1st section.png" ----
+// ---- framed hero card (Hero) — same dark navy band + soft-emboss plate as
+// .app-hero-media/.app-hero-frame, radius matched to AppDev's card language.
 .tr-frame-card {
   position: relative;
-  border-radius: 26px;
+  border-radius: $tr-radius;
   overflow: hidden;
-  background: linear-gradient(150deg, $seo-card-dark 0%, $seo-black 65%);
-  border: 1px solid $seo-line-dark;
-  box-shadow: 0 50px 90px -50px rgba(12, 12, 14, 0.45);
+  background: $tr-navy;
+  border: 1px solid $tr-line-dark;
+  box-shadow:
+    0px 24px 48px -20px rgba(15, 23, 42, 0.18),
+    0px 8px 16px -10px rgba(15, 23, 42, 0.1),
+    0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset,
+    0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .tr-frame-visual {
@@ -12498,7 +12527,7 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
 .tr-frame-num {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 15px;
   color: rgba(255, 255, 255, 0.55);
 }
@@ -12509,7 +12538,7 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   gap: 10px;
   padding: 18px 22px;
   background: rgba(0, 0, 0, 0.22);
-  border-top: 1px solid $seo-line-dark;
+  border-top: 1px solid $tr-line-dark;
   color: rgba(255, 255, 255, 0.85);
   font-size: 14px;
   font-weight: 600;
@@ -12534,16 +12563,16 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 .tr-stat-value {
   display: block;
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
-  color: $seo-ink;
+  color: $tr-ink;
   line-height: 1;
   margin-bottom: 10px;
 }
 
 .tr-stat-label {
   font-size: 14px;
-  color: $seo-ink-dim;
+  color: $tr-ink-dim;
 }
 
 .tr-stat-pending {
@@ -12558,9 +12587,9 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   border-radius: 8px;
   background: linear-gradient(
     90deg,
-    $seo-line 25%,
+    $tr-line 25%,
     rgba(29, 211, 248, 0.22) 50%,
-    $seo-line 75%
+    $tr-line 75%
   );
   background-size: 200% 100%;
   animation: trShimmer 2.2s ease-in-out infinite;
@@ -12598,43 +12627,61 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 }
 
+// Chrome matches .app-feature-card exactly: flat white, 16px radius, 1px
+// hairline border, no lift on hover — only the shadow deepens.
 .tr-card {
   display: flex;
   flex-direction: column;
   height: 100%;
-  background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  background: $white-color;
+  border: 1px solid $tr-line;
+  border-radius: $tr-radius;
   padding: 30px 26px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: $transition;
 
   &:hover {
-    transform: translateY(-5px);
-    border-color: rgba(12, 12, 14, 0.2);
-    box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+    box-shadow: 0 16px 30px -20px rgba(15, 23, 42, 0.18);
   }
 }
 
 .tr-alt .tr-card {
-  background: $seo-white;
+  background: $white-color;
 }
 
+// User feedback on the SEO/DM equivalents ("i hate these black cards"): a
+// plain white card with AppDev's full emboss shadow, floating on the navy
+// .tr-dark section, instead of a same-family dark-on-dark tone.
 .tr-card-dark {
-  background: $seo-card-dark;
-  border: 1px solid $seo-line-dark;
-  color: rgba(255, 255, 255, 0.85);
+  background: $white-color;
+  border: none;
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.24);
-    box-shadow: none;
+    transform: translateY(-6px);
+    box-shadow:
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  }
+
+  // .tr-dark .tr-h3/.tr-p (section-level) force white text for anything
+  // inside the dark section — needs winning back to dark ink now the card
+  // itself is white.
+  .tr-h3 {
+    color: $tr-ink;
   }
 
   .tr-p {
-    color: rgba(255, 255, 255, 0.6);
+    color: $tr-ink-dim;
   }
 
   .tr-stat-label {
-    color: rgba(255, 255, 255, 0.55);
+    color: $tr-ink-dim;
   }
 }
 
@@ -12644,35 +12691,31 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   align-items: center;
 }
 
+// Same size/radius/fill as .app-feature-icon; cyan at rest, not just on hover.
 .tr-icon-well {
-  width: 46px;
-  height: 46px;
-  border-radius: 13px;
-  background: rgba(12, 12, 14, 0.05);
+  width: 40px;
+  height: 40px;
+  border-radius: $tr-radius-sm;
+  background: #eef7fb;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  color: $seo-ink;
+  font-size: 21px;
+  color: $main-color;
   margin-bottom: 18px;
-  transition: background 0.25s ease, color 0.25s ease;
-}
-
-.tr-card:hover .tr-icon-well {
-  background: rgba(29, 211, 248, 0.14);
-  color: #0a90ac;
+  transition: $transition;
 }
 
 .tr-avatar-circle {
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(29, 211, 248, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 34px;
-  color: rgba(255, 255, 255, 0.7);
+  color: $main-color;
   margin: 0 auto 18px;
 
   &.tr-avatar-sm {
@@ -12680,14 +12723,14 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
     height: 42px;
     font-size: 18px;
     margin: 0;
-    background: rgba(12, 12, 14, 0.06);
-    color: $seo-ink-dim;
+    background: $tr-surface-alt;
+    color: $tr-ink-dim;
   }
 }
 
 .tr-quote-icon {
   font-size: 26px;
-  color: rgba(29, 211, 248, 0.35);
+  color: rgba(29, 211, 248, 0.5);
   margin-bottom: 14px;
 }
 
@@ -12702,9 +12745,9 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
 .tr-step-num {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 13px;
-  color: rgba(12, 12, 14, 0.32);
+  color: rgba(15, 23, 42, 0.32);
   letter-spacing: 0.05em;
   margin-bottom: 14px;
   display: block;
@@ -12725,8 +12768,8 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
       width: 22px;
       height: 22px;
       transform: translateY(-50%);
-      background: $seo-white;
-      border: 1px solid $seo-line;
+      background: $tr-surface-alt;
+      border: 1px solid $tr-line;
       border-radius: 50%;
       z-index: 2;
 
@@ -12743,8 +12786,8 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
       width: 8px;
       height: 8px;
       transform: translateY(-50%) rotate(45deg);
-      border-top: 1.5px solid $seo-ink-dim;
-      border-inline-end: 1.5px solid $seo-ink-dim;
+      border-top: 1.5px solid $tr-ink-dim;
+      border-inline-end: 1.5px solid $tr-ink-dim;
       z-index: 3;
 
       @media (max-width: 991px) {
@@ -12757,55 +12800,70 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 .tr-tag-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 14px;
 }
 
 .tr-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid $seo-line;
-  color: $seo-ink-dim;
+  border: 1px solid $tr-line;
+  color: $tr-ink-dim;
   border-radius: 100px;
-  padding: 5px 12px;
+  padding: 7px 13px;
 }
 
+// Icon badge matches .app-plan-features li i exactly (20px circle, tinted fill).
 .tr-list {
   list-style: none;
   margin: 0 0 22px;
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 
   li {
     display: flex;
     align-items: flex-start;
-    gap: 8px;
+    gap: 10px;
     font-size: 14px;
-    color: $seo-ink-dim;
-    line-height: 1.6;
+    color: $tr-ink-dim;
+    line-height: 1.8;
   }
 
   i {
-    color: $main-color;
-    font-size: 16px;
-    margin-top: 1px;
     flex-shrink: 0;
+    width: 20px;
+    height: 20px;
+    margin-top: 4px;
+    border-radius: 50%;
+    background-color: rgba(29, 211, 248, 0.14);
+    color: $main-color;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 14px;
   }
 }
 
-// ---- certificate mock (Certificate) ----
+// ---- certificate mock (Certificate) — outer plate matches the soft-emboss
+// recipe of .app-hero-frame/.dm-campaign-card ----
 .tr-cert-card {
   width: 100%;
   max-width: 340px;
   text-align: center;
-  background: $seo-white;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  background: $white-color;
+  border: 1px solid $tr-line;
+  border-radius: $tr-radius;
   padding: 30px 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow:
+    0px 24px 48px -20px rgba(15, 23, 42, 0.18),
+    0px 8px 16px -10px rgba(15, 23, 42, 0.1),
+    0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset,
+    0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .tr-cert-seal {
@@ -12827,9 +12885,9 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   margin-bottom: 10px;
   background: linear-gradient(
     90deg,
-    $seo-line 25%,
+    $tr-line 25%,
     rgba(29, 211, 248, 0.18) 50%,
-    $seo-line 75%
+    $tr-line 75%
   );
   background-size: 200% 100%;
   animation: trShimmer 2.2s ease-in-out infinite;
@@ -12844,7 +12902,7 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
 .tr-cert-line {
   height: 1px;
-  background: $seo-line;
+  background: $tr-line;
   margin: 18px 0;
 }
 
@@ -12852,14 +12910,14 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  color: $seo-ink-dim;
+  color: $tr-ink-dim;
 }
 
 // ---- schedule table (Schedule) ----
 .tr-table-wrap {
   overflow-x: auto;
-  border: 1px solid $seo-line;
-  border-radius: 18px;
+  border: 1px solid $tr-line;
+  border-radius: $tr-radius;
 }
 
 .tr-table {
@@ -12875,17 +12933,17 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 
   thead th {
-    background: $seo-gray;
-    color: $seo-ink;
+    background: $tr-surface-alt;
+    color: $tr-ink;
     font-family: "Cairo", sans-serif;
     font-weight: 700;
     font-size: 13px;
-    border-bottom: 1px solid $seo-line;
+    border-bottom: 1px solid $tr-line;
   }
 
   tbody td {
-    color: $seo-ink-dim;
-    border-bottom: 1px solid $seo-line;
+    color: $tr-ink-dim;
+    border-bottom: 1px solid $tr-line;
   }
 
   tbody tr:last-child td {
@@ -12897,21 +12955,39 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 }
 
-// ---- pricing cards ----
+// ---- pricing cards — box-shadow/hover recipe matches .app-plan-card exactly
+// (soft-emboss, no border, lifts on hover instead of just shadowing) ----
 .tr-plan {
+  border: none;
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+  &:hover {
+    transform: translateY(-6px);
+    box-shadow:
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  }
+
+  // "Most popular" treatment matches .app-plan-card.is-popular's navy #0a1f44 exactly.
   &.is-popular {
-    background: $seo-black;
-    border-color: $seo-black;
-    color: $seo-white;
+    background: $tr-navy;
+    color: $white-color;
 
     .tr-h3,
     .tr-stat-value {
-      color: $seo-white;
+      color: $white-color;
     }
 
     .tr-p,
     .tr-stat-label {
-      color: rgba(255, 255, 255, 0.6);
+      color: rgba(255, 255, 255, 0.65);
     }
 
     .tr-plan-badge {
@@ -12922,22 +12998,19 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
       color: rgba(255, 255, 255, 0.85);
 
       i {
+        background-color: rgba(29, 211, 248, 0.2);
         color: $main-color;
       }
     }
 
     .tr-btn {
-      background: $seo-white;
-      color: $seo-black;
+      background: $white-color;
+      color: $tr-navy;
 
       &:hover {
         background: $main-color;
+        color: $white-color;
       }
-    }
-
-    &:hover {
-      transform: translateY(-5px);
-      border-color: $seo-black;
     }
   }
 }
@@ -12947,10 +13020,11 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  background: rgba(29, 211, 248, 0.16);
-  color: $main-color;
-  font-size: 12px;
-  font-weight: 700;
+  background: $main-color;
+  color: $white-color;
+  font-family: "Cairo", sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
   border-radius: 100px;
   padding: 6px 13px;
   margin-bottom: 14px;
@@ -12958,7 +13032,7 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
 .tr-plan-price {
   padding: 16px 0;
-  border-bottom: 1px solid $seo-line;
+  border-bottom: 1px solid $tr-line;
   margin-bottom: 16px;
 }
 
@@ -12984,14 +13058,14 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 .tr-label {
   font-size: 13px;
   font-weight: 600;
-  color: $seo-ink;
+  color: $tr-ink;
 }
 
 .tr-select {
-  border: 1px solid $seo-line;
-  background: $seo-white;
-  color: $seo-ink;
-  border-radius: 12px;
+  border: 1px solid $tr-line;
+  background: $white-color;
+  color: $tr-ink;
+  border-radius: $tr-radius-sm;
   padding: 11px 16px;
   font-size: 14px;
   min-width: 150px;
@@ -13004,16 +13078,16 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
 
 .tr-filter-count {
   font-size: 13px;
-  color: $seo-ink-dim;
+  color: $tr-ink-dim;
   margin-bottom: 22px;
 }
 
 .tr-empty {
   text-align: center;
-  border: 1px dashed $seo-line;
-  border-radius: 16px;
+  border: 1px dashed $tr-line;
+  border-radius: $tr-radius;
   padding: 44px 24px;
-  color: $seo-ink-dim;
+  color: $tr-ink-dim;
   font-size: 15px;
 
   .tr-note {
@@ -13021,7 +13095,8 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 }
 
-// ---- FAQ ----
+// ---- FAQ — .accordion__item chrome matches .app-faq-accordion exactly:
+// box-shadow instead of a border, icon tinted cyan at rest ----
 .tr-accordion {
   max-width: 800px;
   margin: 0 auto;
@@ -13029,8 +13104,16 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   .accordion__item {
     margin-bottom: 14px;
     border-radius: 16px;
-    border: 1px solid $seo-line;
+    background-color: $white-color;
+    box-shadow:
+      0px 5px 11px 0px rgba(15, 23, 42, 0.05),
+      0px 2px 2px 0px rgba(15, 23, 42, 0.07);
     overflow: hidden;
+    transition: box-shadow 0.3s ease;
+
+    &:hover {
+      box-shadow: 0 16px 28px -20px rgba(15, 23, 42, 0.35);
+    }
   }
 
   .accordion__button {
@@ -13043,46 +13126,49 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
     font-family: "Cairo", sans-serif;
     font-weight: 600;
     font-size: 16px;
-    color: $seo-ink;
+    color: $tr-ink;
 
     &::before {
       display: none;
     }
   }
 
+  // Cyan-tinted circle at rest, matching .app-faq-accordion .accordion__button i.
   .tr-acc-sign {
     flex-shrink: 0;
-    width: 30px;
-    height: 30px;
+    width: 32px;
+    height: 32px;
     border-radius: 50%;
-    background: rgba(12, 12, 14, 0.06);
+    background: rgba(29, 211, 248, 0.12);
+    color: $main-color;
     display: flex;
     align-items: center;
     justify-content: center;
     font-size: 18px;
     line-height: 1;
-    transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+    transition: $transition;
   }
 
   .accordion__button[aria-expanded="true"] .tr-acc-sign {
     transform: rotate(45deg);
-    background: rgba(29, 211, 248, 0.16);
-    color: $main-color;
   }
 
   .accordion__panel {
     padding: 0 24px 22px;
 
     p {
-      color: $seo-ink-dim;
+      color: $tr-ink-dim;
       font-size: 15px;
-      line-height: 1.75;
+      line-height: 1.9;
       margin: 0;
     }
   }
 }
 
 // ---- CtaBand ----
+// Note: unlike SEO's/DM's CtaBand (both on a `-dark` section), Training's
+// CtaBand.js renders on `tr-alt` (light gray) — no forced white text here;
+// .tr-h2/.tr-p already default to dark ink, which is correct on that ground.
 .tr-cta-band {
   text-align: center;
   max-width: 640px;
@@ -13114,4 +13200,146 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
     height: 40px;
     font-size: 18px;
   }
+}
+
+// === Seo: hover/interaction pass (UI Animator) ===
+// The visual reskins above never revisited hover/interaction — cards, icon
+// wells, badges and the ring row either kept whatever the old editorial
+// system had (nothing, in most cases) or inherited a bare lift. This pass
+// gives the page one hover language instead of section-by-section ad hoc
+// states, built from what's already used site-wide:
+//  - card lift + icon-well nudge = AppDev's own .app-feature-card:hover
+//    .app-feature-icon (translateY + slight rotate) — see line ~9733.
+//    Same Lab preset #2 (Hover micro · Standard, 200-300ms, card grids).
+//  - control/accordion/badge tints = Lab preset #1 (Hover micro · Subtle,
+//    150-200ms) — color/background only, no movement.
+// No new dependency, no JS: everything below is a CSS transition already
+// declared (or extending a transition already declared) on these selectors.
+// Transform/color hovers are not gated behind prefers-reduced-motion, same
+// convention as .seo-card/.app-feature-card above — only infinite/looping
+// keyframe animations get the @media (prefers-reduced-motion: reduce) guard
+// on this page (see line ~10894); a hover microinteraction only ever runs
+// once, on purposeful user input, so it stays on.
+
+// Icon wells now nudge on card hover, matching AppDev's own
+// .app-feature-card:hover .app-feature-icon exactly (translateY + rotate),
+// instead of only recoloring. Covers Pillars' full-size wells and (via
+// .seo-card-corner above) the same wells sized down for its corner cards.
+.seo-icon-well {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease,
+    color 0.25s ease;
+}
+
+.seo-card:hover .seo-icon-well {
+  transform: translateY(-3px) rotate(-8deg);
+}
+
+// Metric tiles (CaseStudies) get the same icon nudge as .seo-card, plus the
+// trend chevron reads slightly larger on hover so the up/down direction is
+// the thing that pops, not just the whole tile lifting.
+.seo-metric-icon {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-metric-card:hover .seo-metric-icon {
+  transform: translateY(-2px) scale(1.08);
+}
+
+// Check-mark list items (AiSearch differentiators, Reporting report
+// contents, Pricing plan features) — a quiet per-row response so the list
+// doesn't read as flat text under an otherwise animated page. Vertical-only
+// motion, no side-specific translate, so it's RTL-safe without a mirrored
+// override.
+.seo-list li {
+  transition: color 0.2s ease;
+
+  i {
+    transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease;
+  }
+
+  &:hover {
+    color: $seopal-ink;
+
+    i {
+      transform: translateY(-1px) scale(1.15);
+      color: $main-color;
+    }
+  }
+}
+
+.seo-plan.is-popular .seo-list li:hover {
+  color: $seo-white;
+}
+
+// FAQ accordion — the button had cursor:pointer and nothing else backing it
+// up; a hover state now previews the same interaction the click performs
+// (the sign well deepens exactly like it does on expand, see
+// .accordion__button[aria-expanded="true"] .seo-acc-sign above) plus a soft
+// background wash so the row itself reads as a hit target.
+.seo-accordion {
+  .accordion__button {
+    transition: background 0.25s ease;
+
+    &:hover {
+      background: $seopal-gray;
+    }
+  }
+
+  .accordion__button:hover .seo-acc-sign {
+    background: rgba(29, 211, 248, 0.18);
+  }
+}
+
+// Reporting's ring row — four static SVG arcs with no response to the
+// cursor at all before this pass. Hover lifts + glows the ring (echoes the
+// site's card-lift shadow language at small scale) and brightens both the
+// center value and the "state" tag so a user scanning the row gets visual
+// confirmation on the one they're pointing at, without re-running the
+// draw-in animation (which is a one-shot scroll reveal, not a loop, so
+// re-triggering it on hover would fight the Lab's "no orphaned tweens" rule
+// every time the cursor passes over the row).
+.seo-ring {
+  border-radius: 16px;
+  padding: 8px;
+  transition: background 0.25s ease;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.6);
+  }
+}
+
+.seo-ring-circle {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+}
+
+.seo-ring:hover .seo-ring-circle {
+  transform: scale(1.06);
+  filter: drop-shadow(0 10px 16px rgba(15, 23, 42, 0.18));
+}
+
+.seo-ring-value {
+  transition: color 0.2s ease;
+}
+
+.seo-ring:hover .seo-ring-value {
+  color: $main-color;
+}
+
+.seo-ring-state {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-ring:hover .seo-ring-state {
+  transform: scale(1.08);
+}
+
+// Popular-plan badge gets a matching pulse when its card lifts, instead of
+// riding along static while everything else on the card moves.
+.seo-plan-badge {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-plan.is-popular:hover .seo-plan-badge {
+  transform: scale(1.06);
 }

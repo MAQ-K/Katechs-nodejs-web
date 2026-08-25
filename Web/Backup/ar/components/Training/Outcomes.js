@@ -34,7 +34,7 @@ const Outcomes = () => {
         >
           {items.map((n) => (
             <motion.div className="tr-card" key={n} variants={staggerItem()}>
-              <i className="bx bxs-quote-alt-left tr-quote-icon"></i>
+              <i className="bx bx-quote-alt-left tr-quote-icon"></i>
               <p className="tr-p">
                 نص رأي المتدرب — ما الذي كان يريده قبل الدورة، وما الذي
                 استطاع فعله بعدها.

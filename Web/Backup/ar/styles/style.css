@@ -10686,9 +10686,17 @@ marquee, the beam and the ambient hero glow.
 }
 /* ===================================================================
    Training — visual pass on top of the UX-prototype layouts in
-   components/Training/*.js. Same design system as SEO / Digital Marketing
-   above, under a `tr-` prefix. Replaces styles/ux-prototype.css classes on
-   THIS page only.
+   components/Training/*.js, under a `tr-` prefix so the page never fights
+   over class names with SEO/DM. T-011: reskinned in place to match the App
+   Development page's visual system exactly (components/AppDev + its
+   style.scss blocks) — 16px card radius, rgba(15,23,42,.08) hairline
+   borders, Cairo 700 headings, $main-color cyan accents, .default-btn-style
+   filled buttons and the soft-emboss card/plan recipe — same pass already
+   applied to `.seo-*` and `.dm-*` above. The $tr-* tokens below are
+   AppDev's own values, not approximations. Replaces
+   styles/ux-prototype.css classes on THIS page only; with this landing all
+   three service pages (SEO/DM/Training) share one visual system (T-017 can
+   now delete ux-prototype.css).
    =================================================================== */
 .tr-section {
   padding: 100px 0;
@@ -10696,10 +10704,10 @@ marquee, the beam and the ambient hero glow.
   overflow: hidden;
 }
 .tr-section.tr-alt {
-  background: #f6f6f4;
+  background: #f5f6f8;
 }
 .tr-section.tr-dark {
-  background: #1b1d23;
+  background: #0a1f44;
 }
 .tr-section.tr-first {
   padding-top: 160px;
@@ -10735,12 +10743,13 @@ marquee, the beam and the ambient hero glow.
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
   padding: 7px 16px;
+  font-family: "Cairo", sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #101012;
+  color: #212121;
   margin-bottom: 20px;
 }
 .tr-eyebrow .dot {
@@ -10752,26 +10761,26 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-dark .tr-eyebrow {
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.88);
 }
 
 .tr-h1 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
-  line-height: 1.1;
+  line-height: 1.28;
   letter-spacing: -0.01em;
-  color: #101012;
+  color: #212121;
   margin-bottom: 22px;
 }
 
 .tr-h2 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
-  line-height: 1.25;
-  color: #101012;
+  line-height: 1.4;
+  color: #212121;
   margin-bottom: 14px;
 }
 
@@ -10779,7 +10788,7 @@ marquee, the beam and the ambient hero glow.
   font-family: "Cairo", sans-serif;
   font-weight: 700;
   font-size: 17px;
-  color: #101012;
+  color: #212121;
   margin-bottom: 8px;
 }
 
@@ -10790,9 +10799,9 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-p {
-  color: #6c6c72;
+  color: #4d4d4d;
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.9;
   margin-bottom: 0;
 }
 
@@ -10802,18 +10811,18 @@ marquee, the beam and the ambient hero glow.
 
 .tr-fit {
   font-size: 13px;
-  color: #6c6c72;
+  color: #4d4d4d;
   opacity: 0.85;
   margin: 0;
 }
 
 .tr-card-dark .tr-fit {
-  color: rgba(255, 255, 255, 0.55);
+  color: #4d4d4d;
 }
 
 .tr-note {
   font-size: 12px;
-  color: #6c6c72;
+  color: #4d4d4d;
   opacity: 0.7;
   margin-top: 14px;
 }
@@ -10837,13 +10846,13 @@ marquee, the beam and the ambient hero glow.
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #1b1d23;
+  background: #1dd3f8;
   color: #ffffff;
   font-family: "Droid Arabic Kufi", serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
-  padding: 14px 28px;
-  border-radius: 100px;
+  padding: 16px 31px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, filter 0.18s ease;
@@ -10854,16 +10863,16 @@ marquee, the beam and the ambient hero glow.
 }
 .tr-btn:hover {
   color: #ffffff;
-  filter: brightness(1.22);
+  filter: brightness(1.08);
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+  box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.5);
 }
 .tr-btn:hover i {
   transform: translateX(-3px);
 }
 .tr-btn:active {
   transform: translateY(0);
-  filter: brightness(1.1);
+  filter: brightness(1.02);
 }
 .tr-btn:disabled {
   opacity: 0.4;
@@ -10881,27 +10890,28 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-btn-ghost {
-  background: transparent;
-  color: #101012;
-  border: 1.5px solid rgba(12, 12, 14, 0.1);
+  background: #ffffff;
+  color: #212121;
+  border: 1px solid #d9dde3;
 }
 .tr-btn-ghost:hover {
   filter: none;
-  background: rgba(12, 12, 14, 0.045);
-  border-color: #101012;
-  color: #101012;
+  background: #ffffff;
+  border-color: #1dd3f8;
+  color: #1dd3f8;
   box-shadow: none;
   transform: translateY(-1px);
 }
 
 .tr-dark .tr-btn-ghost {
+  background: transparent;
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 .tr-dark .tr-btn-ghost:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;
+  border-color: #1dd3f8;
+  color: #1dd3f8;
 }
 
 .tr-proof-row {
@@ -10915,8 +10925,8 @@ marquee, the beam and the ambient hero glow.
   align-items: center;
   gap: 7px;
   font-size: 13px;
-  color: #6c6c72;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  color: #4d4d4d;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
   padding: 8px 14px;
 }
@@ -10963,9 +10973,9 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-media-panel {
-  background: #f6f6f4;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 22px;
+  background: #f5f6f8;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 34px;
   min-height: 380px;
   display: flex;
@@ -10979,11 +10989,11 @@ marquee, the beam and the ambient hero glow.
 
 .tr-frame-card {
   position: relative;
-  border-radius: 26px;
+  border-radius: 16px;
   overflow: hidden;
-  background: linear-gradient(150deg, #24262d 0%, #1b1d23 65%);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  box-shadow: 0 50px 90px -50px rgba(12, 12, 14, 0.45);
+  background: #0a1f44;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .tr-frame-visual {
@@ -10998,7 +11008,7 @@ marquee, the beam and the ambient hero glow.
 
 .tr-frame-num {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 15px;
   color: rgba(255, 255, 255, 0.55);
 }
@@ -11009,7 +11019,7 @@ marquee, the beam and the ambient hero glow.
   gap: 10px;
   padding: 18px 22px;
   background: rgba(0, 0, 0, 0.22);
-  border-top: 1px solid rgba(255, 255, 255, 0.1);
+  border-top: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.85);
   font-size: 14px;
   font-weight: 600;
@@ -11032,16 +11042,16 @@ marquee, the beam and the ambient hero glow.
 .tr-stat-value {
   display: block;
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
-  color: #101012;
+  color: #212121;
   line-height: 1;
   margin-bottom: 10px;
 }
 
 .tr-stat-label {
   font-size: 14px;
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 
 .tr-stat-pending {
@@ -11054,7 +11064,7 @@ marquee, the beam and the ambient hero glow.
   width: 64%;
   height: 18px;
   border-radius: 8px;
-  background: linear-gradient(90deg, rgba(12, 12, 14, 0.1) 25%, rgba(29, 211, 248, 0.22) 50%, rgba(12, 12, 14, 0.1) 75%);
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.08) 25%, rgba(29, 211, 248, 0.22) 50%, rgba(15, 23, 42, 0.08) 75%);
   background-size: 200% 100%;
   animation: trShimmer 2.2s ease-in-out infinite;
 }
@@ -11094,15 +11104,13 @@ marquee, the beam and the ambient hero glow.
   flex-direction: column;
   height: 100%;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 30px 26px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: all 0.6s ease;
 }
 .tr-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(12, 12, 14, 0.2);
-  box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+  box-shadow: 0 16px 30px -20px rgba(15, 23, 42, 0.18);
 }
 
 .tr-alt .tr-card {
@@ -11110,19 +11118,22 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-card-dark {
-  background: #24262d;
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  color: rgba(255, 255, 255, 0.85);
+  background: #ffffff;
+  border: none;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 .tr-card-dark:hover {
-  border-color: rgba(255, 255, 255, 0.24);
-  box-shadow: none;
+  transform: translateY(-6px);
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+}
+.tr-card-dark .tr-h3 {
+  color: #212121;
 }
 .tr-card-dark .tr-p {
-  color: rgba(255, 255, 255, 0.6);
+  color: #4d4d4d;
 }
 .tr-card-dark .tr-stat-label {
-  color: rgba(255, 255, 255, 0.55);
+  color: #4d4d4d;
 }
 
 .tr-instructor-card,
@@ -11132,34 +11143,29 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-icon-well {
-  width: 46px;
-  height: 46px;
-  border-radius: 13px;
-  background: rgba(12, 12, 14, 0.05);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #eef7fb;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  color: #101012;
+  font-size: 21px;
+  color: #1dd3f8;
   margin-bottom: 18px;
-  transition: background 0.25s ease, color 0.25s ease;
-}
-
-.tr-card:hover .tr-icon-well {
-  background: rgba(29, 211, 248, 0.14);
-  color: #0a90ac;
+  transition: all 0.6s ease;
 }
 
 .tr-avatar-circle {
   width: 84px;
   height: 84px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.06);
+  background: rgba(29, 211, 248, 0.12);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 34px;
-  color: rgba(255, 255, 255, 0.7);
+  color: #1dd3f8;
   margin: 0 auto 18px;
 }
 .tr-avatar-circle.tr-avatar-sm {
@@ -11167,13 +11173,13 @@ marquee, the beam and the ambient hero glow.
   height: 42px;
   font-size: 18px;
   margin: 0;
-  background: rgba(12, 12, 14, 0.06);
-  color: #6c6c72;
+  background: #f5f6f8;
+  color: #4d4d4d;
 }
 
 .tr-quote-icon {
   font-size: 26px;
-  color: rgba(29, 211, 248, 0.35);
+  color: rgba(29, 211, 248, 0.5);
   margin-bottom: 14px;
 }
 
@@ -11188,9 +11194,9 @@ marquee, the beam and the ambient hero glow.
 
 .tr-step-num {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 13px;
-  color: rgba(12, 12, 14, 0.32);
+  color: rgba(15, 23, 42, 0.32);
   letter-spacing: 0.05em;
   margin-bottom: 14px;
   display: block;
@@ -11210,8 +11216,8 @@ marquee, the beam and the ambient hero glow.
   width: 22px;
   height: 22px;
   transform: translateY(-50%);
-  background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  background: #f5f6f8;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 50%;
   z-index: 2;
 }
@@ -11228,8 +11234,8 @@ marquee, the beam and the ambient hero glow.
   width: 8px;
   height: 8px;
   transform: translateY(-50%) rotate(45deg);
-  border-top: 1.5px solid #6c6c72;
-  border-inline-end: 1.5px solid #6c6c72;
+  border-top: 1.5px solid #4d4d4d;
+  border-inline-end: 1.5px solid #4d4d4d;
   z-index: 3;
 }
 @media (max-width: 991px) {
@@ -11241,18 +11247,20 @@ marquee, the beam and the ambient hero glow.
 .tr-tag-row {
   display: flex;
   flex-wrap: wrap;
-  gap: 8px;
+  gap: 10px;
   margin-bottom: 14px;
 }
 
 .tr-tag {
-  display: inline-block;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  color: #6c6c72;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #4d4d4d;
   border-radius: 100px;
-  padding: 5px 12px;
+  padding: 7px 13px;
 }
 
 .tr-list {
@@ -11261,21 +11269,28 @@ marquee, the beam and the ambient hero glow.
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 .tr-list li {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
   font-size: 14px;
-  color: #6c6c72;
-  line-height: 1.6;
+  color: #4d4d4d;
+  line-height: 1.8;
 }
 .tr-list i {
-  color: #1dd3f8;
-  font-size: 16px;
-  margin-top: 1px;
   flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: #1dd3f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
 }
 
 .tr-cert-card {
@@ -11283,10 +11298,10 @@ marquee, the beam and the ambient hero glow.
   max-width: 340px;
   text-align: center;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 30px 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .tr-cert-seal {
@@ -11306,7 +11321,7 @@ marquee, the beam and the ambient hero glow.
   height: 10px;
   border-radius: 5px;
   margin-bottom: 10px;
-  background: linear-gradient(90deg, rgba(12, 12, 14, 0.1) 25%, rgba(29, 211, 248, 0.18) 50%, rgba(12, 12, 14, 0.1) 75%);
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.08) 25%, rgba(29, 211, 248, 0.18) 50%, rgba(15, 23, 42, 0.08) 75%);
   background-size: 200% 100%;
   animation: trShimmer 2.2s ease-in-out infinite;
 }
@@ -11319,7 +11334,7 @@ marquee, the beam and the ambient hero glow.
 
 .tr-cert-line {
   height: 1px;
-  background: rgba(12, 12, 14, 0.1);
+  background: rgba(15, 23, 42, 0.08);
   margin: 18px 0;
 }
 
@@ -11327,13 +11342,13 @@ marquee, the beam and the ambient hero glow.
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 
 .tr-table-wrap {
   overflow-x: auto;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
 }
 
 .tr-table {
@@ -11348,16 +11363,16 @@ marquee, the beam and the ambient hero glow.
   font-size: 14px;
 }
 .tr-table thead th {
-  background: #f6f6f4;
-  color: #101012;
+  background: #f5f6f8;
+  color: #212121;
   font-family: "Cairo", sans-serif;
   font-weight: 700;
   font-size: 13px;
-  border-bottom: 1px solid rgba(12, 12, 14, 0.1);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 .tr-table tbody td {
-  color: #6c6c72;
-  border-bottom: 1px solid rgba(12, 12, 14, 0.1);
+  color: #4d4d4d;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
 }
 .tr-table tbody tr:last-child td {
   border-bottom: none;
@@ -11366,9 +11381,17 @@ marquee, the beam and the ambient hero glow.
   background: rgba(29, 211, 248, 0.04);
 }
 
+.tr-plan {
+  border: none;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.tr-plan:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+}
 .tr-plan.is-popular {
-  background: #1b1d23;
-  border-color: #1b1d23;
+  background: #0a1f44;
   color: #ffffff;
 }
 .tr-plan.is-popular .tr-h3,
@@ -11377,7 +11400,7 @@ marquee, the beam and the ambient hero glow.
 }
 .tr-plan.is-popular .tr-p,
 .tr-plan.is-popular .tr-stat-label {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
 }
 .tr-plan.is-popular .tr-plan-badge {
   display: inline-flex;
@@ -11386,18 +11409,16 @@ marquee, the beam and the ambient hero glow.
   color: rgba(255, 255, 255, 0.85);
 }
 .tr-plan.is-popular .tr-list li i {
+  background-color: rgba(29, 211, 248, 0.2);
   color: #1dd3f8;
 }
 .tr-plan.is-popular .tr-btn {
   background: #ffffff;
-  color: #1b1d23;
+  color: #0a1f44;
 }
 .tr-plan.is-popular .tr-btn:hover {
   background: #1dd3f8;
-}
-.tr-plan.is-popular:hover {
-  transform: translateY(-5px);
-  border-color: #1b1d23;
+  color: #ffffff;
 }
 
 .tr-plan-badge {
@@ -11405,10 +11426,11 @@ marquee, the beam and the ambient hero glow.
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  background: rgba(29, 211, 248, 0.16);
-  color: #1dd3f8;
-  font-size: 12px;
-  font-weight: 700;
+  background: #1dd3f8;
+  color: #ffffff;
+  font-family: "Cairo", sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
   border-radius: 100px;
   padding: 6px 13px;
   margin-bottom: 14px;
@@ -11416,7 +11438,7 @@ marquee, the beam and the ambient hero glow.
 
 .tr-plan-price {
   padding: 16px 0;
-  border-bottom: 1px solid rgba(12, 12, 14, 0.1);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   margin-bottom: 16px;
 }
 
@@ -11441,14 +11463,14 @@ marquee, the beam and the ambient hero glow.
 .tr-label {
   font-size: 13px;
   font-weight: 600;
-  color: #101012;
+  color: #212121;
 }
 
 .tr-select {
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   background: #ffffff;
-  color: #101012;
-  border-radius: 12px;
+  color: #212121;
+  border-radius: 10px;
   padding: 11px 16px;
   font-size: 14px;
   min-width: 150px;
@@ -11460,16 +11482,16 @@ marquee, the beam and the ambient hero glow.
 
 .tr-filter-count {
   font-size: 13px;
-  color: #6c6c72;
+  color: #4d4d4d;
   margin-bottom: 22px;
 }
 
 .tr-empty {
   text-align: center;
-  border: 1px dashed rgba(12, 12, 14, 0.1);
+  border: 1px dashed rgba(15, 23, 42, 0.08);
   border-radius: 16px;
   padding: 44px 24px;
-  color: #6c6c72;
+  color: #4d4d4d;
   font-size: 15px;
 }
 .tr-empty .tr-note {
@@ -11483,8 +11505,13 @@ marquee, the beam and the ambient hero glow.
 .tr-accordion .accordion__item {
   margin-bottom: 14px;
   border-radius: 16px;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  background-color: #ffffff;
+  box-shadow: 0px 5px 11px 0px rgba(15, 23, 42, 0.05), 0px 2px 2px 0px rgba(15, 23, 42, 0.07);
   overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+.tr-accordion .accordion__item:hover {
+  box-shadow: 0 16px 28px -20px rgba(15, 23, 42, 0.35);
 }
 .tr-accordion .accordion__button {
   display: flex;
@@ -11496,36 +11523,35 @@ marquee, the beam and the ambient hero glow.
   font-family: "Cairo", sans-serif;
   font-weight: 600;
   font-size: 16px;
-  color: #101012;
+  color: #212121;
 }
 .tr-accordion .accordion__button::before {
   display: none;
 }
 .tr-accordion .tr-acc-sign {
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: rgba(12, 12, 14, 0.06);
+  background: rgba(29, 211, 248, 0.12);
+  color: #1dd3f8;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   line-height: 1;
-  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  transition: all 0.6s ease;
 }
 .tr-accordion .accordion__button[aria-expanded=true] .tr-acc-sign {
   transform: rotate(45deg);
-  background: rgba(29, 211, 248, 0.16);
-  color: #1dd3f8;
 }
 .tr-accordion .accordion__panel {
   padding: 0 24px 22px;
 }
 .tr-accordion .accordion__panel p {
-  color: #6c6c72;
+  color: #4d4d4d;
   font-size: 15px;
-  line-height: 1.75;
+  line-height: 1.9;
   margin: 0;
 }
 
@@ -11545,6 +11571,93 @@ marquee, the beam and the ambient hero glow.
   width: 40px;
   height: 40px;
   font-size: 18px;
+}
+
+.seo-icon-well {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), background 0.25s ease, color 0.25s ease;
+}
+
+.seo-card:hover .seo-icon-well {
+  transform: translateY(-3px) rotate(-8deg);
+}
+
+.seo-metric-icon {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-metric-card:hover .seo-metric-icon {
+  transform: translateY(-2px) scale(1.08);
+}
+
+.seo-list li {
+  transition: color 0.2s ease;
+}
+.seo-list li i {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.2s ease;
+}
+.seo-list li:hover {
+  color: #212121;
+}
+.seo-list li:hover i {
+  transform: translateY(-1px) scale(1.15);
+  color: #1dd3f8;
+}
+
+.seo-plan.is-popular .seo-list li:hover {
+  color: #ffffff;
+}
+
+.seo-accordion .accordion__button {
+  transition: background 0.25s ease;
+}
+.seo-accordion .accordion__button:hover {
+  background: #f5f6f8;
+}
+.seo-accordion .accordion__button:hover .seo-acc-sign {
+  background: rgba(29, 211, 248, 0.18);
+}
+
+.seo-ring {
+  border-radius: 16px;
+  padding: 8px;
+  transition: background 0.25s ease;
+}
+.seo-ring:hover {
+  background: rgba(255, 255, 255, 0.6);
+}
+
+.seo-ring-circle {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), filter 0.3s ease;
+}
+
+.seo-ring:hover .seo-ring-circle {
+  transform: scale(1.06);
+  filter: drop-shadow(0 10px 16px rgba(15, 23, 42, 0.18));
+}
+
+.seo-ring-value {
+  transition: color 0.2s ease;
+}
+
+.seo-ring:hover .seo-ring-value {
+  color: #1dd3f8;
+}
+
+.seo-ring-state {
+  display: inline-block;
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-ring:hover .seo-ring-state {
+  transform: scale(1.08);
+}
+
+.seo-plan-badge {
+  transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.seo-plan.is-popular:hover .seo-plan-badge {
+  transform: scale(1.06);
 }
 
 /*# sourceMappingURL=style.css.map */

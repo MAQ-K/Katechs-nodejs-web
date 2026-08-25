@@ -9,6 +9,16 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-08-25 · UI Implementer — Training page's `.tr-*` visual system reskinned to match AppDev.**
+  Same pass as SEO/DM: `.tr-*` block (styles/style.scss ~L12160-13097) rebuilt with its own
+  `$tr-*` token set (was riding on `$seo-*`), cards dropped hover-lift/border-darken for
+  AppDev's shadow-only-on-hover feature-card recipe, `.tr-card-dark` (Instructors) went from a
+  literal dark card to white+emboss on the navy section (same "no black cards" fix SEO/DM got),
+  buttons went from full-pill/black to 10px-radius/cyan. Two `bxs-*` solid-icon bugs fixed along
+  the way (Outcomes.js, Certificate.js — rendered as empty boxes). **All three G1 service pages
+  now share one visual system — T-011 is REVIEW, T-017 (delete `ux-prototype.css`) can run once
+  the user has looked.** Full diff in `brain/logs/2026-08-25.md`. Anyone touching
+  `components/Training/**` or `.tr-*` next should read that log first.
 - **2026-08-25 · UI Implementer — SEO page's `.seo-*` visual system reskinned to match AppDev.**
   Cards/media panels/faq accordion dropped their `1px solid $seo-line` borders for AppDev's
   layered emboss box-shadow (radius 18px → 16px), `.seo-btn`/`.seo-btn-ghost` went from a full

@@ -52,7 +52,7 @@ const Certificate = () => {
               <div className="tr-media-panel">
                 <div className="tr-cert-card">
                   <span className="tr-cert-seal">
-                    <i className="bx bxs-award"></i>
+                    <i className="bx bx-medal"></i>
                   </span>
                   <div className="tr-skel-line w80" style={{ marginInline: "auto" }}></div>
                   <div className="tr-skel-line w60" style={{ marginInline: "auto" }}></div>
