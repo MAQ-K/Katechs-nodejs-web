@@ -7128,8 +7128,9 @@ sections read as one system.)
   gap: 36px;
 }
 .app-platforms .app-platforms-orbit {
-  flex: 0 0 320px;
-  max-width: 320px;
+  flex: 0 0 250px;
+  max-width: 250px;
+  overflow: hidden;
 }
 .app-platforms .app-platforms-cards {
   flex: 1 1 auto;
@@ -8323,7 +8324,7 @@ Three ground rules held throughout:
 /* ---------- Platforms: 3D phone orbit + card tilt ---------- */
 .app-platforms .app-orbit {
   position: relative;
-  height: 300px;
+  height: 230px;
   margin-bottom: 0;
 }
 .app-platforms .app-orbit-glow {
@@ -8350,7 +8351,7 @@ Three ground rules held throughout:
   user-select: none;
   perspective: 1300px;
   perspective-origin: 50% 38%;
-  transform: scale(0.62);
+  transform: scale(0.46);
 }
 .app-platforms .app-orbit-stage.is-dragging {
   cursor: grabbing;
@@ -9707,9 +9708,13 @@ marquee, the beam and the ambient hero glow.
 }
 /* ===================================================================
    Digital Marketing — visual pass on top of the UX-prototype layouts in
-   components/DigitalMarketing/*.js. Same design system as the SEO page
-   above (same color tokens, spacing, radius, shadow conventions) under a
-   `dm-` prefix so the two pages never fight over class names. Replaces
+   components/DigitalMarketing/*.js, under a `dm-` prefix so the page never
+   fights over class names with SEO/Training. T-011: reskinned in place to
+   match the App Development page's visual system exactly (components/AppDev
+   + its style.scss blocks) — 16px card radius, rgba(15,23,42,.08) hairline
+   borders, Cairo 700 headings, $main-color cyan accents, .default-btn-style
+   filled buttons and the soft-emboss pricing-card recipe. The $dm-* tokens
+   below are AppDev's own values, not approximations. Replaces
    styles/ux-prototype.css classes on THIS page only; that file stays
    imported for Training until its own pass lands.
    =================================================================== */
@@ -9719,10 +9724,10 @@ marquee, the beam and the ambient hero glow.
   overflow: hidden;
 }
 .dm-section.dm-alt {
-  background: #f6f6f4;
+  background: #f5f6f8;
 }
 .dm-section.dm-dark {
-  background: #1b1d23;
+  background: #0b0b0d;
 }
 .dm-section.dm-first {
   padding-top: 160px;
@@ -9758,12 +9763,13 @@ marquee, the beam and the ambient hero glow.
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
   padding: 7px 16px;
+  font-family: "Cairo", sans-serif;
   font-size: 13px;
   font-weight: 600;
-  color: #101012;
+  color: #212121;
   margin-bottom: 20px;
 }
 .dm-eyebrow .dot {
@@ -9775,26 +9781,26 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-dark .dm-eyebrow {
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.88);
 }
 
 .dm-h1 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
-  line-height: 1.1;
+  line-height: 1.28;
   letter-spacing: -0.01em;
-  color: #101012;
+  color: #212121;
   margin-bottom: 22px;
 }
 
 .dm-h2 {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
-  line-height: 1.25;
-  color: #101012;
+  line-height: 1.4;
+  color: #212121;
   margin-bottom: 14px;
 }
 
@@ -9802,7 +9808,7 @@ marquee, the beam and the ambient hero glow.
   font-family: "Cairo", sans-serif;
   font-weight: 700;
   font-size: 17px;
-  color: #101012;
+  color: #212121;
   margin-bottom: 8px;
 }
 
@@ -9813,9 +9819,9 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-p {
-  color: #6c6c72;
+  color: #4d4d4d;
   font-size: 16px;
-  line-height: 1.8;
+  line-height: 1.9;
   margin-bottom: 0;
 }
 
@@ -9825,7 +9831,7 @@ marquee, the beam and the ambient hero glow.
 
 .dm-note {
   font-size: 12px;
-  color: #6c6c72;
+  color: #4d4d4d;
   opacity: 0.7;
   margin-top: 14px;
 }
@@ -9849,13 +9855,13 @@ marquee, the beam and the ambient hero glow.
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: #1b1d23;
+  background: #1dd3f8;
   color: #ffffff;
   font-family: "Droid Arabic Kufi", serif;
-  font-weight: 700;
+  font-weight: 600;
   font-size: 15px;
-  padding: 14px 28px;
-  border-radius: 100px;
+  padding: 16px 31px;
+  border-radius: 10px;
   border: none;
   cursor: pointer;
   transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, filter 0.18s ease;
@@ -9866,16 +9872,16 @@ marquee, the beam and the ambient hero glow.
 }
 .dm-btn:hover {
   color: #ffffff;
-  filter: brightness(1.22);
+  filter: brightness(1.08);
   transform: translateY(-1px);
-  box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+  box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.5);
 }
 .dm-btn:hover i {
   transform: translateX(-3px);
 }
 .dm-btn:active {
   transform: translateY(0);
-  filter: brightness(1.1);
+  filter: brightness(1.02);
 }
 .dm-btn.dm-btn-block {
   width: 100%;
@@ -9883,37 +9889,38 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-btn-ghost {
-  background: transparent;
-  color: #101012;
-  border: 1.5px solid rgba(12, 12, 14, 0.1);
+  background: #ffffff;
+  color: #212121;
+  border: 1px solid #d9dde3;
 }
 .dm-btn-ghost:hover {
   filter: none;
-  background: rgba(12, 12, 14, 0.045);
-  border-color: #101012;
-  color: #101012;
+  background: #ffffff;
+  border-color: #1dd3f8;
+  color: #1dd3f8;
   box-shadow: none;
   transform: translateY(-1px);
 }
 
 .dm-dark .dm-btn-ghost {
+  background: transparent;
   color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.1);
+  border-color: rgba(255, 255, 255, 0.12);
 }
 .dm-dark .dm-btn-ghost:hover {
   background: rgba(255, 255, 255, 0.06);
-  border-color: rgba(255, 255, 255, 0.4);
-  color: #ffffff;
+  border-color: #1dd3f8;
+  color: #1dd3f8;
 }
 
 .dm-btn-invert {
   background: #ffffff;
-  color: #1b1d23;
+  color: #212121;
 }
 .dm-btn-invert:hover {
   filter: none;
   background: #1dd3f8;
-  color: #1b1d23;
+  color: #ffffff;
   box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.4);
 }
 
@@ -9928,8 +9935,8 @@ marquee, the beam and the ambient hero glow.
   align-items: center;
   gap: 7px;
   font-size: 13px;
-  color: #6c6c72;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  color: #4d4d4d;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
   padding: 8px 14px;
 }
@@ -9976,9 +9983,9 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-media-panel {
-  background: #f6f6f4;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 22px;
+  background: #f5f6f8;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 34px;
   min-height: 380px;
   display: flex;
@@ -9995,17 +10002,17 @@ marquee, the beam and the ambient hero glow.
   width: 100%;
   max-width: 380px;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .dm-campaign-badge {
   position: absolute;
   top: -14px;
   inset-inline-end: 18px;
-  background: #1b1d23;
+  background: #111318;
   color: #ffffff;
   font-size: 12px;
   font-weight: 700;
@@ -10033,15 +10040,15 @@ marquee, the beam and the ambient hero glow.
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
   padding: 9px 14px;
   margin-bottom: 18px;
-  color: #6c6c72;
+  color: #4d4d4d;
   font-size: 13px;
 }
 .dm-campaign-bar i {
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 
 .dm-campaign-row {
@@ -10060,18 +10067,18 @@ marquee, the beam and the ambient hero glow.
   align-items: center;
   gap: 6px;
   font-size: 12px;
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 .dm-campaign-label i {
   font-size: 15px;
-  color: #101012;
+  color: #212121;
 }
 
 .dm-campaign-track {
   flex: 1;
   height: 8px;
   border-radius: 4px;
-  background: rgba(12, 12, 14, 0.1);
+  background: rgba(15, 23, 42, 0.08);
   overflow: hidden;
 }
 
@@ -10085,7 +10092,7 @@ marquee, the beam and the ambient hero glow.
 .dm-strip-label {
   text-align: center;
   font-size: 13px;
-  color: #6c6c72;
+  color: #4d4d4d;
   margin-bottom: 18px;
 }
 
@@ -10103,10 +10110,10 @@ marquee, the beam and the ambient hero glow.
   align-items: center;
   justify-content: center;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 12px;
   font-size: 12px;
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 
 .dm-grid {
@@ -10136,15 +10143,13 @@ marquee, the beam and the ambient hero glow.
   flex-direction: column;
   height: 100%;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 30px 26px;
-  transition: transform 0.25s ease, border-color 0.25s ease, box-shadow 0.25s ease;
+  transition: all 0.6s ease;
 }
 .dm-card:hover {
-  transform: translateY(-5px);
-  border-color: rgba(12, 12, 14, 0.2);
-  box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
+  box-shadow: 0 16px 30px -20px rgba(15, 23, 42, 0.18);
 }
 
 .dm-alt .dm-card {
@@ -10152,8 +10157,8 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-card-dark {
-  background: #24262d;
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: #111318;
+  border: 1px solid rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.85);
 }
 .dm-card-dark:hover {
@@ -10168,27 +10173,22 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-icon-well {
-  width: 46px;
-  height: 46px;
-  border-radius: 13px;
-  background: rgba(12, 12, 14, 0.05);
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  background: #eef7fb;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
-  color: #101012;
+  font-size: 21px;
+  color: #1dd3f8;
   margin-bottom: 18px;
-  transition: background 0.25s ease, color 0.25s ease;
-}
-
-.dm-card:hover .dm-icon-well {
-  background: rgba(29, 211, 248, 0.14);
-  color: #0a90ac;
+  transition: all 0.6s ease;
 }
 
 .dm-card-dark .dm-icon-well {
   background: rgba(255, 255, 255, 0.06);
-  color: #ffffff;
+  color: #1dd3f8;
 }
 
 .dm-card-dark:hover .dm-icon-well {
@@ -10217,9 +10217,9 @@ marquee, the beam and the ambient hero glow.
 
 .dm-step-num {
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: 13px;
-  color: rgba(12, 12, 14, 0.32);
+  color: rgba(15, 23, 42, 0.32);
   letter-spacing: 0.05em;
   margin-bottom: 14px;
   display: block;
@@ -10239,8 +10239,8 @@ marquee, the beam and the ambient hero glow.
   width: 22px;
   height: 22px;
   transform: translateY(-50%);
-  background: #f6f6f4;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  background: #f5f6f8;
+  border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 50%;
   z-index: 2;
 }
@@ -10257,8 +10257,8 @@ marquee, the beam and the ambient hero glow.
   width: 8px;
   height: 8px;
   transform: translateY(-50%) rotate(45deg);
-  border-top: 1.5px solid #6c6c72;
-  border-inline-end: 1.5px solid #6c6c72;
+  border-top: 1.5px solid #4d4d4d;
+  border-inline-end: 1.5px solid #4d4d4d;
   z-index: 3;
 }
 @media (max-width: 991px) {
@@ -10280,8 +10280,8 @@ marquee, the beam and the ambient hero glow.
   gap: 6px;
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  color: #6c6c72;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  color: #4d4d4d;
   border-radius: 100px;
   padding: 7px 13px;
 }
@@ -10299,10 +10299,10 @@ marquee, the beam and the ambient hero glow.
   width: 100%;
   max-width: 340px;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 22px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .dm-skel-badge {
@@ -10328,21 +10328,21 @@ marquee, the beam and the ambient hero glow.
   flex: 1;
   height: 10px;
   border-radius: 5px;
-  background: rgba(12, 12, 14, 0.1);
+  background: rgba(15, 23, 42, 0.08);
 }
 
 .dm-post-avatar {
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(12, 12, 14, 0.1);
+  background: rgba(15, 23, 42, 0.08);
   flex-shrink: 0;
 }
 
 .dm-post-thumb {
   height: 150px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(29, 211, 248, 0.16), #f6f6f4);
+  background: linear-gradient(135deg, rgba(29, 211, 248, 0.16), #f5f6f8);
   margin-bottom: 16px;
 }
 
@@ -10350,7 +10350,7 @@ marquee, the beam and the ambient hero glow.
   display: flex;
   gap: 16px;
   font-size: 12px;
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 .dm-post-stats span {
   display: inline-flex;
@@ -10368,36 +10368,43 @@ marquee, the beam and the ambient hero glow.
   padding: 0;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  gap: 12px;
 }
 .dm-list li {
   display: flex;
   align-items: flex-start;
-  gap: 8px;
+  gap: 10px;
   font-size: 14px;
-  color: #6c6c72;
-  line-height: 1.6;
+  color: #4d4d4d;
+  line-height: 1.8;
 }
 .dm-list i {
-  color: #1dd3f8;
-  font-size: 16px;
-  margin-top: 1px;
   flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: #1dd3f8;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 14px;
 }
 
 .dm-stat-value {
   display: block;
   font-family: "Cairo", sans-serif;
-  font-weight: 800;
+  font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
-  color: #101012;
+  color: #212121;
   line-height: 1;
   margin-bottom: 10px;
 }
 
 .dm-stat-label {
   font-size: 14px;
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 
 .dm-stat-pending {
@@ -10410,7 +10417,7 @@ marquee, the beam and the ambient hero glow.
   width: 64%;
   height: 18px;
   border-radius: 8px;
-  background: linear-gradient(90deg, rgba(12, 12, 14, 0.1) 25%, rgba(29, 211, 248, 0.22) 50%, rgba(12, 12, 14, 0.1) 75%);
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.08) 25%, rgba(29, 211, 248, 0.22) 50%, rgba(15, 23, 42, 0.08) 75%);
   background-size: 200% 100%;
   animation: dmShimmer 2.2s ease-in-out infinite;
 }
@@ -10427,9 +10434,17 @@ marquee, the beam and the ambient hero glow.
     background-position: -200% 0;
   }
 }
+.dm-plan {
+  border: none;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.dm-plan:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+}
 .dm-plan.is-popular {
-  background: #1b1d23;
-  border-color: #1b1d23;
+  background: #0a1f44;
   color: #ffffff;
 }
 .dm-plan.is-popular .dm-h3,
@@ -10438,7 +10453,7 @@ marquee, the beam and the ambient hero glow.
 }
 .dm-plan.is-popular .dm-p,
 .dm-plan.is-popular .dm-stat-label {
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255, 255, 255, 0.65);
 }
 .dm-plan.is-popular .dm-plan-badge {
   display: inline-flex;
@@ -10447,18 +10462,16 @@ marquee, the beam and the ambient hero glow.
   color: rgba(255, 255, 255, 0.85);
 }
 .dm-plan.is-popular .dm-list li i {
+  background-color: rgba(29, 211, 248, 0.2);
   color: #1dd3f8;
 }
 .dm-plan.is-popular .dm-btn {
   background: #ffffff;
-  color: #1b1d23;
+  color: #0a1f44;
 }
 .dm-plan.is-popular .dm-btn:hover {
   background: #1dd3f8;
-}
-.dm-plan.is-popular:hover {
-  transform: translateY(-5px);
-  border-color: #1b1d23;
+  color: #ffffff;
 }
 
 .dm-plan-badge {
@@ -10466,10 +10479,11 @@ marquee, the beam and the ambient hero glow.
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  background: rgba(29, 211, 248, 0.16);
-  color: #1dd3f8;
-  font-size: 12px;
-  font-weight: 700;
+  background: #1dd3f8;
+  color: #ffffff;
+  font-family: "Cairo", sans-serif;
+  font-size: 11.5px;
+  font-weight: 600;
   border-radius: 100px;
   padding: 6px 13px;
   margin-bottom: 14px;
@@ -10477,7 +10491,7 @@ marquee, the beam and the ambient hero glow.
 
 .dm-plan-price {
   padding: 16px 0;
-  border-bottom: 1px solid rgba(12, 12, 14, 0.1);
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
   margin-bottom: 16px;
 }
 
@@ -10492,8 +10506,13 @@ marquee, the beam and the ambient hero glow.
 .dm-accordion .accordion__item {
   margin-bottom: 14px;
   border-radius: 16px;
-  border: 1px solid rgba(12, 12, 14, 0.1);
+  background-color: #ffffff;
+  box-shadow: 0px 5px 11px 0px rgba(15, 23, 42, 0.05), 0px 2px 2px 0px rgba(15, 23, 42, 0.07);
   overflow: hidden;
+  transition: box-shadow 0.3s ease;
+}
+.dm-accordion .accordion__item:hover {
+  box-shadow: 0 16px 28px -20px rgba(15, 23, 42, 0.35);
 }
 .dm-accordion .accordion__button {
   display: flex;
@@ -10505,36 +10524,35 @@ marquee, the beam and the ambient hero glow.
   font-family: "Cairo", sans-serif;
   font-weight: 600;
   font-size: 16px;
-  color: #101012;
+  color: #212121;
 }
 .dm-accordion .accordion__button::before {
   display: none;
 }
 .dm-accordion .dm-acc-sign {
   flex-shrink: 0;
-  width: 30px;
-  height: 30px;
+  width: 32px;
+  height: 32px;
   border-radius: 50%;
-  background: rgba(12, 12, 14, 0.06);
+  background: rgba(29, 211, 248, 0.12);
+  color: #1dd3f8;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 18px;
   line-height: 1;
-  transition: transform 0.25s ease, background 0.25s ease, color 0.25s ease;
+  transition: all 0.6s ease;
 }
 .dm-accordion .accordion__button[aria-expanded=true] .dm-acc-sign {
   transform: rotate(45deg);
-  background: rgba(29, 211, 248, 0.16);
-  color: #1dd3f8;
 }
 .dm-accordion .accordion__panel {
   padding: 0 24px 22px;
 }
 .dm-accordion .accordion__panel p {
-  color: #6c6c72;
+  color: #4d4d4d;
   font-size: 15px;
-  line-height: 1.75;
+  line-height: 1.9;
   margin: 0;
 }
 
@@ -10551,10 +10569,10 @@ marquee, the beam and the ambient hero glow.
   width: 100%;
   max-width: 380px;
   background: #ffffff;
-  border: 1px solid rgba(12, 12, 14, 0.1);
-  border-radius: 18px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
   padding: 24px;
-  box-shadow: 0 40px 70px -40px rgba(12, 12, 14, 0.25);
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
 }
 
 .dm-report-bars {
@@ -10588,7 +10606,7 @@ marquee, the beam and the ambient hero glow.
   display: flex;
   justify-content: space-between;
   font-size: 11px;
-  color: #6c6c72;
+  color: #4d4d4d;
 }
 
 @media (prefers-reduced-motion: reduce) {
