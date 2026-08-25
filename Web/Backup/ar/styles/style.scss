@@ -7684,7 +7684,7 @@ numbered caption plate.)
     aspect-ratio: 4 / 5;
     border-radius: 16px;
     overflow: hidden;
-    background-color: #0b0b0d;
+    background-color: #0a1f44;
     line-height: 0;
 
     img {
@@ -7774,11 +7774,11 @@ numbered caption plate.)
 App Development Page — Platforms (Section 2)
 (layout from the user's inspiration image: dark band, heading/paragraph split
 header, portrait media cards with the label row sitting *below* the card on
-the dark ground. Dark tone reuses the hero media's #0b0b0d so the two
+the dark ground. Dark tone reuses the hero media's #0a1f44 so the two
 sections read as one system.)
 ======================================================*/
 .app-platforms {
-  background-color: #0b0b0d;
+  background-color: #0a1f44;
   padding-top: 100px;
   padding-bottom: 100px;
   overflow: hidden;
@@ -7820,8 +7820,8 @@ sections read as one system.)
   }
 
   .app-platforms-orbit {
-    flex: 0 0 250px;
-    max-width: 250px;
+    flex: 0 0 540px;
+    max-width: 540px;
     overflow: hidden;
   }
 
@@ -9144,7 +9144,7 @@ Three ground rules held throughout:
 
 /* ---------- Tech marquee ---------- */
 .app-marquee {
-  background-color: #0b0b0d;
+  background-color: #0a1f44;
   padding: 22px 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.07);
 
@@ -9216,25 +9216,8 @@ Three ground rules held throughout:
 .app-platforms {
   .app-orbit {
     position: relative;
-    height: 230px;
+    height: 480px;
     margin-bottom: 0;
-  }
-
-  .app-orbit-glow {
-    position: absolute;
-    z-index: 0;
-    inset-inline-start: 50%;
-    top: 50%;
-    width: 720px;
-    height: 380px;
-    margin-inline-start: -360px;
-    margin-top: -190px;
-    pointer-events: none;
-    background: radial-gradient(
-      ellipse at center,
-      rgba(29, 211, 248, 0.14) 0%,
-      rgba(29, 211, 248, 0) 65%
-    );
   }
 
   .app-orbit-stage {
@@ -9254,8 +9237,8 @@ Three ground rules held throughout:
     perspective: 1300px;
     perspective-origin: 50% 38%;
     // The ring's geometry (RADIUS in the component) is built for a full-width
-    // stage; scaled down here so it fits the narrower column beside the cards.
-    transform: scale(0.46);
+    // stage; scaled up here well past its native size for a large hero-like orbit.
+    transform: scale(1.15);
   }
 
   .app-orbit-stage.is-dragging {
@@ -9395,17 +9378,6 @@ Three ground rules held throughout:
     }
   }
 
-  .app-orbit-hint {
-    position: absolute;
-    z-index: 2;
-    bottom: -6px;
-    inset-inline-start: 50%;
-    transform: translateX(-50%);
-    font-family: "Cairo", sans-serif;
-    font-size: 12px;
-    color: rgba(255, 255, 255, 0.38);
-  }
-
   // The tilt wrapper replaces the old direct hover-lift on the media, so the
   // lift and the tilt don't fight over the same transform.
   .app-platform-tilt {
@@ -9463,10 +9435,6 @@ Three ground rules held throughout:
 
     .app-orbit-stage {
       transform: scale(0.56);
-    }
-
-    .app-orbit-hint {
-      bottom: 4px;
     }
   }
 }
@@ -9619,7 +9587,7 @@ Three ground rules held throughout:
     gap: 24px;
     padding: 38px 30px;
     border-radius: 20px;
-    background: linear-gradient(150deg, #0b0b0d 0%, #12212f 100%);
+    background: linear-gradient(150deg, #0a1f44 0%, #12212f 100%);
     box-shadow: 0 30px 60px -40px rgba(15, 23, 42, 0.6);
   }
 
@@ -9872,17 +9840,42 @@ $seo-ink-dim: #6c6c72;
 $seo-line: rgba(12, 12, 14, 0.1);
 $seo-line-dark: rgba(255, 255, 255, 0.1);
 
+// Palette-match pass (T-0825 follow-up): the $seo-* tokens above are load-
+// bearing for the Training page too (.tr-* reuses them directly, see its own
+// banner further down) so they were left at their original values instead of
+// being overwritten in place — that would have silently reskinned Training,
+// which wasn't part of this ask. These $seopal-* tokens are SEO-page-local
+// (only referenced inside the .seo-* selectors below) and hold the actual
+// App Development equivalents, as of when this SEO pass was done:
+// $seopal-black was AppDev's dark band (.app-platforms / .app-hero-media,
+// #0b0b0d then) and $seopal-navy is AppDev's "most popular" plan tone
+// (.app-plan-card.is-popular, #0a1f44), kept distinct so the dark section
+// band and the popular-plan card no longer collapse to one color the way
+// $seo-black did double duty for both. AppDev's dark band has since moved
+// off pure black onto that same navy, but $seopal-black is this page's own
+// snapshot value (not a live reference), so it was left as-is rather than
+// silently reskinning the SEO page along with it.
+// $seopal-ink/$seopal-ink-dim are literally $heading-color/$body-color
+// (AppDev's text scale).
+$seopal-black: #0b0b0d; // AppDev dark band, as of this SEO pass
+$seopal-navy: #0a1f44; // AppDev "most popular" plan tone
+$seopal-gray: #f5f6f8; // AppDev alt-band color (.app-hero/.app-pricing)
+$seopal-ink: $heading-color; // AppDev heading color (#212121)
+$seopal-ink-dim: $body-color; // AppDev body color (#4d4d4d)
+$seopal-line: rgba(15, 23, 42, 0.08); // AppDev hairline (.app-feature-card border)
+$seopal-line-dark: rgba(255, 255, 255, 0.12); // matches $dm-line-dark / AppDev's on-dark divider values
+
 .seo-section {
   padding: 100px 0;
   background: $seo-white;
   overflow: hidden;
 
   &.seo-alt {
-    background: $seo-gray;
+    background: $seopal-gray;
   }
 
   &.seo-dark {
-    background: $seo-black;
+    background: $seopal-navy;
   }
 
   // fixed navbar overlays page content — every page's first section needs
@@ -9923,12 +9916,12 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  border: 1px solid $seo-line;
+  border: 1px solid $seopal-line;
   border-radius: 100px;
   padding: 7px 16px;
   font-size: 13px;
   font-weight: 600;
-  color: $seo-ink;
+  color: $seopal-ink;
   margin-bottom: 20px;
 
   .dot {
@@ -9941,7 +9934,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 }
 
 .seo-dark .seo-eyebrow {
-  border-color: $seo-line-dark;
+  border-color: $seopal-line-dark;
   color: rgba(255, 255, 255, 0.88);
 }
 
@@ -9953,7 +9946,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
   line-height: 1.1;
   letter-spacing: -0.01em;
-  color: $seo-ink;
+  color: $seopal-ink;
   margin-bottom: 22px;
 }
 
@@ -9962,7 +9955,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   line-height: 1.25;
-  color: $seo-ink;
+  color: $seopal-ink;
   margin-bottom: 14px;
 }
 
@@ -9970,7 +9963,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   font-family: "Cairo", sans-serif;
   font-weight: 700;
   font-size: 17px;
-  color: $seo-ink;
+  color: $seopal-ink;
   margin-bottom: 8px;
 }
 
@@ -9981,7 +9974,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 }
 
 .seo-p {
-  color: $seo-ink-dim;
+  color: $seopal-ink-dim;
   font-size: 16px;
   line-height: 1.8;
   margin-bottom: 0;
@@ -10007,7 +10000,11 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  background: $seo-black;
+  // Was $seopal-black, then briefly $main-color (cyan). User asked explicitly
+  // for navy instead — $seopal-navy is the same #0a1f44 AppDev's own
+  // "most popular" plan tone uses (.app-plan-card.is-popular), already reused
+  // by .seo-plan.is-popular below, so the CTA now matches that tone too.
+  background: $seopal-navy;
   color: $seo-white;
   font-family: $body-font-family;
   font-weight: 700;
@@ -10026,14 +10023,13 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     transition: transform 0.18s ease;
   }
 
-  // brightness lift instead of an off-tone background swap (the old
-  // #26262c read as a muddy grey-brown, not a hover state) + a much
-  // smaller, tighter lift than the previous -3px/heavy-shadow combo
+  // Brightness-lift hover, shadow re-keyed to navy so it reads as this
+  // button's own glow rather than a leftover from an earlier fill color.
   &:hover {
     color: $seo-white;
-    filter: brightness(1.22);
+    filter: brightness(1.15);
     transform: translateY(-1px);
-    box-shadow: 0 10px 18px -10px rgba(12, 12, 14, 0.4);
+    box-shadow: 0 10px 18px -10px rgba(10, 31, 68, 0.5);
 
     i {
       transform: translateX(-3px);
@@ -10053,8 +10049,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .seo-btn-ghost {
   background: transparent;
-  color: $seo-ink;
-  border: 1px solid $seo-line;
+  color: $seopal-ink;
+  border: 1px solid $seopal-line;
 
   // AppDev's ghost CTA (.app-hero-ghost-btn) lifts to the accent color on
   // hover instead of darkening toward ink — brings the outlined button in
@@ -10072,7 +10068,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .seo-dark .seo-btn-ghost {
   color: $seo-white;
-  border-color: $seo-line-dark;
+  border-color: $seopal-line-dark;
 
   &:hover {
     background: rgba(255, 255, 255, 0.06);
@@ -10085,12 +10081,12 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 // .seo-btn would be black-on-black.
 .seo-btn-invert {
   background: $seo-white;
-  color: $seo-black;
+  color: $seopal-black;
 
   &:hover {
     filter: none;
     background: $main-color;
-    color: $seo-black;
+    color: $seopal-black;
     box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.4);
   }
 }
@@ -10106,8 +10102,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     align-items: center;
     gap: 7px;
     font-size: 13px;
-    color: $seo-ink-dim;
-    border: 1px solid $seo-line;
+    color: $seopal-ink-dim;
+    border: 1px solid $seopal-line;
     border-radius: 100px;
     padding: 8px 14px;
 
@@ -10161,7 +10157,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 // Outer plate, same role as AppDev's .app-hero-frame — radius bumped to
 // match (24px) and border swapped for the same soft ambient shadow.
 .seo-media-panel {
-  background: $seo-gray;
+  background: $seopal-gray;
   border-radius: 24px;
   padding: 34px;
   min-height: 380px;
@@ -10173,12 +10169,10 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     0px 8px 16px -10px rgba(15, 23, 42, 0.08);
 }
 
-.seo-dark .seo-media-panel {
-  background: $seo-card-dark;
-  box-shadow:
-    0px 24px 48px -20px rgba(0, 0, 0, 0.5),
-    0px 8px 16px -10px rgba(0, 0, 0, 0.3);
-}
+// No .seo-dark .seo-media-panel override anymore — not used by any current
+// section, and keeping it around as a leftover near-black tone contradicts
+// the "no dark cards" direction above. Falls back to the light .seo-media-panel
+// treatment if it's ever placed inside a dark section.
 
 // ---- SERP mock illustration (Hero) ----
 .seo-serp-card {
@@ -10199,15 +10193,15 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   gap: 10px;
-  border: 1px solid $seo-line;
+  border: 1px solid $seopal-line;
   border-radius: 100px;
   padding: 9px 14px;
   margin-bottom: 18px;
-  color: $seo-ink-dim;
+  color: $seopal-ink-dim;
   font-size: 13px;
 
   i {
-    color: $seo-ink-dim;
+    color: $seopal-ink-dim;
   }
 }
 
@@ -10230,7 +10224,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   .seo-serp-line {
     height: 8px;
     border-radius: 4px;
-    background: $seo-line;
+    background: $seopal-line;
 
     &.short {
       width: 45%;
@@ -10241,7 +10235,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     font-family: "Cairo", sans-serif;
     font-weight: 800;
     font-size: 15px;
-    color: $seo-ink-dim;
+    color: $seopal-ink-dim;
   }
 
   &.is-top {
@@ -10269,7 +10263,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   position: absolute;
   top: -14px;
   inset-inline-end: 18px;
-  background: $seo-black;
+  background: $seopal-navy;
   color: $seo-white;
   font-size: 12px;
   font-weight: 700;
@@ -10312,14 +10306,14 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   // matches .app-stat-num's weight
   font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
-  color: $seo-ink;
+  color: $seopal-ink;
   line-height: 1;
   margin-bottom: 10px;
 }
 
 .seo-stat-label {
   font-size: 14px;
-  color: $seo-ink-dim;
+  color: $seopal-ink-dim;
 }
 
 // pending-data state for a stat whose real figure doesn't exist yet — a
@@ -10337,24 +10331,12 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   border-radius: 8px;
   background: linear-gradient(
     90deg,
-    $seo-line 25%,
+    $seopal-line 25%,
     rgba(29, 211, 248, 0.22) 50%,
-    $seo-line 75%
+    $seopal-line 75%
   );
   background-size: 200% 100%;
   animation: seoShimmer 2.2s ease-in-out infinite;
-
-  // dark-card variant (CaseStudies) — the light-grey base would be
-  // invisible against $seo-card-dark
-  &.seo-stat-pending-bar-dark {
-    background: linear-gradient(
-      90deg,
-      rgba(255, 255, 255, 0.1) 25%,
-      rgba(29, 211, 248, 0.35) 50%,
-      rgba(255, 255, 255, 0.1) 75%
-    );
-    background-size: 200% 100%;
-  }
 }
 
 // ---- card grids (Pillars, Process, CaseStudies, Pricing) ----
@@ -10365,6 +10347,13 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
   &.seo-grid-4 {
     grid-template-columns: repeat(4, 1fr);
+  }
+
+  // 2 columns for a grid living inside a half-width .seo-split column —
+  // 3-up would be too cramped at that width. Currently unused (Pillars
+  // moved to the full-width 3-col .seo-grid), kept for the next split grid.
+  &.seo-grid-2 {
+    grid-template-columns: repeat(2, 1fr);
   }
 
   @media (max-width: 991px) {
@@ -10413,37 +10402,38 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   background: $seo-white;
 }
 
+// User rejected the dark card entirely ("i hate these black cards") — even
+// the lightened-navy version from the previous pass still read as too dark
+// against the dark section behind it. Now plain white, same emboss recipe as
+// .seo-card, so it reads as a bright card floating on the navy .seo-dark
+// section instead of a same-family dark-on-dark tone.
 .seo-card-dark {
-  background: $seo-card-dark;
-  color: rgba(255, 255, 255, 0.85);
-  // Same emboss recipe on the dark card — this is exactly how AppDev treats
-  // its own dark "is-popular" plan card (.app-plan-card.is-popular): the
-  // light-based inset highlight still reads correctly on a navy/charcoal fill.
+  background: $seo-white;
   box-shadow:
-    0px 7.77px 16px 0px rgba(0, 0, 0, 0.22),
-    0px 3px 3px 0px rgba(0, 0, 0, 0.18),
-    0px -8px 0px 0px rgba(0, 0, 0, 0.12) inset,
-    0px 4px 0px 0px rgba(255, 255, 255, 0.06) inset;
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 
   &:hover {
     transform: translateY(-6px);
     box-shadow:
-      0px 22px 38px -16px rgba(0, 0, 0, 0.34),
-      0px 3px 3px 0px rgba(0, 0, 0, 0.18),
-      0px -8px 0px 0px rgba(0, 0, 0, 0.12) inset,
-      0px 4px 0px 0px rgba(255, 255, 255, 0.06) inset;
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  }
+
+  // .seo-dark .seo-h3/.seo-p (section-level) force white text for anything
+  // inside the dark section, same specificity as these — needs winning back
+  // to dark ink now the card itself is white. .seo-stat-value/.seo-stat-label
+  // have no such section-level override, so they already default correctly.
+  .seo-h3 {
+    color: $seopal-ink;
   }
 
   .seo-p {
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  .seo-stat-value {
-    color: $seo-white;
-  }
-
-  .seo-stat-label {
-    color: rgba(255, 255, 255, 0.55);
+    color: $seopal-ink-dim;
   }
 }
 
@@ -10452,36 +10442,39 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   height: 46px;
   // AppDev icon wells (.app-plan-icon) use 14px.
   border-radius: 14px;
-  background: rgba(12, 12, 14, 0.05);
+  // Was a neutral grey (rgba(12,12,14,.05)) that only turned cyan on hover.
+  // AppDev's icon wells (.app-feature-icon/.app-plan-icon) are cyan-tinted
+  // at rest, not revealed on hover — matched that here.
+  background: #eef7fb;
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 20px;
-  color: $seo-ink;
+  color: $main-color;
   margin-bottom: 18px;
   transition: background 0.25s ease, color 0.25s ease;
 }
 
 .seo-card:hover .seo-icon-well {
-  background: rgba(29, 211, 248, 0.14);
-  color: #0a90ac;
-}
-
-.seo-card-dark .seo-icon-well {
-  background: rgba(255, 255, 255, 0.06);
-  color: $seo-white;
-}
-
-.seo-card-dark:hover .seo-icon-well {
-  background: rgba(29, 211, 248, 0.16);
+  // Deepened rather than "revealed" now that rest state is already cyan.
+  // #0a90ac (a dark teal with no AppDev equivalent) dropped for $main-color.
+  background: rgba(29, 211, 248, 0.22);
   color: $main-color;
 }
+
+// .seo-card-dark's icon well previously had its own faint-white-wash variant
+// for the dark card. Now the card is white, the default .seo-icon-well /
+// .seo-card:hover .seo-icon-well rules (cyan-tinted rest, deepened on hover)
+// already apply correctly — no override needed.
 
 .seo-step-num {
   font-family: "Cairo", sans-serif;
   font-weight: 800;
   font-size: 13px;
-  color: rgba(12, 12, 14, 0.32);
+  // Was rgba(12,12,14,.32), keyed off SEO's old near-black ink. AppDev's own
+  // muted step label (.app-step-label) is a standalone cool-grey, not a
+  // faded version of the heading color — matched that value directly.
+  color: #9aa2ad;
   letter-spacing: 0.05em;
   margin-bottom: 14px;
   display: block;
@@ -10504,7 +10497,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
       height: 22px;
       transform: translateY(-50%);
       background: $seo-white;
-      border: 1px solid $seo-line;
+      border: 1px solid $seopal-line;
       border-radius: 50%;
       z-index: 2;
 
@@ -10524,8 +10517,8 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
       width: 8px;
       height: 8px;
       transform: translateY(-50%) rotate(45deg);
-      border-top: 1.5px solid $seo-ink-dim;
-      border-inline-end: 1.5px solid $seo-ink-dim;
+      border-top: 1.5px solid $seopal-ink-dim;
+      border-inline-end: 1.5px solid $seopal-ink-dim;
       z-index: 3;
 
       @media (max-width: 991px) {
@@ -10543,8 +10536,10 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: inline-block;
   font-size: 12px;
   font-weight: 600;
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.75);
+  // Only used inside .seo-card-dark (CaseStudies), now a white card — was
+  // white-on-transparent for the old dark-card fill.
+  border: 1px solid $seopal-line;
+  color: $seopal-ink-dim;
   border-radius: 100px;
   padding: 5px 12px;
 }
@@ -10552,8 +10547,12 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 // ---- pricing cards ----
 .seo-plan {
   &.is-popular {
-    background: $seo-black;
-    border-color: $seo-black;
+    // Was $seopal-black — now $seopal-navy, matching AppDev's own distinction
+    // between its dark section band (#0b0b0d) and its "most popular" plan
+    // card (.app-plan-card.is-popular, #0a1f44). The two were the same
+    // color here before this pass; AppDev keeps them visibly different.
+    background: $seopal-navy;
+    border-color: $seopal-navy;
     color: $seo-white;
 
     .seo-h3,
@@ -10580,7 +10579,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
     .seo-btn {
       background: $seo-white;
-      color: $seo-black;
+      color: $seopal-navy;
 
       &:hover {
         background: $main-color;
@@ -10589,7 +10588,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
     &:hover {
       transform: translateY(-5px);
-      border-color: $seo-black;
+      border-color: $seopal-navy;
     }
   }
 }
@@ -10599,8 +10598,10 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   align-items: center;
   gap: 6px;
   align-self: flex-start;
-  background: rgba(29, 211, 248, 0.16);
-  color: $main-color;
+  // Was a soft cyan tint + cyan text; AppDev's own plan badge (.app-plan-badge)
+  // is a solid cyan fill with white text — matched that pairing exactly.
+  background: $main-color;
+  color: $seo-white;
   font-size: 12px;
   font-weight: 700;
   border-radius: 100px;
@@ -10610,7 +10611,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
 .seo-plan-price {
   padding: 16px 0;
-  border-bottom: 1px solid $seo-line;
+  border-bottom: 1px solid $seopal-line;
   margin-bottom: 16px;
 }
 
@@ -10631,7 +10632,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     align-items: flex-start;
     gap: 8px;
     font-size: 14px;
-    color: $seo-ink-dim;
+    color: $seopal-ink-dim;
     line-height: 1.6;
   }
 
@@ -10669,19 +10670,24 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     font-family: "Cairo", sans-serif;
     font-weight: 600;
     font-size: 16px;
-    color: $seo-ink;
+    color: $seopal-ink;
 
     &::before {
       display: none;
     }
   }
 
+  // Was a neutral grey at rest that only turned cyan on expand. AppDev's own
+  // FAQ icon circle (.app-faq-accordion i) is cyan-tinted at rest always,
+  // with no toggle-triggered color change — matched that here; the
+  // rotate-on-expand transform (already existing motion) is untouched.
   .seo-acc-sign {
     flex-shrink: 0;
     width: 30px;
     height: 30px;
     border-radius: 50%;
-    background: rgba(12, 12, 14, 0.06);
+    background: rgba(29, 211, 248, 0.12);
+    color: $main-color;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -10692,15 +10698,14 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 
   .accordion__button[aria-expanded="true"] .seo-acc-sign {
     transform: rotate(45deg);
-    background: rgba(29, 211, 248, 0.16);
-    color: $main-color;
+    background: rgba(29, 211, 248, 0.18);
   }
 
   .accordion__panel {
     padding: 0 24px 22px;
 
     p {
-      color: $seo-ink-dim;
+      color: $seopal-ink-dim;
       font-size: 15px;
       line-height: 1.75;
       margin: 0;
@@ -10735,7 +10740,7 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
 }
 
 .seo-input {
-  border: 1px solid $seo-line-dark;
+  border: 1px solid $seopal-line-dark;
   background: rgba(255, 255, 255, 0.04);
   color: $seo-white;
   border-radius: 12px;
@@ -10808,8 +10813,11 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: inline-flex;
   align-items: center;
   gap: 6px;
+  // rgba(29,211,248,.12) already matches AppDev's own soft-cyan chip
+  // (.app-faq-accordion i); only the text color (#0a90ac, a dark teal with
+  // no AppDev equivalent) needed swapping for $main-color.
   background: rgba(29, 211, 248, 0.12);
-  color: #0a90ac;
+  color: $main-color;
   font-size: 11px;
   font-weight: 700;
   border-radius: 100px;
@@ -10823,9 +10831,9 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   margin-bottom: 10px;
   background: linear-gradient(
     90deg,
-    $seo-line 25%,
+    $seopal-line 25%,
     rgba(29, 211, 248, 0.18) 50%,
-    $seo-line 75%
+    $seopal-line 75%
   );
   background-size: 200% 100%;
   animation: seoShimmer 2.2s ease-in-out infinite;
@@ -10855,10 +10863,10 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
   display: flex;
   align-items: center;
   gap: 8px;
-  border-top: 1px solid $seo-line;
+  border-top: 1px solid $seopal-line;
   padding-top: 14px;
   font-size: 12px;
-  color: $seo-ink-dim;
+  color: $seopal-ink-dim;
 
   i {
     color: $main-color;
@@ -10879,49 +10887,224 @@ $seo-line-dark: rgba(255, 255, 255, 0.1);
     0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 
-.seo-report-bars {
-  display: flex;
-  align-items: flex-end;
-  gap: 10px;
-  height: 100px;
-  margin-bottom: 16px;
-}
-
-.seo-report-bar {
-  flex: 1;
-  background: rgba(29, 211, 248, 0.18);
-  border-radius: 6px 6px 0 0;
-  transform-origin: bottom;
-  animation: seoBarGrow 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
-
-  &:last-child {
-    background: $main-color;
-  }
-}
-
-@keyframes seoBarGrow {
-  from {
-    transform: scaleY(0);
-  }
-  to {
-    transform: scaleY(1);
-  }
-}
-
-.seo-report-foot {
-  display: flex;
-  justify-content: space-between;
-  font-size: 11px;
-  color: $seo-ink-dim;
-}
+// .seo-report-bars/.seo-report-bar/.seo-report-foot (animated bar-chart mock)
+// removed — no longer referenced by any component since Reporting.js moved
+// to the ring row (.seo-ring-row) below.
 
 @media (prefers-reduced-motion: reduce) {
   .seo-serp-badge,
   .seo-skel-line,
-  .seo-report-bar,
   .seo-stat-pending-bar {
     animation: none !important;
   }
+}
+
+// === Seo: CaseStudies (results split) + Reporting (ring row) ===
+// CaseStudies moved from a dark 3-card grid to a light two-column split
+// (badge/heading/copy + a 2x2 metric grid), per
+// public/images/inspiration/seopage-insp.png. Reporting's left-hand mock
+// swapped its animated bar chart for a row of partial-circle rings, per
+// seopage-insp2.png. Both stay inside the existing seo- system above
+// (.seo-section/.seo-split/.seo-media-panel/.seo-report-card, $seopal-*
+// tokens) rather than inventing a parallel one.
+
+.seo-split-results {
+  align-items: start;
+}
+
+// Filled dark pill — the "Platform" badge in the reference. Distinct from
+// .seo-eyebrow (outline, has a dot) which is used everywhere else on this
+// page for section labels; this one is solid so the results split reads as
+// its own moment rather than another instance of the same label style.
+.seo-badge-solid {
+  display: inline-block;
+  background: $seopal-navy;
+  color: $seo-white;
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 12px;
+  border-radius: 100px;
+  padding: 7px 16px;
+  margin-bottom: 18px;
+}
+
+.seo-metric-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 16px;
+
+  @media (max-width: 575px) {
+    grid-template-columns: 1fr;
+  }
+}
+
+// Same emboss recipe as .seo-card, just a shorter card — these are stat
+// tiles, not content cards, so they don't need .seo-card's flex-column
+// height stretch.
+.seo-metric-card {
+  background: $seo-white;
+  border-radius: 16px;
+  padding: 20px 20px 18px;
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+
+  &:hover {
+    transform: translateY(-4px);
+    box-shadow:
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  }
+}
+
+.seo-metric-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 30px;
+  height: 30px;
+  border-radius: 9px;
+  font-size: 16px;
+  margin-bottom: 14px;
+
+  &.is-up {
+    background: rgba(29, 211, 248, 0.12);
+    color: $main-color;
+  }
+
+  &.is-down {
+    background: rgba(245, 165, 36, 0.14);
+    color: #b8760a;
+  }
+}
+
+.seo-metric-row {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 8px;
+}
+
+// Same pending-shimmer language as .seo-stat-pending-bar, sized to sit next
+// to a small "قريبًا" chip instead of standing alone.
+.seo-metric-pending {
+  display: block;
+  width: 72px;
+  height: 22px;
+  border-radius: 6px;
+  background: linear-gradient(
+    90deg,
+    $seopal-line 25%,
+    rgba(29, 211, 248, 0.22) 50%,
+    $seopal-line 75%
+  );
+  background-size: 200% 100%;
+  animation: seoShimmer 2.2s ease-in-out infinite;
+}
+
+.seo-metric-change {
+  font-size: 12px;
+  font-weight: 600;
+  color: $seopal-ink-dim;
+  border: 1px solid $seopal-line;
+  border-radius: 100px;
+  padding: 3px 10px;
+}
+
+.seo-metric-label {
+  display: block;
+  font-size: 13px;
+  color: $seopal-ink-dim;
+  line-height: 1.5;
+}
+
+// ---- report ring row (Reporting) ----
+// Restructured from a half-width mock (rings boxed inside .seo-media-panel/
+// .seo-report-card, opposite the section's text) to a full-width row: label
+// above each ring, value centered inside the ring itself, laid out full
+// container width below the text block instead of sharing a .seo-split.
+.seo-ring-row {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 14px;
+  flex-wrap: wrap;
+
+  &.seo-ring-row-full {
+    margin-top: 48px;
+    padding: 40px 32px;
+    background: $seopal-gray;
+    border-radius: 24px;
+    justify-content: space-around;
+
+    @media (max-width: 575px) {
+      padding: 30px 18px;
+      gap: 30px 14px;
+    }
+  }
+}
+
+.seo-ring {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex: 1 1 70px;
+}
+
+.seo-ring-circle {
+  position: relative;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.seo-ring-svg {
+  transform: rotate(-90deg);
+
+  circle {
+    fill: none;
+  }
+}
+
+.seo-ring-track {
+  stroke: $seopal-line;
+}
+
+.seo-ring-value {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 15px;
+  color: $seopal-ink;
+}
+
+.seo-ring-label {
+  font-size: 13px;
+  font-weight: 600;
+  color: $seopal-ink;
+  margin-bottom: 6px;
+  text-align: center;
+}
+
+// === Seo: Reporting (positive ring states) ===
+// Small state tag under each ring's label, added when the ring values pass
+// pushed every metric into a consistently "good" range — a short word so the
+// eye reads "this is working" before it even gets to the number.
+.seo-ring-state {
+  font-size: 11px;
+  font-weight: 700;
+  color: #16a34a;
+  margin-bottom: 12px;
+  text-align: center;
 }
 
 /* ===================================================================
@@ -10941,7 +11124,10 @@ $dm-line-dark: rgba(255, 255, 255, 0.12);
 $dm-ink: $heading-color; // AppDev heading color (#212121)
 $dm-ink-dim: $body-color; // AppDev body color (#4d4d4d)
 $dm-surface-alt: #f5f6f8; // AppDev section alt ground (.app-hero/.app-pricing)
-$dm-dark: #0b0b0d; // AppDev dark band (.app-platforms / .app-hero-media)
+$dm-dark: #0a1f44; // AppDev dark band (.app-platforms / .app-hero-media) is
+// actually #0a1f44 navy in the current AppDev pass, not the #0b0b0d this var
+// was set to during an earlier AppDev revision — corrected to match live AppDev
+// (same value as $dm-navy below, defined later so not referenced directly here).
 $dm-navy: #0a1f44; // AppDev "most popular" plan (.app-plan-card.is-popular)
 $dm-radius: 16px; // AppDev card radius
 $dm-radius-sm: 10px; // AppDev button/icon radius
@@ -11427,24 +11613,38 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   background: $white-color;
 }
 
-// No AppDev equivalent for a dark card — nearest AppDev tone (#111318, the
-// feature-card's own dark support-bubble color) rather than inventing a new one.
+// Matches SEO's own resolution for this exact card (.seo-card-dark, used by
+// CaseStudies.js / Pillars.js — Results.js/Channels.js's direct SEO
+// equivalents): user rejected the black/near-black dark card there
+// ("i hate these black cards") — now plain white with AppDev's full emboss
+// shadow recipe (idle + hover, not just a hover-only shadow), floating on
+// the navy .dm-dark section instead of a same-family dark-on-dark tone.
 .dm-card-dark {
-  background: #111318;
-  border: 1px solid $dm-line-dark;
-  color: rgba(255, 255, 255, 0.85);
+  background: $white-color;
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 
   &:hover {
-    border-color: rgba(255, 255, 255, 0.24);
-    box-shadow: none;
+    transform: translateY(-6px);
+    box-shadow:
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  }
+
+  // .dm-dark .dm-h3/.dm-p (section-level) force white text for anything
+  // inside the dark section — needs winning back to dark ink now the card
+  // itself is white (same fix SEO already applied to .seo-card-dark).
+  .dm-h3 {
+    color: $dm-ink;
   }
 
   .dm-p {
-    color: rgba(255, 255, 255, 0.6);
-  }
-
-  .dm-stat-label {
-    color: rgba(255, 255, 255, 0.55);
+    color: $dm-ink-dim;
   }
 }
 
@@ -11463,15 +11663,9 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   transition: $transition;
 }
 
-.dm-card-dark .dm-icon-well {
-  background: rgba(255, 255, 255, 0.06);
-  color: $main-color;
-}
-
-.dm-card-dark:hover .dm-icon-well {
-  background: rgba(29, 211, 248, 0.16);
-  color: $main-color;
-}
+// No dark-card override needed — .dm-card-dark is now a plain white card
+// (matches SEO: .seo-icon-well has no .seo-card-dark variant either), the
+// default .dm-icon-well cyan-tint already applies correctly.
 
 .dm-inline-link {
   display: inline-flex;
@@ -11572,11 +11766,8 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   }
 }
 
-.dm-dark .dm-tag,
-.dm-card-dark .dm-tag {
-  border-color: rgba(255, 255, 255, 0.18);
-  color: rgba(255, 255, 255, 0.75);
-}
+// No dark-card override — matches SEO: .seo-tag is used only inside
+// .seo-card-dark (now a white card) and has no dark variant either.
 
 // ---- social post mock (SocialMedia) ----
 .dm-post-card {
@@ -12902,5 +13093,25 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   .tr-stat-pending-bar,
   .tr-skel-line {
     animation: none !important;
+  }
+}
+
+// === Seo: Pillars (stacked/centered layout) ===
+// Restacked from the split layout (badge+heading opposite a 2-col grid) back
+// to the centered-header convention used elsewhere on this page (.seo-head
+// .seo-center — see Process.js, Results.js, Pricing.js), with all 6 pillar
+// cards below in the shared 3-col .seo-grid. .seo-split-pillars had no other
+// user (grepped components/Seo) so it's dropped along with the split markup.
+// .seo-card-corner (used by the cards) stays — see rule below.
+
+// .seo-card's icon-well already sits first in the card's flex column, which
+// in RTL already reads as the "top-start corner" slot from the reference —
+// no positioning override needed, just a touch smaller so it reads as an
+// inset well rather than a full-size icon block.
+.seo-card-corner {
+  .seo-icon-well {
+    width: 40px;
+    height: 40px;
+    font-size: 18px;
   }
 }

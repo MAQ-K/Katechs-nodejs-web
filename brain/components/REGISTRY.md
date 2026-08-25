@@ -23,6 +23,9 @@
 | Emails Hero | `Emails/Hero.js` | — | — | Shipped — soft-emboss card, 16px radius |
 | Emails Option Cards + Tabs | `Emails/PricingFlow.js` | — | — | Shipped — synced tab bar ↔ plan cards |
 | Emails Features / FAQ | `Emails/FeaturesPlaceholder.js`, `Emails/FaqPlaceholder.js` | — | — | **Placeholder** — real UI pending |
+| SEO Results split | `Seo/CaseStudies.js` | local const, real case-study numbers pending (flag in-file) | Reveal + stagger | Shipped — light 2-col split (badge/heading/copy + 2x2 metric-card grid), replaces old dark 3-card grid |
+| SEO Reporting ring row | `Seo/Reporting.js` | local const (illustrative) | framer-motion stroke animation on scroll | Shipped — text block full width on top, 4 label-over-ring pairs in one full-width row below (was a half-width `.seo-split` mock) |
+| SEO Pillars split | `Seo/Pillars.js` | local const, 6 pillars (copy unchanged) | Reveal + stagger | Shipped — light 2-col split (badge/heading/copy + 2-col card grid), replaces old dark 3x2 card grid |
 
 ## Motion / interaction primitives (see `brain/animation/LAB.md`)
 | Component | Path | Notes |

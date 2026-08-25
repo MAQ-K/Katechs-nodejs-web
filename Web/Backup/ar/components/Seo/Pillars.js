@@ -2,9 +2,13 @@ import React from "react";
 import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
 import { motion } from "framer-motion";
 
-// Visual pass — from "seo page inspiration/3rd section.png" (dark, 6-card
-// grid). Copy unchanged: five pillars reused verbatim from
-// components/Common/SeoShowcase.js, e-commerce SEO added per Backlinko.
+// Layout restack — dropped the left/right split (badge+heading opposite a
+// 2-col card grid) for a stacked/centered layout matching the seo-head
+// seo-center convention already used by Process.js, Results.js, Pricing.js
+// etc: badge + heading + copy centered full width on top, then all 6 pillar
+// cards below in the shared 3-col .seo-grid (collapses 3 -> 2 -> 1, same as
+// every other seo-grid usage on this page). Card shape (.seo-card-corner)
+// and content (6 pillars) unchanged from the split version.
 const pillars = [
   {
     icon: "bx-code-alt",
@@ -40,17 +44,24 @@ const pillars = [
 
 const Pillars = () => {
   return (
-    <section className="seo-section seo-dark">
+    <section className="seo-section seo-alt">
       <div className="container">
-        <Reveal>
-          <div className="seo-head seo-center" style={{ maxWidth: 640, marginInline: "auto" }}>
+        <div className="seo-head seo-center">
+          <Reveal>
+            <span className="seo-badge-solid">المحاور</span>
+          </Reveal>
+
+          <Reveal delay={0.05}>
             <h2 className="seo-h2">ما الذي نعمل عليه بالضبط</h2>
+          </Reveal>
+
+          <Reveal delay={0.1}>
             <p className="seo-p">
               السيو ليس بندًا واحدًا — هذه المحاور الستة هي ما نغطيه في كل
               مشروع.
             </p>
-          </div>
-        </Reveal>
+          </Reveal>
+        </div>
 
         <motion.div
           className="seo-grid"
@@ -61,7 +72,7 @@ const Pillars = () => {
         >
           {pillars.map((item) => (
             <motion.div
-              className="seo-card seo-card-dark"
+              className="seo-card seo-card-corner"
               key={item.title}
               variants={staggerItem()}
             >

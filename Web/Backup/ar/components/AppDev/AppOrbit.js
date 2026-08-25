@@ -123,8 +123,6 @@ const AppOrbit = () => {
 
   return (
     <div className="app-orbit" ref={ref}>
-      <span className="app-orbit-glow" aria-hidden="true"></span>
-
       <div
         className={`app-orbit-stage${dragging ? " is-dragging" : ""}`}
         onPointerDown={onPointerDown}
@@ -163,8 +161,6 @@ const AppOrbit = () => {
           ))}
         </motion.div>
       </div>
-
-      <span className="app-orbit-hint">اسحب لتدوير النماذج — أو مرّر الصفحة</span>
     </div>
   );
 };
