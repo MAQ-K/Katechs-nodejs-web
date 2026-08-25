@@ -3,10 +3,11 @@ import Link from "next/link";
 import Reveal from "../Common/Reveal";
 import Magnetic from "../Common/Magnetic";
 
-// Visual pass — from "seo page inspiration/1st section.png". Content is the
-// same copy the UX prototype already proved out; the reference had no
-// bullets, so the three proof points are compacted into a pill row instead
-// of dropped.
+// Visual pass — from brain/ui-library/inspiration/seo page/1stsec.png: two
+// overlapping, gently tilted cards instead of one flat panel. The SERP
+// ranking mock stays the large "canvas" card; the growth-rate badge that
+// used to float on top of it becomes its own card, restaged to overlap the
+// bottom corner the way the reference's second photo overlaps the first.
 const proof = [
   "تقارير أداء شهرية",
   "عمل حقيقي على الموقع",
@@ -19,14 +20,9 @@ const Hero = () => {
       <div className="container">
         <div className="seo-split">
           <div>
-            <Reveal>
-              <div className="seo-media-panel">
-                <div className="seo-serp-card">
-                  <div className="seo-serp-badge">
-                    <i className="bx bx-trending-up"></i>
-                    نمو 240%
-                  </div>
-
+            <div className="seo-hero-visual">
+              <Reveal>
+                <div className="seo-hero-visual-main">
                   <div className="seo-serp-bar">
                     <i className="bx bx-search"></i>
                     خدمات تحسين محركات البحث
@@ -56,8 +52,20 @@ const Hero = () => {
                     <span className="seo-serp-rank">3</span>
                   </div>
                 </div>
-              </div>
-            </Reveal>
+              </Reveal>
+
+              <Reveal delay={0.12}>
+                <div className="seo-hero-visual-accent">
+                  <span className="seo-hero-visual-icon">
+                    <i className="bx bx-trending-up"></i>
+                  </span>
+                  <span className="seo-hero-visual-value">240%</span>
+                  <span className="seo-hero-visual-label">
+                    نمو الزيارات العضوية
+                  </span>
+                </div>
+              </Reveal>
+            </div>
           </div>
 
           <div>
@@ -99,8 +107,9 @@ const Hero = () => {
                     <i className="bx bx-left-arrow-alt"></i>
                   </Link>
                 </Magnetic>
-                <Link href="#pricing" className="seo-btn seo-btn-ghost">
+                <Link href="#pricing" className="seo-link-btn">
                   شاهد الباقات
+                  <i className="bx bx-left-arrow-alt"></i>
                 </Link>
               </div>
             </Reveal>
