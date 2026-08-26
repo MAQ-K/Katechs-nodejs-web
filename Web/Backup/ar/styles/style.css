@@ -11660,4 +11660,411 @@ marquee, the beam and the ambient hero glow.
   transform: scale(1.06);
 }
 
-/*# sourceMappingURL=style.css.map */
+/*================================================
+=== Web Services Page: Area 1 ===
+Hero (video) / Projects carousel / Service navigator.
+Matches the newer service-page system (hosting/emails/app-dev/seo):
+cyan #1dd3f8, hairline rgba(15,23,42,.08), 16px cards, Cairo headings.
+Logical properties throughout so nothing is needed in rtl.css.
+=================================================*/
+.wsv-eyebrow {
+  display: inline-block;
+  font-family: "Cairo", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  color: #1dd3f8;
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+/*-- Section 1: hero --*/
+.wsv-hero {
+  position: relative;
+  overflow: hidden;
+  min-height: clamp(460px, 62vh, 600px);
+  padding-top: 120px;
+  padding-bottom: 90px;
+  display: flex;
+  align-items: center;
+  background-color: #0a1f44;
+}
+.wsv-hero .container {
+  position: relative;
+  z-index: 2;
+}
+
+.wsv-hero-video {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  min-width: 100%;
+  min-height: 100%;
+  width: auto;
+  height: auto;
+  transform: translate(-50%, -50%);
+  object-fit: cover;
+  z-index: 0;
+}
+
+/* The shade the design calls for: black / dark-blue at 45%. */
+.wsv-hero-overlay {
+  position: absolute;
+  inset: 0;
+  background-color: rgba(8, 18, 42, 0.45);
+  z-index: 1;
+}
+
+.wsv-hero-inner {
+  position: relative;
+  /* Holds its height while AnimatePresence swaps the text out and in, so the
+     section doesn't twitch every 6 seconds. */
+  min-height: 300px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wsv-hero-text {
+  width: 100%;
+  max-width: 720px;
+  margin-inline: auto;
+  text-align: center;
+}
+
+.wsv-hero-badge {
+  display: inline-block;
+  padding: 9px 20px;
+  border-radius: 50px;
+  background-color: rgba(29, 211, 248, 0.16);
+  border: 1px solid rgba(29, 211, 248, 0.4);
+  color: #1dd3f8;
+  font-family: "Cairo", sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  margin-bottom: 20px;
+}
+
+.wsv-hero-text h1 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: clamp(28px, 4vw, 46px);
+  line-height: 1.35;
+  color: #ffffff;
+  margin-bottom: 16px;
+}
+
+.wsv-hero-text p {
+  font-size: 16px;
+  line-height: 1.9;
+  color: rgba(255, 255, 255, 0.78);
+  margin-bottom: 28px;
+}
+
+.wsv-hero-cta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  justify-content: center;
+}
+
+.wsv-btn {
+  display: inline-block;
+  padding: 15px 32px;
+  border-radius: 10px;
+  background-color: #1dd3f8;
+  border: 1px solid #1dd3f8;
+  color: #ffffff;
+  font-family: "Cairo", sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  transition: all 0.6s ease;
+}
+.wsv-btn:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #0a1f44;
+}
+
+.wsv-btn-ghost {
+  background-color: transparent;
+  border-color: rgba(255, 255, 255, 0.5);
+  color: #ffffff;
+}
+.wsv-btn-ghost:hover {
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #0a1f44;
+}
+
+/* Bottom-right dots. `direction: ltr` is deliberate: under the page's RTL
+   root, flex-end would push these to the visual left. */
+.wsv-hero-dots-wrap {
+  position: absolute;
+  bottom: 30px;
+  inset-inline: 0;
+  z-index: 2;
+}
+
+.wsv-hero-dots {
+  direction: ltr;
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+.wsv-hero-dots button {
+  width: 22px;
+  height: 8px;
+  padding: 0;
+  border: none;
+  border-radius: 30px;
+  background-color: rgba(255, 255, 255, 0.35);
+  cursor: pointer;
+  transition: all 0.6s ease;
+}
+.wsv-hero-dots button:hover {
+  background-color: rgba(255, 255, 255, 0.6);
+}
+.wsv-hero-dots button.is-active {
+  background-color: #1dd3f8;
+  box-shadow: 0 0 0 4px rgba(29, 211, 248, 0.22);
+}
+
+/*-- Section 2: projects carousel --*/
+.wsv-projects {
+  padding-top: 90px;
+  padding-bottom: 90px;
+  background-color: #f5f6f8;
+}
+
+.wsv-projects-head,
+.wsv-nav-head {
+  margin-bottom: 40px;
+}
+
+.wsv-projects-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.wsv-projects-head h2,
+.wsv-nav-head h2 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 800;
+  font-size: 32px;
+  color: #212121;
+  margin-bottom: 0;
+}
+
+.wsv-arrows {
+  display: flex;
+  gap: 10px;
+}
+
+.wsv-arrow {
+  width: 46px;
+  height: 46px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background-color: #ffffff;
+  color: #212121;
+  font-size: 24px;
+  cursor: pointer;
+  transition: all 0.6s ease;
+}
+.wsv-arrow:hover {
+  background-color: #1dd3f8;
+  border-color: #1dd3f8;
+  color: #ffffff;
+}
+
+.wsv-projects-swiper {
+  padding-bottom: 6px;
+}
+
+.wsv-project-card {
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  border-radius: 16px;
+  overflow: hidden;
+  transition: transform 0.5s ease, box-shadow 0.5s ease;
+}
+.wsv-project-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18);
+}
+.wsv-project-card:hover .wsv-project-media img {
+  transform: scale(1.04);
+}
+
+.wsv-project-media {
+  overflow: hidden;
+  line-height: 0;
+  background-color: #eef2f6;
+}
+.wsv-project-media img {
+  width: 100%;
+  height: auto;
+  aspect-ratio: 16/10;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+
+.wsv-project-body {
+  padding: 20px 22px 22px;
+}
+.wsv-project-body h3 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 17px;
+  color: #212121;
+  margin-bottom: 4px;
+}
+.wsv-project-body span {
+  font-size: 14px;
+  color: #6084a4;
+}
+
+/*-- Section 3: service navigator --*/
+.wsv-nav {
+  padding-top: 90px;
+  padding-bottom: 90px;
+  background-color: #ffffff;
+}
+
+.wsv-nav-head {
+  text-align: center;
+}
+
+.wsv-nav-grid {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 24px;
+}
+
+.wsv-nav-card {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  min-height: 240px;
+  padding: 34px 30px;
+  border-radius: 16px;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  background-color: #ffffff;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1), border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  /* Soft cyan glow that fades in with the lift. */
+}
+.wsv-nav-card::before {
+  content: "";
+  position: absolute;
+  top: -40%;
+  inset-inline-end: -30%;
+  width: 220px;
+  height: 220px;
+  border-radius: 50%;
+  background: radial-gradient(circle, rgba(29, 211, 248, 0.18) 0%, rgba(29, 211, 248, 0) 70%);
+  opacity: 0;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+  pointer-events: none;
+}
+.wsv-nav-card h3 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  color: #212121;
+  margin-bottom: 10px;
+}
+.wsv-nav-card p {
+  font-size: 15px;
+  line-height: 1.85;
+  color: #6084a4;
+  margin-bottom: 0;
+}
+.wsv-nav-card:hover {
+  transform: translateY(-8px);
+  border-color: rgba(29, 211, 248, 0.45);
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.06);
+}
+.wsv-nav-card:hover::before {
+  opacity: 1;
+}
+.wsv-nav-card:hover .wsv-nav-icon {
+  background-color: #1dd3f8;
+  color: #ffffff;
+}
+.wsv-nav-card:hover .wsv-nav-arrow {
+  transform: translateX(-6px);
+  opacity: 1;
+}
+
+.wsv-nav-icon {
+  width: 54px;
+  height: 54px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 14px;
+  background-color: #f6fdff;
+  color: #1dd3f8;
+  font-size: 27px;
+  margin-bottom: 20px;
+  transition: all 0.6s ease;
+}
+
+.wsv-nav-arrow {
+  margin-top: auto;
+  padding-top: 18px;
+  align-self: flex-end;
+  color: #1dd3f8;
+  font-size: 22px;
+  line-height: 1;
+  opacity: 0.55;
+  transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*-- Responsive --*/
+@media only screen and (max-width: 1199px) {
+  .wsv-nav-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 767px) {
+  .wsv-hero {
+    min-height: 420px;
+    padding-top: 100px;
+    padding-bottom: 70px;
+  }
+  .wsv-hero-text p {
+    font-size: 15px;
+  }
+  .wsv-hero-cta .wsv-btn {
+    flex: 1 1 100%;
+    text-align: center;
+  }
+  .wsv-hero-dots {
+    justify-content: center;
+  }
+  .wsv-projects,
+  .wsv-nav {
+    padding-top: 60px;
+    padding-bottom: 60px;
+  }
+  .wsv-projects-head h2,
+  .wsv-nav-head h2 {
+    font-size: 25px;
+  }
+  .wsv-nav-grid {
+    grid-template-columns: 1fr;
+  }
+  .wsv-nav-card {
+    min-height: 0;
+    padding: 28px 24px;
+  }
+}

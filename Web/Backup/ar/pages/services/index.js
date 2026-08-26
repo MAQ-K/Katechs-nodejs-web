@@ -2,6 +2,9 @@ import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
 import Navbar from "../../components/Layouts/Navbar";
 import Footer from "../../components/Layouts/Footer";
+import Hero from "../../components/Services/Hero";
+import Projects from "../../components/Services/Projects";
+import ServiceNav from "../../components/Services/ServiceNav";
 
 // Wireframe-only page: grey boxes, no visual design yet.
 // 3 web service types, each an "area" made of multiple stacked sub-sections.
@@ -38,7 +41,22 @@ const box = {
 
 export default function ServicesHubWireframe() {
   const [activeArea, setActiveArea] = useState(areas[0].id);
+  const [navVisible, setNavVisible] = useState(false);
   const areaRefs = useRef({});
+  const sentinelRef = useRef(null);
+
+  // The side nav belongs to the service areas, not to Area 1 — it only appears
+  // once the 4 nav boxes have scrolled past the top of the viewport.
+  useEffect(() => {
+    const el = sentinelRef.current;
+    if (!el || typeof IntersectionObserver === "undefined") return undefined;
+    const io = new IntersectionObserver(
+      ([entry]) => setNavVisible(entry.boundingClientRect.top <= 0),
+      { threshold: 0 }
+    );
+    io.observe(el);
+    return () => io.disconnect();
+  }, []);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -64,18 +82,21 @@ export default function ServicesHubWireframe() {
   return (
     <>
       <Head>
-        <title>الخدمات - Wireframe</title>
+        <title>خدمات الويب</title>
       </Head>
 
       <Navbar />
 
-      {/* floating side nav - mirrors the tabs, follows scroll */}
+      {/* floating side nav - hidden until the nav boxes scroll past */}
       <div
         style={{
           position: "fixed",
           top: "50%",
           left: 16,
-          transform: "translateY(-50%)",
+          transform: `translateY(-50%) translateX(${navVisible ? 0 : -12}px)`,
+          opacity: navVisible ? 1 : 0,
+          pointerEvents: navVisible ? "auto" : "none",
+          transition: "opacity .4s ease, transform .4s ease",
           display: "flex",
           flexDirection: "column",
           gap: 10,
@@ -103,66 +124,16 @@ export default function ServicesHubWireframe() {
         ))}
       </div>
 
+      {/* ===== AREA 1 — the brief area (designed) ===== */}
+      <Hero />
+      <Projects />
+      <ServiceNav />
+
+      {/* crossing this line is what reveals the floating side nav */}
+      <div ref={sentinelRef} aria-hidden="true" />
+
+      {/* ===== AREAS 2+ — still wireframe grey boxes ===== */}
       <main style={{ padding: "40px 20px", maxWidth: 1140, margin: "0 auto" }}>
-        {/* HERO: image placeholder + title/about placeholder */}
-        <section
-          style={{
-            display: "flex",
-            gap: 24,
-            flexWrap: "wrap",
-            marginTop: 40,
-            marginBottom: 24,
-          }}
-        >
-          <div style={{ ...box, flex: "1 1 320px", height: 260 }}>
-            صورة / Hero Image
-          </div>
-          <div
-            style={{
-              ...box,
-              flex: "1 1 400px",
-              height: 260,
-              flexDirection: "column",
-              gap: 10,
-              alignItems: "stretch",
-            }}
-          >
-            <div style={{ ...box, height: 36, width: "60%" }}>العنوان</div>
-            <div style={{ ...box, height: 90 }}>
-              نبذة عن الخدمة - جملة أو جملتين توضح للزائر أنه في المكان
-              الصحيح
-            </div>
-          </div>
-        </section>
-
-        {/* TABS - each takes you to its own area (which can span multiple sections) */}
-        <section
-          style={{
-            display: "flex",
-            gap: 16,
-            flexWrap: "wrap",
-            marginBottom: 40,
-          }}
-        >
-          {areas.map((a) => (
-            <button
-              key={a.id}
-              onClick={() => scrollTo(a.id)}
-              style={{
-                ...box,
-                flex: "1 1 200px",
-                height: 60,
-                cursor: "pointer",
-                fontSize: 15,
-                borderColor: activeArea === a.id ? "#555" : "#9a9a9a",
-                borderWidth: activeArea === a.id ? 3 : 2,
-              }}
-            >
-              {a.label}
-            </button>
-          ))}
-        </section>
-
         {/* AREAS - each is a group of stacked sections for one web service type */}
         {areas.map((a) => (
           <div
