@@ -88,10 +88,10 @@ export const projects = [
 export const serviceNav = [
   {
     id: "nav-1",
-    icon: "bx bx-window-alt",
-    title: "النوع الأول",
-    brief: "مناسب لك إذا كنت تريد موقعاً تعريفياً يوضح خدماتك ويجلب لك عملاء.",
-    href: "#type-1",
+    icon: "bx bx-buildings",
+    title: "مواقع الشركات",
+    brief: "مناسب لك إذا كنت تريد موقعاً يعكس حجم شركتك الحقيقي ويجلب لك استفسارات.",
+    href: "#business-websites",
   },
   {
     id: "nav-2",

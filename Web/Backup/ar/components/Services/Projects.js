@@ -12,6 +12,11 @@ const Projects = () => {
   const swiperRef = useRef(null);
   const reduced = useReducedMotion();
 
+  // Six slides barely cover 1.5 viewports, which is not enough for Swiper's
+  // loop to stay seamless on a wide screen — it opens a gap. Doubling the list
+  // is the usual marquee guard.
+  const track = [...projects, ...projects];
+
   // Arrows must not inherit speed={5000}, or a click takes five seconds.
   const step = (dir) => {
     const s = swiperRef.current;
@@ -38,9 +43,9 @@ const Projects = () => {
         allowTouchMove={true}
         className="wsv-projects-swiper"
       >
-        {projects.map((p) => (
-          <SwiperSlide key={p.id} className="wsv-project-slide">
-            <img src={p.image} alt={p.name} />
+        {track.map((p, i) => (
+          <SwiperSlide key={`${p.id}-${i}`} className="wsv-project-slide">
+            <img src={p.image} alt={i < projects.length ? p.name : ""} />
           </SwiperSlide>
         ))}
       </Swiper>

@@ -11667,6 +11667,14 @@ Matches the newer service-page system (hosting/emails/app-dev/seo):
 cyan #1dd3f8, hairline rgba(15,23,42,.08), 16px cards, Cairo headings.
 Logical properties throughout so nothing is needed in rtl.css.
 =================================================*/
+/* Two-step spacing scale. Sections inside one area sit at $wsv-gap-section;
+   the break between areas is ~4x that, so the page reads as areas first and
+   sections second. 2:1 was tried and read as "the same" — next to 180px-tall
+   content blocks a gap has to be far bigger than its neighbour to register as
+   a different kind of break. Both scale with the viewport so the area gap
+   doesn't become a dead band on a phone.
+   The wireframe areas below mirror these values inline in
+   pages/services/index.js — keep the two in sync. */
 .wsv-eyebrow {
   display: inline-block;
   font-family: "Cairo", sans-serif;
@@ -11681,7 +11689,7 @@ Logical properties throughout so nothing is needed in rtl.css.
 .wsv-hero {
   position: relative;
   overflow: hidden;
-  min-height: clamp(460px, 62vh, 600px);
+  min-height: clamp(560px, 72vh, 700px);
   padding-top: 120px;
   padding-bottom: 90px;
   display: flex;
@@ -11693,7 +11701,8 @@ Logical properties throughout so nothing is needed in rtl.css.
   z-index: 2;
 }
 
-.wsv-hero-video {
+/* Same positioning whether it's a <video> or a still <img>. */
+.wsv-hero-media {
   position: absolute;
   top: 50%;
   left: 50%;
@@ -11798,9 +11807,24 @@ Logical properties throughout so nothing is needed in rtl.css.
 
 /* Bottom-right dots. `direction: ltr` is deliberate: under the page's RTL
    root, flex-end would push these to the visual left. */
+/* The sweep sits on top of the hero's bottom edge; the dots have to clear it. */
+.wsv-hero-sweep {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  width: 100%;
+  height: 80px;
+  display: block;
+  z-index: 3;
+  pointer-events: none;
+}
+.wsv-hero-sweep path {
+  fill: #f5f6f8;
+}
+
 .wsv-hero-dots-wrap {
   position: absolute;
-  bottom: 30px;
+  bottom: 84px;
   inset-inline: 0;
   z-index: 2;
 }
@@ -11829,27 +11853,20 @@ Logical properties throughout so nothing is needed in rtl.css.
   box-shadow: 0 0 0 4px rgba(29, 211, 248, 0.22);
 }
 
-/*-- Section 2: projects carousel --*/
+/*-- Section 2: projects showcase ribbon --*/
+/* Full-bleed, near-flush with the hero, no heading, no captions. */
 .wsv-projects {
-  padding-top: 90px;
-  padding-bottom: 90px;
+  position: relative;
+  padding-top: 0;
+  padding-bottom: 0;
   background-color: #f5f6f8;
+  overflow: hidden;
 }
 
-.wsv-projects-head,
 .wsv-nav-head {
   margin-bottom: 40px;
 }
 
-.wsv-projects-head {
-  display: flex;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 20px;
-  flex-wrap: wrap;
-}
-
-.wsv-projects-head h2,
 .wsv-nav-head h2 {
   font-family: "Cairo", sans-serif;
   font-weight: 800;
@@ -11858,12 +11875,32 @@ Logical properties throughout so nothing is needed in rtl.css.
   margin-bottom: 0;
 }
 
-.wsv-arrows {
-  display: flex;
-  gap: 10px;
+/* Marquee: Swiper eases each step by default, which reads as a stutter at
+   delay:0. Linear is what makes it one continuous drift. */
+.wsv-projects-swiper .swiper-wrapper {
+  transition-timing-function: linear;
 }
 
+/* Fixed height, width follows each image's own aspect ratio. */
+.wsv-project-slide {
+  width: auto;
+  height: clamp(200px, 20vw, 300px);
+  line-height: 0;
+}
+.wsv-project-slide img {
+  width: auto;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+}
+
+/* Physical left/right on purpose: these sit on the screen's two edges and must
+   not flip with the RTL root. */
 .wsv-arrow {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  z-index: 5;
   width: 46px;
   height: 46px;
   display: flex;
@@ -11871,7 +11908,8 @@ Logical properties throughout so nothing is needed in rtl.css.
   justify-content: center;
   border-radius: 50%;
   border: 1px solid rgba(15, 23, 42, 0.08);
-  background-color: #ffffff;
+  background-color: rgba(255, 255, 255, 0.92);
+  box-shadow: 0 6px 18px -8px rgba(15, 23, 42, 0.35);
   color: #212121;
   font-size: 24px;
   cursor: pointer;
@@ -11883,57 +11921,19 @@ Logical properties throughout so nothing is needed in rtl.css.
   color: #ffffff;
 }
 
-.wsv-projects-swiper {
-  padding-bottom: 6px;
+.wsv-arrow-start {
+  left: 20px;
 }
 
-.wsv-project-card {
-  background-color: #ffffff;
-  border: 1px solid rgba(15, 23, 42, 0.08);
-  border-radius: 16px;
-  overflow: hidden;
-  transition: transform 0.5s ease, box-shadow 0.5s ease;
-}
-.wsv-project-card:hover {
-  transform: translateY(-6px);
-  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18);
-}
-.wsv-project-card:hover .wsv-project-media img {
-  transform: scale(1.04);
-}
-
-.wsv-project-media {
-  overflow: hidden;
-  line-height: 0;
-  background-color: #eef2f6;
-}
-.wsv-project-media img {
-  width: 100%;
-  height: auto;
-  aspect-ratio: 16/10;
-  object-fit: cover;
-  transition: transform 0.6s ease;
-}
-
-.wsv-project-body {
-  padding: 20px 22px 22px;
-}
-.wsv-project-body h3 {
-  font-family: "Cairo", sans-serif;
-  font-weight: 700;
-  font-size: 17px;
-  color: #212121;
-  margin-bottom: 4px;
-}
-.wsv-project-body span {
-  font-size: 14px;
-  color: #6084a4;
+.wsv-arrow-end {
+  right: 20px;
 }
 
 /*-- Section 3: service navigator --*/
+/* Last section of Area 1 — its bottom padding IS the gap to the next area. */
 .wsv-nav {
-  padding-top: 90px;
-  padding-bottom: 90px;
+  padding-top: clamp(32px, 4vw, 48px);
+  padding-bottom: clamp(110px, 14vw, 200px);
   background-color: #ffffff;
 }
 
@@ -12037,7 +12037,7 @@ Logical properties throughout so nothing is needed in rtl.css.
 }
 @media only screen and (max-width: 767px) {
   .wsv-hero {
-    min-height: 420px;
+    min-height: 480px;
     padding-top: 100px;
     padding-bottom: 70px;
   }
@@ -12048,15 +12048,28 @@ Logical properties throughout so nothing is needed in rtl.css.
     flex: 1 1 100%;
     text-align: center;
   }
+  .wsv-hero-sweep {
+    height: 45px;
+  }
+  .wsv-hero-dots-wrap {
+    bottom: 50px;
+  }
   .wsv-hero-dots {
     justify-content: center;
   }
-  .wsv-projects,
-  .wsv-nav {
-    padding-top: 60px;
-    padding-bottom: 60px;
+  /* .wsv-nav padding is governed by the clamped gap vars — no override here,
+     or the area break collapses back to section size on mobile. */
+  .wsv-arrow {
+    width: 38px;
+    height: 38px;
+    font-size: 20px;
   }
-  .wsv-projects-head h2,
+  .wsv-arrow-start {
+    left: 10px;
+  }
+  .wsv-arrow-end {
+    right: 10px;
+  }
   .wsv-nav-head h2 {
     font-size: 25px;
   }

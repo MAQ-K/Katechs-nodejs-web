@@ -98,6 +98,19 @@ const Hero = () => {
           </div>
         </div>
       </div>
+
+      {/* Curved sweep into the projects strip — the divider between the two.
+          Fill matches $wsv-band so it reads as the next section rising up.
+          preserveAspectRatio="none" lets it stretch to any width. */}
+      <svg
+        className="wsv-hero-sweep"
+        viewBox="0 0 1440 80"
+        preserveAspectRatio="none"
+        aria-hidden="true"
+        focusable="false"
+      >
+        <path d="M0,0 C400,80 1040,80 1440,0 L1440,80 L0,80 Z" />
+      </svg>
     </section>
   );
 };

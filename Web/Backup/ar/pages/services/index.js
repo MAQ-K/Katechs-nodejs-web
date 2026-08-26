@@ -6,26 +6,47 @@ import Hero from "../../components/Services/Hero";
 import Projects from "../../components/Services/Projects";
 import ServiceNav from "../../components/Services/ServiceNav";
 
-// Wireframe-only page: grey boxes, no visual design yet.
-// 3 web service types, each an "area" made of multiple stacked sub-sections.
-// Names are placeholders - to be edited later.
+// Wireframe-only below Area 1: grey boxes, no visual design yet.
+// Each "area" is one web service type, made of stacked blocks. `kind` picks the
+// block's shape - see renderBlock. `note` is the brief for that block: what the
+// customer needs from it, so the intent survives until we design it.
 const areas = [
   {
-    id: "type-1",
-    label: "النوع الأول",
-    subs: ["نظرة عامة", "المميزات", "السعر / طلب الخدمة"],
+    id: "business-websites",
+    label: "مواقع الشركات",
+    blocks: [
+      { kind: "split", label: "نظرة عامة", note: "مصداقية + وضوح: من نحن وماذا نقدم" },
+      { kind: "cards3", label: "الباقات", note: "ماذا أحصل عليه مقابل المبلغ؟" },
+      { kind: "faq", label: "الأسئلة الشائعة", note: "المدة، التعديلات، ما بعد الإطلاق" },
+    ],
   },
   {
     id: "type-2",
     label: "النوع الثاني",
-    subs: ["نظرة عامة", "المميزات", "السعر / طلب الخدمة"],
+    blocks: [
+      { kind: "box", label: "نظرة عامة" },
+      { kind: "box", label: "المميزات" },
+      { kind: "box", label: "السعر / طلب الخدمة" },
+    ],
   },
   {
     id: "type-3",
     label: "النوع الثالث",
-    subs: ["نظرة عامة", "المميزات", "السعر / طلب الخدمة"],
+    blocks: [
+      { kind: "box", label: "نظرة عامة" },
+      { kind: "box", label: "المميزات" },
+      { kind: "box", label: "السعر / طلب الخدمة" },
+    ],
   },
 ];
+
+// Spacing scale — the break between areas is ~4x the gap between the sections
+// inside one, so the page reads as areas first, sections second. 2:1 was tried
+// and read as "the same": next to 180px-tall blocks a gap has to be far bigger
+// than its neighbour to register as a different kind of break.
+// Mirrors $wsv-gap-section / $wsv-gap-area in style.scss; keep them in sync.
+const SECTION_GAP = "clamp(32px, 4vw, 48px)";
+const AREA_GAP = "clamp(110px, 14vw, 200px)";
 
 const box = {
   border: "2px dashed #9a9a9a",
@@ -38,6 +59,85 @@ const box = {
   fontFamily: "sans-serif",
   boxSizing: "border-box",
 };
+
+// The one-line brief under each block - keeps "what is this for" visible while
+// the page is still a wireframe.
+const noteStyle = {
+  fontFamily: "sans-serif",
+  fontSize: 12,
+  color: "#8a8a8a",
+  marginTop: 6,
+  textAlign: "center",
+};
+
+// One renderer for every area. Shapes come from the Area 2 structure draft;
+// `box` is the generic 180px block the untouched areas still use.
+function renderBlock(b, i) {
+  switch (b.kind) {
+    case "split":
+      return (
+        <div key={i}>
+          <div style={{ display: "flex", gap: 20, flexWrap: "wrap" }}>
+            <div style={{ ...box, flex: "1 1 320px", height: 260 }}>
+              صورة / وسائط
+            </div>
+            <div
+              style={{
+                ...box,
+                flex: "1 1 380px",
+                height: 260,
+                flexDirection: "column",
+                gap: 10,
+                alignItems: "stretch",
+                padding: 16,
+              }}
+            >
+              <div style={{ ...box, height: 40 }}>{b.label}</div>
+              <div style={{ ...box, flex: 1 }}>نص تعريفي</div>
+            </div>
+          </div>
+          <div style={noteStyle}>{b.note}</div>
+        </div>
+      );
+
+    case "cards3":
+      return (
+        <div key={i}>
+          <div style={{ ...box, height: 44, marginBottom: 16 }}>{b.label}</div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(auto-fit, minmax(240px, 1fr))",
+              gap: 20,
+            }}
+          >
+            {["الباقة الأولى", "الباقة الثانية", "الباقة الثالثة"].map((p) => (
+              <div key={p} style={{ ...box, height: 380 }}>
+                {p}
+              </div>
+            ))}
+          </div>
+          <div style={noteStyle}>{b.note}</div>
+        </div>
+      );
+
+    case "faq":
+      return (
+        <div key={i}>
+          <div style={{ ...box, height: 300 }}>{b.label}</div>
+          <div style={noteStyle}>{b.note}</div>
+        </div>
+      );
+
+    default:
+      return (
+        <div key={i}>
+          <div style={{ ...box, height: 180 }}>{b.label}</div>
+          {b.note ? <div style={noteStyle}>{b.note}</div> : null}
+        </div>
+      );
+  }
+}
 
 export default function ServicesHubWireframe() {
   const [activeArea, setActiveArea] = useState(areas[0].id);
@@ -133,7 +233,8 @@ export default function ServicesHubWireframe() {
       <div ref={sentinelRef} aria-hidden="true" />
 
       {/* ===== AREAS 2+ — still wireframe grey boxes ===== */}
-      <main style={{ padding: "40px 20px", maxWidth: 1140, margin: "0 auto" }}>
+      {/* Area 1's gap to here is .wsv-nav's padding-bottom, so main adds none. */}
+      <main style={{ padding: "0 20px", maxWidth: 1140, margin: "0 auto" }}>
         {/* AREAS - each is a group of stacked sections for one web service type */}
         {areas.map((a) => (
           <div
@@ -141,8 +242,8 @@ export default function ServicesHubWireframe() {
             id={a.id}
             ref={(el) => (areaRefs.current[a.id] = el)}
             style={{
-              marginBottom: 56,
-              paddingTop: 12,
+              marginBottom: AREA_GAP,
+              paddingTop: 24,
               borderTop: "3px solid #555",
             }}
           >
@@ -157,16 +258,14 @@ export default function ServicesHubWireframe() {
             >
               {a.label} (area - can hold more sections)
             </div>
-            {a.subs.map((subLabel, i) => (
+            {a.blocks.map((b, i) => (
               <section
                 key={i}
                 style={{
-                  ...box,
-                  height: 180,
-                  marginBottom: 20,
+                  marginBottom: i === a.blocks.length - 1 ? 0 : SECTION_GAP,
                 }}
               >
-                {subLabel}
+                {renderBlock(b, i)}
               </section>
             ))}
           </div>
