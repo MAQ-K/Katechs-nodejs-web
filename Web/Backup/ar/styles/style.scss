@@ -13382,17 +13382,35 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
 .wsv-hero {
   position: relative;
   overflow: hidden;
-  min-height: clamp(560px, 72vh, 700px);
-  padding-top: 120px;
-  padding-bottom: 90px;
+  min-height: clamp(680px, 88vh, 900px);
+  padding-top: 130px;
+  padding-bottom: 0;
   display: flex;
-  align-items: center;
-  background-color: $wsv-navy;
+  align-items: flex-start;
+  /* Shows through the gap the curve below reveals — same flat color the
+     next section (Projects) opens with, so the handoff has no seam. */
+  background-color: $wsv-band;
 
   .container {
     position: relative;
     z-index: 2;
   }
+}
+
+/* The video/overlay layer — a plain full-height rectangle. The curve is
+   deliberately NOT here: border-radius only makes convex corners, so rounding
+   this element's bottom edge bulges it DOWN at the centre, which is the mirror
+   image of the reference. `.wsv-hero-curve` owns the divider instead.
+   `overflow: hidden` still earns its place — it clips the oversized centred
+   video. */
+.wsv-hero-bg {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 100%;
+  overflow: hidden;
+  z-index: 0;
 }
 
 /* Same positioning whether it's a <video> or a still <img>. */
@@ -13434,94 +13452,151 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
   text-align: center;
 }
 
+/* Reference: centered pill with a small trailing chevron, glassy rather than
+   tinted — lighter than a brand-color badge so it doesn't compete with the
+   headline. The chevron is bx-chevron-left, not -right: it sits after the
+   label in markup, so under the page's RTL root it lands on the visual left,
+   pointing the way the line continues to flow (mirrors the LTR reference's
+   forward-pointing right chevron instead of copying its direction literally). */
 .wsv-hero-badge {
-  display: inline-block;
-  padding: 9px 20px;
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 9px 18px;
   border-radius: 50px;
-  background-color: rgba($main-color, 0.16);
-  border: 1px solid rgba($main-color, 0.4);
-  color: $main-color;
+  background-color: rgba(255, 255, 255, 0.1);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+  color: rgba(255, 255, 255, 0.92);
   font-family: "Cairo", sans-serif;
   font-size: 13px;
   font-weight: 600;
-  margin-bottom: 20px;
+  letter-spacing: 0.02em;
+  margin-bottom: 24px;
+
+  i {
+    font-size: 16px;
+    color: $main-color;
+  }
 }
 
+/* Dominant, oversized headline — the reference's whole point is that this is
+   the one thing on the page you can't miss. */
 .wsv-hero-text h1 {
   font-family: "Cairo", sans-serif;
   font-weight: 800;
-  font-size: clamp(28px, 4vw, 46px);
-  line-height: 1.35;
+  font-size: clamp(36px, 6vw, 72px);
+  line-height: 1.15;
+  letter-spacing: -0.01em;
   color: $white-color;
-  margin-bottom: 16px;
+  margin-bottom: 18px;
 }
 
 .wsv-hero-text p {
-  font-size: 16px;
+  max-width: 640px;
+  margin-inline: auto;
+  font-size: 17px;
   line-height: 1.9;
   color: rgba(255, 255, 255, 0.78);
-  margin-bottom: 28px;
+  margin-bottom: 32px;
 }
 
 .wsv-hero-cta {
   display: flex;
+  align-items: center;
   flex-wrap: wrap;
-  gap: 14px;
+  gap: 22px;
   justify-content: center;
 }
 
+/* One dominant solid dark rounded-rect button, per the reference — a near-
+   black neutral, not the brand cyan, so it reads as "the" action rather than
+   "an accent color". */
 .wsv-btn {
   display: inline-block;
-  padding: 15px 32px;
-  border-radius: 10px;
-  background-color: $main-color;
-  border: 1px solid $main-color;
-  color: $white-color;
+  padding: 16px 38px;
+  border-radius: 12px;
+  background-color: $white-color;
+  border: 1px solid $white-color;
+  color: $wsv-navy;
   font-family: "Cairo", sans-serif;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
   transition: $transition;
 
   &:hover {
-    background-color: $white-color;
-    border-color: $white-color;
+    background-color: $main-color;
+    border-color: $main-color;
     color: $wsv-navy;
+    transform: translateY(-2px);
   }
 }
 
+/* Secondary reads as a plain link, not a second button, so the solid one
+   stays the only dominant shape — same balance as the reference even though
+   we carry one extra CTA it doesn't. */
 .wsv-btn-ghost {
+  padding: 16px 6px;
   background-color: transparent;
-  border-color: rgba(255, 255, 255, 0.5);
-  color: $white-color;
+  border: none;
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+  box-shadow: none;
 
   &:hover {
-    background-color: $white-color;
-    border-color: $white-color;
-    color: $wsv-navy;
+    background-color: transparent;
+    color: $white-color;
+    text-decoration-color: $white-color;
+    transform: none;
   }
 }
 
-/* Bottom-right dots. `direction: ltr` is deliberate: under the page's RTL
-   root, flex-end would push these to the visual left. */
-/* The sweep sits on top of the hero's bottom edge; the dots have to clear it. */
-.wsv-hero-sweep {
+/* The divider into the projects strip. An opaque band-coloured dome rising
+   into the hero: TOP corners rounded, so its edge peaks at the centre and
+   drops to the viewport edges — the shape the reference actually has. (The
+   previous radial-gradient blob could never track the curve; an inset shadow
+   follows border-radius natively, which is the whole trick here.)
+
+   Width stays 100% so the dome's steep flanks land exactly at the viewport
+   edges — that is where the reference is darkest. The height (rise + 56px)
+   is what produces that darkness for free: at the centre the edge sits at
+   y=0 and the shadow fades out well before the bottom, leaving clean light
+   below; at the left/right the edge sits a full `rise` lower, so the same
+   shadow runs almost to the bottom and reads thick and near-black. */
+.wsv-hero-curve {
+  /* ~130px at 1920px, matching the reference's measured 125-140px rise.
+     A custom property so the height below can't drift out of sync. */
+  --wsv-curve-rise: clamp(64px, 6.8vw, 150px);
+
   position: absolute;
+  inset-inline: 0;
   bottom: 0;
-  left: 0;
-  width: 100%;
-  height: 80px;
-  display: block;
-  z-index: 3;
-  pointer-events: none;
+  height: calc(var(--wsv-curve-rise) + 56px);
+  background-color: $wsv-band;
 
-  path {
-    fill: $wsv-band;
-  }
+  /* Horizontal radii sum to exactly the width, so CSS doesn't scale them
+     down and the two arcs meet at dead centre sharing a flat tangent. */
+  border-radius: 50% 50% 0 0 / var(--wsv-curve-rise) var(--wsv-curve-rise) 0 0;
+
+  /* Offset-y only with negative spread: keeps the shadow off the left, right
+     and bottom edges, so the dome meets $wsv-band below with no dark seam. */
+  box-shadow:
+    inset 0 34px 30px -16px rgba(0, 0, 0, 0.92),
+    inset 0 70px 60px -34px rgba(0, 0, 0, 0.55);
+
+  z-index: 1;
+  pointer-events: none;
 }
 
+/* Clears the dome's peak (rise + 56px ≈ 186px at desktop). The dots are
+   right-aligned, where the dome's edge is a further `rise` lower again. */
 .wsv-hero-dots-wrap {
   position: absolute;
-  bottom: 84px;
+  bottom: 215px;
   inset-inline: 0;
   z-index: 2;
 }
@@ -13584,7 +13659,7 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
 /* Fixed height, width follows each image's own aspect ratio. */
 .wsv-project-slide {
   width: auto;
-  height: clamp(200px, 20vw, 300px);
+  height: clamp(140px, 14vw, 210px);
   line-height: 0;
 
   img {
@@ -13595,40 +13670,21 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
   }
 }
 
-/* Physical left/right on purpose: these sit on the screen's two edges and must
-   not flip with the RTL root. */
-.wsv-arrow {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 5;
-  width: 46px;
-  height: 46px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid $wsv-line;
-  background-color: rgba(255, 255, 255, 0.92);
-  box-shadow: 0 6px 18px -8px rgba(15, 23, 42, 0.35);
-  color: $heading-color;
-  font-size: 24px;
-  cursor: pointer;
-  transition: $transition;
-
-  &:hover {
-    background-color: $main-color;
-    border-color: $main-color;
-    color: $white-color;
-  }
+/* The ribbon is dragged, not stepped — Swiper's grabCursor sets grab/grabbing
+   on the container, but the slides and their images sit on top of it and would
+   otherwise show a default arrow (or the browser's image drag-select cursor).
+   `inherit` lets the container's cursor win over the whole surface. */
+.wsv-projects-swiper,
+.wsv-project-slide,
+.wsv-project-slide img {
+  cursor: inherit;
 }
 
-.wsv-arrow-start {
-  left: 20px;
-}
-
-.wsv-arrow-end {
-  right: 20px;
+/* Native image dragging would otherwise hijack the swipe gesture. */
+.wsv-project-slide img {
+  -webkit-user-drag: none;
+  user-select: none;
+  pointer-events: none;
 }
 
 /*-- Section 3: service navigator --*/
@@ -13746,6 +13802,95 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
     opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/*-- Floating section rail --*/
+/* A vertical segmented control: one capsule, one pill that slides between the
+   items. Physical `left` on purpose, not a logical property — it is pinned to
+   a screen edge and must not flip with the RTL root. The left edge
+   also keeps it clear of the go-to-top button, which sits bottom-right on every
+   page. z-index 50 stays under the fixed navbar (Bootstrap .fixed-top = 1030)
+   so it can never paint over an open dropdown.
+
+   The three custom properties below are the whole layout contract: every item
+   is `flex: 1`, so one slot is exactly --wsv-rail-slot tall and the pill can
+   land on item N with a single translate. Keep --wsv-rail-slot's divisor equal
+   to the number of items in `areas` (pages/services/index.js). */
+.wsv-rail {
+  --wsv-rail-h: 340px;
+  --wsv-rail-pad: 6px;
+  --wsv-rail-slot: calc((var(--wsv-rail-h) - 2 * var(--wsv-rail-pad)) / 4);
+
+  position: fixed;
+  top: 50%;
+  left: 16px;
+  transform: translateY(-50%);
+  z-index: 50;
+
+  display: flex;
+  flex-direction: column;
+  height: var(--wsv-rail-h);
+  padding: var(--wsv-rail-pad);
+  border-radius: 14px;
+  background-color: $white-color;
+  border: 1px solid $wsv-line;
+  box-shadow: 0 18px 40px rgba(10, 31, 68, 0.14);
+  overflow: hidden;
+}
+
+.wsv-rail-item {
+  flex: 1; /* exactly one slot tall — this is what keeps the pill aligned */
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 5px;
+  width: 92px;
+  padding: 0 8px;
+  border: 0;
+  background: none;
+  cursor: pointer;
+  font-family: "Cairo", sans-serif;
+  font-size: 12px;
+  font-weight: 600;
+  line-height: 1.3;
+  text-align: center;
+  color: rgba(10, 31, 68, 0.6);
+  transition: color 0.25s ease;
+
+  i {
+    font-size: 22px;
+  }
+
+  &:hover {
+    color: $wsv-navy;
+  }
+
+  &.is-active {
+    color: $white-color;
+  }
+}
+
+/* Sibling of the items rather than a child of the active one, so it can move
+   independently. --wsv-rail-i (set inline from React) is the only input. */
+.wsv-rail-pill {
+  position: absolute;
+  inset-inline: var(--wsv-rail-pad);
+  top: var(--wsv-rail-pad);
+  height: var(--wsv-rail-slot);
+  z-index: 0;
+  border-radius: 10px;
+  background-color: $wsv-navy;
+  transform: translateY(calc(var(--wsv-rail-slot) * var(--wsv-rail-i, 0)));
+  transition: transform 0.32s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wsv-rail-pill {
+    transition: none;
+  }
+}
+
 /*-- Responsive --*/
 @media only screen and (max-width: 1199px) {
   .wsv-nav-grid {
@@ -13753,11 +13898,19 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
   }
 }
 
+@media only screen and (max-width: 991px) {
+  /* Not enough width to float a rail without covering content — and the
+     .wsv-nav card grid already does this job in the normal flow. */
+  .wsv-rail {
+    display: none;
+  }
+}
+
 @media only screen and (max-width: 767px) {
   .wsv-hero {
-    min-height: 480px;
+    min-height: 620px;
     padding-top: 100px;
-    padding-bottom: 70px;
+    padding-bottom: 0;
   }
 
   .wsv-hero-text p {
@@ -13769,12 +13922,16 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
     text-align: center;
   }
 
-  .wsv-hero-sweep {
-    height: 45px;
+  /* Geometry needs no override — the clamp() floor already lands the rise at
+     64px here. Only the shadow is softened to suit the shallower arc. */
+  .wsv-hero-curve {
+    box-shadow:
+      inset 0 22px 20px -10px rgba(0, 0, 0, 0.9),
+      inset 0 44px 40px -22px rgba(0, 0, 0, 0.5);
   }
 
   .wsv-hero-dots-wrap {
-    bottom: 50px;
+    bottom: 150px;
   }
 
   .wsv-hero-dots {
@@ -13783,20 +13940,6 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
 
   /* .wsv-nav padding is governed by the clamped gap vars — no override here,
      or the area break collapses back to section size on mobile. */
-
-  .wsv-arrow {
-    width: 38px;
-    height: 38px;
-    font-size: 20px;
-  }
-
-  .wsv-arrow-start {
-    left: 10px;
-  }
-
-  .wsv-arrow-end {
-    right: 10px;
-  }
 
   .wsv-nav-head h2 {
     font-size: 25px;

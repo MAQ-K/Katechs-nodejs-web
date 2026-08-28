@@ -1,15 +1,18 @@
-import React, { useRef } from "react";
+import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Autoplay } from "swiper/modules";
+import { Autoplay, FreeMode } from "swiper/modules";
 import { useReducedMotion } from "framer-motion";
 import { projects } from "../../data/services/data";
 
 // Client work as a full-bleed showcase ribbon: no heading, no captions, just
 // the sites drifting past. delay:0 + a linear wrapper transition is the marquee
 // recipe — without the linear override Swiper eases each step and it stutters.
+//
+// No arrows: the ribbon is dragged, not stepped. freeMode lets a drag land
+// anywhere instead of snapping back to a slide edge, and grabCursor is what
+// swaps the pointer to grab/grabbing so it reads as draggable on hover.
 
 const Projects = () => {
-  const swiperRef = useRef(null);
   const reduced = useReducedMotion();
 
   // Six slides barely cover 1.5 viewports, which is not enough for Swiper's
@@ -17,20 +20,11 @@ const Projects = () => {
   // is the usual marquee guard.
   const track = [...projects, ...projects];
 
-  // Arrows must not inherit speed={5000}, or a click takes five seconds.
-  const step = (dir) => {
-    const s = swiperRef.current;
-    if (!s) return;
-    if (dir === "next") s.slideNext(600);
-    else s.slidePrev(600);
-  };
-
   return (
     <section className="wsv-projects" id="wsv-projects">
       <Swiper
         dir="rtl"
-        onSwiper={(s) => (swiperRef.current = s)}
-        modules={[Autoplay]}
+        modules={[Autoplay, FreeMode]}
         slidesPerView="auto"
         spaceBetween={20}
         loop={true}
@@ -41,6 +35,10 @@ const Projects = () => {
             : { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: false }
         }
         allowTouchMove={true}
+        grabCursor={true}
+        // momentum keeps the flick gesture feeling loose; the bounce is off so
+        // a hard drag can't rubber-band a looping marquee.
+        freeMode={{ enabled: true, momentum: true, momentumBounce: false }}
         className="wsv-projects-swiper"
       >
         {track.map((p, i) => (
@@ -49,23 +47,6 @@ const Projects = () => {
           </SwiperSlide>
         ))}
       </Swiper>
-
-      <button
-        type="button"
-        className="wsv-arrow wsv-arrow-start"
-        aria-label="السابق"
-        onClick={() => step("prev")}
-      >
-        <i className="bx bx-chevron-right"></i>
-      </button>
-      <button
-        type="button"
-        className="wsv-arrow wsv-arrow-end"
-        aria-label="التالي"
-        onClick={() => step("next")}
-      >
-        <i className="bx bx-chevron-left"></i>
-      </button>
     </section>
   );
 };

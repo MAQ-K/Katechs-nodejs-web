@@ -5,15 +5,18 @@ import Footer from "../../components/Layouts/Footer";
 import Hero from "../../components/Services/Hero";
 import Projects from "../../components/Services/Projects";
 import ServiceNav from "../../components/Services/ServiceNav";
+import SideRail from "../../components/Services/SideRail";
 
 // Wireframe-only below Area 1: grey boxes, no visual design yet.
 // Each "area" is one web service type, made of stacked blocks. `kind` picks the
 // block's shape - see renderBlock. `note` is the brief for that block: what the
 // customer needs from it, so the intent survives until we design it.
+// `icon` (boxicons) is what the floating SideRail shows for the area.
 const areas = [
   {
     id: "business-websites",
     label: "مواقع الشركات",
+    icon: "bx bx-buildings",
     blocks: [
       { kind: "split", label: "نظرة عامة", note: "مصداقية + وضوح: من نحن وماذا نقدم" },
       { kind: "cards3", label: "الباقات", note: "ماذا أحصل عليه مقابل المبلغ؟" },
@@ -23,6 +26,7 @@ const areas = [
   {
     id: "type-2",
     label: "النوع الثاني",
+    icon: "bx bx-cart-alt",
     blocks: [
       { kind: "box", label: "نظرة عامة" },
       { kind: "box", label: "المميزات" },
@@ -32,6 +36,17 @@ const areas = [
   {
     id: "type-3",
     label: "النوع الثالث",
+    icon: "bx bx-layer",
+    blocks: [
+      { kind: "box", label: "نظرة عامة" },
+      { kind: "box", label: "المميزات" },
+      { kind: "box", label: "السعر / طلب الخدمة" },
+    ],
+  },
+  {
+    id: "type-4",
+    label: "النوع الرابع",
+    icon: "bx bx-cube",
     blocks: [
       { kind: "box", label: "نظرة عامة" },
       { kind: "box", label: "المميزات" },
@@ -141,25 +156,17 @@ function renderBlock(b, i) {
 
 export default function ServicesHubWireframe() {
   const [activeArea, setActiveArea] = useState(areas[0].id);
-  const [navVisible, setNavVisible] = useState(false);
   const areaRefs = useRef({});
-  const sentinelRef = useRef(null);
 
-  // The side nav belongs to the service areas, not to Area 1 — it only appears
-  // once the 4 nav boxes have scrolled past the top of the viewport.
+  // Scroll-spy for the rail. The read line sits a third down the viewport; the
+  // last area starting above it wins. rAF-gated because this runs on every
+  // scroll tick, and run once on mount so a deep link (/services/#type-3)
+  // highlights the right item before the user scrolls at all.
   useEffect(() => {
-    const el = sentinelRef.current;
-    if (!el || typeof IntersectionObserver === "undefined") return undefined;
-    const io = new IntersectionObserver(
-      ([entry]) => setNavVisible(entry.boundingClientRect.top <= 0),
-      { threshold: 0 }
-    );
-    io.observe(el);
-    return () => io.disconnect();
-  }, []);
+    let frame = null;
 
-  useEffect(() => {
-    const handleScroll = () => {
+    const measure = () => {
+      frame = null;
       const scrollPos = window.scrollY + window.innerHeight / 3;
       let current = areas[0].id;
       areas.forEach((a) => {
@@ -170,8 +177,19 @@ export default function ServicesHubWireframe() {
       });
       setActiveArea(current);
     };
-    window.addEventListener("scroll", handleScroll);
-    return () => window.removeEventListener("scroll", handleScroll);
+
+    const onScroll = () => {
+      if (frame === null) frame = window.requestAnimationFrame(measure);
+    };
+
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, []);
 
   const scrollTo = (id) => {
@@ -187,50 +205,13 @@ export default function ServicesHubWireframe() {
 
       <Navbar />
 
-      {/* floating side nav - hidden until the nav boxes scroll past */}
-      <div
-        style={{
-          position: "fixed",
-          top: "50%",
-          left: 16,
-          transform: `translateY(-50%) translateX(${navVisible ? 0 : -12}px)`,
-          opacity: navVisible ? 1 : 0,
-          pointerEvents: navVisible ? "auto" : "none",
-          transition: "opacity .4s ease, transform .4s ease",
-          display: "flex",
-          flexDirection: "column",
-          gap: 10,
-          zIndex: 50,
-        }}
-      >
-        {areas.map((a) => (
-          <button
-            key={a.id}
-            onClick={() => scrollTo(a.id)}
-            style={{
-              ...box,
-              padding: "10px 14px",
-              cursor: "pointer",
-              fontSize: 13,
-              whiteSpace: "nowrap",
-              borderColor: activeArea === a.id ? "#555" : "#9a9a9a",
-              borderWidth: activeArea === a.id ? 3 : 2,
-              fontWeight: activeArea === a.id ? "bold" : "normal",
-              color: activeArea === a.id ? "#333" : "#6b6b6b",
-            }}
-          >
-            {a.label}
-          </button>
-        ))}
-      </div>
+      {/* Floating section rail — visible from first paint, not gated on scroll. */}
+      <SideRail items={areas} activeId={activeArea} onSelect={scrollTo} />
 
       {/* ===== AREA 1 — the brief area (designed) ===== */}
       <Hero />
       <Projects />
       <ServiceNav />
-
-      {/* crossing this line is what reveals the floating side nav */}
-      <div ref={sentinelRef} aria-hidden="true" />
 
       {/* ===== AREAS 2+ — still wireframe grey boxes ===== */}
       {/* Area 1's gap to here is .wsv-nav's padding-bottom, so main adds none. */}

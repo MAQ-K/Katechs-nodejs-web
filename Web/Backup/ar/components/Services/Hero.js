@@ -44,27 +44,35 @@ const Hero = () => {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      {heroMedia.type === "video" ? (
-        <video
-          className="wsv-hero-media"
-          autoPlay
-          muted
-          loop
-          playsInline
-          preload="auto"
-        >
-          <source src={heroMedia.src} type="video/mp4" />
-        </video>
-      ) : (
-        <img className="wsv-hero-media" src={heroMedia.src} alt="" aria-hidden="true" />
-      )}
-      <div className="wsv-hero-overlay" />
+      {/* Plain full-height rectangle. The curve is NOT here: rounding this
+          element's bottom corners would bulge it down at the centre, the
+          mirror image of the reference. `.wsv-hero-curve` below owns it. */}
+      <div className="wsv-hero-bg">
+        {heroMedia.type === "video" ? (
+          <video
+            className="wsv-hero-media"
+            autoPlay
+            muted
+            loop
+            playsInline
+            preload="auto"
+          >
+            <source src={heroMedia.src} type="video/mp4" />
+          </video>
+        ) : (
+          <img className="wsv-hero-media" src={heroMedia.src} alt="" aria-hidden="true" />
+        )}
+        <div className="wsv-hero-overlay" />
+      </div>
 
       <div className="container">
         <div className="wsv-hero-inner">
           <AnimatePresence mode="wait">
             <motion.div key={slide.id} className="wsv-hero-text" {...anim}>
-              <span className="wsv-hero-badge">{slide.badge}</span>
+              <span className="wsv-hero-badge">
+                {slide.badge}
+                <i className="bx bx-chevron-left" aria-hidden="true" />
+              </span>
               <h1>{slide.title}</h1>
               <p>{slide.text}</p>
               <div className="wsv-hero-cta">
@@ -99,18 +107,12 @@ const Hero = () => {
         </div>
       </div>
 
-      {/* Curved sweep into the projects strip — the divider between the two.
-          Fill matches $wsv-band so it reads as the next section rising up.
-          preserveAspectRatio="none" lets it stretch to any width. */}
-      <svg
-        className="wsv-hero-sweep"
-        viewBox="0 0 1440 80"
-        preserveAspectRatio="none"
-        aria-hidden="true"
-        focusable="false"
-      >
-        <path d="M0,0 C400,80 1040,80 1440,0 L1440,80 L0,80 Z" />
-      </svg>
+      {/* The divider. An opaque band-coloured dome whose TOP corners are
+          rounded, so its edge peaks at the centre — the shape the reference
+          actually has. Its inset shadow follows that same radius, which is why
+          the dark band hugs the curve instead of floating near it. Last child
+          so it paints over the photo. */}
+      <div className="wsv-hero-curve" aria-hidden="true" />
     </section>
   );
 };
