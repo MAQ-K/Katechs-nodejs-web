@@ -3,6 +3,19 @@ import LabShell from "../../components/Lab/LabShell";
 import { labGuard } from "../../utils/labData";
 
 import HeroBuildSmarter from "../../components/Sections/HeroBuildSmarter";
+import CoverflowCarousel from "../../components/Sections/CoverflowCarousel";
+
+// Flat-colour placeholder cards, so the carousel demo has no network
+// dependency and the rake is easy to read card-to-card.
+const swatch = (hex, n) =>
+  "data:image/svg+xml;utf8," +
+  encodeURIComponent(
+    `<svg xmlns='http://www.w3.org/2000/svg' width='800' height='600'>
+      <rect width='800' height='600' fill='${hex}'/>
+      <text x='400' y='330' font-family='sans-serif' font-size='140'
+        fill='rgba(255,255,255,.85)' text-anchor='middle'>${n}</text>
+    </svg>`
+  );
 
 // Gallery for components/Sections/ — the standalone, portable one-file
 // sections (see components/Sections/README.md for the contract).
@@ -37,6 +50,26 @@ const SECTIONS = [
             <rect width='1920' height='800' fill='url(#g)'/>
           </svg>`
         ),
+    },
+  },
+  {
+    id: "coverflow-carousel",
+    title: "Carousel — Coverflow",
+    file: "CoverflowCarousel.js",
+    Component: CoverflowCarousel,
+    props: {
+      slides: [
+        ["#0a1f44", "1"],
+        ["#14406b", "2"],
+        ["#1dd3f8", "3"],
+        ["#6084a4", "4"],
+        ["#0f2f57", "5"],
+        ["#3aa0c9", "6"],
+      ].map(([hex, n]) => ({ src: swatch(hex, n), alt: `Card ${n}` })),
+      cardWidth: "clamp(210px, 30vw, 380px)",
+      cardHeight: "clamp(158px, 22.5vw, 285px)",
+      showNavigation: true,
+      showPagination: true,
     },
   },
 ];

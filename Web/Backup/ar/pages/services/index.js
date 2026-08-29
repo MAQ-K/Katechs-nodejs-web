@@ -1,11 +1,13 @@
 import React, { useEffect, useRef, useState } from "react";
 import Head from "next/head";
+import { useRouter } from "next/router";
 import Navbar from "../../components/Layouts/Navbar";
 import Footer from "../../components/Layouts/Footer";
-import Hero from "../../components/Services/Hero";
+import HeroBuildSmarter from "../../components/Sections/HeroBuildSmarter";
 import Projects from "../../components/Services/Projects";
 import ServiceNav from "../../components/Services/ServiceNav";
 import SideRail from "../../components/Services/SideRail";
+import { heroMedia, heroSlides } from "../../data/services/data";
 
 // Wireframe-only below Area 1: grey boxes, no visual design yet.
 // Each "area" is one web service type, made of stacked blocks. `kind` picks the
@@ -154,9 +156,29 @@ function renderBlock(b, i) {
   }
 }
 
+// Hero slide rotation. This used to live inside components/Services/Hero.js;
+// HeroBuildSmarter is a portable presentational section, so the timer and the
+// active index belong to the page that uses it.
+const HERO_AUTOPLAY_MS = 6000;
+
 export default function ServicesHubWireframe() {
   const [activeArea, setActiveArea] = useState(areas[0].id);
+  const [railVisible, setRailVisible] = useState(false);
   const areaRefs = useRef({});
+  const router = useRouter();
+
+  const [heroSlide, setHeroSlide] = useState(0);
+  const [heroPaused, setHeroPaused] = useState(false);
+  const hero = heroSlides[heroSlide];
+
+  useEffect(() => {
+    if (heroPaused || heroSlides.length < 2) return undefined;
+    const t = setInterval(
+      () => setHeroSlide((i) => (i + 1) % heroSlides.length),
+      HERO_AUTOPLAY_MS
+    );
+    return () => clearInterval(t);
+  }, [heroPaused, heroSlide]);
 
   // Scroll-spy for the rail. The read line sits a third down the viewport; the
   // last area starting above it wins. rAF-gated because this runs on every
@@ -176,6 +198,17 @@ export default function ServicesHubWireframe() {
         }
       });
       setActiveArea(current);
+
+      // The rail only exists to jump between the areas, so it stays out of the
+      // way until the projects carousel has gone by. Threshold is the viewport
+      // middle because that is where the rail itself sits — it appears exactly
+      // as the carousel clears its position, rather than popping in over it.
+      const projects = document.getElementById("wsv-projects");
+      setRailVisible(
+        projects
+          ? projects.getBoundingClientRect().bottom <= window.innerHeight / 2
+          : true
+      );
     };
 
     const onScroll = () => {
@@ -192,9 +225,17 @@ export default function ServicesHubWireframe() {
     };
   }, []);
 
+  // Rail clicks land the area's top edge just under the fixed navbar.
+  // scrollIntoView({block:"start"}) puts it at y=0, where .navbar-area covers the
+  // heading, so the area looks like it starts part-way in. Measure the navbar at
+  // click time - its height changes with .is-sticky - and subtract it.
   const scrollTo = (id) => {
     const el = areaRefs.current[id] || document.getElementById(id);
-    if (el) el.scrollIntoView({ behavior: "smooth", block: "start" });
+    if (!el) return;
+    const nav = document.querySelector(".navbar-area");
+    const offset = (nav ? nav.getBoundingClientRect().height : 0) + 16;
+    const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
   };
 
   return (
@@ -206,10 +247,48 @@ export default function ServicesHubWireframe() {
       <Navbar />
 
       {/* Floating section rail — visible from first paint, not gated on scroll. */}
-      <SideRail items={areas} activeId={activeArea} onSelect={scrollTo} />
+      <SideRail
+        items={areas}
+        activeId={activeArea}
+        onSelect={scrollTo}
+        visible={railVisible}
+      />
 
       {/* ===== AREA 1 — the brief area (designed) ===== */}
-      <Hero />
+      {/* Hover pauses the rotation — the wrapper carries it because the section
+          itself is portable and takes no mouse handlers. */}
+      <div
+        onMouseEnter={() => setHeroPaused(true)}
+        onMouseLeave={() => setHeroPaused(false)}
+      >
+        <HeroBuildSmarter
+          badgeText={hero.badge}
+          headlineBold={hero.headlineBold}
+          headlineLight={hero.headlineLight}
+          subtitle={hero.text}
+          ctaText={hero.primary.label}
+          ctaHref={hero.primary.href}
+          // The section uses a plain <a> to stay dependency-free, which would
+          // hard-reload the app. Intercept for client-side nav; the href stays
+          // real so middle-click and crawlers still work.
+          onCtaClick={(e) => {
+            e.preventDefault();
+            router.push(hero.primary.href);
+          }}
+          backgroundImage={heroMedia.type === "image" ? heroMedia.src : null}
+          // cover (the default) fills the section edge to edge. The photo is
+          // 1920x1440, so up to a 1920-wide viewport this crops without
+          // enlarging anything — it is never scaled past 1:1 on a normal screen.
+          bottomRadius="32px"
+          minHeight="85vh"
+          marginBottom="5px"
+          overlay={0.45}
+          slideCount={heroSlides.length}
+          activeSlide={heroSlide}
+          onSlideSelect={setHeroSlide}
+          slideLabel={(i) => `الشريحة ${i + 1}`}
+        />
+      </div>
       <Projects />
       <ServiceNav />
 

@@ -14,11 +14,16 @@ export const heroMedia = {
 
 // --- Section 1: hero slides -------------------------------------------------
 // Only this text cross-fades between the 3 slides; the background stays put.
+// headlineBold + headlineLight are the two-tone split HeroBuildSmarter renders
+// (dark half, grey half). `title` is the same sentence unsplit — still read by the
+// retired components/Services/Hero.js. Keep the three in sync until that file goes.
 export const heroSlides = [
   {
     id: "slide-1",
     badge: "خدمات الويب",
     title: "موقعك الإلكتروني يبدأ من هنا",
+    headlineBold: "موقعك الإلكتروني",
+    headlineLight: "يبدأ من هنا",
     text: "اختر نوع الموقع المناسب لك، ونحن نتكفّل بكل ما هو تقني. لا تحتاج لأي خبرة برمجية — نحن نتولى القرارات الصعبة نيابةً عنك.",
     primary: { label: "اطلب خدمتك الآن", href: "/website-order" },
     secondary: { label: "تصفح الخدمات", href: "#type-1" },
@@ -27,6 +32,8 @@ export const heroSlides = [
     id: "slide-2",
     badge: "تصميم وتطوير",
     title: "تصميم يليق باسم عملك",
+    headlineBold: "تصميم يليق",
+    headlineLight: "باسم عملك",
     text: "مواقع سريعة، واضحة، وتعمل بكفاءة على كل الأجهزة. نصمم لك تجربة تجعل زائرك يفهم ما تقدّمه في ثوانٍ.",
     primary: { label: "شاهد أعمالنا", href: "#wsv-projects" },
     secondary: { label: "تحدث معنا", href: "/contact" },
@@ -35,6 +42,8 @@ export const heroSlides = [
     id: "slide-3",
     badge: "دعم مستمر",
     title: "لا نتركك بعد التسليم",
+    headlineBold: "لا نتركك",
+    headlineLight: "بعد التسليم",
     text: "استضافة، صيانة، وتحديثات دورية ضمن فريق واحد. موقعك يبقى شغّالاً وآمناً وأنت مرتاح البال.",
     primary: { label: "ابدأ مشروعك", href: "/website-order" },
     secondary: { label: "خدمات الاستضافة", href: "/services/hosting-services" },
@@ -115,3 +124,52 @@ export const serviceNav = [
     href: "/contact",
   },
 ];
+
+// ===========================================================================
+// AREA 1 — مواقع الشركات (business websites)
+// ===========================================================================
+// Copy is written against the five buying motives in
+// public/images/inspiration/webservices_page/direction.md — credibility,
+// clarity, opportunity, a painless project, and confidence before spending.
+// It deliberately talks about the customer's company, not about our features:
+// "portfolio proof is more powerful than explaining 20 features."
+//
+// Areas 2-4 are still wireframe. When they are built they add their own key
+// with this same shape and reuse the same components — do not fork the JSX.
+
+export const businessWebsites = {
+  // --- Section 1a: overview split ------------------------------------------
+  overview: {
+    eyebrow: "مواقع الشركات",
+    heading: "موقع يعكس حجم شركتك الحقيقي",
+    body: "أغلب مواقع الشركات تفشل لأنها جميلة لكنها غير مفهومة. نحن نبدأ من نشاطك أنت: ماذا تقدّم، ولمن، ولماذا يختارك العميل — ثم نبني الموقع حول مسار واضح يقود الزائر من الاهتمام إلى طلب عرض سعر.",
+    points: [
+      "بنية ومحتوى نجهّزهما معك، لا نطلب منك تسليمنا كل شيء جاهزاً",
+      "خدماتك وأعمالك وشهاداتك معروضة بشكل يبني الثقة من أول زيارة",
+      "سريع على الجوال ومهيّأ لمحركات البحث من أول سطر كود",
+    ],
+    cta: { label: "اطلب عرض سعر", href: "/website-order" },
+    secondary: { label: "تحدث معنا أولاً", href: "/contact" },
+    // Real client work, not a stock mockup — this is the Tabqat project.
+    media: {
+      src: "/images/inspiration/webservices_page/area1-project1.png",
+      alt: "موقع شركة طبقات معروضاً على حاسوب محمول وهاتف",
+    },
+  },
+
+  // --- Section 1b: client trust strip --------------------------------------
+  // Real logos from public/images/clients/. Keep this list honest: every logo
+  // here must be an actual client. A fabricated logo wall is a trust violation.
+  logos: {
+    title: "شركات اختارتنا",
+    items: [
+      { id: "adeng", name: "Adeng", src: "/images/clients/Adeng.webp" },
+      { id: "afaq", name: "آفاق التعليمية", src: "/images/clients/afaq.webp" },
+      { id: "crossing", name: "Crossing", src: "/images/clients/crossing.webp" },
+      { id: "gulfcodes", name: "Gulf Codes", src: "/images/clients/gulfcodes.png" },
+      { id: "client1", name: "عميل", src: "/images/clients/client1.jpg" },
+      { id: "client3", name: "عميل", src: "/images/clients/client3.jpg" },
+      { id: "client5", name: "عميل", src: "/images/clients/client5.jpg" },
+    ],
+  },
+};

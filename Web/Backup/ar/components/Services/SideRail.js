@@ -9,7 +9,7 @@ import React from "react";
 // keeps the active state on a plain class instead of :has(), which this
 // codebase uses nowhere and Firefox only supports from 121.
 
-const SideRail = ({ items, activeId, onSelect }) => {
+const SideRail = ({ items, activeId, onSelect, visible = true }) => {
   if (!items || items.length === 0) return null;
 
   // Clamped so an unknown activeId parks the pill on the first slot rather
@@ -20,7 +20,11 @@ const SideRail = ({ items, activeId, onSelect }) => {
   );
 
   return (
-    <nav className="wsv-rail" aria-label="أقسام خدمات الويب">
+    <nav
+      className={`wsv-rail${visible ? "" : " is-hidden"}`}
+      aria-label="أقسام خدمات الويب"
+      aria-hidden={visible ? undefined : "true"}
+    >
       {items.map((it) => (
         <button
           key={it.id}

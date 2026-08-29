@@ -13628,12 +13628,18 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
   }
 }
 
-/*-- Section 2: projects showcase ribbon --*/
-/* Full-bleed, near-flush with the hero, no heading, no captions. */
+/*-- Section 2: projects showcase --*/
+/* A 3D cover-flow ring (components/Sections/CoverflowCarousel.js), not the old
+   full-bleed marquee. The carousel carries its own styling — everything below
+   is just the band it sits in. Its cards fan out past the viewport, so the
+   overflow clip stays. */
 .wsv-projects {
   position: relative;
+  /* No top padding: the gap to the hero is the hero's own marginBottom (5px),
+     set where it is wired in. The carousel's internal frame padding already
+     gives the cards room for their drop shadows. */
   padding-top: 0;
-  padding-bottom: 0;
+  padding-bottom: $wsv-gap-section;
   background-color: $wsv-band;
   overflow: hidden;
 }
@@ -13648,43 +13654,6 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
   font-size: 32px;
   color: $heading-color;
   margin-bottom: 0;
-}
-
-/* Marquee: Swiper eases each step by default, which reads as a stutter at
-   delay:0. Linear is what makes it one continuous drift. */
-.wsv-projects-swiper .swiper-wrapper {
-  transition-timing-function: linear;
-}
-
-/* Fixed height, width follows each image's own aspect ratio. */
-.wsv-project-slide {
-  width: auto;
-  height: clamp(140px, 14vw, 210px);
-  line-height: 0;
-
-  img {
-    width: auto;
-    height: 100%;
-    object-fit: cover;
-    border-radius: 12px;
-  }
-}
-
-/* The ribbon is dragged, not stepped — Swiper's grabCursor sets grab/grabbing
-   on the container, but the slides and their images sit on top of it and would
-   otherwise show a default arrow (or the browser's image drag-select cursor).
-   `inherit` lets the container's cursor win over the whole surface. */
-.wsv-projects-swiper,
-.wsv-project-slide,
-.wsv-project-slide img {
-  cursor: inherit;
-}
-
-/* Native image dragging would otherwise hijack the swipe gesture. */
-.wsv-project-slide img {
-  -webkit-user-drag: none;
-  user-select: none;
-  pointer-events: none;
 }
 
 /*-- Section 3: service navigator --*/
@@ -13834,6 +13803,26 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
   border: 1px solid $wsv-line;
   box-shadow: 0 18px 40px rgba(10, 31, 68, 0.14);
   overflow: hidden;
+
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s;
+}
+
+/* Hidden until the projects carousel has scrolled past — above that the rail
+   has nothing to point at yet, and it would sit over the hero. Slides out to
+   the physical left, matching the edge it is pinned to. visibility (not
+   display) so the transition has something to animate, and so it leaves the
+   tab order while hidden. */
+.wsv-rail.is-hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  transform: translateY(-50%) translateX(-14px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wsv-rail {
+    transition: none;
+  }
 }
 
 .wsv-rail-item {
@@ -13845,8 +13834,8 @@ $wsv-gap-area: clamp(110px, 14vw, 200px);
   align-items: center;
   justify-content: center;
   gap: 5px;
-  width: 92px;
-  padding: 0 8px;
+  width: 80px;
+  padding: 0 6px;
   border: 0;
   background: none;
   cursor: pointer;

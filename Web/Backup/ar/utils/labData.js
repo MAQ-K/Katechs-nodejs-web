@@ -113,7 +113,13 @@ export const readInspirationImages = () => {
         images: fs
           .readdirSync(path.join(imagesDir, dir.name))
           .filter((f) => /\.(png|jpe?g|webp|gif|avif)$/i.test(f))
-          .map((f) => ({ file: f, src: encodeURI(`/images/${dir.name}/${f}`) })),
+          // encodeURI leaves `#` untouched (it's a valid URI char), so a filename
+          // like "4th sec#.png" turns into a fragment and 404s. Encode each
+          // segment on its own with encodeURIComponent instead.
+          .map((f) => ({
+            file: f,
+            src: `/images/${encodeURIComponent(dir.name)}/${encodeURIComponent(f)}`,
+          })),
       }))
       .filter((group) => group.images.length > 0);
   } catch {
