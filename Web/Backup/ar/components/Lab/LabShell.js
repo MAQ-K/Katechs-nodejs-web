@@ -31,6 +31,7 @@ const NAV = [
   { href: "/lab/", label: "Hub", icon: "bx-home-alt" },
   { href: "/lab/motion/", label: "Motion", icon: "bx-run" },
   { href: "/lab/components/", label: "Components", icon: "bx-grid-alt" },
+  { href: "/lab/sections/", label: "Sections", icon: "bx-shape-square" },
   { href: "/lab/ui-library/", label: "UI Library", icon: "bx-bulb" },
 ];
 

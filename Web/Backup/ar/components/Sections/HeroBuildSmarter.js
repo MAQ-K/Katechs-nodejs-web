@@ -9,14 +9,26 @@ export default function HeroBuildSmarter({
   badgeText = "NEXT-GEN PRODUCTIVITY",
   headlineBold = "Build smarter tools for",
   headlineLight = "modern teams",
-  subtitle = "Streamline your workflow and boost productivity with intuitive solutions. Security, speed, and simplicity—all in one platform.",
   ctaText = "Get Started",
   ctaHref = "#",
   onCtaClick,
+  backgroundImage = null,
 }) {
   return (
     <section className="hbs-root">
-      <div className="hbs-clip">
+      <div
+        className="hbs-clip"
+        style={
+          backgroundImage
+            ? {
+                backgroundImage: `url(${backgroundImage})`,
+                backgroundSize: "cover",
+                backgroundPosition: "center",
+              }
+            : undefined
+        }
+      >
+      {backgroundImage ? <div className="hbs-overlay" aria-hidden="true" /> : null}
       <div className="hbs-inner">
         <a
           className="hbs-badge"
@@ -47,8 +59,6 @@ export default function HeroBuildSmarter({
           <span className="hbs-headline-light">{headlineLight}</span>
         </h1>
 
-        <p className="hbs-subtitle">{subtitle}</p>
-
         <a
           className="hbs-cta"
           href={ctaHref}
@@ -67,8 +77,8 @@ export default function HeroBuildSmarter({
         >
           <defs>
             <radialGradient id="hbsArcGradient" cx="50%" cy="0%" r="75%">
-              <stop offset="0%" stopColor="#000000" stopOpacity="0.85" />
-              <stop offset="55%" stopColor="#000000" stopOpacity="0.25" />
+              <stop offset="0%" stopColor="#000000" stopOpacity="0.45" />
+              <stop offset="55%" stopColor="#000000" stopOpacity="0.12" />
               <stop offset="100%" stopColor="#000000" stopOpacity="0" />
             </radialGradient>
           </defs>
@@ -92,7 +102,7 @@ export default function HeroBuildSmarter({
           position: relative;
           width: 100%;
           background: #ffffff;
-          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.12);
+          box-shadow: 0 6px 14px rgba(0, 0, 0, 0.08);
           font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto,
             "Helvetica Neue", Arial, sans-serif;
         }
@@ -102,6 +112,18 @@ export default function HeroBuildSmarter({
           overflow: hidden;
           padding: 96px 24px 160px;
           box-sizing: border-box;
+        }
+
+        .hbs-overlay {
+          position: absolute;
+          inset: 0;
+          z-index: 1;
+          background: linear-gradient(
+            180deg,
+            rgba(255, 255, 255, 0.86) 0%,
+            rgba(255, 255, 255, 0.72) 60%,
+            rgba(255, 255, 255, 0.55) 100%
+          );
         }
 
         .hbs-inner {
@@ -138,7 +160,7 @@ export default function HeroBuildSmarter({
         }
 
         .hbs-headline {
-          margin: 0 0 24px;
+          margin: 0 0 36px;
           font-weight: 800;
           line-height: 1.08;
           letter-spacing: -0.02em;
@@ -151,14 +173,6 @@ export default function HeroBuildSmarter({
 
         .hbs-headline-light {
           color: #8a8a8a;
-        }
-
-        .hbs-subtitle {
-          margin: 0 0 36px;
-          max-width: 640px;
-          font-size: clamp(15px, 1.6vw, 18px);
-          line-height: 1.6;
-          color: #6b6b6b;
         }
 
         .hbs-cta {
@@ -192,8 +206,8 @@ export default function HeroBuildSmarter({
           position: absolute;
           left: 0;
           right: 0;
-          bottom: -40px;
-          height: 260px;
+          bottom: 0;
+          height: 220px;
           z-index: 1;
           pointer-events: none;
         }
@@ -203,8 +217,7 @@ export default function HeroBuildSmarter({
             padding: 64px 16px 120px;
           }
           .hbs-arc {
-            height: 160px;
-            bottom: -20px;
+            height: 140px;
           }
         }
       `}</style>
