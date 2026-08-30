@@ -59,3 +59,14 @@ Read `brain/PARALLEL.md` first. Two rules decide whether it works:
 `brain/ui-library/SOURCES.md` — `ui-ux-pro-max` (motion presets, styles, palettes, UX rules) and
 `design-taste-frontend` are **required sources** for the design agents, not optional.
 ⚠️ Its motion snippets are GSAP; **GSAP is not installed here** — translate to framer-motion.
+
+**Standing rule (2026-08-29, user) — whenever asked to design a UI, section, or page, in *any*
+session, not just `/ag-ui-search` or `/ag-ui-build`:**
+1. Read `brain/ui-library/README.md` and skim `brain/ui-library/inspiration/*.md` for anything
+   relevant to the request — reuse a filed idea before inventing a new one.
+2. Pull from the `ui-ux-pro-max` skill (styles, palettes, typography, UX guidelines — see
+   `SOURCES.md` for which file holds what) for whatever the request needs.
+3. Run the design through `design-taste-frontend` before calling it done — the anti-slop
+   judgment pass, not optional.
+4. Only then design/build. If the library has nothing relevant, say so before starting from a
+   blank page — don't skip the check silently.

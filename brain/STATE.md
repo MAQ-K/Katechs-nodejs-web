@@ -9,6 +9,20 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-08-29 · New zone: `components/Sections/` — standalone, portable one-file sections.**
+  Different contract from the rest of `components/`: zero dependency on `style.scss`, icon
+  fonts, or `data/**`, fully self-contained via `styled-jsx`, one file per section, built from a
+  user-supplied reference image on request. **Read `components/Sections/README.md` first**
+  before adding or touching anything here. First one landed: `Sections/HeroBuildSmarter.js`.
+  Preview all of them at `http://localhost:3000/lab/sections/` (new "Sections" tab in the
+  `/lab/` nav — `pages/lab/sections.js`). See `brain/components/REGISTRY.md` for the index.
+- **2026-08-28 · UI Implementer — Services page hero (`.wsv-hero*`) restyled to match the approved
+  reference (T-014e).** Glassy badge with a mirrored RTL chevron (`bx-chevron-left`), headline enlarged to
+  `clamp(36px,6vw,72px)`, primary CTA now a dominant solid-white rounded-rect, secondary CTA now an
+  underlined text link, new `.wsv-hero-arc-glow` blurred radial shadow layered above the existing flat
+  `.wsv-hero-sweep` seam into `$wsv-band`. Background video/overlay and Arabic copy untouched. Full diff in
+  `brain/logs/2026-08-28.md`. Anyone touching `components/Services/Hero.js` or `.wsv-hero*` next should
+  read that log first.
 - **2026-08-25 · UI Implementer — Training page's `.tr-*` visual system reskinned to match AppDev.**
   Same pass as SEO/DM: `.tr-*` block (styles/style.scss ~L12160-13097) rebuilt with its own
   `$tr-*` token set (was riding on `$seo-*`), cards dropped hover-lift/border-darken for

@@ -21,8 +21,18 @@ Last updated: 2026-08-24 — by: Manager
 - `components/Layouts/` — `Navbar.js`, `Footer.js` shell.
 - `data/<page>/data.js` — page content/data, separated from JSX. **New sections must be data-driven, not hardcoded JSX.**
 - Styling = global SCSS classes. No CSS Modules, no Tailwind, no styled-components.
+- `components/Sections/` — the one deliberate exception: standalone, portable, one-file sections
+  built from a reference image on request, self-contained via `styled-jsx`, zero dependency on
+  SCSS/data/icon-fonts. Different contract — read `components/Sections/README.md` before touching
+  it. Preview at `http://localhost:3000/lab/sections/`.
 
 **Direction:** keep the existing theme/shell (colors, fonts, Navbar, Footer, SCSS tokens); give *new* page content a distinct, more modern UI/UX treatment.
+
+**Standing rule (2026-08-29, user) — before designing any UI, in any session:** read
+`brain/ui-library/README.md` + skim `brain/ui-library/inspiration/*.md` for a reusable idea first,
+pull from the `ui-ux-pro-max` skill (styles/palettes/typography/UX rules), then run the result
+through `design-taste-frontend` before calling it done. See `CLAUDE.md` → Design intelligence for
+the full sequence.
 
 **Hard-earned gotchas:**
 - Icons: prefer `bx-*` (regular Boxicons). `bxs-*` (solid) codepoints exist in CSS but glyphs are missing from the bundled font — they render as empty boxes.
@@ -96,7 +106,7 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-014b | Implement the UX (structure, still grey) | `/ag-ui-build` | TODO | `pages/services/index.js` | Currently a grey-box wireframe |
 | T-014c | Prepare the UI library for the page | `/ag-ui-search` | TODO | `brain/ui-library/` | |
 | T-014d | Prepare the animation / 3D / motion library for the page | `/ag-anim` | TODO | `brain/animation/presets/` | |
-| T-014e | Implement the UI design | `/ag-ui-build` | TODO | `components/Services*/` + SCSS lock | |
+| T-014e | Implement the UI design | `/ag-ui-build` | REVIEW | `components/Services*/` + SCSS lock | Hero restyled to reference (`brain/ui-library/inspiration/web services  page hero .png`), see `brain/logs/2026-08-28.md` |
 | T-014f | Implement animations and everything on top | `/ag-anim` | TODO | motion layer | |
 | **G3–G5** |
 | T-013 | Main components UI — header, plan cards, buttons, font | `/ag-ui-build` | TODO | `components/Layouts/**`, `Common/**` | ⚠️ **Shared. Manager-gated. Runs alone** |
