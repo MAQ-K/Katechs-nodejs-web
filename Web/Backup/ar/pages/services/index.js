@@ -308,8 +308,9 @@ export default function ServicesHubWireframe() {
           scroll-spy and the deep link /services/#business-websites depend on. */}
       <div
         id="business-websites"
+        data-area="business-websites"
         ref={(el) => (areaRefs.current["business-websites"] = el)}
-        style={{ marginBottom: AREA_GAP }}
+        style={{ marginBottom: `calc(${AREA_GAP} / 2)` }}
       >
         <BwOverview />
         <BwPlans />
@@ -317,41 +318,44 @@ export default function ServicesHubWireframe() {
 
       {/* ===== AREAS 2+ — still wireframe grey boxes ===== */}
       {/* Area 1's gap to here is .wsv-nav's padding-bottom, so main adds none. */}
-      <main style={{ padding: "0 20px", maxWidth: 1140, margin: "0 auto" }}>
+      <main>
         {/* AREAS - each is a group of stacked sections for one web service type */}
-        {areas.slice(1).map((a) => (
+        {areas.slice(1).map((a, ai) => (
+          // Alternating ground, so crossing an area boundary is felt rather
+          // than merely passed. ai=0 is type-2, which follows .wsv-plans
+          // ($wsv-band) — so it takes white and the alternation runs from there.
+          // The old 3px grey borderTop is gone: the band now does that job.
           <div
             key={a.id}
             id={a.id}
+            data-area={a.id}
             ref={(el) => (areaRefs.current[a.id] = el)}
-            style={{
-              marginBottom: AREA_GAP,
-              paddingTop: 24,
-              borderTop: "3px solid #555",
-            }}
+            className={`wsv-area${ai % 2 === 1 ? " is-alt" : ""}`}
           >
-            <div
-              style={{
-                fontSize: 20,
-                fontWeight: "bold",
-                color: "#444",
-                marginBottom: 16,
-                fontFamily: "sans-serif",
-              }}
-            >
-              {a.label} (area - can hold more sections)
-            </div>
-            {a.blocks.map((b, i) => (
-              <section
-                key={i}
-                className="wsv-snap-stop"
+            <div className="wsv-area-inner">
+              <div
                 style={{
-                  marginBottom: i === a.blocks.length - 1 ? 0 : SECTION_GAP,
+                  fontSize: 20,
+                  fontWeight: "bold",
+                  color: "#444",
+                  marginBottom: 16,
+                  fontFamily: "sans-serif",
                 }}
               >
-                {renderBlock(b, i)}
-              </section>
-            ))}
+                {a.label} (area - can hold more sections)
+              </div>
+              {a.blocks.map((b, bi) => (
+                <section
+                  key={bi}
+                  className="wsv-snap-stop"
+                  style={{
+                    marginBottom: bi === a.blocks.length - 1 ? 0 : SECTION_GAP,
+                  }}
+                >
+                  {renderBlock(b, bi)}
+                </section>
+              ))}
+            </div>
           </div>
         ))}
       </main>

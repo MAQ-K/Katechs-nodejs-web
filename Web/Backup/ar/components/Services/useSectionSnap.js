@@ -70,20 +70,26 @@ export default function useSectionSnap(selector = SNAP_SELECTOR) {
     if (resumeRef.current) resumeRef.current();
   }, []);
 
-  const lock = useCallback(() => {
-    lockedRef.current = true;
-    // Hand the scroll entirely to our animation while it runs. Without this the
-    // browser's snap engine stays live during window.scrollTo and can re-target
-    // it mid-flight — that fight is what shows up as a stutter when the wheel
-    // is spun hard.
-    if (suspendRef.current) suspendRef.current();
-    if (ceilingRef.current) clearTimeout(ceilingRef.current);
-    ceilingRef.current = setTimeout(unlock, MAX_LOCK_MS);
-  }, [unlock]);
+  // `blur` is passed only when the jump crosses an area boundary — moving
+  // between sections inside one area is not meant to read as a scene change.
+  const lock = useCallback(
+    (blur = false) => {
+      lockedRef.current = true;
+      // Hand the scroll entirely to our animation while it runs. Without this
+      // the browser's snap engine stays live during window.scrollTo and can
+      // re-target it mid-flight — that fight is what shows up as a stutter when
+      // the wheel is spun hard.
+      if (suspendRef.current) suspendRef.current(blur);
+      if (ceilingRef.current) clearTimeout(ceilingRef.current);
+      ceilingRef.current = setTimeout(unlock, MAX_LOCK_MS);
+    },
+    [unlock]
+  );
 
   // Called by the page before its own programmatic scroll (the rail) so the
-  // wheel handler doesn't try to steer at the same time.
-  const markProgrammatic = useCallback(() => lock(), [lock]);
+  // wheel handler doesn't try to steer at the same time. Rail items ARE areas,
+  // so every rail jump crosses one by definition.
+  const markProgrammatic = useCallback(() => lock(true), [lock]);
 
   useEffect(() => {
     if (typeof window === "undefined") return undefined;
@@ -118,10 +124,22 @@ export default function useSectionSnap(selector = SNAP_SELECTOR) {
     const navOffset = () => measured.value || readNav();
     syncNavVar();
 
-    // Suspend / resume the browser's own snapping around our animations.
-    suspendRef.current = () => root.classList.add("wsv-snap-off");
+    // Suspend / resume the browser's own snapping around our animations, and
+    // carry the jump blur on the same lifecycle.
+    //
+    // `is-jumping` drives a filter on the SECTIONS, never on a wrapper: `filter`
+    // makes an element the containing block for any position:fixed descendant,
+    // so blurring an ancestor of the page would tear the navbar, the rail and
+    // the go-top button off the viewport. It would also force a ~9000px layer to
+    // rasterize. Sections contain nothing fixed and only the one or two on
+    // screen ever rasterize, so both problems simply do not arise.
+    suspendRef.current = (blur) => {
+      root.classList.add("wsv-snap-off");
+      if (blur) root.classList.add("is-jumping");
+    };
     resumeRef.current = () => {
       root.classList.remove("wsv-snap-off");
+      root.classList.remove("is-jumping");
       syncNavVar(); // catch up on any height change we froze through
     };
 
@@ -176,6 +194,15 @@ export default function useSectionSnap(selector = SNAP_SELECTOR) {
       return top - nav;
     };
 
+    // Which service area a stop belongs to, or null for the intro stops (hero,
+    // carousel, navigator) which sit outside any area wrapper. Used only to
+    // decide whether a jump earns the blur: moving between sections inside one
+    // area is navigation, crossing into a new area is a scene change.
+    const areaOf = (el) => {
+      const wrapper = el.closest("[data-area]");
+      return wrapper ? wrapper.getAttribute("data-area") : null;
+    };
+
     // Tall sections need `start` alignment in CSS too, or native snapping would
     // pull them to centre and hide their tops. Measured, not hard-coded, so it
     // stays right as the wireframe areas are built out and grow.
@@ -220,7 +247,7 @@ export default function useSectionSnap(selector = SNAP_SELECTOR) {
       if (next < 0 || next >= list.length) return;
 
       event.preventDefault();
-      lock();
+      lock(areaOf(list[index]) !== areaOf(list[next]));
       window.scrollTo({
         top: Math.max(0, targetFor(list[next])),
         behavior: "smooth",
@@ -284,6 +311,7 @@ export default function useSectionSnap(selector = SNAP_SELECTOR) {
       // Leaving the page must not leave <html> snapping for every other route.
       root.classList.remove("wsv-snapping");
       root.classList.remove("wsv-snap-off");
+      root.classList.remove("is-jumping");
       root.style.removeProperty("--wsv-nav-h");
       suspendRef.current = null;
       resumeRef.current = null;

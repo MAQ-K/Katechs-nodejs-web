@@ -13659,9 +13659,18 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
 /*-- Section 3: service navigator --*/
 /* Last section of Area 1 — its bottom padding IS the gap to the next area. */
 .wsv-nav {
+  /* position + z-index are what make the shadow visible at all: this section
+     comes before the areas in the DOM, so without raising it the next section
+     simply paints over the shadow. */
+  position: relative;
+  z-index: 1;
   padding-top: $wsv-gap-section;
   padding-bottom: $wsv-gap-area;
   background-color: $white-color;
+  /* Navy drop under the section's bottom edge, closing off the intro area.
+     The negative spread cancels the shadow on the other three sides, so only
+     the bottom shows — offset down, then pulled back in by the same amount. */
+  box-shadow: 0 26px 46px -26px rgba(10, 31, 68, 0.35);
 }
 
 .wsv-nav-head {
@@ -13685,6 +13694,15 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
   border-radius: 16px;
   border: 1px solid $wsv-line;
   background-color: $white-color;
+  /* These had a hairline border and NO resting shadow, so they read as flat
+     outlines next to the embossed cards further down the page. A navy-tinted
+     lift — the same hue as .wsv-rail's and .wsv-plan's shadows — puts them in
+     the same system. Wide, soft and low-alpha so it reads as light, not as a
+     dark edge. */
+  box-shadow:
+    0 18px 40px -22px rgba(10, 31, 68, 0.28),
+    0 3px 3px 0 rgba(15, 23, 42, 0.05),
+    0 4px 0 0 rgba(255, 255, 255, 0.6) inset;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     box-shadow 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     border-color 0.6s cubic-bezier(0.22, 1, 0.36, 1);
@@ -13726,8 +13744,12 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
   &:hover {
     transform: translateY(-8px);
     border-color: rgba($main-color, 0.45);
-    box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18),
-      0px 3px 3px 0px rgba(15, 23, 42, 0.06);
+    /* Same recipe, deeper — the lift reads as the card rising off the page
+       rather than as a different shadow being swapped in. */
+    box-shadow:
+      0 30px 54px -26px rgba(10, 31, 68, 0.36),
+      0 3px 3px 0 rgba(15, 23, 42, 0.06),
+      0 4px 0 0 rgba(255, 255, 255, 0.6) inset;
 
     &::before {
       opacity: 1;
@@ -13786,7 +13808,17 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
 .wsv-rail {
   --wsv-rail-h: 340px;
   --wsv-rail-pad: 6px;
-  --wsv-rail-slot: calc((var(--wsv-rail-h) - 2 * var(--wsv-rail-pad)) / 4);
+  --wsv-rail-border: 1px;
+  /* Bootstrap sets box-sizing: border-box globally, so --wsv-rail-h includes the
+     1px border on each side. Leaving the border out of this made each slot 82px
+     while the real flex items are 81.5px — a drift that accumulates down the
+     rail and pushed the pill ~2px past the last item. */
+  --wsv-rail-slot: calc(
+    (
+        var(--wsv-rail-h) - 2 * var(--wsv-rail-pad) - 2 *
+          var(--wsv-rail-border)
+      ) / 4
+  );
 
   position: fixed;
   top: 50%;
@@ -13800,7 +13832,7 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
   padding: var(--wsv-rail-pad);
   border-radius: 14px;
   background-color: $white-color;
-  border: 1px solid $wsv-line;
+  border: var(--wsv-rail-border) solid $wsv-line;
   box-shadow: 0 18px 40px rgba(10, 31, 68, 0.14);
   overflow: hidden;
 
@@ -14300,6 +14332,33 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   color: $wsv-muted;
 }
 
+/*-- Section 6b: area bands --*/
+/* Each service area sits on the opposite ground to its neighbour, so crossing a
+   boundary is felt rather than merely passed. Neutral on purpose — white and
+   $wsv-band are already the page's two grounds, so this adds structure without
+   adding a colour the design has to answer for.
+   The gap between areas is PADDING, not margin: a margin would fall outside the
+   band and open a stripe of page background between every pair of areas. Half
+   the gap comes from the area above, half from the area below. */
+.wsv-area {
+  padding-top: calc(#{$wsv-gap-area} / 2);
+  padding-bottom: calc(#{$wsv-gap-area} / 2);
+  background-color: $white-color;
+}
+
+.wsv-area.is-alt {
+  background-color: $wsv-band;
+}
+
+/* The width cap used to live on <main>, which meant a background on an area
+   would have been a 1140px stripe rather than a full-bleed band. It moved here
+   so the area itself can reach the viewport edges. */
+.wsv-area-inner {
+  max-width: 1140px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
 /*-- Section 7: desktop section snap --*/
 /* One scroll gesture = one section, desktop only.
    `scroll-snap-type` has to live on the scroll container, which is <html> — and
@@ -14346,6 +14405,27 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   html.wsv-snapping.wsv-snap-off {
     scroll-snap-type: none;
   }
+
+  /* Jump blur — the "turning your head in an FPS" cue.
+     Fires ONLY when a jump crosses into a different service area, never between
+     sections inside one: useSectionSnap compares [data-area] ancestors and adds
+     `is-jumping` only on a boundary crossing. Section-to-section is navigation;
+     area-to-area is a scene change, and only the second earns a cue.
+
+     The filter is on the SECTIONS, never on a wrapper. `filter` makes an element
+     the containing block for position:fixed descendants, so blurring an ancestor
+     of the page would tear the navbar and the side rail off the viewport and
+     make them scroll with the content; it would also force a ~9000px-tall layer
+     to rasterize. Sections contain nothing fixed, and only the one or two on
+     screen ever rasterize — so the chrome stays sharp for free, which is
+     exactly the effect anyway: HUD crisp, world smeared. */
+  html.wsv-snapping .wsv-snap {
+    transition: filter 0.16s ease-out;
+  }
+
+  html.wsv-snapping.is-jumping .wsv-snap {
+    filter: blur(1px);
+  }
 }
 
 /* Belt and braces — the hook already refuses to add the class under reduced
@@ -14353,6 +14433,13 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 @media (prefers-reduced-motion: reduce) {
   html.wsv-snapping {
     scroll-snap-type: none;
+  }
+
+  /* A blur pulse is motion. */
+  html.wsv-snapping .wsv-snap,
+  html.wsv-snapping.is-jumping .wsv-snap {
+    filter: none;
+    transition: none;
   }
 }
 
