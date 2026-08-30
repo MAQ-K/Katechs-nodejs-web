@@ -7,6 +7,9 @@ import HeroBuildSmarter from "../../components/Sections/HeroBuildSmarter";
 import Projects from "../../components/Services/Projects";
 import ServiceNav from "../../components/Services/ServiceNav";
 import SideRail from "../../components/Services/SideRail";
+import BwOverview from "../../components/Services/BusinessWebsites/Overview";
+import BwTrustLogos from "../../components/Services/BusinessWebsites/TrustLogos";
+import BwPlans from "../../components/Services/BusinessWebsites/Plans";
 import { heroMedia, heroSlides } from "../../data/services/data";
 
 // Wireframe-only below Area 1: grey boxes, no visual design yet.
@@ -292,11 +295,26 @@ export default function ServicesHubWireframe() {
       <Projects />
       <ServiceNav />
 
+      {/* ===== AREA 1 — business websites (designed) ===== */}
+      {/* Rendered outside <main> on purpose: these sections are full-bleed and
+          bring their own .container, so the wireframe wrapper's 1140px cap and
+          side padding must not apply to them. Keeps the id + ref the SideRail
+          scroll-spy and the deep link /services/#business-websites depend on. */}
+      <div
+        id="business-websites"
+        ref={(el) => (areaRefs.current["business-websites"] = el)}
+        style={{ marginBottom: AREA_GAP }}
+      >
+        <BwOverview />
+        <BwTrustLogos />
+        <BwPlans />
+      </div>
+
       {/* ===== AREAS 2+ — still wireframe grey boxes ===== */}
       {/* Area 1's gap to here is .wsv-nav's padding-bottom, so main adds none. */}
       <main style={{ padding: "0 20px", maxWidth: 1140, margin: "0 auto" }}>
         {/* AREAS - each is a group of stacked sections for one web service type */}
-        {areas.map((a) => (
+        {areas.slice(1).map((a) => (
           <div
             key={a.id}
             id={a.id}

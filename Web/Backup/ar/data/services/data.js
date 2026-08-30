@@ -172,4 +172,149 @@ export const businessWebsites = {
       { id: "client5", name: "عميل", src: "/images/clients/client5.jpg" },
     ],
   },
+
+  // --- Section 2: packages -------------------------------------------------
+  // Register is MSA, matching app-development and seo — NOT the Egyptian
+  // colloquial of the hosting page ("اختار باقتك"). A corporate-websites buyer
+  // is the same audience as the app-development page's.
+  //
+  // The ladder is scope, not feature-count: تعريفي → شركة كامل → + متجر. Each
+  // tier repeats the "كل ما في الباقة السابقة" line so the three read as one
+  // ladder rather than three unrelated offers, and each ends on a support line
+  // — direction.md motive 4, "don't make this project painful".
+  //
+  // 🔴 TODO(prices): every `price` below is a placeholder em-dash. Published
+  // prices are a commitment to customers and must come from the business — do
+  // not fill these in by inference. The SA figures must be genuinely SA; the
+  // hosting page has a standing bug where its ر.س tier is still priced in ج.م
+  // (data/hosting-services/data.js:98) and that must not be repeated here.
+  plansSection: {
+    eyebrow: "الباقات",
+    heading: "اختر ما يناسب حجم شركتك",
+    note: "كل باقة تشمل التصميم والتطوير والإطلاق. نتفق على النطاق والجدول الزمني قبل بدء العمل، بلا مفاجآت.",
+  },
+
+  pricing: {
+    currencies: {
+      EG: {
+        label: "ج.م",
+        billingNote: null,
+        plans: [
+          {
+            id: "intro",
+            icon: "bx bx-file",
+            name: "موقع تعريفي",
+            summary: "شركة تريد حضوراً واضحاً على الإنترنت",
+            price: "—",
+            priceNote: "TODO(prices)",
+            features: [
+              "حتى 5 صفحات",
+              "تصميم مخصّص يعكس هويتك",
+              "نموذج تواصل وربط بواتساب",
+              "متجاوب مع الجوال بالكامل",
+              "تهيئة أساسية لمحركات البحث",
+              "دعم فني شهر بعد الإطلاق",
+            ],
+            cta: { text: "اطلب عرض سعر", href: "/website-order" },
+          },
+          {
+            id: "corporate",
+            icon: "bx bx-buildings",
+            name: "موقع شركة كامل",
+            summary: "شركة لديها خدمات وأعمال تريد عرضها بشكل احترافي",
+            price: "—",
+            priceNote: "TODO(prices)",
+            isPopular: true,
+            badge: "الأكثر طلبًا",
+            features: [
+              "كل ما في الباقة التعريفية",
+              "صفحات خدمات ومعرض أعمال",
+              "مدوّنة تحدّثها بنفسك",
+              "لوحة تحكم لتعديل المحتوى دون رجوع إلينا",
+              "تهيئة متقدّمة لمحركات البحث",
+              "دعم فني ثلاثة أشهر بعد الإطلاق",
+            ],
+            cta: { text: "اطلب عرض سعر", href: "/website-order" },
+          },
+          {
+            id: "store",
+            icon: "bx bx-cart-alt",
+            name: "موقع + متجر",
+            summary: "شركة تبيع منتجاتها أونلاين إلى جانب التعريف بها",
+            price: "—",
+            priceNote: "TODO(prices)",
+            features: [
+              "كل ما في باقة موقع الشركة",
+              "متجر إلكتروني كامل",
+              "بوابات دفع وشحن مربوطة",
+              "إدارة المنتجات والطلبات والمخزون",
+              "تقارير مبيعات",
+              "دعم فني ستة أشهر بعد الإطلاق",
+            ],
+            cta: { text: "اطلب عرض سعر", href: "/website-order" },
+          },
+        ],
+      },
+
+      SA: {
+        label: "ر.س",
+        billingNote: null,
+        plans: [
+          {
+            id: "intro",
+            icon: "bx bx-file",
+            name: "موقع تعريفي",
+            summary: "شركة تريد حضوراً واضحاً على الإنترنت",
+            price: "—",
+            priceNote: "TODO(prices)",
+            features: [
+              "حتى 5 صفحات",
+              "تصميم مخصّص يعكس هويتك",
+              "نموذج تواصل وربط بواتساب",
+              "متجاوب مع الجوال بالكامل",
+              "تهيئة أساسية لمحركات البحث",
+              "دعم فني شهر بعد الإطلاق",
+            ],
+            cta: { text: "اطلب عرض سعر", href: "/website-order" },
+          },
+          {
+            id: "corporate",
+            icon: "bx bx-buildings",
+            name: "موقع شركة كامل",
+            summary: "شركة لديها خدمات وأعمال تريد عرضها بشكل احترافي",
+            price: "—",
+            priceNote: "TODO(prices)",
+            isPopular: true,
+            badge: "الأكثر طلبًا",
+            features: [
+              "كل ما في الباقة التعريفية",
+              "صفحات خدمات ومعرض أعمال",
+              "مدوّنة تحدّثها بنفسك",
+              "لوحة تحكم لتعديل المحتوى دون رجوع إلينا",
+              "تهيئة متقدّمة لمحركات البحث",
+              "دعم فني ثلاثة أشهر بعد الإطلاق",
+            ],
+            cta: { text: "اطلب عرض سعر", href: "/website-order" },
+          },
+          {
+            id: "store",
+            icon: "bx bx-cart-alt",
+            name: "موقع + متجر",
+            summary: "شركة تبيع منتجاتها أونلاين إلى جانب التعريف بها",
+            price: "—",
+            priceNote: "TODO(prices)",
+            features: [
+              "كل ما في باقة موقع الشركة",
+              "متجر إلكتروني كامل",
+              "بوابات دفع وشحن مربوطة",
+              "إدارة المنتجات والطلبات والمخزون",
+              "تقارير مبيعات",
+              "دعم فني ستة أشهر بعد الإطلاق",
+            ],
+            cta: { text: "اطلب عرض سعر", href: "/website-order" },
+          },
+        ],
+      },
+    },
+  },
 };

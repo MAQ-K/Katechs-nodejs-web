@@ -12151,6 +12151,435 @@ Logical properties throughout so nothing is needed in rtl.css.
     transition: none;
   }
 }
+/*================================================
+=== Web Services: Area 1 — Business Websites ===
+The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
+.wsv-p, .wsv-list, .wsv-frame) are deliberately NOT prefixed per-area: areas
+2-4 render the same components with their own data, so these must stay generic.
+=================================================*/
+/*-- Shared atoms for the area sections --*/
+/* Same 1fr/1fr split as .seo-split / .dm-split / .tr-split. Media div comes
+   first in the DOM so the RTL grid puts the text column on the right and an
+   Arabic reader meets the headline before the image. */
+.wsv-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.wsv-h2 {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.7rem, 2.8vw, 2.3rem);
+  line-height: 1.45;
+  color: #212121;
+  margin-bottom: 16px;
+}
+
+.wsv-p {
+  font-size: 15px;
+  line-height: 1.95;
+  color: #4d4d4d;
+  margin-bottom: 0;
+}
+
+.wsv-list {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+}
+.wsv-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: #4d4d4d;
+  /* Fixed slot so a two-line item keeps its tick aligned to the first line
+     instead of centring against the whole block. */
+}
+.wsv-list li:last-child {
+  margin-bottom: 0;
+}
+.wsv-list li i {
+  flex-shrink: 0;
+  margin-top: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: #1dd3f8;
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Outer plate + inner media — the AppDev double-frame, for a real photo. */
+.wsv-frame {
+  position: relative;
+  padding: 14px;
+  border-radius: 24px;
+  background-color: #ffffff;
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
+}
+
+.wsv-frame-media {
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  background-color: #f5f6f8;
+  line-height: 0;
+}
+.wsv-frame-media img {
+  width: 100%;
+  height: auto;
+  display: block;
+}
+
+/*-- Section 4: business websites — overview --*/
+.wsv-about {
+  padding-top: clamp(32px, 4vw, 48px);
+  padding-bottom: clamp(32px, 4vw, 48px);
+  background-color: #ffffff;
+}
+
+.wsv-about-cta {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 12px 24px;
+  margin-top: 30px;
+}
+
+/* .wsv-btn was authored white-on-photo for the hero. On this white section it
+   needs the inverse: solid navy, cyan on hover — same swap, legible ground. */
+.wsv-btn-solid {
+  background-color: #0a1f44;
+  border-color: #0a1f44;
+  color: #ffffff;
+  box-shadow: 0 12px 28px rgba(10, 31, 68, 0.22);
+}
+.wsv-btn-solid:hover {
+  background-color: #1dd3f8;
+  border-color: #1dd3f8;
+  color: #0a1f44;
+}
+
+/* Secondary reads as a link, not a second button, so the solid one stays the
+   only dominant shape — same balance as the hero's .wsv-btn-ghost. */
+.wsv-about-link {
+  font-family: "Cairo", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #0a1f44;
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(10, 31, 68, 0.3);
+  transition: all 0.6s ease;
+}
+.wsv-about-link:hover {
+  color: #1dd3f8;
+  text-decoration-color: #1dd3f8;
+}
+
+/*-- Section 4b: business websites — client trust strip --*/
+/* Quiet on purpose: proof, not decoration. It must not compete with the CTA
+   directly above it, so the logos sit greyscale until hovered. */
+.wsv-logos {
+  padding-top: 8px;
+  padding-bottom: clamp(32px, 4vw, 48px);
+  background-color: #ffffff;
+}
+
+.wsv-logos-title {
+  display: block;
+  margin-bottom: 22px;
+  font-family: "Cairo", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  color: #6084a4;
+  text-align: center;
+}
+
+.wsv-logos-row {
+  list-style: none;
+  padding: 26px 20px;
+  margin: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 20px 46px;
+  border-radius: 16px;
+  background-color: #f5f6f8;
+}
+.wsv-logos-row li {
+  line-height: 0;
+}
+.wsv-logos-row img {
+  height: 34px;
+  width: auto;
+  max-width: 140px;
+  object-fit: contain;
+  filter: grayscale(1);
+  opacity: 0.55;
+  transition: filter 0.25s ease, opacity 0.25s ease;
+}
+.wsv-logos-row li:hover img {
+  filter: grayscale(0);
+  opacity: 1;
+}
+
+/*-- Section 5: business websites — packages --*/
+/* Ground alternates: overview white → logos white → packages $wsv-band, the
+   same section-banding rhythm AppDev uses. */
+.wsv-plans {
+  padding-top: clamp(32px, 4vw, 48px);
+  padding-bottom: clamp(32px, 4vw, 48px);
+  background-color: #f5f6f8;
+}
+
+.wsv-plans-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 38px;
+}
+
+/* Currency toggle. A pill track with the active segment filled — same idea as
+   the rail's sliding pill, but only two slots so a plain class swap is enough. */
+.wsv-cur-switch {
+  display: inline-flex;
+  gap: 4px;
+  margin-top: 24px;
+  padding: 4px;
+  border-radius: 100px;
+  background-color: #ffffff;
+  box-shadow: 0px 5px 11px 0px rgba(15, 23, 42, 0.05), 0px 2px 2px 0px rgba(15, 23, 42, 0.07);
+}
+.wsv-cur-switch button {
+  min-width: 64px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: 100px;
+  background: none;
+  cursor: pointer;
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6084a4;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.wsv-cur-switch button:hover {
+  color: #0a1f44;
+}
+.wsv-cur-switch button.is-active {
+  background-color: #0a1f44;
+  color: #ffffff;
+}
+
+/* 3-up → 2-up at 991 → 1-up at 575, the .seo-grid breakpoints. */
+.wsv-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* Card surface is the house emboss recipe: no border, layered shadow, 16px. */
+.wsv-plan {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 32px 26px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  transition: box-shadow 0.35s ease;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  /* Lift is whileHover in the component, not here — framer-motion writes an
+     inline transform on the card and a CSS transform would lose to it. */
+}
+.wsv-plan:hover {
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+}
+.wsv-plan h3 {
+  font-family: "Cairo", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  margin-bottom: 6px;
+  color: #212121;
+}
+
+/* In flow, not an absolute corner tag — nothing to mirror in RTL. */
+.wsv-plan-badge {
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 6px 13px;
+  border-radius: 100px;
+  background-color: #1dd3f8;
+  color: #ffffff;
+  font-family: "Cairo", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.wsv-plan-icon {
+  width: 50px;
+  height: 50px;
+  margin-bottom: 18px;
+  border-radius: 14px;
+  background-color: #f6fdff;
+  color: #1dd3f8;
+  font-size: 26px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wsv-plan-summary {
+  display: block;
+  font-size: 14px;
+  line-height: 1.75;
+  color: #4d4d4d;
+  margin-bottom: 20px;
+}
+
+.wsv-plan-price {
+  display: flex;
+  align-items: baseline;
+  gap: 6px;
+  padding-bottom: 20px;
+  margin-bottom: 20px;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.wsv-plan-amount {
+  font-family: "Cairo", sans-serif;
+  font-size: 28px;
+  font-weight: 800;
+  line-height: 1;
+  color: #212121;
+}
+
+.wsv-plan-cur {
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #6084a4;
+}
+
+/* flex:1 pushes .wsv-plan-cta down, so the buttons line up across cards even
+   when the lists are different lengths. The rows themselves stay ragged —
+   there is no min-height anywhere in this system and adding one here would
+   only mask uneven copy. */
+.wsv-plan-features {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  flex: 1 1 auto;
+}
+.wsv-plan-features li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 11px;
+  font-size: 14px;
+  line-height: 1.8;
+  color: #4d4d4d;
+  /* Fixed well + top margin: keeps the tick on the first line when an Arabic
+     item wraps, instead of centring it against the whole two-line block. */
+}
+.wsv-plan-features li:last-child {
+  margin-bottom: 0;
+}
+.wsv-plan-features li i {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: #1dd3f8;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.wsv-plan-cta {
+  margin-top: auto;
+}
+
+.wsv-plan-btn {
+  display: block;
+  width: 100%;
+  padding: 15px 20px;
+  border-radius: 10px;
+  background-color: #0a1f44;
+  color: #ffffff;
+  font-family: "Cairo", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  transition: all 0.6s ease;
+}
+.wsv-plan-btn:hover {
+  background-color: #1dd3f8;
+  color: #0a1f44;
+}
+
+/* ---- recommended tier ---- */
+/* Static navy fill, deliberately NOT AppDev's rotating conic beam: this page
+   already carries a moving hero and a moving carousel. Same palette swap the
+   hero's on-dark state uses. */
+.wsv-plan.is-popular {
+  background-color: #0a1f44;
+  /* Inverted so the recommended card's CTA stays the most prominent one. */
+}
+.wsv-plan.is-popular h3 {
+  color: #ffffff;
+}
+.wsv-plan.is-popular .wsv-plan-summary {
+  color: rgba(255, 255, 255, 0.65);
+}
+.wsv-plan.is-popular .wsv-plan-icon {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.wsv-plan.is-popular .wsv-plan-amount {
+  color: #ffffff;
+}
+.wsv-plan.is-popular .wsv-plan-cur {
+  color: rgba(255, 255, 255, 0.6);
+}
+.wsv-plan.is-popular .wsv-plan-price {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+.wsv-plan.is-popular .wsv-plan-features li {
+  color: rgba(255, 255, 255, 0.8);
+}
+.wsv-plan.is-popular .wsv-plan-features li i {
+  background-color: rgba(29, 211, 248, 0.2);
+}
+.wsv-plan.is-popular .wsv-plan-btn {
+  background-color: #ffffff;
+  color: #0a1f44;
+}
+.wsv-plan.is-popular .wsv-plan-btn:hover {
+  background-color: #1dd3f8;
+  color: #0a1f44;
+}
+
+.wsv-plans-note {
+  margin: 24px 0 0;
+  text-align: center;
+  font-size: 13px;
+  color: #6084a4;
+}
+
 /*-- Responsive --*/
 @media only screen and (max-width: 1199px) {
   .wsv-nav-grid {
@@ -12163,8 +12592,48 @@ Logical properties throughout so nothing is needed in rtl.css.
   .wsv-rail {
     display: none;
   }
+  /* Stacks text-first: the media div is first in the DOM for the RTL grid, so
+     order:2 keeps the headline above the image once the columns collapse. */
+  .wsv-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .wsv-split > :first-child {
+    order: 2;
+  }
+  .wsv-frame {
+    max-width: 520px;
+    margin-inline: auto;
+  }
+  /* 2-up: the recommended card wraps to its own row and would otherwise sit
+     stretched across half the grid on its own. */
+  .wsv-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media only screen and (max-width: 575px) {
+  .wsv-grid {
+    grid-template-columns: 1fr;
+  }
 }
 @media only screen and (max-width: 767px) {
+  .wsv-about-cta {
+    gap: 14px 20px;
+  }
+  .wsv-logos-row {
+    padding: 20px 16px;
+    gap: 18px 30px;
+  }
+  .wsv-logos-row img {
+    height: 26px;
+    max-width: 110px;
+  }
+  .wsv-plan {
+    padding: 26px 22px;
+  }
+  .wsv-plan-amount {
+    font-size: 24px;
+  }
   .wsv-hero {
     min-height: 620px;
     padding-top: 100px;
