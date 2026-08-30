@@ -157,22 +157,6 @@ export const businessWebsites = {
     },
   },
 
-  // --- Section 1b: client trust strip --------------------------------------
-  // Real logos from public/images/clients/. Keep this list honest: every logo
-  // here must be an actual client. A fabricated logo wall is a trust violation.
-  logos: {
-    title: "شركات اختارتنا",
-    items: [
-      { id: "adeng", name: "Adeng", src: "/images/clients/Adeng.webp" },
-      { id: "afaq", name: "آفاق التعليمية", src: "/images/clients/afaq.webp" },
-      { id: "crossing", name: "Crossing", src: "/images/clients/crossing.webp" },
-      { id: "gulfcodes", name: "Gulf Codes", src: "/images/clients/gulfcodes.png" },
-      { id: "client1", name: "عميل", src: "/images/clients/client1.jpg" },
-      { id: "client3", name: "عميل", src: "/images/clients/client3.jpg" },
-      { id: "client5", name: "عميل", src: "/images/clients/client5.jpg" },
-    ],
-  },
-
   // --- Section 2: packages -------------------------------------------------
   // Register is MSA, matching app-development and seo — NOT the Egyptian
   // colloquial of the hosting page ("اختار باقتك"). A corporate-websites buyer

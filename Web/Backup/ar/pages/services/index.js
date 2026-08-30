@@ -7,8 +7,8 @@ import HeroBuildSmarter from "../../components/Sections/HeroBuildSmarter";
 import Projects from "../../components/Services/Projects";
 import ServiceNav from "../../components/Services/ServiceNav";
 import SideRail from "../../components/Services/SideRail";
+import useSectionSnap from "../../components/Services/useSectionSnap";
 import BwOverview from "../../components/Services/BusinessWebsites/Overview";
-import BwTrustLogos from "../../components/Services/BusinessWebsites/TrustLogos";
 import BwPlans from "../../components/Services/BusinessWebsites/Plans";
 import { heroMedia, heroSlides } from "../../data/services/data";
 
@@ -66,7 +66,7 @@ const areas = [
 // than its neighbour to register as a different kind of break.
 // Mirrors $wsv-gap-section / $wsv-gap-area in style.scss; keep them in sync.
 const SECTION_GAP = "clamp(32px, 4vw, 48px)";
-const AREA_GAP = "clamp(110px, 14vw, 200px)";
+const AREA_GAP = "clamp(170px, 21vw, 320px)";
 
 const box = {
   border: "2px dashed #9a9a9a",
@@ -170,6 +170,10 @@ export default function ServicesHubWireframe() {
   const areaRefs = useRef({});
   const router = useRouter();
 
+  // Desktop-only section snapping. Returns markProgrammatic so the rail's own
+  // jump below can tell it to stand down instead of the two fighting.
+  const { markProgrammatic } = useSectionSnap();
+
   const [heroSlide, setHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
   const hero = heroSlides[heroSlide];
@@ -238,6 +242,7 @@ export default function ServicesHubWireframe() {
     const nav = document.querySelector(".navbar-area");
     const offset = (nav ? nav.getBoundingClientRect().height : 0) + 16;
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
+    markProgrammatic();
     window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
   };
 
@@ -261,6 +266,7 @@ export default function ServicesHubWireframe() {
       {/* Hover pauses the rotation — the wrapper carries it because the section
           itself is portable and takes no mouse handlers. */}
       <div
+        className="wsv-snap-stop"
         onMouseEnter={() => setHeroPaused(true)}
         onMouseLeave={() => setHeroPaused(false)}
       >
@@ -306,7 +312,6 @@ export default function ServicesHubWireframe() {
         style={{ marginBottom: AREA_GAP }}
       >
         <BwOverview />
-        <BwTrustLogos />
         <BwPlans />
       </div>
 
@@ -339,6 +344,7 @@ export default function ServicesHubWireframe() {
             {a.blocks.map((b, i) => (
               <section
                 key={i}
+                className="wsv-snap-stop"
                 style={{
                   marginBottom: i === a.blocks.length - 1 ? 0 : SECTION_GAP,
                 }}

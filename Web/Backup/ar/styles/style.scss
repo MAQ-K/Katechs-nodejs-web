@@ -13366,7 +13366,7 @@ $wsv-band: #f5f6f8;
    The wireframe areas below mirror these values inline in
    pages/services/index.js — keep the two in sync. */
 $wsv-gap-section: clamp(32px, 4vw, 48px);
-$wsv-gap-area: clamp(110px, 14vw, 200px);
+$wsv-gap-area: clamp(170px, 21vw, 320px);
 
 .wsv-eyebrow {
   display: inline-block;
@@ -14025,58 +14025,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   }
 }
 
-/*-- Section 4b: business websites — client trust strip --*/
-/* Quiet on purpose: proof, not decoration. It must not compete with the CTA
-   directly above it, so the logos sit greyscale until hovered. */
-.wsv-logos {
-  padding-top: 8px;
-  padding-bottom: $wsv-gap-section;
-  background-color: $white-color;
-}
-
-.wsv-logos-title {
-  display: block;
-  margin-bottom: 22px;
-  font-family: "Cairo", sans-serif;
-  font-size: 13px;
-  font-weight: 700;
-  letter-spacing: 0.5px;
-  color: $wsv-muted;
-  text-align: center;
-}
-
-.wsv-logos-row {
-  list-style: none;
-  padding: 26px 20px;
-  margin: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  flex-wrap: wrap;
-  gap: 20px 46px;
-  border-radius: 16px;
-  background-color: $wsv-band;
-
-  li {
-    line-height: 0;
-  }
-
-  img {
-    height: 34px;
-    width: auto;
-    max-width: 140px;
-    object-fit: contain;
-    filter: grayscale(1);
-    opacity: 0.55;
-    transition: filter 0.25s ease, opacity 0.25s ease;
-  }
-
-  li:hover img {
-    filter: grayscale(0);
-    opacity: 1;
-  }
-}
-
 /*-- Section 5: business websites — packages --*/
 /* Ground alternates: overview white → logos white → packages $wsv-band, the
    same section-banding rhythm AppDev uses. */
@@ -14352,6 +14300,62 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   color: $wsv-muted;
 }
 
+/*-- Section 7: desktop section snap --*/
+/* One scroll gesture = one section, desktop only.
+   `scroll-snap-type` has to live on the scroll container, which is <html> — and
+   <html> is shared by every page in the app. So it is gated behind a class that
+   components/Services/useSectionSnap.js adds on mount and removes on unmount;
+   without that this rule would silently change scrolling site-wide.
+   --wsv-nav-h is written by the same hook from the real measured navbar height,
+   so the CSS offset and the JS jump target can never drift apart. */
+@media only screen and (min-width: 992px) {
+  html.wsv-snapping {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: var(--wsv-nav-h, 90px);
+  }
+
+  /* `proximity`, never `mandatory`: several of these sections are taller than
+     the viewport, and mandatory would drag the reader back to the section top
+     while they are still working down it. Proximity settles onto edges without
+     ever trapping — the hook supplies the discrete one-gesture-one-section
+     feel on top of it. */
+  /* Centred, not top-aligned. Most of these sections are shorter than the
+     viewport — the carousel is ~509px against ~840px — so `start` parked them
+     against the navbar and left the next section visible underneath. `center`
+     resolves against the snapport, which scroll-padding-top above has already
+     shrunk by the navbar, so the section lands centred in the band the user can
+     actually see. useSectionSnap.js computes the same position for its own
+     jumps, so the two agree. */
+  html.wsv-snapping .wsv-snap {
+    scroll-snap-align: center;
+  }
+
+  /* Except when the section is taller than that band: centring something that
+     overflows the screen would push its own heading off the top. The hook
+     measures each section and adds this class, so it stays correct as the
+     wireframe areas grow into real content. */
+  html.wsv-snapping .wsv-snap.wsv-snap-tall {
+    scroll-snap-align: start;
+  }
+
+  /* Snapping is switched OFF for the duration of one of our own jumps.
+     Otherwise the browser's snap engine stays live during window.scrollTo and
+     re-targets the animation mid-flight — two things steering one scroll, which
+     is what reads as a stutter when the wheel is spun hard. The hook adds this
+     class when it starts a jump and removes it once the scroll has settled. */
+  html.wsv-snapping.wsv-snap-off {
+    scroll-snap-type: none;
+  }
+}
+
+/* Belt and braces — the hook already refuses to add the class under reduced
+   motion, but if it is ever added some other way this still switches it off. */
+@media (prefers-reduced-motion: reduce) {
+  html.wsv-snapping {
+    scroll-snap-type: none;
+  }
+}
+
 /*-- Responsive --*/
 @media only screen and (max-width: 1199px) {
   .wsv-nav-grid {
@@ -14398,16 +14402,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 @media only screen and (max-width: 767px) {
   .wsv-about-cta {
     gap: 14px 20px;
-  }
-
-  .wsv-logos-row {
-    padding: 20px 16px;
-    gap: 18px 30px;
-
-    img {
-      height: 26px;
-      max-width: 110px;
-    }
   }
 
   .wsv-plan {
