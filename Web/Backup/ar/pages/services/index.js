@@ -7,6 +7,7 @@ import HeroBuildSmarter from "../../components/Sections/HeroBuildSmarter";
 import Projects from "../../components/Services/Projects";
 import ServiceNav from "../../components/Services/ServiceNav";
 import SideRail from "../../components/Services/SideRail";
+import ScrollProgress from "../../components/Services/ScrollProgress";
 import useSectionSnap from "../../components/Services/useSectionSnap";
 import BwOverview from "../../components/Services/BusinessWebsites/Overview";
 import BwPlans from "../../components/Services/BusinessWebsites/Plans";
@@ -64,9 +65,12 @@ const areas = [
 // inside one, so the page reads as areas first, sections second. 2:1 was tried
 // and read as "the same": next to 180px-tall blocks a gap has to be far bigger
 // than its neighbour to register as a different kind of break.
-// Mirrors $wsv-gap-section / $wsv-gap-area in style.scss; keep them in sync.
+//
+// Only the section gap is mirrored here now: the area gap became `.wsv-area`'s
+// margin-bottom in style.scss when areas gained their own backgrounds, so there
+// is one definition of it again rather than two to keep in sync.
+// Mirrors $wsv-gap-section; keep the two in step.
 const SECTION_GAP = "clamp(32px, 4vw, 48px)";
-const AREA_GAP = "clamp(170px, 21vw, 320px)";
 
 const box = {
   border: "2px dashed #9a9a9a",
@@ -253,6 +257,7 @@ export default function ServicesHubWireframe() {
       </Head>
 
       <Navbar />
+      <ScrollProgress />
 
       {/* Floating section rail — visible from first paint, not gated on scroll. */}
       <SideRail
@@ -309,8 +314,8 @@ export default function ServicesHubWireframe() {
       <div
         id="business-websites"
         data-area="business-websites"
+        className="wsv-area"
         ref={(el) => (areaRefs.current["business-websites"] = el)}
-        style={{ marginBottom: `calc(${AREA_GAP} / 2)` }}
       >
         <BwOverview />
         <BwPlans />
@@ -320,17 +325,16 @@ export default function ServicesHubWireframe() {
       {/* Area 1's gap to here is .wsv-nav's padding-bottom, so main adds none. */}
       <main>
         {/* AREAS - each is a group of stacked sections for one web service type */}
-        {areas.slice(1).map((a, ai) => (
-          // Alternating ground, so crossing an area boundary is felt rather
-          // than merely passed. ai=0 is type-2, which follows .wsv-plans
-          // ($wsv-band) — so it takes white and the alternation runs from there.
-          // The old 3px grey borderTop is gone: the band now does that job.
+        {areas.slice(1).map((a) => (
+          // Each area carries its own ground, keyed off [data-area] in the
+          // stylesheet, and every section inside it shares that colour. The old
+          // 3px grey borderTop is gone — the colour change does that job now.
           <div
             key={a.id}
             id={a.id}
             data-area={a.id}
             ref={(el) => (areaRefs.current[a.id] = el)}
-            className={`wsv-area${ai % 2 === 1 ? " is-alt" : ""}`}
+            className="wsv-area"
           >
             <div className="wsv-area-inner">
               <div

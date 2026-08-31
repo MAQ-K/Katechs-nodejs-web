@@ -11667,6 +11667,13 @@ Matches the newer service-page system (hosting/emails/app-dev/seo):
 cyan #1dd3f8, hairline rgba(15,23,42,.08), 16px cards, Cairo headings.
 Logical properties throughout so nothing is needed in rtl.css.
 =================================================*/
+/* Per-area grounds. One colour per service area, shared by EVERY section inside
+   it — the area is the unit the visitor perceives, so a section changing colour
+   mid-area reads as a boundary that isn't there.
+   All five are mixed from the two theme colours at very low weight, so they stay
+   in the family and never compete with the Arabic text sitting on them. The page
+   itself is white, and areas are separated by margin, so the white shows through
+   between them as the gap. */
 /* Two-step spacing scale. Sections inside one area sit at $wsv-gap-section;
    the break between areas is ~4x that, so the page reads as areas first and
    sections second. 2:1 was tried and read as "the same" — next to 180px-tall
@@ -11959,8 +11966,8 @@ Logical properties throughout so nothing is needed in rtl.css.
   position: relative;
   z-index: 1;
   padding-top: clamp(32px, 4vw, 48px);
-  padding-bottom: clamp(170px, 21vw, 320px);
-  background-color: #ffffff;
+  padding-bottom: clamp(32px, 4vw, 48px);
+  background-color: #f5f6f8;
   /* Navy drop under the section's bottom edge, closing off the intro area.
      The negative spread cancels the shadow on the other three sides, so only
      the bottom shows — offset down, then pulled back in by the same amount. */
@@ -11983,8 +11990,8 @@ Logical properties throughout so nothing is needed in rtl.css.
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 240px;
-  padding: 34px 30px;
+  min-height: 176px;
+  padding: 24px 26px;
   border-radius: 16px;
   border: 1px solid rgba(15, 23, 42, 0.08);
   background-color: #ffffff;
@@ -12015,7 +12022,7 @@ Logical properties throughout so nothing is needed in rtl.css.
   font-weight: 700;
   font-size: 20px;
   color: #212121;
-  margin-bottom: 10px;
+  margin-bottom: 6px;
 }
 .wsv-nav-card p {
   font-size: 15px;
@@ -12043,22 +12050,22 @@ Logical properties throughout so nothing is needed in rtl.css.
 }
 
 .wsv-nav-icon {
-  width: 54px;
-  height: 54px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
+  border-radius: 12px;
   background-color: #f6fdff;
   color: #1dd3f8;
-  font-size: 27px;
-  margin-bottom: 20px;
+  font-size: 22px;
+  margin-bottom: 14px;
   transition: all 0.6s ease;
 }
 
 .wsv-nav-arrow {
   margin-top: auto;
-  padding-top: 18px;
+  padding-top: 12px;
   align-self: flex-end;
   color: #1dd3f8;
   font-size: 22px;
@@ -12067,6 +12074,38 @@ Logical properties throughout so nothing is needed in rtl.css.
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
 }
 
+/*-- Scroll progress bar --*/
+/* Sits just under the navbar rather than at the very top of the viewport —
+   the more common placement, at y:0, would overlap the logo/nav links since
+   the navbar is itself fixed there. `top` is written from JS (the navbar's
+   real height, which changes with .is-sticky) so the two can never disagree.
+   Below the navbar's z-index (1030) on purpose: it must not float above an
+   open dropdown, same rule .wsv-rail already follows. */
+.wsv-progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 1000;
+  background-color: rgba(10, 31, 68, 0.08);
+  pointer-events: none;
+  transition: top 0.25s ease;
+}
+
+.wsv-progress-fill {
+  height: 100%;
+  background-color: #1dd3f8;
+  transition: width 0.12s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wsv-progress {
+    transition: none;
+  }
+  .wsv-progress-fill {
+    transition: none;
+  }
+}
 /*-- Floating section rail --*/
 /* A vertical segmented control: one capsule, one pill that slides between the
    items. Physical `left` on purpose, not a logical property — it is pinned to
@@ -12270,7 +12309,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 .wsv-about {
   padding-top: clamp(32px, 4vw, 48px);
   padding-bottom: clamp(32px, 4vw, 48px);
-  background-color: #ffffff;
 }
 
 .wsv-about-cta {
@@ -12318,7 +12356,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 .wsv-plans {
   padding-top: clamp(32px, 4vw, 48px);
   padding-bottom: clamp(32px, 4vw, 48px);
-  background-color: #f5f6f8;
 }
 
 .wsv-plans-head {
@@ -12558,31 +12595,44 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   color: #6084a4;
 }
 
-/*-- Section 6b: area bands --*/
-/* Each service area sits on the opposite ground to its neighbour, so crossing a
-   boundary is felt rather than merely passed. Neutral on purpose — white and
-   $wsv-band are already the page's two grounds, so this adds structure without
-   adding a colour the design has to answer for.
-   The gap between areas is PADDING, not margin: a margin would fall outside the
-   band and open a stripe of page background between every pair of areas. Half
-   the gap comes from the area above, half from the area below. */
+/*-- Section 6b: area grounds --*/
+/* One colour per area, carried by the area wrapper so every section inside it
+   shares that ground. Areas are separated by MARGIN, not padding — the white
+   page shows through between them, so the areas read as distinct blocks with
+   real air between:
+       [ area 1 ]
+         (gap)
+       [ area 2 ]
+   That is also why no area is pure white: it would dissolve into the gap. */
 .wsv-area {
-  padding-top: calc(clamp(170px, 21vw, 320px) / 2);
-  padding-bottom: calc(clamp(170px, 21vw, 320px) / 2);
-  background-color: #ffffff;
+  margin-bottom: clamp(240px, 30vw, 460px);
 }
 
-.wsv-area.is-alt {
-  background-color: #f5f6f8;
+.wsv-area[data-area=business-websites] {
+  background-color: #dff9fe;
+}
+
+.wsv-area[data-area=type-2] {
+  background-color: #e2e4e9;
+}
+
+.wsv-area[data-area=type-3] {
+  background-color: #d2f6fe;
+}
+
+.wsv-area[data-area=type-4] {
+  background-color: #d8dbe1;
 }
 
 /* The width cap used to live on <main>, which meant a background on an area
    would have been a 1140px stripe rather than a full-bleed band. It moved here
-   so the area itself can reach the viewport edges. */
+   so the area itself can reach the viewport edges. The vertical padding is here
+   too, for the wireframe areas whose blocks bring none of their own — area 1's
+   sections have their own padding and no .wsv-area-inner. */
 .wsv-area-inner {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: clamp(32px, 4vw, 48px) 20px;
 }
 
 /*-- Section 7: desktop section snap --*/

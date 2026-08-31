@@ -13357,6 +13357,25 @@ $wsv-line: rgba(15, 23, 42, 0.08);
 $wsv-muted: #6084a4;
 $wsv-band: #f5f6f8;
 
+/* Per-area grounds. One colour per service area, shared by EVERY section inside
+   it — the area is the unit the visitor perceives, so a section changing colour
+   mid-area reads as a boundary that isn't there.
+   All five are mixed from the two theme colours at very low weight, so they stay
+   in the family and never compete with the Arabic text sitting on them. The page
+   itself is white, and areas are separated by margin, so the white shows through
+   between them as the gap. */
+// Mix weights raised from an earlier 5-11% pass: at that strength every area
+// landed within ~15/255 of pure white, which is also the colour of the GAP
+// between areas (the page itself is white) — so the margin was rendering
+// correctly but was visually unreadable, indistinguishable from the areas
+// it was supposed to separate. These weights keep the tint soft but put
+// enough distance from #fff that the gap reads as an actual gap.
+$wsv-area-intro: $wsv-band; // hero aftermath: carousel + navigator
+$wsv-area-1: mix($main-color, $white-color, 14%);
+$wsv-area-2: mix($wsv-navy, $white-color, 12%);
+$wsv-area-3: mix($main-color, $white-color, 20%);
+$wsv-area-4: mix($wsv-navy, $white-color, 16%);
+
 /* Two-step spacing scale. Sections inside one area sit at $wsv-gap-section;
    the break between areas is ~4x that, so the page reads as areas first and
    sections second. 2:1 was tried and read as "the same" — next to 180px-tall
@@ -13366,7 +13385,7 @@ $wsv-band: #f5f6f8;
    The wireframe areas below mirror these values inline in
    pages/services/index.js — keep the two in sync. */
 $wsv-gap-section: clamp(32px, 4vw, 48px);
-$wsv-gap-area: clamp(170px, 21vw, 320px);
+$wsv-gap-area: clamp(240px, 30vw, 460px);
 
 .wsv-eyebrow {
   display: inline-block;
@@ -13640,7 +13659,7 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
      gives the cards room for their drop shadows. */
   padding-top: 0;
   padding-bottom: $wsv-gap-section;
-  background-color: $wsv-band;
+  background-color: $wsv-area-intro;
   overflow: hidden;
 }
 
@@ -13665,8 +13684,8 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
   position: relative;
   z-index: 1;
   padding-top: $wsv-gap-section;
-  padding-bottom: $wsv-gap-area;
-  background-color: $white-color;
+  padding-bottom: $wsv-gap-section;
+  background-color: $wsv-area-intro;
   /* Navy drop under the section's bottom edge, closing off the intro area.
      The negative spread cancels the shadow on the other three sides, so only
      the bottom shows — offset down, then pulled back in by the same amount. */
@@ -13689,8 +13708,8 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
   display: flex;
   flex-direction: column;
   height: 100%;
-  min-height: 240px;
-  padding: 34px 30px;
+  min-height: 176px;
+  padding: 24px 26px;
   border-radius: 16px;
   border: 1px solid $wsv-line;
   background-color: $white-color;
@@ -13731,7 +13750,7 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
     font-weight: 700;
     font-size: 20px;
     color: $heading-color;
-    margin-bottom: 10px;
+    margin-bottom: 6px;
   }
 
   p {
@@ -13768,22 +13787,22 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
 }
 
 .wsv-nav-icon {
-  width: 54px;
-  height: 54px;
+  width: 44px;
+  height: 44px;
   display: flex;
   align-items: center;
   justify-content: center;
-  border-radius: 14px;
+  border-radius: 12px;
   background-color: #f6fdff;
   color: $main-color;
-  font-size: 27px;
-  margin-bottom: 20px;
+  font-size: 22px;
+  margin-bottom: 14px;
   transition: $transition;
 }
 
 .wsv-nav-arrow {
   margin-top: auto;
-  padding-top: 18px;
+  padding-top: 12px;
   align-self: flex-end;
   color: $main-color;
   font-size: 22px;
@@ -13791,6 +13810,39 @@ $wsv-gap-area: clamp(170px, 21vw, 320px);
   opacity: 0.55;
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
     opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/*-- Scroll progress bar --*/
+/* Sits just under the navbar rather than at the very top of the viewport —
+   the more common placement, at y:0, would overlap the logo/nav links since
+   the navbar is itself fixed there. `top` is written from JS (the navbar's
+   real height, which changes with .is-sticky) so the two can never disagree.
+   Below the navbar's z-index (1030) on purpose: it must not float above an
+   open dropdown, same rule .wsv-rail already follows. */
+.wsv-progress {
+  position: fixed;
+  left: 0;
+  right: 0;
+  height: 3px;
+  z-index: 1000;
+  background-color: rgba(10, 31, 68, 0.08);
+  pointer-events: none;
+  transition: top 0.25s ease;
+}
+
+.wsv-progress-fill {
+  height: 100%;
+  background-color: $main-color;
+  transition: width 0.12s linear;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wsv-progress {
+    transition: none;
+  }
+  .wsv-progress-fill {
+    transition: none;
+  }
 }
 
 /*-- Floating section rail --*/
@@ -14013,7 +14065,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 .wsv-about {
   padding-top: $wsv-gap-section;
   padding-bottom: $wsv-gap-section;
-  background-color: $white-color;
 }
 
 .wsv-about-cta {
@@ -14063,7 +14114,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 .wsv-plans {
   padding-top: $wsv-gap-section;
   padding-bottom: $wsv-gap-section;
-  background-color: $wsv-band;
 }
 
 .wsv-plans-head {
@@ -14332,31 +14382,44 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   color: $wsv-muted;
 }
 
-/*-- Section 6b: area bands --*/
-/* Each service area sits on the opposite ground to its neighbour, so crossing a
-   boundary is felt rather than merely passed. Neutral on purpose — white and
-   $wsv-band are already the page's two grounds, so this adds structure without
-   adding a colour the design has to answer for.
-   The gap between areas is PADDING, not margin: a margin would fall outside the
-   band and open a stripe of page background between every pair of areas. Half
-   the gap comes from the area above, half from the area below. */
+/*-- Section 6b: area grounds --*/
+/* One colour per area, carried by the area wrapper so every section inside it
+   shares that ground. Areas are separated by MARGIN, not padding — the white
+   page shows through between them, so the areas read as distinct blocks with
+   real air between:
+       [ area 1 ]
+         (gap)
+       [ area 2 ]
+   That is also why no area is pure white: it would dissolve into the gap. */
 .wsv-area {
-  padding-top: calc(#{$wsv-gap-area} / 2);
-  padding-bottom: calc(#{$wsv-gap-area} / 2);
-  background-color: $white-color;
+  margin-bottom: $wsv-gap-area;
 }
 
-.wsv-area.is-alt {
-  background-color: $wsv-band;
+.wsv-area[data-area="business-websites"] {
+  background-color: $wsv-area-1;
+}
+
+.wsv-area[data-area="type-2"] {
+  background-color: $wsv-area-2;
+}
+
+.wsv-area[data-area="type-3"] {
+  background-color: $wsv-area-3;
+}
+
+.wsv-area[data-area="type-4"] {
+  background-color: $wsv-area-4;
 }
 
 /* The width cap used to live on <main>, which meant a background on an area
    would have been a 1140px stripe rather than a full-bleed band. It moved here
-   so the area itself can reach the viewport edges. */
+   so the area itself can reach the viewport edges. The vertical padding is here
+   too, for the wireframe areas whose blocks bring none of their own — area 1's
+   sections have their own padding and no .wsv-area-inner. */
 .wsv-area-inner {
   max-width: 1140px;
   margin: 0 auto;
-  padding: 0 20px;
+  padding: $wsv-gap-section 20px;
 }
 
 /*-- Section 7: desktop section snap --*/

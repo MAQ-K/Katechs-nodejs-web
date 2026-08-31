@@ -13,6 +13,16 @@ import TechMarquee from "../../components/AppDev/TechMarquee";
 import AppOrbit from "../../components/AppDev/AppOrbit";
 import Stats from "../../components/AppDev/Stats";
 
+import TweenBasics from "../../components/AnimeJs/TweenBasics";
+import EasingShowcase from "../../components/AnimeJs/EasingShowcase";
+import StaggerGrid from "../../components/AnimeJs/StaggerGrid";
+import TimelineSequence from "../../components/AnimeJs/TimelineSequence";
+import SvgLineDraw from "../../components/AnimeJs/SvgLineDraw";
+import MotionPathDemo from "../../components/AnimeJs/MotionPathDemo";
+import DraggableCard from "../../components/AnimeJs/DraggableCard";
+import ScrollScrub from "../../components/AnimeJs/ScrollScrub";
+import TextSplitReveal from "../../components/AnimeJs/TextSplitReveal";
+
 // Motion lab — every primitive this site owns, running, next to the
 // ui-ux-pro-max motion.csv row it corresponds to.
 //
@@ -185,6 +195,97 @@ const SPECIMENS = [
         <ParticleField />
       </div>
     ),
+  },
+  {
+    id: "anime-tween",
+    title: "anime.js — Core tween",
+    path: "components/AnimeJs/TweenBasics.js",
+    meta: [
+      { label: "source", value: "animejs.com — Animation" },
+      { label: "lib", value: "animejs ^4" },
+    ],
+    replayable: true,
+    note:
+      "The animate() call every other anime.js specimen here builds on: translate, rotate, scale and a color tween on one element, alternating forever.",
+    render: () => <TweenBasics />,
+  },
+  {
+    id: "anime-easings",
+    title: "anime.js — Easing curves compared",
+    path: "components/AnimeJs/EasingShowcase.js",
+    meta: [{ label: "source", value: "animejs.com — Easings" }],
+    replayable: true,
+    note:
+      "Six easings (including a spring) racing the same distance — the fastest way to feel the difference rather than read it off a curve graph.",
+    render: () => <EasingShowcase />,
+  },
+  {
+    id: "anime-stagger",
+    title: "anime.js — Stagger from center",
+    path: "components/AnimeJs/StaggerGrid.js",
+    meta: [{ label: "source", value: "animejs.com — Utilities · stagger()" }],
+    replayable: true,
+    note:
+      "stagger() turns one selector into a per-element delay curve — here radiating out from the grid's center instead of a flat left-to-right sweep.",
+    render: () => <StaggerGrid />,
+  },
+  {
+    id: "anime-timeline",
+    title: "anime.js — Timeline sequencing",
+    path: "components/AnimeJs/TimelineSequence.js",
+    meta: [{ label: "source", value: "animejs.com — Timeline" }],
+    replayable: true,
+    note:
+      "createTimeline() chains three animate() steps with negative offsets so each one starts slightly before the last finishes, instead of hand-timed setTimeouts.",
+    render: () => <TimelineSequence />,
+  },
+  {
+    id: "anime-svg-draw",
+    title: "anime.js — SVG line draw",
+    path: "components/AnimeJs/SvgLineDraw.js",
+    meta: [{ label: "source", value: "animejs.com — SVG · createDrawable()" }],
+    replayable: true,
+    note:
+      "createDrawable() measures the path's real length and drives stroke-dashoffset from it, so the line draws in at a constant speed regardless of how curvy it is.",
+    render: () => <SvgLineDraw />,
+  },
+  {
+    id: "anime-motion-path",
+    title: "anime.js — Motion path",
+    path: "components/AnimeJs/MotionPathDemo.js",
+    meta: [{ label: "source", value: "animejs.com — SVG · createMotionPath()" }],
+    replayable: true,
+    note:
+      "createMotionPath() turns an SVG path into translateX/translateY/rotate values, so a plain HTML dot can travel and bank along a curve, not just a straight line.",
+    render: () => <MotionPathDemo />,
+  },
+  {
+    id: "anime-draggable",
+    title: "anime.js — Draggable with spring release",
+    path: "components/AnimeJs/DraggableCard.js",
+    meta: [{ label: "source", value: "animejs.com — Draggable" }],
+    note:
+      "createDraggable() adds pointer-driven dragging plus a spring-based snap back to the container bounds on release — no extra drag library.",
+    render: () => <DraggableCard />,
+  },
+  {
+    id: "anime-scroll",
+    title: "anime.js — Scroll-scrubbed progress",
+    path: "components/AnimeJs/ScrollScrub.js",
+    meta: [{ label: "source", value: "animejs.com — Events · onScroll()" }],
+    note:
+      "onScroll({ sync: true }) links an animation's progress directly to scroll position inside a container, scrubbing forward and backward with the scrollbar.",
+    render: () => <ScrollScrub />,
+  },
+  {
+    id: "anime-text-split",
+    title: "anime.js — Per-character text reveal",
+    path: "components/AnimeJs/TextSplitReveal.js",
+    meta: [{ label: "source", value: "animejs.com — Text · split()" }],
+    replayable: true,
+    note:
+      "text.split() breaks a heading into per-character spans (words still wrap naturally), turning a line fade into a per-letter stagger for free.",
+    render: () => <TextSplitReveal />,
   },
 ];
 
