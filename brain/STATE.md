@@ -9,6 +9,17 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-08-30 · 10 more Motion Lab specimens — `components/Motion/`, ambient + CSS-3D.**
+  Pure CSS, no rAF, no WebGL, reduced-motion respected: `FloatingBlobs`, `GradientAurora`,
+  `FloatingIcons`, `WaveDivider`, `OrbitRing` (always-moving ambient loops) and `Cube3D`,
+  `FlipCard3D`, `CardStack3D`, `OrbitSphere3D`, `ParallaxLayers3D` (CSS-3D). Demoed at
+  `/lab/motion/`. See `brain/components/REGISTRY.md` and `brain/animation/LAB.md` → Tier C.
+- **2026-08-30 · New dependency: `animejs` ^4.5.0 installed (user's call).** New Tier D in
+  `brain/animation/LAB.md`, 9 new specimens under `components/AnimeJs/` demoed at
+  `/lab/motion/` (tween, easings, stagger, timeline, SVG line-draw, motion path, draggable,
+  scroll-scrub, text-split). Tier A (`Reveal.js`/`Magnetic.js`) is still the default for a plain
+  reveal/hover — reach for anime.js only when its API is genuinely the better tool. See
+  `brain/components/REGISTRY.md` for the index.
 - **2026-08-29 · New zone: `components/Sections/` — standalone, portable one-file sections.**
   Different contract from the rest of `components/`: zero dependency on `style.scss`, icon
   fonts, or `data/**`, fully self-contained via `styled-jsx`, one file per section, built from a

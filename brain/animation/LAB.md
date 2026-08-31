@@ -51,6 +51,43 @@ pulling GSAP in — check it before adding the dependency).
 
 ⏳ Six advanced 3D scenes in raw WebGL/canvas + the React Three Fiber pipeline guide — still in the artifact only.
 
+**Also built, 2026-08-30 — `components/Motion/`, ambient + CSS-3D batch** (all pure CSS, no rAF, reduced-motion
+opts out via `@media (prefers-reduced-motion: reduce)`, demoed at `/lab/motion/`):
+- `FloatingBlobs.js` — two blurred gradient blobs drifting on offset loops (background layer).
+- `GradientAurora.js` — `background-position` animated across an oversized gradient.
+- `FloatingIcons.js` — a row of badges bobbing on staggered delays.
+- `WaveDivider.js` — a seamless self-scrolling SVG wave section divider.
+- `OrbitRing.js` — dots placed by rotation, the ring spun as one element.
+- `Cube3D.js` — six real faces in one `preserve-3d` box, spinning on two axes.
+- `FlipCard3D.js` — two real faces flipped 180° on Y, hover **and** focus (keyboard-safe).
+- `CardStack3D.js` — a deck fanned out on Z/rotate, flattening to a row on hover.
+- `OrbitSphere3D.js` — icon badges on a `rotateY` + `translateZ` ring inside one spinning `preserve-3d` scene.
+- `ParallaxLayers3D.js` — three depth layers reacting to cursor at different rates (framer-motion springs,
+  same mechanic as `Tilt3D`'s `preserve3d` mode, extended to a whole scene instead of one card).
+
+## Tier D — anime.js (real dependency, installed 2026-08-30)
+`animejs` ^4.5.0 is now a real npm dependency — a user decision (asked directly, chose "install it" over
+hand-rolling the same effects with framer-motion/CSS, the pattern used for GSAP-sourced ideas). Reach for
+this tier for anything its API is genuinely the better tool for: SVG line-draw/motion-path, scroll-scrubbed
+progress, spring-released dragging, per-character text stagger. For a plain scroll reveal or hover, Tier A
+(`Reveal.js`/`Magnetic.js`) is still the default — don't reach for a 4th animation engine on this site for
+something Tier A already does.
+
+**Built**, all in `components/AnimeJs/`, demoed at `/lab/motion/`:
+- `TweenBasics.js` — core `animate()`: translate/rotate/scale/color tween.
+- `EasingShowcase.js` — six easings (incl. a spring) racing side by side.
+- `StaggerGrid.js` — `stagger()` radiating from a grid's center.
+- `TimelineSequence.js` — `createTimeline()` chaining three steps with negative offsets.
+- `SvgLineDraw.js` — `svg.createDrawable()`, length-aware stroke draw-in.
+- `MotionPathDemo.js` — `svg.createMotionPath()`, an HTML element banking along an SVG curve.
+- `DraggableCard.js` — `createDraggable()` with a spring release back into bounds.
+- `ScrollScrub.js` — `onScroll({ sync: true })`, progress scrubs with the scrollbar.
+- `TextSplitReveal.js` — `text.split()`, per-character stagger-in.
+
+All follow the same non-negotiables as every other tier: `useEffect`-only DOM access (SSR-safe), the
+returned animation instance is `.pause()`d on unmount, and RTL is respected (drag/scroll demos don't assume
+a fixed left/right).
+
 ---
 
 ## UI Kit — the shadow / surface recipe

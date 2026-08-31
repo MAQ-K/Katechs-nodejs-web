@@ -41,8 +41,10 @@ See `components/Sections/README.md` for the full contract.
 | SEO Pillars split | `Seo/Pillars.js` | local const, 6 pillars (copy unchanged) | Reveal + stagger | Shipped — light 2-col split (badge/heading/copy + 2-col card grid), replaces old dark 3x2 card grid |
 | Services Hero | `Services/Hero.js` | `data/services/data.js` → `heroMedia`, `heroSlides` | AnimatePresence slide crossfade (existing) | Shipped (T-014e) — restyled to match `brain/ui-library/inspiration/web services  page hero .png`: glassy pill badge with `bx-chevron-left` (mirrored for RTL), oversized `clamp(36px,6vw,72px)` headline, solid-white dominant primary CTA vs. underlined-text secondary CTA, blurred radial `.wsv-hero-arc-glow` shadow arc over the existing flat `.wsv-hero-sweep` seam into `$wsv-band`. Background video/image and Arabic copy untouched. |
 | BW Overview | `Services/BusinessWebsites/Overview.js` | `data/services/data.js` → `businessWebsites.overview` | Reveal + stagger | Area 1 §1. Split; media div first in DOM so RTL puts text right. Real Tabqat mockup, not a CSS skeleton. |
-| BW Trust Logos | `Services/BusinessWebsites/TrustLogos.js` | `data/services/data.js` → `businessWebsites.logos` | Reveal + stagger | Area 1 §1b. Real client logos only, greyscale at rest. No counts/ratings — fabricated numbers are a trust violation. |
 | BW Plans | `Services/BusinessWebsites/Plans.js` | `data/services/data.js` → `businessWebsites.pricing` | Reveal + feature stagger, `whileHover` lift | Area 1 §2. CSS-grid 3-up (`.seo-grid` breakpoints, not AppDev's Bootstrap row). EG/SA currency toggle, local state, grid keyed on currency. Recommended tier = **static** navy highlight, deliberately not AppDev's rotating beam. 🔴 **Prices are `"—"` placeholders — needs 6 real figures from the business.** |
+| BW Faq | `Services/BusinessWebsites/Faq.js` | `data/services/data.js` → `businessWebsites.{faqSection,faqs}` | react-accessible-accordion + Reveal stagger | Area 1 §3, closes the area. 4 questions on purpose ("not too long"). Navy-tinted variant of the site's standard `.app-faq-accordion` recipe — same `::before:none` double-chevron fix. |
+| Section Snap (hook) | `Services/useSectionSnap.js` | — | native CSS scroll-snap + wheel accumulator | Desktop-only (≥992px), off under reduced motion. Exports `SNAP_SELECTOR` — the snap set lives there and nowhere else; the hook tags matches with `.wsv-snap` so SCSS needs only one class. Returns `markProgrammatic()` for the SideRail to call so the two don't fight. |
+| Scroll Progress | `Services/ScrollProgress.js` | — | none, informational | Thin fill bar pinned just under the fixed navbar (measured live via ResizeObserver, not hard-coded — the navbar's height changes with `.is-sticky`). Whole-document scroll, NOT desktop-gated or area-aware like the rail/snap — stays meaningful on phones. |
 
 ## Motion / interaction primitives (see `brain/animation/LAB.md`)
 | Component | Path | Notes |
@@ -53,6 +55,40 @@ See `components/Sections/README.md` for the full contract.
 | AppOrbit | `AppDev/AppOrbit.js` | CSS 3D phone orbit. |
 | TechMarquee | `AppDev/TechMarquee.js` | Infinite marquee, masked edges, pauses on hover. |
 | Stats | `AppDev/Stats.js` | Scroll count-up without GSAP. |
+
+## anime.js primitives (`components/AnimeJs/`, `animejs` ^4.5.0)
+Tier D in `brain/animation/LAB.md` — a real dependency (2026-08-30, user's call). Reach for these when the
+API is genuinely the better tool (SVG draw/path, scroll-scrub, spring drag, text stagger); Tier A stays the
+default for a plain reveal/hover. All demoed at `/lab/motion/`.
+
+| Component | Path | Notes |
+|-----------|------|-------|
+| TweenBasics | `AnimeJs/TweenBasics.js` | Core `animate()` — translate/rotate/scale/color. |
+| EasingShowcase | `AnimeJs/EasingShowcase.js` | Six easings incl. a spring, side by side. |
+| StaggerGrid | `AnimeJs/StaggerGrid.js` | `stagger()` radiating from a grid's center. |
+| TimelineSequence | `AnimeJs/TimelineSequence.js` | `createTimeline()`, three steps, negative offsets. |
+| SvgLineDraw | `AnimeJs/SvgLineDraw.js` | `svg.createDrawable()` length-aware line draw-in. |
+| MotionPathDemo | `AnimeJs/MotionPathDemo.js` | `svg.createMotionPath()` — HTML element banking along a curve. |
+| DraggableCard | `AnimeJs/DraggableCard.js` | `createDraggable()` with spring release into bounds. |
+| ScrollScrub | `AnimeJs/ScrollScrub.js` | `onScroll({ sync: true })` — progress scrubs with scroll. |
+| TextSplitReveal | `AnimeJs/TextSplitReveal.js` | `text.split()` — per-character stagger-in. |
+
+## Ambient + CSS-3D primitives (`components/Motion/`)
+Tier C in `brain/animation/LAB.md`, added 2026-08-30. Pure CSS — no rAF, no WebGL/three.js, reduced-motion
+respected via media query. All demoed at `/lab/motion/`.
+
+| Component | Path | Notes |
+|-----------|------|-------|
+| FloatingBlobs | `Motion/FloatingBlobs.js` | Two blurred gradient blobs drifting on offset loops. |
+| GradientAurora | `Motion/GradientAurora.js` | Animated `background-position` gradient wash. |
+| FloatingIcons | `Motion/FloatingIcons.js` | Badge row bobbing on staggered delays. |
+| WaveDivider | `Motion/WaveDivider.js` | Seamless self-scrolling SVG wave divider. |
+| OrbitRing | `Motion/OrbitRing.js` | Dot ring spinning as one element. |
+| Cube3D | `Motion/Cube3D.js` | Six-face `preserve-3d` cube spinning on two axes. |
+| FlipCard3D | `Motion/FlipCard3D.js` | Two-face 180° Y flip, hover + focus. |
+| CardStack3D | `Motion/CardStack3D.js` | Fanned Z/rotate deck, flattens on hover. |
+| OrbitSphere3D | `Motion/OrbitSphere3D.js` | Icon badges orbiting in 3D depth. |
+| ParallaxLayers3D | `Motion/ParallaxLayers3D.js` | Three depth layers, cursor-parallax (framer-motion). |
 
 ## Legacy / template components (Jumpx base — mostly lorem ipsum, pre-direction)
 `AboutOne` `AboutTwo` `Auth` `CaseStudiesDetails` `ComingSoon` `Contact` `DigitalMarketing` `EmailFag`
