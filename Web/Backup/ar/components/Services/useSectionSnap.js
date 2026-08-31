@@ -46,11 +46,16 @@ const MAX_LOCK_MS = 1200;
 // them needed editing. Only the two inline cases (the hero wrapper and the
 // wireframe blocks in pages/services/index.js) carry a marker class.
 export const SNAP_SELECTOR = [
-  ".wsv-snap-stop", // hero wrapper + wireframe blocks (marker, page-owned)
+  ".wsv-snap-stop", // hero wrapper (marker, page-owned)
   ".wsv-projects", // Services/Projects.js
   ".wsv-nav", // Services/ServiceNav.js
-  ".wsv-about", // BusinessWebsites/Overview.js
-  ".wsv-plans", // BusinessWebsites/Plans.js
+  // ONE stop per service area, not per section inside it. Overview, packages,
+  // and the wireframe blocks used to each be their own stop — moving through
+  // an area was a series of jumps. Now the whole .wsv-area is the stop: the
+  // "scroll through, then jump" rule below already handles an over-tall target
+  // by letting native scroll proceed until its bottom, so this single change
+  // is what gives "normal scroll inside an area, jump between areas" for free.
+  ".wsv-area",
 ].join(", ");
 
 export default function useSectionSnap(selector = SNAP_SELECTOR) {
@@ -234,9 +239,11 @@ export default function useSectionSnap(selector = SNAP_SELECTOR) {
         if (list[i].getBoundingClientRect().top <= line + EDGE_SLOP) index = i;
       }
 
-      // "Scroll through, then jump" — the rule that keeps sections taller than
-      // the viewport reachable. Only .wsv-plans is currently over-tall, but the
-      // wireframe areas become so as they are built out.
+      // "Scroll through, then jump" — the rule that keeps a stop taller than
+      // the viewport reachable. Now that the stop is a whole .wsv-area rather
+      // than one section, this is what makes scrolling INSIDE an area feel
+      // native: only once you hit the area's true bottom does the next gesture
+      // advance to the next area.
       const rect = list[index].getBoundingClientRect();
       if (dir > 0 && rect.bottom > window.innerHeight + EDGE_SLOP) return;
       if (dir < 0 && rect.top < -EDGE_SLOP) return;

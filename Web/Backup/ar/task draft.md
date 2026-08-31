@@ -29,7 +29,7 @@ then section 2 area 2
 and like this in all page 
 can u do this 
 and it dont apply on small screens
-
+-
 ## nav boxes area 1
 add a dark blue shadow box light and modern for the end of area 1
 and i want area have sort of a theme bg not too much appearing but it kinda feel u moved from area to another 
@@ -38,8 +38,8 @@ and when scroll from area to area can we a very small simple blur like u turn ar
 ## nav sidebar
 look when we scoll before 1st service area the side bar have no blue bg on any box 
 after we got to the 1st section then it assign a bg for the right box 
-
-## rest of area 1
+-
+## rest of area 2
 the area 1 have 3 sections 
 the third is a FAQ section create it but not too long 
 
@@ -49,3 +49,13 @@ this area have 3 sections same as area 2 brief plans FAQ
 
 ## area 4 & area 5 structure and layout
 image & descirtion file 
+
+
+
+
+## design system 
+take out the design system from web services page 
+add it to the lab 
+we gonna use it to make all website pages look the same style 
+borders , fonts , colors , btn , cards 
+

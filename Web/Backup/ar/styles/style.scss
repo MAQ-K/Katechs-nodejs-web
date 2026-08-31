@@ -13385,7 +13385,7 @@ $wsv-area-4: mix($wsv-navy, $white-color, 16%);
    The wireframe areas below mirror these values inline in
    pages/services/index.js — keep the two in sync. */
 $wsv-gap-section: clamp(32px, 4vw, 48px);
-$wsv-gap-area: clamp(240px, 30vw, 460px);
+$wsv-gap-area: clamp(320px, 40vw, 640px);
 
 .wsv-eyebrow {
   display: inline-block;
@@ -14382,6 +14382,85 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   color: $wsv-muted;
 }
 
+/*-- Section 6: business websites — FAQ --*/
+/* Same react-accessible-accordion recipe as .app-faq-accordion, tinted navy
+   (this page's own accent) instead of the plain cyan the other FAQs use, so it
+   reads as this area's system rather than a copy-pasted block. */
+.wsv-faq {
+  padding-top: $wsv-gap-section;
+  padding-bottom: $wsv-gap-section;
+}
+
+.wsv-faq-head {
+  text-align: center;
+  max-width: 600px;
+  margin: 0 auto 36px;
+}
+
+.wsv-faq-accordion {
+  max-width: 780px;
+  margin: 0 auto;
+
+  .accordion__item {
+    margin-bottom: 14px;
+    border-radius: 16px;
+    background-color: $white-color;
+    box-shadow:
+      0px 5px 11px 0px rgba(15, 23, 42, 0.05),
+      0px 2px 2px 0px rgba(15, 23, 42, 0.07);
+    overflow: hidden;
+  }
+
+  .accordion__button {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 16px;
+    padding: 20px 24px;
+    cursor: pointer;
+    font-family: "Cairo", sans-serif;
+    font-weight: 600;
+    font-size: 15.5px;
+    color: $heading-color;
+
+    /* fancy-example.css (imported globally in _app.js) draws its own chevron
+       on ::before and doubles up with the plus icon below without this. */
+    &::before {
+      display: none;
+    }
+
+    i {
+      flex-shrink: 0;
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background-color: rgba(10, 31, 68, 0.08);
+      color: $wsv-navy;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: $transition;
+    }
+
+    &[aria-expanded="true"] i {
+      background-color: $wsv-navy;
+      color: $white-color;
+      transform: rotate(45deg);
+    }
+  }
+
+  .accordion__panel {
+    padding: 0 24px 22px;
+
+    p {
+      color: $body-color;
+      font-size: 14.5px;
+      line-height: 1.9;
+      margin-bottom: 0;
+    }
+  }
+}
+
 /*-- Section 6b: area grounds --*/
 /* One colour per area, carried by the area wrapper so every section inside it
    shares that ground. Areas are separated by MARGIN, not padding — the white
@@ -14392,7 +14471,11 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
        [ area 2 ]
    That is also why no area is pure white: it would dissolve into the gap. */
 .wsv-area {
-  margin-bottom: $wsv-gap-area;
+  /* margin, not padding: this space must be plain white page, not tinted by
+     the area's own background. Padding would have been INSIDE the coloured
+     box; margin sits OUTSIDE it, same as $wsv-gap-area, so the two combine
+     into one continuous white gap rather than colour-then-white. */
+  margin-bottom: calc(#{$wsv-gap-area} + 300px);
 }
 
 .wsv-area[data-area="business-websites"] {

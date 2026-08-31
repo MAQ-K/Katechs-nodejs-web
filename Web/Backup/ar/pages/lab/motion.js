@@ -23,6 +23,17 @@ import DraggableCard from "../../components/AnimeJs/DraggableCard";
 import ScrollScrub from "../../components/AnimeJs/ScrollScrub";
 import TextSplitReveal from "../../components/AnimeJs/TextSplitReveal";
 
+import FloatingBlobs from "../../components/Motion/FloatingBlobs";
+import GradientAurora from "../../components/Motion/GradientAurora";
+import FloatingIcons from "../../components/Motion/FloatingIcons";
+import WaveDivider from "../../components/Motion/WaveDivider";
+import OrbitRing from "../../components/Motion/OrbitRing";
+import Cube3D from "../../components/Motion/Cube3D";
+import FlipCard3D from "../../components/Motion/FlipCard3D";
+import CardStack3D from "../../components/Motion/CardStack3D";
+import OrbitSphere3D from "../../components/Motion/OrbitSphere3D";
+import ParallaxLayers3D from "../../components/Motion/ParallaxLayers3D";
+
 // Motion lab — every primitive this site owns, running, next to the
 // ui-ux-pro-max motion.csv row it corresponds to.
 //
@@ -287,6 +298,132 @@ const SPECIMENS = [
       "text.split() breaks a heading into per-character spans (words still wrap naturally), turning a line fade into a per-letter stagger for free.",
     render: () => <TextSplitReveal />,
   },
+  {
+    id: "ambient-blobs",
+    title: "Ambient — Floating gradient blobs",
+    path: "components/Motion/FloatingBlobs.js",
+    meta: [{ label: "tier", value: "C · pure CSS, no rAF" }],
+    note:
+      "Two blurred radial-gradient blobs drifting on offset loops. Compositor-only CSS animation — cheap enough to leave running behind hero content.",
+    render: () => (
+      <div className="lab-demo lab-demo-ambient">
+        <FloatingBlobs />
+      </div>
+    ),
+  },
+  {
+    id: "ambient-aurora",
+    title: "Ambient — Shifting gradient background",
+    path: "components/Motion/GradientAurora.js",
+    meta: [{ label: "tier", value: "C · pure CSS, no rAF" }],
+    note:
+      "background-position animated across an oversized gradient — a moving-color wash for a section background, no JS.",
+    render: () => (
+      <div className="lab-demo lab-demo-ambient">
+        <GradientAurora />
+      </div>
+    ),
+  },
+  {
+    id: "ambient-floating-icons",
+    title: "Ambient — Bobbing icon row",
+    path: "components/Motion/FloatingIcons.js",
+    meta: [{ label: "tier", value: "C · pure CSS, no rAF" }],
+    note: "Each badge bobs on its own delay offset so the row never moves in lockstep.",
+    render: () => (
+      <div className="lab-demo">
+        <FloatingIcons />
+      </div>
+    ),
+  },
+  {
+    id: "ambient-wave",
+    title: "Ambient — Scrolling wave divider",
+    path: "components/Motion/WaveDivider.js",
+    meta: [{ label: "tier", value: "C · pure CSS, no rAF" }],
+    note:
+      "Two copies of the same SVG path laid end to end and translated by exactly one path-width — the loop never visibly jumps.",
+    render: () => (
+      <div className="lab-demo lab-demo-full">
+        <WaveDivider />
+      </div>
+    ),
+  },
+  {
+    id: "ambient-orbit-ring",
+    title: "Ambient — Orbiting dot ring",
+    path: "components/Motion/OrbitRing.js",
+    meta: [{ label: "tier", value: "C · pure CSS, no rAF" }],
+    note: "Eight dots placed by rotation, the whole ring spun as one element so spacing never drifts.",
+    render: () => (
+      <div className="lab-demo">
+        <OrbitRing />
+      </div>
+    ),
+  },
+  {
+    id: "3d-cube",
+    title: "3D — Spinning cube",
+    path: "components/Motion/Cube3D.js",
+    meta: [{ label: "tier", value: "C · CSS 3D, no WebGL" }],
+    note:
+      "Six real faces in one preserve-3d box, each pushed out along its own axis by half the cube's size.",
+    render: () => (
+      <div className="lab-demo">
+        <Cube3D />
+      </div>
+    ),
+  },
+  {
+    id: "3d-flip-card",
+    title: "3D — Flip card (hover/focus)",
+    path: "components/Motion/FlipCard3D.js",
+    meta: [{ label: "tier", value: "C · CSS 3D, no WebGL" }],
+    note: "Two real faces in one preserve-3d box rotated 180° on Y — not a crossfade. Keyboard-focusable.",
+    render: () => (
+      <div className="lab-demo">
+        <FlipCard3D />
+      </div>
+    ),
+  },
+  {
+    id: "3d-card-stack",
+    title: "3D — Fanning card deck",
+    path: "components/Motion/CardStack3D.js",
+    meta: [{ label: "tier", value: "C · CSS 3D, no WebGL" }],
+    note: "Cards pushed back on Z and rotated per index, flattening into a row on hover.",
+    render: () => (
+      <div className="lab-demo">
+        <CardStack3D />
+      </div>
+    ),
+  },
+  {
+    id: "3d-orbit-sphere",
+    title: "3D — Icons orbiting in depth",
+    path: "components/Motion/OrbitSphere3D.js",
+    meta: [{ label: "tier", value: "C · CSS 3D, no WebGL" }],
+    note:
+      "Each badge sits on its own ring (rotateY + translateZ); the whole preserve-3d scene spins on Y so items swing toward and away from the viewer.",
+    render: () => (
+      <div className="lab-demo">
+        <OrbitSphere3D />
+      </div>
+    ),
+  },
+  {
+    id: "3d-parallax-layers",
+    title: "3D — Cursor-parallax depth scene",
+    path: "components/Motion/ParallaxLayers3D.js",
+    meta: [{ label: "preset", value: "#13 Parallax · Subtle, extended to 3 layers" }],
+    note:
+      "Three flat layers at different depths react to cursor position at different rates — the whole-scene version of Tilt3D's preserve3d mode.",
+    render: () => (
+      <div className="lab-demo">
+        <ParallaxLayers3D />
+      </div>
+    ),
+  },
 ];
 
 const MotionLab = ({ only, dir, ground }) => {
@@ -310,6 +447,16 @@ const MotionLab = ({ only, dir, ground }) => {
             gap: 14px;
             justify-content: center;
             flex-wrap: wrap;
+          }
+          .lab-demo-ambient {
+            position: relative;
+            min-height: 260px;
+            overflow: hidden;
+            padding: 0;
+          }
+          .lab-demo-full {
+            padding: 0;
+            display: block;
           }
         `}</style>
       </>
@@ -364,6 +511,16 @@ const MotionLab = ({ only, dir, ground }) => {
           position: relative;
           min-height: 260px;
           background: #06131a;
+        }
+        .lab-demo-ambient {
+          position: relative;
+          min-height: 260px;
+          overflow: hidden;
+          padding: 0;
+        }
+        .lab-demo-full {
+          padding: 0;
+          display: block;
         }
         .lab-demo-card {
           min-width: 190px;

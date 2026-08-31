@@ -12605,7 +12605,11 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
        [ area 2 ]
    That is also why no area is pure white: it would dissolve into the gap. */
 .wsv-area {
-  margin-bottom: clamp(240px, 30vw, 460px);
+  /* margin, not padding: this space must be plain white page, not tinted by
+     the area's own background. Padding would have been INSIDE the coloured
+     box; margin sits OUTSIDE it, same as $wsv-gap-area, so the two combine
+     into one continuous white gap rather than colour-then-white. */
+  margin-bottom: calc(clamp(320px, 40vw, 640px) + 300px);
 }
 
 .wsv-area[data-area=business-websites] {

@@ -11,6 +11,7 @@ import ScrollProgress from "../../components/Services/ScrollProgress";
 import useSectionSnap from "../../components/Services/useSectionSnap";
 import BwOverview from "../../components/Services/BusinessWebsites/Overview";
 import BwPlans from "../../components/Services/BusinessWebsites/Plans";
+import BwFaq from "../../components/Services/BusinessWebsites/Faq";
 import { heroMedia, heroSlides } from "../../data/services/data";
 
 // Wireframe-only below Area 1: grey boxes, no visual design yet.
@@ -319,6 +320,7 @@ export default function ServicesHubWireframe() {
       >
         <BwOverview />
         <BwPlans />
+        <BwFaq />
       </div>
 
       {/* ===== AREAS 2+ — still wireframe grey boxes ===== */}
@@ -348,10 +350,12 @@ export default function ServicesHubWireframe() {
               >
                 {a.label} (area - can hold more sections)
               </div>
+              {/* No longer individual snap stops — the .wsv-area wrapper
+                  around this whole loop is the stop now, so scrolling through
+                  these blocks is plain native scroll. */}
               {a.blocks.map((b, bi) => (
                 <section
                   key={bi}
-                  className="wsv-snap-stop"
                   style={{
                     marginBottom: bi === a.blocks.length - 1 ? 0 : SECTION_GAP,
                   }}
