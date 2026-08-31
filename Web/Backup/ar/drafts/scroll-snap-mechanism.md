@@ -1,3 +1,40 @@
+# Section scroll-snap mechanism — REMOVED, archived for possible reuse
+
+Removed from `/services` on 2026-08-31 at the user's request, replaced by plain
+smooth sliding scroll. Everything needed to restore it is in this file.
+
+**What it did:** one wheel gesture = one service area. Native CSS scroll-snap did
+the settling; a thin JS layer added the discrete feel, a jump blur on area
+crossings, and cooperation with the SideRail. Desktop only (>=992px), off under
+`prefers-reduced-motion`.
+
+**Why it was built the way it was** — four constraints discovered in this codebase,
+all of which caused visible bugs when ignored. Any restore has to honour them:
+
+1. `bootstrap.min.css` already sets `:root { scroll-behavior: smooth }` (gated on
+   `prefers-reduced-motion: no-preference`). `window.scrollTo` therefore animates
+   for free and the duration belongs to the browser — hence a scroll-settle
+   detector rather than a guessed timeout.
+2. `.navbar-area` is fixed and CHANGES HEIGHT with `.is-sticky` (20px->15px
+   padding at scrollY>150). The CSS snap position and the JS jump target must use
+   the same number or the browser re-snaps ~10px after every jump. A
+   `ResizeObserver` kept `--wsv-nav-h` in sync and both sides read only that.
+3. `CoverflowCarousel` claims ArrowLeft/ArrowRight with `preventDefault`, so the
+   hook binds the wheel ONLY and leaves every key alone.
+4. `scroll-snap-type` must live on `<html>`, which every route shares — so it was
+   gated behind an `html.wsv-snapping` class added on mount / removed on unmount.
+   Without that it silently changes scrolling site-wide.
+
+Also: `filter` makes an element the containing block for `position: fixed`
+descendants, so the jump blur went on the SECTIONS, never a wrapper — blurring an
+ancestor tears the navbar and side rail off the viewport and forces a ~9000px
+layer to rasterize.
+
+---
+
+## 1. Restore: `components/Services/useSectionSnap.js`
+
+```js
 import { useCallback, useEffect, useRef } from "react";
 
 // One scroll gesture = one section, desktop only.
@@ -327,3 +364,144 @@ export default function useSectionSnap(selector = SNAP_SELECTOR) {
 
   return { markProgrammatic };
 }
+```
+
+---
+
+## 2. Restore: SCSS — `styles/style.scss`
+
+Went immediately before the `/*-- Responsive --*/` group inside the
+`=== Web Services: Area 1 — Business Websites ===` banner.
+
+```scss
+/*-- Section 7: desktop section snap --*/
+/* One scroll gesture = one section, desktop only.
+   `scroll-snap-type` has to live on the scroll container, which is <html> — and
+   <html> is shared by every page in the app. So it is gated behind a class that
+   components/Services/useSectionSnap.js adds on mount and removes on unmount;
+   without that this rule would silently change scrolling site-wide.
+   --wsv-nav-h is written by the same hook from the real measured navbar height,
+   so the CSS offset and the JS jump target can never drift apart. */
+@media only screen and (min-width: 992px) {
+  html.wsv-snapping {
+    scroll-snap-type: y proximity;
+    scroll-padding-top: var(--wsv-nav-h, 90px);
+  }
+
+  /* `proximity`, never `mandatory`: several of these sections are taller than
+     the viewport, and mandatory would drag the reader back to the section top
+     while they are still working down it. */
+  /* Centred, not top-aligned. Most sections are shorter than the viewport, so
+     `start` parked them against the navbar and left the next section visible
+     underneath. `center` resolves against the snapport, which scroll-padding-top
+     has already shrunk by the navbar. */
+  html.wsv-snapping .wsv-snap {
+    scroll-snap-align: center;
+  }
+
+  /* Except when taller than that band: centring something that overflows the
+     screen would push its own heading off the top. The hook measures each
+     section and adds this class. */
+  html.wsv-snapping .wsv-snap.wsv-snap-tall {
+    scroll-snap-align: start;
+  }
+
+  /* Snapping OFF for the duration of one of our own jumps, or the browser's
+     snap engine re-targets the animation mid-flight — two things steering one
+     scroll, which reads as a stutter when the wheel is spun hard. */
+  html.wsv-snapping.wsv-snap-off {
+    scroll-snap-type: none;
+  }
+
+  /* Jump blur — fires ONLY when a jump crosses into a different service area
+     (the hook compares [data-area] ancestors). On the SECTIONS, never a
+     wrapper — see the containing-block note at the top of this file. */
+  html.wsv-snapping .wsv-snap {
+    transition: filter 0.16s ease-out;
+  }
+
+  html.wsv-snapping.is-jumping .wsv-snap {
+    filter: blur(1px);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html.wsv-snapping {
+    scroll-snap-type: none;
+  }
+
+  html.wsv-snapping .wsv-snap,
+  html.wsv-snapping.is-jumping .wsv-snap {
+    filter: none;
+    transition: none;
+  }
+}
+```
+
+---
+
+## 3. Restore: `pages/services/index.js` wiring
+
+Four edits:
+
+```jsx
+// a) import
+import useSectionSnap from "../../components/Services/useSectionSnap";
+
+// b) in the component body, near the other state
+// Desktop-only section snapping. Returns markProgrammatic so the rail's own
+// jump below can tell it to stand down instead of the two fighting.
+const { markProgrammatic } = useSectionSnap();
+
+// c) inside scrollTo(), immediately before window.scrollTo — this is what stops
+//    the rail and the wheel handler steering at the same time
+markProgrammatic();
+window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+
+// d) marker class on the hero wrapper div
+<div
+  className="wsv-snap-stop"
+  onMouseEnter={() => setHeroPaused(true)}
+  onMouseLeave={() => setHeroPaused(false)}
+>
+```
+
+`data-area` on the four area wrappers is still in the page — the hook read it to
+decide whether a jump crossed an area boundary (blur) or stayed inside one (no
+blur). It was left in place because it is harmless and cheap to reuse.
+
+---
+
+## 4. Snap-target set
+
+`SNAP_SELECTOR` in the hook. Final state was ONE stop per area, not per section
+(changed late, on user feedback — "in each area normal scroll, from area to area
+the scroll we have now"):
+
+```js
+export const SNAP_SELECTOR = [
+  ".wsv-snap-stop", // hero wrapper (marker, page-owned)
+  ".wsv-projects",  // Services/Projects.js
+  ".wsv-nav",       // Services/ServiceNav.js
+  ".wsv-area",      // one stop per service area
+].join(", ");
+```
+
+The hook tagged matches with `.wsv-snap` at runtime so the stylesheet needed only
+one class and the set stayed defined in exactly one place.
+
+---
+
+## History / feedback that shaped it
+
+- Sections taller than the viewport: "scroll through, then jump" — a gesture is
+  ignored while the current stop still has unseen content, so nothing becomes
+  unreachable. This is also what made "normal scroll inside an area" work for
+  free once the stop became the whole area.
+- Alignment started as `start`, changed to `center` after the user pointed out
+  short sections sat at the top with the next one showing beneath.
+- Blur started at 2px on every section jump; user asked for lighter and
+  area-crossings only -> 1px, gated on `[data-area]` comparison.
+- A jitter bug on fast/spammed scrolling was traced to two causes, both fixed
+  above: the live snap engine fighting the animation, and the navbar height
+  changing mid-jump.

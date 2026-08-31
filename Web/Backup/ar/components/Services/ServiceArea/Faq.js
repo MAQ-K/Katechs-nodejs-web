@@ -8,9 +8,10 @@ import {
   AccordionItemButton,
 } from "react-accessible-accordion";
 import { EASE } from "../../Common/Reveal";
-import { businessWebsites } from "../../../data/services/data";
 
-// Area 1, section 3 — closes the area. Kept to 4 questions on purpose ("not
+// Section 3 of a service area — closes it.
+//
+// Generic: every area renders this same component with its own data object. Kept to 4 questions on purpose ("not
 // too long"): this is a confidence check before the CTA, not a support page.
 //
 // Same react-accessible-accordion contract as every other FAQ in this codebase
@@ -19,12 +20,12 @@ import { businessWebsites } from "../../../data/services/data";
 // globally in _app.js) draws its own chevron on ::before and doubles up with
 // the plus icon below without it.
 
-const Faq = () => {
+const Faq = ({ area, id }) => {
   const reduced = useReducedMotion();
-  const { faqSection, faqs } = businessWebsites;
+  const { faqSection, faqs } = area;
 
   return (
-    <section className="wsv-faq">
+    <section className="wsv-faq" id={id}>
       <div className="container">
         <div className="wsv-faq-head">
           <span className="wsv-eyebrow">{faqSection.eyebrow}</span>

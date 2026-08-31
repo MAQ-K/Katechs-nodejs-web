@@ -11967,6 +11967,11 @@ Logical properties throughout so nothing is needed in rtl.css.
   z-index: 1;
   padding-top: clamp(32px, 4vw, 48px);
   padding-bottom: clamp(32px, 4vw, 48px);
+  /* The navigator is the last section of the intro (the user calls that whole
+     block "area 1"), so the space after it is an AREA gap and has to match the
+     ones between the service areas below. Without this it was ~96px against
+     their ~1200px, and the first area read as glued to the intro. */
+  margin-bottom: calc(clamp(220px, 27vw, 450px) + 150px);
   background-color: #f5f6f8;
   /* Navy drop under the section's bottom edge, closing off the intro area.
      The negative spread cancels the shadow on the other three sides, so only
@@ -12679,7 +12684,19 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
      the area's own background. Padding would have been INSIDE the coloured
      box; margin sits OUTSIDE it, same as $wsv-gap-area, so the two combine
      into one continuous white gap rather than colour-then-white. */
-  margin-bottom: calc(clamp(320px, 40vw, 640px) + 300px);
+  margin-bottom: calc(clamp(220px, 27vw, 450px) + 150px);
+  /* Contains the ambient <FloatingBlobs> layer, which is position:absolute
+     inset:0. `overflow: hidden` keeps its blur inside the area's own band so
+     it cannot bleed across the white gap into the next area. */
+  position: relative;
+  overflow: hidden;
+}
+
+/* The blobs sit at z-index 0; the real sections have to stay above them.
+   Without this the ambient layer paints over the content. */
+.wsv-area > section {
+  position: relative;
+  z-index: 1;
 }
 
 .wsv-area[data-area=business-websites] {
@@ -12709,82 +12726,511 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   padding: clamp(32px, 4vw, 48px) 20px;
 }
 
-/*-- Section 7: desktop section snap --*/
-/* One scroll gesture = one section, desktop only.
-   `scroll-snap-type` has to live on the scroll container, which is <html> — and
-   <html> is shared by every page in the app. So it is gated behind a class that
-   components/Services/useSectionSnap.js adds on mount and removes on unmount;
-   without that this rule would silently change scrolling site-wide.
-   --wsv-nav-h is written by the same hook from the real measured navbar height,
-   so the CSS offset and the JS jump target can never drift apart. */
-@media only screen and (min-width: 992px) {
-  html.wsv-snapping {
-    scroll-snap-type: y proximity;
-    scroll-padding-top: var(--wsv-nav-h, 90px);
-  }
-  /* `proximity`, never `mandatory`: several of these sections are taller than
-     the viewport, and mandatory would drag the reader back to the section top
-     while they are still working down it. Proximity settles onto edges without
-     ever trapping — the hook supplies the discrete one-gesture-one-section
-     feel on top of it. */
-  /* Centred, not top-aligned. Most of these sections are shorter than the
-     viewport — the carousel is ~509px against ~840px — so `start` parked them
-     against the navbar and left the next section visible underneath. `center`
-     resolves against the snapport, which scroll-padding-top above has already
-     shrunk by the navbar, so the section lands centred in the band the user can
-     actually see. useSectionSnap.js computes the same position for its own
-     jumps, so the two agree. */
-  html.wsv-snapping .wsv-snap {
-    scroll-snap-align: center;
-  }
-  /* Except when the section is taller than that band: centring something that
-     overflows the screen would push its own heading off the top. The hook
-     measures each section and adds this class, so it stays correct as the
-     wireframe areas grow into real content. */
-  html.wsv-snapping .wsv-snap.wsv-snap-tall {
-    scroll-snap-align: start;
-  }
-  /* Snapping is switched OFF for the duration of one of our own jumps.
-     Otherwise the browser's snap engine stays live during window.scrollTo and
-     re-targets the animation mid-flight — two things steering one scroll, which
-     is what reads as a stutter when the wheel is spun hard. The hook adds this
-     class when it starts a jump and removes it once the scroll has settled. */
-  html.wsv-snapping.wsv-snap-off {
-    scroll-snap-type: none;
-  }
-  /* Jump blur — the "turning your head in an FPS" cue.
-     Fires ONLY when a jump crosses into a different service area, never between
-     sections inside one: useSectionSnap compares [data-area] ancestors and adds
-     `is-jumping` only on a boundary crossing. Section-to-section is navigation;
-     area-to-area is a scene change, and only the second earns a cue.
+/*-- Section 7: smooth sliding scroll --*/
+/* Replaces the section-snap mechanism that used to live here (archived in full
+   at drafts/scroll-snap-mechanism.md). Nothing snaps now: the page simply eases
+   toward where the wheel points and glides to a stop.
+   The interpolation itself lives in components/Services/useSmoothScroll.js —
+   this is only the CSS it needs. */
+html {
+  /* Keeps the fixed .navbar-area from covering the target of an in-page anchor
+     or a SideRail jump. The rail also computes its own offset in JS, so nothing
+     depends on this being pixel-exact. */
+  scroll-padding-top: var(--wsv-nav-h, 90px);
+}
 
-     The filter is on the SECTIONS, never on a wrapper. `filter` makes an element
-     the containing block for position:fixed descendants, so blurring an ancestor
-     of the page would tear the navbar and the side rail off the viewport and
-     make them scroll with the content; it would also force a ~9000px-tall layer
-     to rasterize. Sections contain nothing fixed, and only the one or two on
-     screen ever rasterize — so the chrome stays sharp for free, which is
-     exactly the effect anyway: HUD crisp, world smeared. */
-  html.wsv-snapping .wsv-snap {
-    transition: filter 0.16s ease-out;
-  }
-  html.wsv-snapping.is-jumping .wsv-snap {
-    filter: blur(1px);
-  }
+/* Load-bearing, not cosmetic. bootstrap.min.css sets
+   `:root { scroll-behavior: smooth }`, which makes EVERY scrollTo animate —
+   including the ~60 per second the interpolation loop issues, so each frame
+   would start its own animation toward the next interpolated position: an
+   animation inside an animation, which reads as sludge.
+   The hook adds this class on mount and removes it on unmount, so the override
+   is scoped to pages that actually use it rather than the whole site. */
+html.wsv-smooth {
+  scroll-behavior: auto;
 }
-/* Belt and braces — the hook already refuses to add the class under reduced
-   motion, but if it is ever added some other way this still switches it off. */
+
 @media (prefers-reduced-motion: reduce) {
-  html.wsv-snapping {
-    scroll-snap-type: none;
-  }
-  /* A blur pulse is motion. */
-  html.wsv-snapping .wsv-snap,
-  html.wsv-snapping.is-jumping .wsv-snap {
-    filter: none;
-    transition: none;
+  html {
+    scroll-behavior: auto;
   }
 }
+/*-- Section 8: area 4 — e-commerce --*/
+/* Compact by instruction: the page already carries three areas above this one,
+   so the visitor should take it in within about a screen. Nothing here gets the
+   full embossed-card treatment except the one card that matters (the order). */
+.wsv-ecom-intro {
+  padding-top: clamp(32px, 4vw, 48px);
+  padding-bottom: calc(clamp(32px, 4vw, 48px) / 2);
+}
+
+.wsv-ecom-head {
+  max-width: 640px;
+  margin: 0 0 38px;
+}
+
+/* The buying journey. Laid out by document direction, so step one is on the
+   RIGHT under RTL and the arrows point left — the way the page is read. */
+.wsv-flow {
+  display: flex;
+  align-items: stretch;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.wsv-flow-cell {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex: 1 1 auto;
+}
+
+.wsv-flow-step {
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  min-height: 104px;
+  padding: 18px 14px;
+  border-radius: 14px;
+  background-color: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.08);
+  text-align: center;
+  font-family: "Cairo", sans-serif;
+  font-size: 13.5px;
+  font-weight: 600;
+  color: #0a1f44;
+}
+.wsv-flow-step i {
+  font-size: 24px;
+  color: #6084a4;
+}
+
+/* The payoff. Heavier than the steps that lead to it — this is the outcome the
+   whole section is selling, so it is the only element here that lifts. */
+.wsv-flow-step.is-result {
+  border-color: transparent;
+  background-color: #0a1f44;
+  color: #ffffff;
+  box-shadow: 0 18px 40px -20px rgba(10, 31, 68, 0.5);
+}
+.wsv-flow-step.is-result i {
+  color: #1dd3f8;
+  font-size: 26px;
+}
+
+.wsv-flow-result-title {
+  font-size: 15px;
+  font-weight: 700;
+}
+
+.wsv-flow-result-line {
+  font-size: 12.5px;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.wsv-flow-result-ref {
+  font-size: 12px;
+  color: rgba(255, 255, 255, 0.55);
+}
+
+.wsv-flow-arrow {
+  flex-shrink: 0;
+  font-size: 20px;
+  color: #6084a4;
+  opacity: 0.5;
+}
+
+/* The last cell is the result card; nothing follows it to point at. */
+.wsv-flow-cell:last-child .wsv-flow-arrow {
+  display: none;
+}
+
+/* Says out loud that a figure is illustrative. The brief forbids presenting
+   sample data as real client results, and an unlabelled number implies exactly
+   that — so this is a correctness rule, not decoration. */
+.wsv-sample {
+  display: inline-block;
+  margin-top: 6px;
+  font-family: "Cairo", sans-serif;
+  font-size: 10.5px;
+  font-weight: 600;
+  letter-spacing: 0.3px;
+  color: #6084a4;
+  opacity: 0.85;
+}
+
+.wsv-flow-step.is-result .wsv-sample {
+  color: rgba(255, 255, 255, 0.5);
+}
+
+/*-- capabilities strip --*/
+.wsv-ecom-caps {
+  padding-top: calc(clamp(32px, 4vw, 48px) / 2);
+  padding-bottom: clamp(32px, 4vw, 48px);
+}
+
+.wsv-caps-title {
+  display: block;
+  margin-bottom: 18px;
+  font-family: "Cairo", sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 0.4px;
+  color: #6084a4;
+}
+
+/* Light rows, not six more cards — the brief warns against this becoming a
+   second grid of panels. */
+.wsv-caps-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 28px;
+}
+.wsv-caps-grid li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+}
+
+.wsv-caps-icon {
+  flex-shrink: 0;
+  width: 38px;
+  height: 38px;
+  border-radius: 11px;
+  background-color: rgba(29, 211, 248, 0.12);
+  color: #1dd3f8;
+  font-size: 19px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.6s ease;
+}
+
+/* These rows are deliberately not cards, so they get a light touch on hover —
+   the icon fills in and the row nudges along the reading direction. Enough to
+   feel responsive without pretending to be clickable, since they are not. */
+.wsv-caps-grid li {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.wsv-caps-grid li:hover {
+  transform: translateX(4px);
+}
+.wsv-caps-grid li:hover .wsv-caps-icon {
+  background-color: #1dd3f8;
+  color: #ffffff;
+}
+
+.wsv-check-grid li {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.wsv-check-grid li i {
+  transition: all 0.6s ease;
+}
+
+.wsv-check-grid li:hover {
+  transform: translateX(4px);
+}
+.wsv-check-grid li:hover i {
+  background-color: #1dd3f8;
+  color: #ffffff;
+}
+
+/* The issue rows carry a priority badge, so the hover tints the ROW rather
+   than moving it — sliding a row with a coloured tag reads as a drag handle. */
+.wsv-diag-issues li {
+  transition: background-color 0.25s ease;
+  border-radius: 8px;
+  padding-inline: 8px;
+  margin-inline: -8px;
+}
+
+.wsv-diag-issues li:hover {
+  background-color: rgba(10, 31, 68, 0.04);
+}
+
+.wsv-caps-text {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wsv-caps-text strong {
+  font-family: "Cairo", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  color: #212121;
+}
+.wsv-caps-text em {
+  font-style: normal;
+  font-size: 13.5px;
+  line-height: 1.7;
+  color: #4d4d4d;
+}
+
+/*-- Section 9: area 5 — consulting & performance --*/
+/* Must not read as another build service. The visitor already has a website;
+   this is diagnosis, so the whole area is scan / findings / priorities. */
+.wsv-cons-intro {
+  padding-top: clamp(32px, 4vw, 48px);
+  padding-bottom: calc(clamp(32px, 4vw, 48px) / 2);
+}
+
+.wsv-cons-head {
+  max-width: 660px;
+  margin: 0 0 34px;
+}
+
+/* Compact rows, deliberately not cards — same reason as the capabilities strip. */
+.wsv-check-grid {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 14px 28px;
+  /* Fixed well + top margin keeps the tick on the first line when an Arabic
+     label wraps, instead of centring against the whole block. */
+}
+.wsv-check-grid li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.wsv-check-grid i {
+  flex-shrink: 0;
+  margin-top: 3px;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: #1dd3f8;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.wsv-check-grid span {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
+.wsv-check-grid strong {
+  font-family: "Cairo", sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #212121;
+}
+.wsv-check-grid em {
+  font-style: normal;
+  font-size: 13px;
+  line-height: 1.7;
+  color: #4d4d4d;
+}
+
+/*-- the diagnostic: scan -> issues -> plan --*/
+.wsv-cons-flow {
+  padding-top: calc(clamp(32px, 4vw, 48px) / 2);
+  padding-bottom: clamp(32px, 4vw, 48px);
+}
+
+.wsv-diag {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 20px;
+  align-items: stretch;
+}
+
+.wsv-diag-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  padding: 24px 22px;
+  border-radius: 16px;
+  background-color: #ffffff;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08);
+}
+.wsv-diag-card h3 {
+  font-family: "Cairo", sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  color: #212121;
+  margin: 0 0 16px;
+}
+
+/* Numbered so the three read as a sequence rather than three parallel options. */
+.wsv-diag-step {
+  font-family: "Cairo", sans-serif;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 1px;
+  color: #1dd3f8;
+  margin-bottom: 6px;
+}
+
+.wsv-diag-metrics {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 auto;
+}
+.wsv-diag-metrics li {
+  margin-bottom: 12px;
+}
+.wsv-diag-metrics li:last-child {
+  margin-bottom: 0;
+}
+
+.wsv-diag-metric-top {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  margin-bottom: 6px;
+  font-size: 13px;
+  color: #4d4d4d;
+}
+.wsv-diag-metric-top strong {
+  font-family: "Cairo", sans-serif;
+  font-weight: 700;
+  color: #212121;
+}
+
+.wsv-diag-bar {
+  display: block;
+  height: 6px;
+  border-radius: 100px;
+  background-color: rgba(10, 31, 68, 0.08);
+  overflow: hidden;
+}
+.wsv-diag-bar span {
+  display: block;
+  height: 100%;
+  border-radius: 100px;
+  background-color: #1dd3f8;
+}
+
+.wsv-diag-issues {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 auto;
+}
+.wsv-diag-issues li {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  padding: 9px 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  font-size: 13.5px;
+  line-height: 1.6;
+  color: #4d4d4d;
+}
+.wsv-diag-issues li:last-child {
+  border-bottom: 0;
+}
+
+/* Priority badges. Colour carries meaning here, so the level is always spelled
+   out in words too — colour alone would fail anyone who cannot separate them. */
+.wsv-tag {
+  flex-shrink: 0;
+  font-style: normal;
+  font-family: "Cairo", sans-serif;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: 100px;
+}
+
+.wsv-tag.is-high {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #b91c1c;
+}
+
+.wsv-tag.is-mid {
+  background-color: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+}
+
+.wsv-tag.is-low {
+  background-color: rgba(10, 31, 68, 0.07);
+  color: #6084a4;
+}
+
+.wsv-diag-plan {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 auto;
+}
+.wsv-diag-plan li {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  padding: 11px 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+.wsv-diag-plan li:last-child {
+  border-bottom: 0;
+}
+.wsv-diag-plan strong {
+  font-family: "Cairo", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  color: #212121;
+}
+.wsv-diag-plan em {
+  font-style: normal;
+  font-size: 12.5px;
+  line-height: 1.65;
+  color: #4d4d4d;
+}
+
+/*-- shared: the one CTA that closes an area --*/
+/* One action only. Both of these areas deliberately have no pricing cards, so
+   this band carries the entire close and must not compete with a second button. */
+.wsv-cta {
+  padding-bottom: clamp(32px, 4vw, 48px);
+}
+
+.wsv-cta-inner {
+  padding: 40px 32px;
+  border-radius: 18px;
+  background-color: #0a1f44;
+  text-align: center;
+}
+.wsv-cta-inner h2 {
+  font-family: "Cairo", sans-serif;
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 10px;
+}
+.wsv-cta-inner p {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 22px;
+}
+
+.wsv-cta-btn {
+  display: inline-block;
+  padding: 15px 34px;
+  border-radius: 10px;
+  background-color: #ffffff;
+  color: #0a1f44;
+  font-family: "Cairo", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  transition: all 0.6s ease;
+}
+.wsv-cta-btn:hover {
+  background-color: #1dd3f8;
+  color: #0a1f44;
+}
+
 /*-- Responsive --*/
 @media only screen and (max-width: 1199px) {
   .wsv-nav-grid {
@@ -12795,6 +13241,28 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   /* Not enough width to float a rail without covering content — and the
      .wsv-nav card grid already does this job in the normal flow. */
   .wsv-rail {
+    display: none;
+  }
+  /* Three across is too tight below this; two keeps the label and its line
+     readable without wrapping every word. */
+  .wsv-caps-grid,
+  .wsv-check-grid {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  /* The diagnostic stacks rather than shrinks: three dashboard cards side by
+     side below this width would compress the score bars and the priority
+     badges past legibility. Stacked, the 01/02/03 numbering still carries the
+     sequence. */
+  .wsv-diag {
+    grid-template-columns: 1fr;
+  }
+  /* The journey wraps to its own rows, so each step keeps a sane width instead
+     of being squeezed into a five-column strip. The arrow would then point at
+     the row below rather than the next step, so it goes. */
+  .wsv-flow-cell {
+    flex: 1 1 44%;
+  }
+  .wsv-flow-arrow {
     display: none;
   }
   /* Stacks text-first: the media div is first in the DOM for the RTL grid, so
@@ -12824,6 +13292,18 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 @media only screen and (max-width: 767px) {
   .wsv-about-cta {
     gap: 14px 20px;
+  }
+  /* Single column on phones — two-up leaves the Arabic labels wrapping mid-word. */
+  .wsv-caps-grid,
+  .wsv-check-grid {
+    grid-template-columns: 1fr;
+  }
+  /* Each journey step gets its own row; five across never fit here. */
+  .wsv-flow-cell {
+    flex: 1 1 100%;
+  }
+  .wsv-cta-inner {
+    padding: 32px 22px;
   }
   .wsv-plan {
     padding: 26px 22px;

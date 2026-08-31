@@ -2,9 +2,11 @@ import React from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import Reveal, { staggerParent, staggerItem } from "../../Common/Reveal";
-import { businessWebsites } from "../../../data/services/data";
 
-// Area 1, section 1 — the credibility opener.
+// Section 1 of a service area — the credibility opener.
+//
+// Generic: every area renders this same component with its own data object.
+// Do NOT fork it per area; add a key to data/services/data.js instead.
 //
 // Same split idiom as Seo/AiSearch.js and DigitalMarketing/SocialMedia.js, but
 // the media column carries a REAL client site (the Tabqat device mockup) rather
@@ -16,13 +18,13 @@ import { businessWebsites } from "../../../data/services/data";
 // the text column on the right, so an Arabic reader hits the headline before the
 // image — the same ordering decision documented for .seo-split.
 
-const Overview = () => {
+const Overview = ({ area, id }) => {
   const reduced = useReducedMotion();
   const { eyebrow, heading, body, points, cta, secondary, media } =
-    businessWebsites.overview;
+    area.overview;
 
   return (
-    <section className="wsv-about" id="bw-overview">
+    <section className="wsv-about" id={id}>
       <div className="container">
         <div className="wsv-split">
           <Reveal>

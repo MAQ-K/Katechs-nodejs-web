@@ -7,12 +7,25 @@ import HeroBuildSmarter from "../../components/Sections/HeroBuildSmarter";
 import Projects from "../../components/Services/Projects";
 import ServiceNav from "../../components/Services/ServiceNav";
 import SideRail from "../../components/Services/SideRail";
+import useSmoothScroll from "../../components/Services/useSmoothScroll";
 import ScrollProgress from "../../components/Services/ScrollProgress";
-import useSectionSnap from "../../components/Services/useSectionSnap";
-import BwOverview from "../../components/Services/BusinessWebsites/Overview";
-import BwPlans from "../../components/Services/BusinessWebsites/Plans";
-import BwFaq from "../../components/Services/BusinessWebsites/Faq";
-import { heroMedia, heroSlides } from "../../data/services/data";
+import AreaOverview from "../../components/Services/ServiceArea/Overview";
+import AreaPlans from "../../components/Services/ServiceArea/Plans";
+import AreaFaq from "../../components/Services/ServiceArea/Faq";
+import AreaCta from "../../components/Services/ServiceArea/Cta";
+import EcomIntro from "../../components/Services/Ecommerce/Intro";
+import EcomCapabilities from "../../components/Services/Ecommerce/Capabilities";
+import ConsIntro from "../../components/Services/Consulting/Intro";
+import ConsDiagnostic from "../../components/Services/Consulting/Diagnostic";
+import FloatingBlobs from "../../components/Motion/FloatingBlobs";
+import {
+  heroMedia,
+  heroSlides,
+  businessWebsites,
+  wordpress,
+  ecommerce,
+  consulting,
+} from "../../data/services/data";
 
 // Wireframe-only below Area 1: grey boxes, no visual design yet.
 // Each "area" is one web service type, made of stacked blocks. `kind` picks the
@@ -32,34 +45,56 @@ const areas = [
   },
   {
     id: "type-2",
-    label: "النوع الثاني",
-    icon: "bx bx-cart-alt",
+    label: "ووردبريس",
+    icon: "bx bx-window-alt",
+    // Built — see BUILT_AREAS. blocks[] is unused for built areas but kept so
+    // the shape stays uniform across the table.
     blocks: [
-      { kind: "box", label: "نظرة عامة" },
-      { kind: "box", label: "المميزات" },
-      { kind: "box", label: "السعر / طلب الخدمة" },
+      { kind: "split", label: "نظرة عامة" },
+      { kind: "cards3", label: "الباقات" },
+      { kind: "faq", label: "الأسئلة الشائعة" },
     ],
   },
   {
     id: "type-3",
-    label: "النوع الثالث",
-    icon: "bx bx-layer",
+    label: "متجر إلكتروني",
+    icon: "bx bx-cart-alt",
+    // Built — see BUILT_AREAS. `blocks` is unused for built areas; kept so the
+    // table's shape stays uniform.
     blocks: [
-      { kind: "box", label: "نظرة عامة" },
-      { kind: "box", label: "المميزات" },
-      { kind: "box", label: "السعر / طلب الخدمة" },
+      { kind: "split", label: "نظرة عامة" },
+      { kind: "box", label: "ما تديره بنفسك" },
+      { kind: "box", label: "اطلب عرضاً" },
     ],
   },
   {
     id: "type-4",
-    label: "النوع الرابع",
-    icon: "bx bx-cube",
+    label: "استشارات وتحسين",
+    icon: "bx bx-line-chart",
+    // Built — see BUILT_AREAS. `blocks` is unused for built areas; kept so the
+    // table's shape stays uniform.
     blocks: [
-      { kind: "box", label: "نظرة عامة" },
-      { kind: "box", label: "المميزات" },
-      { kind: "box", label: "السعر / طلب الخدمة" },
+      { kind: "split", label: "نظرة عامة" },
+      { kind: "box", label: "الفحص والخطة" },
+      { kind: "box", label: "حلّل موقعي" },
     ],
   },
+];
+
+// Areas that have real UI, in page order. Adding one here and a matching data
+// key is the whole job — the three section components are generic and must not
+// be forked per area. Order MUST match the head of `areas` above, since the
+// wireframe loop below renders `areas.slice(BUILT_AREAS.length)`.
+const BUILT_AREAS = [
+  // `kind` picks the section layout. The first two are the standard
+  // overview/plans/FAQ shape; the last two are bespoke because their brief
+  // (rest of web servicespage areas.md) rules out pricing cards entirely —
+  // e-commerce scope is too variable to price on a card, and a consulting
+  // visitor cannot pick a tier before they know what is wrong with their site.
+  { id: "business-websites", kind: "standard", data: businessWebsites },
+  { id: "type-2", kind: "standard", data: wordpress },
+  { id: "type-3", kind: "ecommerce", data: ecommerce },
+  { id: "type-4", kind: "consulting", data: consulting },
 ];
 
 // Spacing scale — the break between areas is ~4x the gap between the sections
@@ -175,9 +210,10 @@ export default function ServicesHubWireframe() {
   const areaRefs = useRef({});
   const router = useRouter();
 
-  // Desktop-only section snapping. Returns markProgrammatic so the rail's own
-  // jump below can tell it to stand down instead of the two fighting.
-  const { markProgrammatic } = useSectionSnap();
+  // Eased "sliding" wheel scrolling. Returns scrollToY so the rail's own jump
+  // below rides the same easing — the hook disables CSS smooth scrolling, so a
+  // plain scrollTo({behavior:"smooth"}) would land instantly instead.
+  const { scrollToY } = useSmoothScroll();
 
   const [heroSlide, setHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
@@ -247,8 +283,7 @@ export default function ServicesHubWireframe() {
     const nav = document.querySelector(".navbar-area");
     const offset = (nav ? nav.getBoundingClientRect().height : 0) + 16;
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    markProgrammatic();
-    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    scrollToY(Math.max(0, top));
   };
 
   return (
@@ -271,8 +306,12 @@ export default function ServicesHubWireframe() {
       {/* ===== AREA 1 — the brief area (designed) ===== */}
       {/* Hover pauses the rotation — the wrapper carries it because the section
           itself is portable and takes no mouse handlers. */}
+      {/* The intro IS an area (the user counts it as area 1), so it is one
+          snap stop: hero, carousel and navigator scroll through normally and a
+          single gesture at the end crosses into the first service area.
+          data-area makes that crossing register as an area change for the blur. */}
+      <div className="wsv-snap-stop" data-area="intro">
       <div
-        className="wsv-snap-stop"
         onMouseEnter={() => setHeroPaused(true)}
         onMouseLeave={() => setHeroPaused(false)}
       >
@@ -306,28 +345,58 @@ export default function ServicesHubWireframe() {
       </div>
       <Projects />
       <ServiceNav />
+      </div>
 
-      {/* ===== AREA 1 — business websites (designed) ===== */}
+      {/* ===== BUILT AREAS ===== */}
       {/* Rendered outside <main> on purpose: these sections are full-bleed and
           bring their own .container, so the wireframe wrapper's 1140px cap and
           side padding must not apply to them. Keeps the id + ref the SideRail
-          scroll-spy and the deep link /services/#business-websites depend on. */}
-      <div
-        id="business-websites"
-        data-area="business-websites"
-        className="wsv-area"
-        ref={(el) => (areaRefs.current["business-websites"] = el)}
-      >
-        <BwOverview />
-        <BwPlans />
-        <BwFaq />
-      </div>
+          scroll-spy and the deep links (/services/#business-websites) need. */}
+      {BUILT_AREAS.map(({ id, kind, data }) => (
+        <div
+          key={id}
+          id={id}
+          data-area={id}
+          className="wsv-area"
+          ref={(el) => (areaRefs.current[id] = el)}
+        >
+          {/* Ambient drift behind the area's ground. Pure CSS (compositor-only,
+              no rAF), which is why it can run in all four at once without
+              competing with the scroll loop for frames — the one thing that
+              would bring back the jitter. Freezes under reduced motion. */}
+          <FloatingBlobs />
 
-      {/* ===== AREAS 2+ — still wireframe grey boxes ===== */}
+          {kind === "standard" && (
+            <>
+              <AreaOverview area={data} id={`${id}-overview`} />
+              <AreaPlans area={data} id={`${id}-plans`} />
+              <AreaFaq area={data} id={`${id}-faq`} />
+            </>
+          )}
+
+          {kind === "ecommerce" && (
+            <>
+              <EcomIntro area={data} id={`${id}-intro`} />
+              <EcomCapabilities area={data} id={`${id}-caps`} />
+              <AreaCta cta={data.cta} id={`${id}-cta`} />
+            </>
+          )}
+
+          {kind === "consulting" && (
+            <>
+              <ConsIntro area={data} id={`${id}-intro`} />
+              <ConsDiagnostic area={data} id={`${id}-flow`} />
+              <AreaCta cta={data.cta} id={`${id}-cta`} />
+            </>
+          )}
+        </div>
+      ))}
+
+      {/* ===== REMAINING AREAS — still wireframe grey boxes ===== */}
       {/* Area 1's gap to here is .wsv-nav's padding-bottom, so main adds none. */}
       <main>
         {/* AREAS - each is a group of stacked sections for one web service type */}
-        {areas.slice(1).map((a) => (
+        {areas.slice(BUILT_AREAS.length).map((a) => (
           // Each area carries its own ground, keyed off [data-area] in the
           // stylesheet, and every section inside it shares that colour. The old
           // 3px grey borderTop is gone — the colour change does that job now.

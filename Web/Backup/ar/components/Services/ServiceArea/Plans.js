@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import Reveal, { EASE } from "../../Common/Reveal";
-import { businessWebsites } from "../../../data/services/data";
 
-// Area 1, section 2 — the packages.
+// Section 2 of a service area — the packages.
+//
+// Generic: every area renders this same component with its own data object.
 //
 // Grid comes from .seo-grid/.seo-plan rather than AppDev's Bootstrap row: real
 // CSS grid, height:100% equalises the cards for free, and the badge sits in
@@ -17,16 +18,16 @@ import { businessWebsites } from "../../../data/services/data";
 // (style.scss:3326) that is a red 45deg-rotated ribbon and would land on the
 // card element itself.
 
-const Plans = () => {
+const Plans = ({ area, id }) => {
   const reduced = useReducedMotion();
-  const { plansSection, pricing } = businessWebsites;
+  const { plansSection, pricing } = area;
 
   const codes = Object.keys(pricing.currencies);
   const [currency, setCurrency] = useState(codes[0]);
   const active = pricing.currencies[currency];
 
   return (
-    <section className="wsv-plans" id="bw-plans">
+    <section className="wsv-plans" id={id}>
       <div className="container">
         <div className="wsv-plans-head">
           <Reveal as="span" className="wsv-eyebrow">

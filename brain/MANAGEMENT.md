@@ -70,6 +70,23 @@ Decision 2026-08-24: **rebuild those properly** through library → implement �
 get replaced in place. `styles/ux-prototype.css` and its `_app.js` import get deleted when the last one lands (T-017).
 The genuine wireframe is `pages/services/index.js` — the web services hub (G2).
 
+### Web Services page — area numbering (canonical)
+
+The user counts the **intro block (hero + carousel + navigator) as area 1**. Use this mapping in
+all communication; internal code ids differ:
+
+| User says | Service | id |
+|---|---|---|
+| area 1 | intro (hero, carousel, navigator) | — |
+| area 2 | مواقع الشركات | `business-websites` |
+| area 3 | ووردبريس | `type-2` |
+| area 4 | E-commerce Development | `type-3` |
+| area 5 | Website Consulting & Performance | `type-4` |
+
+There are four SERVICE areas, not five — the fifth number is the intro. Adding a built area is one
+row in `BUILT_AREAS` (pages/services/index.js) plus a data key; the section components in
+`components/Services/ServiceArea/` are generic and must not be forked per area.
+
 ### Known Issues / Debt (open)
 1. **[Critical]** Hardcoded live SendGrid API key in `pages/api/contact.js:7` and `pages/api/web.js:7` → rotate + `process.env.SENDGRID_API_KEY`.
 2. **[Critical]** `.gitignore` line meant to ignore `sendgrid.env` is corrupted — a plain `git add .` can commit a raw API key.
