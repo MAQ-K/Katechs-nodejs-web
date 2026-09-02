@@ -57,6 +57,7 @@ In priority order, as set 2026-08-24.
 | G6 | **Test the whole site** | Tester | Not started |
 | G7 | **Finish content** — real Arabic copy everywhere, no lorem, all data-driven | Content & Data | In progress |
 | G8 | **Finish implementing visuals** — motion, 3D, hover, interactivity across the site | UI Animator | In progress |
+| G9 | **Sitewide monochrome design system rollout** — the `.ds-new-*` layer (`/lab/design-system/`) is now the site's real direction, replacing navy/cyan `.ds-*`/`.wsv-*`/page-specific button-card-tag styling everywhere. Decision 2026-09-01 (user). See Known Issues below — almost nothing on real pages uses `.ds-*` yet, this is a full page-by-page visual rebuild, not a class rename. | Manager → UI Implementer | In progress — Web Services page first |
 
 Standing constraints, not goals: every section data-driven from `data/<page>/data.js`; motion language
 unified from `brain/animation/LAB.md`; nothing merges without a Tester report; the security debt below
@@ -135,6 +136,8 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-020 | Content sweep — kill remaining lorem ipsum, all copy data-driven | `/ag-content` | TODO | `data/**` | Known: `AboutTwo/*`, `degital-markiting-/WhatWeOffer/*`, `ComingSoon/*` |
 | T-022 | **Fix the broken production build** — `pages/offers.js` raw `<script>` in JSX | Manager | **BLOCKED** | `pages/offers.js` | Live conversion tracking. Needs the user to say which gtag block to keep |
 | T-021 | `robots.txt` — disallow `/lab/`, exclude from sitemap | `/ag-seo` | TODO | `public/`, sitemap | Small; do it with the next SEO pass |
+| **G9 — sitewide monochrome design system** |
+| T-023 | Roll the `.ds-new-*` monochrome system (buttons/cards/tags/media-cards/split-hero, `/lab/design-system/`) out across the whole site, page by page | `/ag-ui-build` | IN PROGRESS | `styles/style.scss`, every page's components | ⚠️ **Real footprint check (2026-09-01): almost nothing on a live page uses `.ds-*` yet** — only `pages/hosting-order.js` (`.ds-frame`). Even `/services` runs on its own separate `.wsv-*` classes. This is a full page-by-page visual rebuild of each page's actual buttons/cards/tags, not a find-and-replace of class names. Starting with Web Services (`components/Services/**`) since it's the system's origin and the most-worked page. |
 
 > **Scheduling rule:** T-013 and T-016 touch shared components and can break every page at once — they run
 > **alone**, never in parallel with page work. Everything else follows `brain/PARALLEL.md`.
