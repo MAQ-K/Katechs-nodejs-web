@@ -16,7 +16,7 @@ export default function Services2Page() {
       </Head>
 
 
-      <Navbar />
+      <Navbar theme="navy" />
 
       <PageBanner
         pageTitle="طلب استضافة مواقع  "
@@ -25,20 +25,23 @@ export default function Services2Page() {
         activePageText=""
       />
 
-      
-
-
-    <iframe
-      title="طلب استضافة"
-      src="https://forms.katechs.com/katechskat1/form/34991/formperma/CnfaSPEyBVYClLkV6P1OgCDHhnbBWELZCMwZo9sihns"
-      style={{ height: '500px', width: '99%', border: 'none' }}
-      frameBorder="0"
-      aria-label="طلب استضافة"
-    ></iframe>
-
-
-
-
+      {/* Uses the portable .ds-* design-system layer (styles/style.scss,
+          "=== DESIGN SYSTEM — COMPONENT LAYER ==="), the same classes
+          documented at /lab/design-system/. The page owns no styling of its
+          own any more. Navbar/PageBanner/Footer are shared components and are
+          intentionally untouched. */}
+      <div className="container ds-section">
+        <div className="ds-frame">
+          <div className="ds-frame-media">
+            <iframe
+              title="طلب استضافة"
+              src="https://forms.katechs.com/katechskat1/form/34991/formperma/CnfaSPEyBVYClLkV6P1OgCDHhnbBWELZCMwZo9sihns"
+              style={{ height: "600px" }}
+              aria-label="طلب استضافة"
+            ></iframe>
+          </div>
+        </div>
+      </div>
 
       <Footer />
     </>

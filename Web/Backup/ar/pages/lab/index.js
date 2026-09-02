@@ -30,6 +30,20 @@ const DOORS = [
     body:
       "Reference screenshots collected for the site, and the ideas the Searcher has filed into brain/ui-library/.",
   },
+  {
+    href: "/lab/area-transitions/",
+    icon: "bx-transfer-alt",
+    title: "Area transition options",
+    body:
+      "Five ways to replace the white gap between /services areas with an actual transition — curved seam, gradient crossfade, diagonal wipe, sticky overlap, blur-cut. Pick one before it goes on the real page.",
+  },
+  {
+    href: "/lab/design-system/",
+    icon: "bx-palette",
+    title: "Design system",
+    body:
+      "The visual language worked out on /services — colour, type, radii, elevation, rhythm, buttons, cards, scroll feel — extracted so every other page can adopt it. Read live from style.scss's --ds-* tokens.",
+  },
 ];
 
 const ROUTES = [

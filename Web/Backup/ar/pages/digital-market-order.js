@@ -28,13 +28,22 @@ export default function Services2Page() {
       
 
  
-      <iframe
-        title="لتحسين جودة الخدمة يرجى تعبئة النموذج"
-        aria-label="لتحسين جودة الخدمة يرجى تعبئة النموذج"
-        frameBorder="0"
-        style={{ height: '1500px', width: '100%', border: 'none' }}
-        src="https://forms.zohopublic.com/katechskat1/form/DigitalMarketForm/formperma/E6R5tU78jTvSCQ65WFUKBH9w0pG4pqqvFWEk1VLCUqA"
-      />
+      {/* Design system: .ds-section + .ds-frame — same treatment as every
+          other embedded-form page. The form itself is third-party and cannot
+          be styled from here, so the frame is what makes it read as designed. */}
+      <div className="container ds-section">
+        <div className="ds-frame">
+          <div className="ds-frame-media">
+            <iframe
+              title="لتحسين جودة الخدمة يرجى تعبئة النموذج"
+              aria-label="لتحسين جودة الخدمة يرجى تعبئة النموذج"
+              loading="lazy"
+              style={{ height: "1500px" }}
+              src="https://forms.zohopublic.com/katechskat1/form/DigitalMarketForm/formperma/E6R5tU78jTvSCQ65WFUKBH9w0pG4pqqvFWEk1VLCUqA"
+            ></iframe>
+          </div>
+        </div>
+      </div>
 
 
 

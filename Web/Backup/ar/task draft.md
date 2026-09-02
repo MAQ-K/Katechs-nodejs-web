@@ -57,5 +57,20 @@ image & descirtion file
 take out the design system from web services page 
 add it to the lab 
 we gonna use it to make all website pages look the same style 
-borders , fonts , colors , btn , cards 
+borders , fonts , colors , btn , cards , scroll 
+
+## scroll transition 
+i want to remove or reduse the space between the areas 
+but we keep the transistion from area to area it's important
+
+## nav sidebar
+when iam not on area 2 [business websites] the box of it on the side bar dont have bg like the rest boxes
+fix to the top btn or make it take us to area 1
+
+## area bg 
+i want a solid bg not this type of bg
+
+## header color 
+change the header bg color to be the same as this page 
+services/hosting-services/
 

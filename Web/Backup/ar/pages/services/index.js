@@ -17,7 +17,6 @@ import EcomIntro from "../../components/Services/Ecommerce/Intro";
 import EcomCapabilities from "../../components/Services/Ecommerce/Capabilities";
 import ConsIntro from "../../components/Services/Consulting/Intro";
 import ConsDiagnostic from "../../components/Services/Consulting/Diagnostic";
-import FloatingBlobs from "../../components/Motion/FloatingBlobs";
 import {
   heroMedia,
   heroSlides,
@@ -228,16 +227,27 @@ export default function ServicesHubWireframe() {
     return () => clearInterval(t);
   }, [heroPaused, heroSlide]);
 
-  // Scroll-spy for the rail. The read line sits a third down the viewport; the
-  // last area starting above it wins. rAF-gated because this runs on every
-  // scroll tick, and run once on mount so a deep link (/services/#type-3)
-  // highlights the right item before the user scrolls at all.
+  // Scroll-spy for the rail. The read line sits at the middle of the readable
+  // band (viewport minus the fixed navbar); the last area starting above it
+  // wins. This has to be the SAME line useSmoothScroll.js uses to decide the
+  // "current" area for its push-to-cross logic — they used to disagree (a
+  // flat third-down-viewport here vs. nav-offset + half-band there), which let
+  // the rail and the actual scroll mechanic pick different "current" areas
+  // right at a boundary. Business-websites sat exactly on that seam, right
+  // after the long intro block, which is why its highlight looked unreliable.
+  // rAF-gated because this runs on every scroll tick, and run once on mount so
+  // a deep link (/services/#type-3) highlights the right item before the user
+  // scrolls at all.
   useEffect(() => {
     let frame = null;
 
     const measure = () => {
       frame = null;
-      const scrollPos = window.scrollY + window.innerHeight / 3;
+      const nav =
+        (document.querySelector(".navbar-area")?.getBoundingClientRect()
+          .height || 74) + 16;
+      const band = window.innerHeight - nav;
+      const scrollPos = window.scrollY + nav + band / 2;
       let current = areas[0].id;
       areas.forEach((a) => {
         const el = areaRefs.current[a.id];
@@ -292,7 +302,7 @@ export default function ServicesHubWireframe() {
         <title>خدمات الويب</title>
       </Head>
 
-      <Navbar />
+      <Navbar theme="navy" />
       <ScrollProgress />
 
       {/* Floating section rail — visible from first paint, not gated on scroll. */}
@@ -352,20 +362,20 @@ export default function ServicesHubWireframe() {
           bring their own .container, so the wireframe wrapper's 1140px cap and
           side padding must not apply to them. Keeps the id + ref the SideRail
           scroll-spy and the deep links (/services/#business-websites) need. */}
-      {BUILT_AREAS.map(({ id, kind, data }) => (
+      {BUILT_AREAS.map(({ id, kind, data }, i) => (
         <div
           key={id}
           id={id}
           data-area={id}
-          className="wsv-area"
+          // .wsv-area's margin-bottom is the gap to the NEXT area. The last
+          // one has no next area — footer follows instead — so without this
+          // modifier that same gap just dangles as unexplained empty space
+          // before the footer. If more areas ever get added after
+          // BUILT_AREAS (the wireframe loop below is currently empty), this
+          // needs to move to whichever one renders last.
+          className={`wsv-area${i === BUILT_AREAS.length - 1 ? " wsv-area-last" : ""}`}
           ref={(el) => (areaRefs.current[id] = el)}
         >
-          {/* Ambient drift behind the area's ground. Pure CSS (compositor-only,
-              no rAF), which is why it can run in all four at once without
-              competing with the scroll loop for frames — the one thing that
-              would bring back the jitter. Freezes under reduced motion. */}
-          <FloatingBlobs />
-
           {kind === "standard" && (
             <>
               <AreaOverview area={data} id={`${id}-overview`} />

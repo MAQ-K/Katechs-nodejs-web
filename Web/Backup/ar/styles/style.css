@@ -3839,19 +3839,30 @@ INNER PAGE STYLE
 /* 
 Page Title Area Style
 =====================================================*/
+/* Migrated onto the design system (--ds-* tokens, see "=== DESIGN SYSTEM
+   TOKENS ==="). This banner is shared by 30 sub-pages, so it is the single
+   highest-leverage surface for making the site read as one theme. Neither the
+   homepage nor the /services hub uses it — both were explicitly excluded from
+   the migration and both carry their own hero instead.
+
+   Padding was 200/150. The top figure has to clear the fixed navbar so it
+   stays generous, but both are now fluid: 150px of dead space under a title
+   was most of what made these pages feel like a different site. */
 .page-title-area {
   position: relative;
   z-index: 1;
-  padding-top: 200px;
-  padding-bottom: 150px;
-  background-color: #04063c;
+  padding-top: clamp(140px, 15vw, 190px);
+  padding-bottom: clamp(60px, 8vw, 96px);
+  background-color: var(--ds-navy);
   overflow: hidden;
   text-align: center;
 }
 .page-title-area .page-title-content h2 {
   margin-bottom: 20px;
-  color: #ffffff;
-  font-size: 40px;
+  color: var(--ds-white);
+  font-family: var(--ds-font);
+  font-size: clamp(1.9rem, 4vw, 2.6rem);
+  line-height: 1.35;
   font-weight: 700;
 }
 .page-title-area .page-title-content ul {
@@ -11682,6 +11693,73 @@ Logical properties throughout so nothing is needed in rtl.css.
    doesn't become a dead band on a phone.
    The wireframe areas below mirror these values inline in
    pages/services/index.js — keep the two in sync. */
+/*================================================
+=== DESIGN SYSTEM TOKENS ===
+The visual language worked out on the Web Services page, lifted out so the rest
+of the site can adopt it. Documented live at /lab/design-system/.
+
+These are CSS custom properties rather than more Sass variables ON PURPOSE:
+  - a Sass variable is compile-time only, so JS cannot read it and the Lab would
+    need a hand-copied list of hex codes that silently drifts from reality;
+  - a custom property is readable at runtime, so /lab/design-system/ reports what
+    the stylesheet ACTUALLY says. The documentation cannot go stale.
+  - they can also be consumed directly by other pages, which is the point of
+    extracting them at all.
+
+The `$wsv-*` Sass variables above stay as the source, mirrored here — so the
+Web Services page keeps working untouched and there is still exactly one place
+to change a value.
+=================================================*/
+:root {
+  /* -- colour -- */
+  --ds-navy: #0a1f44;
+  --ds-cyan: #1dd3f8;
+  --ds-muted: #6084a4;
+  --ds-heading: #212121;
+  --ds-body: #4d4d4d;
+  --ds-white: #ffffff;
+  --ds-line: rgba(15, 23, 42, 0.08);
+  --ds-band: #f5f6f8;
+  /* -- type -- */
+  /* Cairo for anything structural. The sitewide $heading-font-family is Droid
+     Arabic Kufi and is deliberately NOT changed; this system opts in per rule,
+     which is why every heading below states its family rather than inheriting. */
+  --ds-font: "Cairo", sans-serif;
+  --ds-h2: clamp(1.7rem, 2.8vw, 2.3rem);
+  --ds-body-size: 15px;
+  --ds-body-line: 1.95;
+  --ds-eyebrow: 13px;
+  /* -- radii -- */
+  --ds-r-card: 16px;
+  --ds-r-btn: 10px;
+  --ds-r-well: 12px;
+  --ds-r-pill: 100px;
+  /* -- elevation --
+     Layered emboss, not a single drop shadow: two outer layers for depth plus
+     two inset layers that fake a lit top edge and a shaded bottom. Borders are
+     avoided on cards precisely because this reads softer at Arabic text sizes. */
+  --ds-shadow-card:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  --ds-shadow-card-hover:
+    0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  /* Navy-tinted lift for elements that sit on a tinted ground. */
+  --ds-shadow-lift:
+    0 18px 40px -22px rgba(10, 31, 68, 0.28),
+    0 3px 3px 0 rgba(15, 23, 42, 0.05),
+    0 4px 0 0 rgba(255, 255, 255, 0.6) inset;
+  /* -- rhythm --
+     Two steps only. The area gap is ~4x the section gap so the page reads as
+     areas first, sections second; 2:1 was tried and read as "the same". */
+  --ds-gap-section: clamp(32px, 4vw, 48px);
+  --ds-gap-area: clamp(64px, 8vw, 140px);
+}
+
 .wsv-eyebrow {
   display: inline-block;
   font-family: "Cairo", sans-serif;
@@ -11969,9 +12047,9 @@ Logical properties throughout so nothing is needed in rtl.css.
   padding-bottom: clamp(32px, 4vw, 48px);
   /* The navigator is the last section of the intro (the user calls that whole
      block "area 1"), so the space after it is an AREA gap and has to match the
-     ones between the service areas below. Without this it was ~96px against
-     their ~1200px, and the first area read as glued to the intro. */
-  margin-bottom: calc(clamp(220px, 27vw, 450px) + 150px);
+     ones between the service areas below — same token as .wsv-area's own
+     margin-bottom, so this boundary can't drift out of step with the rest. */
+  margin-bottom: clamp(64px, 8vw, 140px);
   background-color: #f5f6f8;
   /* Navy drop under the section's bottom edge, closing off the intro area.
      The negative spread cancels the shadow on the other three sides, so only
@@ -12394,10 +12472,10 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 .wsv-cur-switch button:hover {
-  color: #0a1f44;
+  color: #111111;
 }
 .wsv-cur-switch button.is-active {
-  background-color: #0a1f44;
+  background-color: #111111;
   color: #ffffff;
 }
 
@@ -12440,7 +12518,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   margin-bottom: 14px;
   padding: 6px 13px;
   border-radius: 100px;
-  background-color: #1dd3f8;
+  background-color: #111111;
   color: #ffffff;
   font-family: "Cairo", sans-serif;
   font-size: 11.5px;
@@ -12452,8 +12530,8 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   height: 50px;
   margin-bottom: 18px;
   border-radius: 14px;
-  background-color: #f6fdff;
-  color: #1dd3f8;
+  background-color: #f4f4f5;
+  color: #111111;
   font-size: 26px;
   display: flex;
   align-items: center;
@@ -12522,8 +12600,8 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   height: 20px;
   margin-top: 4px;
   border-radius: 50%;
-  background-color: rgba(29, 211, 248, 0.14);
-  color: #1dd3f8;
+  background-color: rgba(17, 17, 17, 0.08);
+  color: #111111;
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -12539,7 +12617,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   width: 100%;
   padding: 15px 20px;
   border-radius: 10px;
-  background-color: #0a1f44;
+  background-color: #111111;
   color: #ffffff;
   font-family: "Cairo", sans-serif;
   font-size: 15px;
@@ -12548,8 +12626,8 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   transition: all 0.6s ease;
 }
 .wsv-plan-btn:hover {
-  background-color: #1dd3f8;
-  color: #0a1f44;
+  background-color: #2b2a2a;
+  color: #ffffff;
 }
 
 /* ---- recommended tier ---- */
@@ -12557,7 +12635,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
    already carries a moving hero and a moving carousel. Same palette swap the
    hero's on-dark state uses. */
 .wsv-plan.is-popular {
-  background-color: #0a1f44;
+  background-color: #111111;
   /* Inverted so the recommended card's CTA stays the most prominent one. */
 }
 .wsv-plan.is-popular h3 {
@@ -12582,15 +12660,16 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   color: rgba(255, 255, 255, 0.8);
 }
 .wsv-plan.is-popular .wsv-plan-features li i {
-  background-color: rgba(29, 211, 248, 0.2);
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
 }
 .wsv-plan.is-popular .wsv-plan-btn {
   background-color: #ffffff;
-  color: #0a1f44;
+  color: #111111;
 }
 .wsv-plan.is-popular .wsv-plan-btn:hover {
-  background-color: #1dd3f8;
-  color: #0a1f44;
+  background-color: #e5e5e5;
+  color: #111111;
 }
 
 .wsv-plans-note {
@@ -12684,12 +12763,21 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
      the area's own background. Padding would have been INSIDE the coloured
      box; margin sits OUTSIDE it, same as $wsv-gap-area, so the two combine
      into one continuous white gap rather than colour-then-white. */
-  margin-bottom: calc(clamp(220px, 27vw, 450px) + 150px);
-  /* Contains the ambient <FloatingBlobs> layer, which is position:absolute
-     inset:0. `overflow: hidden` keeps its blur inside the area's own band so
-     it cannot bleed across the white gap into the next area. */
+  margin-bottom: clamp(64px, 8vw, 140px);
+  /* General containment for the area's own ground — keeps anything absolutely
+     positioned inside (a decorative layer, a card's hover glow) from bleeding
+     across the white gap into the next area. */
   position: relative;
   overflow: hidden;
+}
+
+/* margin-bottom above is the gap to the NEXT area — the last one has no next
+   area, footer follows instead, so left alone that same gap dangles as
+   unexplained empty space before the footer. Zeroed here instead of on
+   .wsv-area itself so a future area appended after this one gets the gap back
+   automatically (index-based, set in pages/services/index.js). */
+.wsv-area.wsv-area-last {
+  margin-bottom: 0;
 }
 
 /* The blobs sit at z-index 0; the real sections have to stay above them.
@@ -13346,6 +13434,1097 @@ html.wsv-smooth {
     min-height: 0;
     padding: 28px 24px;
   }
+}
+/*================================================
+===  DESIGN SYSTEM — COMPONENT LAYER (.ds-*)  ===
+
+The visual language worked out on the Web Services page, lifted out of its
+page-specific `.wsv-*` names so ANY page can use it. `--ds-*` (further up,
+"=== DESIGN SYSTEM TOKENS ===") holds the values; this holds the patterns
+built from them — buttons, cards, lists, splits, accordions, CTAs.
+
+WHY A SECOND SET OF CLASSES RATHER THAN RENAMING .wsv-*:
+`wsv` means "web services". Another page writing class="wsv-plan" to get a
+card would inherit a name that lies about where it belongs, and every future
+edit to that class would have to reason about two unrelated pages at once. So
+`.ds-*` is the portable layer and `.wsv-*` stays the services page's own.
+They are deliberately NOT aliased to each other yet: /services is the
+most-worked page in the repo and re-pointing its classes mid-flight risks a
+regression nobody would catch quickly. Collapsing `.wsv-*` onto `.ds-*` is a
+follow-up worth doing once this layer has been used on real pages.
+
+USAGE: everything below is page-agnostic. No page prefix, no imports, no
+markup contract beyond the class names. Documented live at
+/lab/design-system/.
+=================================================*/
+/* ---------- typography ---------- */
+.ds-eyebrow {
+  display: inline-block;
+  font-family: var(--ds-font);
+  font-size: var(--ds-eyebrow);
+  font-weight: 700;
+  color: var(--ds-cyan);
+  letter-spacing: 0.5px;
+  margin-bottom: 8px;
+}
+
+.ds-h2 {
+  font-family: var(--ds-font);
+  font-weight: 700;
+  font-size: var(--ds-h2);
+  line-height: 1.45;
+  color: var(--ds-heading);
+  margin-bottom: 16px;
+}
+
+.ds-h3 {
+  font-family: var(--ds-font);
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 1.5;
+  color: var(--ds-heading);
+  margin-bottom: 6px;
+}
+
+.ds-p {
+  font-size: var(--ds-body-size);
+  line-height: var(--ds-body-line);
+  color: var(--ds-body);
+  margin-bottom: 0;
+}
+
+/* Small print — pricing notes, disclaimers, captions. */
+.ds-note {
+  font-size: 13px;
+  line-height: 1.8;
+  color: var(--ds-muted);
+  margin-bottom: 0;
+}
+
+/* ---------- layout ---------- */
+/* One section of a page. Vertical rhythm only — it sets no ground of its own,
+   so it can sit on white or on .ds-band without fighting either. */
+.ds-section {
+  padding-top: var(--ds-gap-section);
+  padding-bottom: var(--ds-gap-section);
+}
+
+/* The neutral alternate ground, for banding one section against its
+   neighbours. */
+.ds-band {
+  background-color: var(--ds-band);
+}
+
+/* Media one side, copy the other. Put the MEDIA first in the DOM: under RTL
+   the grid places it on the left, so an Arabic reader meets the heading
+   before the image — and at <=991px the `order` rule below keeps text first
+   once the columns stack. */
+.ds-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.ds-grid-3 {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+.ds-grid-2 {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 22px;
+  align-items: stretch;
+}
+
+/* Centred section header — eyebrow + h2 + one line of copy. */
+.ds-head {
+  text-align: center;
+  max-width: 640px;
+  margin: 0 auto 38px;
+}
+
+/* ---------- buttons ---------- */
+/* Base shape only. Always pair with a variant — .ds-btn alone is deliberately
+   unstyled as to colour, so a variant can never be half-applied and leave
+   text at the wrong contrast. */
+.ds-btn {
+  display: inline-block;
+  padding: 15px 34px;
+  border: 1px solid transparent;
+  border-radius: var(--ds-r-btn);
+  font-family: var(--ds-font);
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ds-btn:hover {
+  transform: translateY(-2px);
+}
+
+/* The dominant action on a LIGHT ground. Cyan arrives on hover — across this
+   whole system the accent is an event, not a resting state. */
+.ds-btn-solid {
+  background-color: var(--ds-navy);
+  border-color: var(--ds-navy);
+  color: var(--ds-white);
+  box-shadow: 0 12px 28px rgba(10, 31, 68, 0.22);
+}
+.ds-btn-solid:hover {
+  background-color: var(--ds-cyan);
+  border-color: var(--ds-cyan);
+  color: var(--ds-navy);
+}
+
+/* The same job on a DARK ground (navy card, CTA band, photo overlay) — the
+   inverse fill, so the dominant action stays dominant either way. */
+.ds-btn-light {
+  background-color: var(--ds-white);
+  border-color: var(--ds-white);
+  color: var(--ds-navy);
+  box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
+}
+.ds-btn-light:hover {
+  background-color: var(--ds-cyan);
+  border-color: var(--ds-cyan);
+  color: var(--ds-navy);
+}
+
+/* Full-width, for the bottom of a card. */
+.ds-btn-block {
+  display: block;
+  width: 100%;
+  padding-inline: 20px;
+}
+.ds-btn-block:hover {
+  transform: none;
+}
+
+/* Secondary action. Reads as a link so the solid button stays the only
+   dominant shape on screen — two filled buttons split the decision and
+   neither wins. */
+.ds-link {
+  font-family: var(--ds-font);
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--ds-navy);
+  text-decoration: underline;
+  text-underline-offset: 4px;
+  text-decoration-color: rgba(10, 31, 68, 0.3);
+  transition: color 0.25s ease, text-decoration-color 0.25s ease;
+}
+.ds-link:hover {
+  color: var(--ds-cyan);
+  text-decoration-color: var(--ds-cyan);
+}
+
+/* Same, on a dark ground. */
+.ds-link-light {
+  color: rgba(255, 255, 255, 0.82);
+  text-decoration-color: rgba(255, 255, 255, 0.35);
+}
+.ds-link-light:hover {
+  color: var(--ds-white);
+  text-decoration-color: var(--ds-white);
+}
+
+/* ---------- cards ---------- */
+/* Layered emboss, no border. Two outer layers for depth plus two insets that
+   fake a lit top edge and a shaded bottom — softer than a hairline border at
+   Arabic text sizes, which is why nothing in this system outlines a card.
+   height:100% so a row of them in .ds-grid-3 comes out even. */
+.ds-card {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  padding: 32px 26px;
+  border-radius: var(--ds-r-card);
+  background-color: var(--ds-white);
+  box-shadow: var(--ds-shadow-card);
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+
+/* Opt in — for a card that is a link or otherwise interactive. A static card
+   should NOT lift, or the page implies an affordance it does not have. */
+.ds-card-hover:hover {
+  box-shadow: var(--ds-shadow-card-hover);
+  transform: translateY(-8px);
+}
+
+/* Inverted card, for the one option you want chosen. Everything inside
+   re-points here rather than being restated at the call site. */
+.ds-card.is-dark {
+  background-color: var(--ds-navy);
+  /* The recommended card's CTA has to stay the most prominent one on the row,
+     so it inverts too. */
+}
+.ds-card.is-dark .ds-h3,
+.ds-card.is-dark h3 {
+  color: var(--ds-white);
+}
+.ds-card.is-dark .ds-p,
+.ds-card.is-dark .ds-note {
+  color: rgba(255, 255, 255, 0.68);
+}
+.ds-card.is-dark .ds-icon {
+  background-color: rgba(255, 255, 255, 0.1);
+}
+.ds-card.is-dark .ds-list li {
+  color: rgba(255, 255, 255, 0.8);
+}
+.ds-card.is-dark .ds-list li i {
+  background-color: rgba(29, 211, 248, 0.2);
+}
+.ds-card.is-dark .ds-btn-solid {
+  background-color: var(--ds-white);
+  border-color: var(--ds-white);
+  color: var(--ds-navy);
+}
+.ds-card.is-dark .ds-btn-solid:hover {
+  background-color: var(--ds-cyan);
+  border-color: var(--ds-cyan);
+  color: var(--ds-navy);
+}
+
+/* Pushes whatever follows to the bottom of a flex card, so buttons line up
+   across a row even when the copy above them differs in length. */
+.ds-card-foot {
+  margin-top: auto;
+}
+
+/* ---------- small parts ---------- */
+/* Icon well. */
+.ds-icon {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 50px;
+  height: 50px;
+  margin-bottom: 18px;
+  border-radius: var(--ds-r-well);
+  background-color: #f6fdff;
+  color: var(--ds-cyan);
+  font-size: 26px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+
+.ds-icon-sm {
+  width: 44px;
+  height: 44px;
+  margin-bottom: 14px;
+  font-size: 22px;
+}
+
+/* In flow, not an absolutely-positioned corner ribbon — nothing to mirror
+   under RTL, and it cannot collide with the card's own padding. */
+.ds-badge {
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 6px 13px;
+  border-radius: var(--ds-r-pill);
+  background-color: var(--ds-cyan);
+  color: var(--ds-white);
+  font-family: var(--ds-font);
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+/* Status pill — priority, state, severity. */
+.ds-tag {
+  flex-shrink: 0;
+  font-style: normal;
+  font-family: var(--ds-font);
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 10px;
+  border-radius: var(--ds-r-pill);
+  background-color: rgba(10, 31, 68, 0.07);
+  color: var(--ds-muted);
+}
+
+.ds-tag.is-high {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #b91c1c;
+}
+
+.ds-tag.is-mid {
+  background-color: rgba(217, 119, 6, 0.12);
+  color: #b45309;
+}
+
+.ds-tag.is-low {
+  background-color: rgba(10, 31, 68, 0.07);
+  color: var(--ds-muted);
+}
+
+/* ---------- lists ---------- */
+/* Ticked list. The icon sits in a fixed well with a top margin rather than
+   being vertically centred: an Arabic item that wraps to two lines keeps its
+   tick on the FIRST line, where it belongs, instead of drifting to the middle
+   of the block. */
+.ds-list {
+  list-style: none;
+  padding: 0;
+  margin: 22px 0 0;
+}
+.ds-list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  margin-bottom: 12px;
+  font-size: var(--ds-body-size);
+  line-height: 1.8;
+  color: var(--ds-body);
+}
+.ds-list li:last-child {
+  margin-bottom: 0;
+}
+.ds-list li i {
+  flex-shrink: 0;
+  margin-top: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: var(--ds-cyan);
+  font-size: 15px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* Tighter, for inside a card. */
+.ds-list-sm {
+  margin: 0 0 24px;
+  flex: 1 1 auto;
+}
+.ds-list-sm li {
+  margin-bottom: 11px;
+  font-size: 14px;
+}
+.ds-list-sm li i {
+  width: 20px;
+  height: 20px;
+  font-size: 14px;
+}
+
+/* ---------- media frame ---------- */
+/* Outer plate + inner media, for a real photo or screenshot. The double frame
+   is what stops a raw image from reading as pasted onto the page. */
+.ds-frame {
+  position: relative;
+  padding: 14px;
+  border-radius: 24px;
+  background-color: var(--ds-white);
+  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
+}
+
+.ds-frame-media {
+  position: relative;
+  border-radius: var(--ds-r-card);
+  overflow: hidden;
+  background-color: var(--ds-band);
+  line-height: 0;
+}
+.ds-frame-media img,
+.ds-frame-media iframe,
+.ds-frame-media video {
+  width: 100%;
+  height: auto;
+  display: block;
+  border: 0;
+}
+
+/* ---------- accordion ---------- */
+/* Shapes react-accessible-accordion, already a dependency and what every FAQ
+   in this codebase uses. Markup contract is that library's:
+   .accordion__item / __button / __panel. */
+.ds-accordion {
+  max-width: 780px;
+  margin: 0 auto;
+}
+.ds-accordion .accordion__item {
+  margin-bottom: 14px;
+  border-radius: var(--ds-r-card);
+  background-color: var(--ds-white);
+  box-shadow: 0px 5px 11px 0px rgba(15, 23, 42, 0.05), 0px 2px 2px 0px rgba(15, 23, 42, 0.07);
+  overflow: hidden;
+}
+.ds-accordion .accordion__button {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 20px 24px;
+  cursor: pointer;
+  font-family: var(--ds-font);
+  font-weight: 600;
+  font-size: 15.5px;
+  color: var(--ds-heading);
+  /* LOAD-BEARING: fancy-example.css is imported globally in _app.js and
+     draws its own chevron on ::before. Without this every row shows two
+     icons. Any new accordion in this codebase needs the same line. */
+}
+.ds-accordion .accordion__button::before {
+  display: none;
+}
+.ds-accordion .accordion__button i {
+  flex-shrink: 0;
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  background-color: rgba(10, 31, 68, 0.08);
+  color: var(--ds-navy);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.ds-accordion .accordion__button[aria-expanded=true] i {
+  background-color: var(--ds-navy);
+  color: var(--ds-white);
+  transform: rotate(45deg);
+}
+.ds-accordion .accordion__panel {
+  padding: 0 24px 22px;
+}
+.ds-accordion .accordion__panel p {
+  color: var(--ds-body);
+  font-size: 14.5px;
+  line-height: 1.9;
+  margin-bottom: 0;
+}
+
+/* ---------- CTA band ---------- */
+.ds-cta {
+  padding: 40px 32px;
+  border-radius: 18px;
+  background-color: var(--ds-navy);
+  text-align: center;
+}
+.ds-cta h2,
+.ds-cta .ds-h2 {
+  font-family: var(--ds-font);
+  font-size: clamp(1.4rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  color: var(--ds-white);
+  margin-bottom: 10px;
+}
+.ds-cta p,
+.ds-cta .ds-p {
+  font-size: 14.5px;
+  color: rgba(255, 255, 255, 0.7);
+  margin-bottom: 22px;
+}
+
+/* ---------- segmented switch ---------- */
+/* Two or three mutually exclusive options — a currency, a billing period, a
+   view. Buttons, not radios: it changes a view, it does not submit a value. */
+.ds-switch {
+  display: inline-flex;
+  gap: 4px;
+  padding: 4px;
+  border-radius: var(--ds-r-pill);
+  background-color: var(--ds-white);
+  box-shadow: 0px 5px 11px 0px rgba(15, 23, 42, 0.05), 0px 2px 2px 0px rgba(15, 23, 42, 0.07);
+}
+.ds-switch button {
+  min-width: 64px;
+  padding: 9px 18px;
+  border: 0;
+  border-radius: var(--ds-r-pill);
+  background: none;
+  cursor: pointer;
+  font-family: var(--ds-font);
+  font-size: 14px;
+  font-weight: 700;
+  color: var(--ds-muted);
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.ds-switch button:hover {
+  color: var(--ds-navy);
+}
+.ds-switch button.is-active {
+  background-color: var(--ds-navy);
+  color: var(--ds-white);
+}
+
+/* ---------- responsive ---------- */
+@media only screen and (max-width: 991px) {
+  /* Media is first in the DOM for the RTL grid, so it needs pushing below the
+     copy once the columns stack — the heading should still come first. */
+  .ds-split {
+    grid-template-columns: 1fr;
+    gap: 36px;
+  }
+  .ds-split > :first-child {
+    order: 2;
+  }
+  .ds-grid-3 {
+    grid-template-columns: repeat(2, 1fr);
+  }
+  .ds-frame {
+    max-width: 520px;
+    margin-inline: auto;
+  }
+}
+@media only screen and (max-width: 767px) {
+  .ds-card {
+    padding: 26px 22px;
+  }
+  .ds-cta {
+    padding: 32px 22px;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .ds-grid-3,
+  .ds-grid-2 {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-btn,
+  .ds-card,
+  .ds-card-hover:hover {
+    transition: none;
+    transform: none;
+  }
+}
+/* =================================================
+=== DESIGN SYSTEM — "NEW" LAYER (2026-09-01) ===
+
+A second, monochrome-black component family sitting alongside the navy/cyan
+.ds-* layer above — built from the reference set in
+`Web/Backup/ar/design system stuff/inspirations/` (stat cards, split combo
+tags, image cards, a bold split hero) plus the button snippet in
+`elements code.md` (adapted from a Uiverse.io community snippet by niat786:
+https://uiverse.io — contrast bumped from the original grey-on-black to
+white-on-black for real readability).
+
+These do NOT replace anything above — the brand navy/cyan system stays the
+default. This layer exists so /lab/design-system/ can show both side by
+side; picking one as the site's real direction is a Manager/user call, not
+implied by this file existing.
+
+Prefix: `.ds-new-*`, so nothing here can collide with the layer above.
+Documented live at /lab/design-system/.
+=================================================*/
+/* ---------- buttons (monochrome pair) ---------- */
+.ds-new-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  height: 48px;
+  padding: 0 22px;
+  border-radius: 10px;
+  border: 1px solid transparent;
+  font-family: var(--ds-font);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background-color 0.25s ease, border-color 0.25s ease, transform 0.25s ease, box-shadow 0.25s ease;
+}
+.ds-new-btn:hover {
+  transform: translateY(-2px);
+}
+
+.ds-new-btn-dark {
+  background-color: #111111;
+  border-color: #111111;
+  color: #ffffff;
+  box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
+}
+.ds-new-btn-dark:hover {
+  background-color: #2b2a2a;
+  border-color: #2b2a2a;
+}
+
+.ds-new-btn-outline {
+  background-color: #ffffff;
+  border-color: var(--ds-line);
+  color: #111111;
+}
+.ds-new-btn-outline:hover {
+  border-color: #111111;
+}
+
+/* ---------- stat card ---------- */
+.ds-new-stat-card {
+  padding: 22px 20px;
+  border-radius: 14px;
+  border: 1px solid var(--ds-line);
+  background-color: var(--ds-white);
+}
+
+.ds-new-stat-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 22px;
+  font-family: var(--ds-font);
+  font-size: 13px;
+  color: var(--ds-muted);
+}
+.ds-new-stat-head i {
+  font-size: 16px;
+  color: var(--ds-muted);
+}
+
+.ds-new-stat-value {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-bottom: 16px;
+  font-family: var(--ds-font);
+  font-size: 26px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ds-new-stat-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 3px;
+  padding: 3px 9px;
+  border-radius: var(--ds-r-pill);
+  font-size: 12px;
+  font-weight: 700;
+}
+
+.ds-new-stat-pill.is-up {
+  background-color: rgba(22, 163, 74, 0.12);
+  color: #15803d;
+}
+
+.ds-new-stat-pill.is-down {
+  background-color: rgba(220, 38, 38, 0.1);
+  color: #b91c1c;
+}
+
+.ds-new-stat-foot {
+  padding-top: 14px;
+  border-top: 1px solid var(--ds-line);
+  font-size: 12.5px;
+  color: var(--ds-muted);
+}
+.ds-new-stat-foot b {
+  color: #0f172a;
+  font-weight: 700;
+}
+
+/* ---------- combo tag (two-part status pill) ---------- */
+.ds-new-combo-tag {
+  display: inline-flex;
+  align-items: center;
+  border-radius: var(--ds-r-pill);
+  border: 1px solid var(--ds-line);
+  background-color: var(--ds-white);
+  font-family: var(--ds-font);
+  font-size: 12.5px;
+  overflow: hidden;
+}
+
+.ds-new-combo-tag-part {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  padding: 7px 12px;
+  color: var(--ds-muted);
+}
+.ds-new-combo-tag-part i {
+  font-size: 14px;
+}
+.ds-new-combo-tag-part.is-strong {
+  font-weight: 700;
+  color: #0f172a;
+}
+.ds-new-combo-tag-part.is-good i {
+  color: #16a34a;
+}
+.ds-new-combo-tag-part.is-bad i {
+  color: #dc2626;
+}
+.ds-new-combo-tag-part + .ds-new-combo-tag-part {
+  border-inline-start: 1px solid var(--ds-line);
+}
+
+/* ---------- image / media card ---------- */
+.ds-new-media-card {
+  position: relative;
+  height: 260px;
+  border-radius: 14px;
+  overflow: hidden;
+  background-color: #e6edf5;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;
+}
+
+.ds-new-media-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(0, 0, 0, 0) 40%, rgba(0, 0, 0, 0.62) 100%);
+}
+
+.ds-new-media-card-body {
+  position: relative;
+  z-index: 1;
+  padding: 20px;
+  color: #ffffff;
+}
+
+.ds-new-media-card-body h3 {
+  font-family: var(--ds-font);
+  font-size: 19px;
+  font-weight: 700;
+  color: #ffffff;
+  margin-bottom: 4px;
+}
+
+.ds-new-media-card-body p {
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.82);
+  margin-bottom: 14px;
+}
+
+.ds-new-media-card-body .ds-new-btn {
+  height: 40px;
+  padding: 0 18px;
+  background-color: #ffffff;
+  border-color: #ffffff;
+  color: #111111;
+}
+.ds-new-media-card-body .ds-new-btn:hover {
+  background-color: #f0f0f0;
+  border-color: #f0f0f0;
+}
+
+/* ---------- bold split hero ---------- */
+.ds-new-hero-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 56px;
+  align-items: center;
+}
+
+.ds-new-hero-pill {
+  display: inline-block;
+  margin-bottom: 18px;
+  padding: 5px 14px;
+  border-radius: var(--ds-r-pill);
+  border: 1px solid var(--ds-line);
+  font-family: var(--ds-font);
+  font-size: 12px;
+  font-weight: 700;
+  color: #0f172a;
+}
+
+.ds-new-hero-split h2 {
+  font-family: var(--ds-font);
+  font-weight: 700;
+  font-size: clamp(2rem, 4.2vw, 3.2rem);
+  line-height: 1.12;
+  color: #0f172a;
+  margin-bottom: 18px;
+}
+
+.ds-new-hero-split p {
+  font-size: 15px;
+  line-height: 1.8;
+  color: var(--ds-muted);
+  margin-bottom: 26px;
+  max-width: 46ch;
+}
+
+.ds-new-hero-actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.ds-new-hero-placeholder {
+  height: 100%;
+  min-height: 260px;
+  border-radius: 14px;
+  background-color: #f2f3f5;
+}
+
+@media only screen and (max-width: 991px) {
+  .ds-new-hero-split {
+    grid-template-columns: 1fr;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .ds-new-btn {
+    transition: none;
+    transform: none;
+  }
+}
+/*================================================
+===  SUB-PAGE MIGRATION → DESIGN SYSTEM  ===
+
+Brings the legacy template pages onto the same visual language as /services,
+by re-pointing the classes their components ALREADY use onto the --ds-*
+tokens — rather than rewriting JSX across ~20 pages. Those components carry
+form logic and third-party embeds; restyling in place is the lower-risk half
+of the job and it covers every page that shares a component at once.
+
+SCOPING RULE FOR THIS WHOLE BLOCK: every selector is anchored to a specific
+page-area wrapper (.contact-info-area, .main-contact-area, .user-area-all-style,
+.privacy-policy-area …). Nothing here restyles a bare Bootstrap class like
+.form-control or .default-btn globally — those are shared with the homepage and
+the /services hub, and BOTH were explicitly excluded from this migration.
+=================================================*/
+/* ---------- shared form controls (scoped, never global) ---------- */
+.contact-form,
+.main-contact-area,
+.user-area-all-style {
+  /* The template's own button, re-skinned to the .ds-btn-solid recipe without
+     renaming it — these components' JSX is left alone on purpose. */
+}
+.contact-form .form-control,
+.main-contact-area .form-control,
+.user-area-all-style .form-control {
+  height: auto;
+  padding: 14px 18px;
+  border: 1px solid var(--ds-line);
+  border-radius: var(--ds-r-btn);
+  background-color: var(--ds-white);
+  box-shadow: none;
+  font-family: var(--ds-font);
+  font-size: 14.5px;
+  color: var(--ds-heading);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  /* Cyan arrives on focus, the same way it arrives on hover everywhere else
+     in this system — the accent marks an event, not a resting state. */
+}
+.contact-form .form-control::placeholder,
+.main-contact-area .form-control::placeholder,
+.user-area-all-style .form-control::placeholder {
+  color: var(--ds-muted);
+}
+.contact-form .form-control:focus,
+.main-contact-area .form-control:focus,
+.user-area-all-style .form-control:focus {
+  border-color: var(--ds-cyan);
+  box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.15);
+  outline: none;
+}
+.contact-form textarea.form-control,
+.main-contact-area textarea.form-control,
+.user-area-all-style textarea.form-control {
+  min-height: 140px;
+  resize: vertical;
+}
+.contact-form .form-group,
+.main-contact-area .form-group,
+.user-area-all-style .form-group {
+  margin-bottom: 18px;
+}
+.contact-form .default-btn,
+.main-contact-area .default-btn,
+.user-area-all-style .default-btn {
+  display: inline-block;
+  padding: 15px 34px;
+  border: 1px solid var(--ds-navy);
+  border-radius: var(--ds-r-btn);
+  background-color: var(--ds-navy);
+  color: var(--ds-white);
+  font-family: var(--ds-font);
+  font-size: 15px;
+  font-weight: 700;
+  transition: background-color 0.25s ease, border-color 0.25s ease, color 0.25s ease, transform 0.25s ease;
+}
+.contact-form .default-btn::before, .contact-form .default-btn::after,
+.main-contact-area .default-btn::before,
+.main-contact-area .default-btn::after,
+.user-area-all-style .default-btn::before,
+.user-area-all-style .default-btn::after {
+  display: none;
+}
+.contact-form .default-btn:hover,
+.main-contact-area .default-btn:hover,
+.user-area-all-style .default-btn:hover {
+  background-color: var(--ds-cyan);
+  border-color: var(--ds-cyan);
+  color: var(--ds-navy);
+  transform: translateY(-2px);
+}
+
+/* ---------- contact info cards ---------- */
+.contact-info-area {
+  padding-top: var(--ds-gap-section);
+  padding-bottom: var(--ds-gap-section);
+  background-color: var(--ds-band);
+}
+.contact-info-area .single-contact-info {
+  height: 100%;
+  margin-bottom: 22px;
+  padding: 30px 24px;
+  border: 0;
+  border-radius: var(--ds-r-card);
+  background-color: var(--ds-white);
+  box-shadow: var(--ds-shadow-card);
+  text-align: center;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  /* The template renders the icon as a bare <i>. Giving it the system's
+     icon-well treatment is what makes these read as the same family as the
+     cards on /services. */
+}
+.contact-info-area .single-contact-info:hover {
+  box-shadow: var(--ds-shadow-card-hover);
+  transform: translateY(-6px);
+}
+.contact-info-area .single-contact-info i {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 16px;
+  border-radius: var(--ds-r-well);
+  background-color: #f6fdff;
+  color: var(--ds-cyan);
+  font-size: 26px;
+  transition: background-color 0.25s ease, color 0.25s ease;
+}
+.contact-info-area .single-contact-info:hover i {
+  background-color: var(--ds-cyan);
+  color: var(--ds-white);
+}
+.contact-info-area .single-contact-info h3 {
+  margin-bottom: 8px;
+  font-family: var(--ds-font);
+  font-size: 18px;
+  font-weight: 700;
+  color: var(--ds-heading);
+}
+.contact-info-area .single-contact-info p,
+.contact-info-area .single-contact-info a {
+  font-size: 14.5px;
+  line-height: 1.85;
+  color: var(--ds-body);
+}
+.contact-info-area .single-contact-info a:hover {
+  color: var(--ds-cyan);
+}
+
+/* ---------- main contact form ---------- */
+.main-contact-area {
+  padding-top: var(--ds-gap-section);
+  padding-bottom: var(--ds-gap-section);
+}
+.main-contact-area .contact-wrap {
+  padding: 34px 30px;
+  border: 0;
+  border-radius: var(--ds-r-card);
+  background-color: var(--ds-white);
+  box-shadow: var(--ds-shadow-card);
+}
+.main-contact-area .section-title h2 {
+  font-family: var(--ds-font);
+  font-size: var(--ds-h2);
+  line-height: 1.45;
+  font-weight: 700;
+  color: var(--ds-heading);
+}
+.main-contact-area .section-title p {
+  font-size: var(--ds-body-size);
+  line-height: var(--ds-body-line);
+  color: var(--ds-body);
+}
+
+/* ---------- auth pages ---------- */
+/* NOTE (content, not styling): these three pages are still entirely in English
+   ("Login to your account!", "Remember me") on an Arabic RTL site, and carry
+   Google/Facebook/Twitter buttons that point at those sites' homepages rather
+   than at any OAuth flow. That is a content/functionality problem, deliberately
+   left alone here — this pass only makes them look like the rest of the site. */
+.user-area-all-style {
+  padding-top: var(--ds-gap-section);
+  padding-bottom: var(--ds-gap-section);
+  background-color: var(--ds-band);
+}
+.user-area-all-style .contact-form-action {
+  max-width: 620px;
+  margin: 0 auto;
+  padding: 34px 30px;
+  border-radius: var(--ds-r-card);
+  background-color: var(--ds-white);
+  box-shadow: var(--ds-shadow-card);
+}
+.user-area-all-style .form-title {
+  font-family: var(--ds-font);
+  font-size: 22px;
+  font-weight: 700;
+  color: var(--ds-heading);
+  margin-bottom: 24px;
+}
+.user-area-all-style .forget,
+.user-area-all-style .account-desc,
+.user-area-all-style .account-desc a {
+  font-size: 14px;
+  color: var(--ds-muted);
+}
+.user-area-all-style .forget:hover,
+.user-area-all-style .account-desc a:hover {
+  color: var(--ds-cyan);
+}
+.user-area-all-style .account-desc a {
+  margin-inline-start: 6px;
+  font-weight: 700;
+  color: var(--ds-navy);
+}
+
+/* ---------- long-form content pages ---------- */
+/* Privacy policy, terms, and anything else that is mostly prose. Caps the
+   measure — full-width Arabic body text across a 1140px container is the main
+   reason these pages are hard to read. */
+.privacy-policy-area,
+.terms-conditions-area {
+  padding-top: var(--ds-gap-section);
+  padding-bottom: var(--ds-gap-section);
+}
+.privacy-policy-area .container,
+.terms-conditions-area .container {
+  max-width: 860px;
+}
+.privacy-policy-area h2,
+.privacy-policy-area h3,
+.terms-conditions-area h2,
+.terms-conditions-area h3 {
+  font-family: var(--ds-font);
+  font-weight: 700;
+  color: var(--ds-heading);
+  margin-top: 32px;
+  margin-bottom: 12px;
+}
+.privacy-policy-area h2,
+.terms-conditions-area h2 {
+  font-size: clamp(1.4rem, 2.4vw, 1.8rem);
+}
+.privacy-policy-area h3,
+.terms-conditions-area h3 {
+  font-size: 18px;
+}
+.privacy-policy-area p,
+.privacy-policy-area li,
+.terms-conditions-area p,
+.terms-conditions-area li {
+  font-size: var(--ds-body-size);
+  line-height: var(--ds-body-line);
+  color: var(--ds-body);
 }
 
 /*# sourceMappingURL=style.css.map */

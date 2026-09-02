@@ -29,20 +29,22 @@ export default function Services2Page() {
 
 
 
-      <main className="website-order-page">
-        <div className="container">
-          <div className="website-order-form-shell">
+      {/* Design system: .ds-section + .ds-frame — same treatment as every
+          other embedded-form page. The form itself is third-party and cannot
+          be styled from here, so the frame is what makes it read as designed. */}
+      <div className="container ds-section">
+        <div className="ds-frame">
+          <div className="ds-frame-media">
             <iframe
-              className="website-order-form-frame"
               title="طلب تصميم موقع ويب"
-              src="https://forms.katechs.com/katechskat1/form/Untitled1/formperma/q-7XHxrMJTylMxkwu8CXHSY7qCCH1-VH2ZMylKekCZE"
-              loading="lazy"
-              frameBorder="0"
               aria-label="طلب تصميم موقع ويب"
+              loading="lazy"
+              style={{ height: "1500px" }}
+              src="https://forms.katechs.com/katechskat1/form/Untitled1/formperma/q-7XHxrMJTylMxkwu8CXHSY7qCCH1-VH2ZMylKekCZE"
             ></iframe>
           </div>
         </div>
-      </main>
+      </div>
 
 
 
