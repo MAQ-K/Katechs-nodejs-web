@@ -80,7 +80,7 @@ const ScrollScrub = () => {
           border-radius: 10px;
           background: #0a1f44;
           color: #fff;
-          font-family: "Cairo", sans-serif;
+          font-family: "Almarai", sans-serif;
           font-weight: 700;
           font-size: 12px;
           text-align: center;

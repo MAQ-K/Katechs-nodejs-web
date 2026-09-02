@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useRouter } from "next/router";
 import Link from "next/link";
 import Image from "next/image";
@@ -6,14 +6,28 @@ import Image from "next/image";
 import logo from "../../public/images/logo-konoz-ar.png";
 
 const Navbar = ({ theme }) => {
-  // Add active class
-  const [currentPath, setCurrentPath] = useState("");
   const router = useRouter();
-  // console.log(router.asPath)
 
-  useEffect(() => {
-    setCurrentPath(router.asPath);
-  }, [router]);
+  // Read straight off the router rather than mirroring it into state via an
+  // effect, which is what this used to do: the state started empty, so the
+  // server rendered every tab inactive and the highlight only appeared after
+  // hydration. asPath is already correct during the server render for these
+  // routes (none of them are dynamic), so the right tab now ships highlighted.
+  const currentPath = router.asPath;
+
+  // Which tab is the page you are on. Comparing router.asPath to the href by
+  // hand is what used to be done here, and four of the seven links never
+  // matched: hrefs carry a trailing slash and three comparisons did not (one
+  // even had a stray space, "/services/website-design "). Normalising both
+  // sides — drop query/hash, force one trailing slash — makes the check
+  // survive any of those being edited again later.
+  const isActive = (href) => {
+    const norm = (v) => {
+      const bare = String(v).split("?")[0].split("#")[0];
+      return bare.endsWith("/") ? bare : bare + "/";
+    };
+    return norm(currentPath) === norm(href);
+  };
 
   const [menu, setMenu] = React.useState(true);
   const toggleNavbar = () => {
@@ -73,9 +87,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item m-ll">
                   <Link
                         href="/about-us/"
-                        className={`nav-link ${
-                          currentPath == "/about-us/" && "active"
-                        }`}
+                        className={`nav-link ${isActive("/about-us/") ? "active" : ""}`}
                       >
                         عن الشركة
                     </Link>
@@ -85,9 +97,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item">
                 <Link
                           href="/services/hosting-services/"
-                          className={`nav-link ${
-                            currentPath == "/services/hosting-services/" && "active"
-                          }`}
+                          className={`nav-link ${isActive("/services/hosting-services/") ? "active" : ""}`}
                         >
                     دومين و استضافة
                   </Link>
@@ -97,9 +107,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item">
                   <Link
                     href="/services/emails/"
-                    className={`nav-link ${
-                      currentPath == "/services/emails" && "active"
-                    }`}
+                    className={`nav-link ${isActive("/services/emails/") ? "active" : ""}`}
                   >
                     بريد إلكتروني
                   </Link>
@@ -108,9 +116,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item">
                       <Link
                             href="/services/website-design/"
-                            className={`nav-link ${
-                              currentPath == "/services/website-design " && "active"
-                            }`}
+                            className={`nav-link ${isActive("/services/website-design/") ? "active" : ""}`}
                           >
                              مواقع ويب
                       </Link>
@@ -119,9 +125,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item">
                   <Link
                         href="/services/app-development/"
-                        className={`nav-link ${
-                          currentPath == "/services/app-development" && "active"
-                        }`}
+                        className={`nav-link ${isActive("/services/app-development/") ? "active" : ""}`}
                       >
                         تطبيقات الموبايل
                     </Link>
@@ -130,9 +134,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item">
                   <Link
                         href="/services/seo/"
-                        className={`nav-link ${
-                          currentPath == "/services/seo/" && "active"
-                        }`}
+                        className={`nav-link ${isActive("/services/seo/") ? "active" : ""}`}
                       >
                         سيو
                     </Link>
@@ -141,9 +143,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item">
                   <Link
                         href="/services/digital-marketing/"
-                        className={`nav-link ${
-                          currentPath == "/services/digital-marketing/" && "active"
-                        }`}
+                        className={`nav-link ${isActive("/services/digital-marketing/") ? "active" : ""}`}
                       >
                         تسويق إلكتروني
                     </Link>
@@ -155,9 +155,7 @@ const Navbar = ({ theme }) => {
        {/*          <li className="nav-item">
                   <Link
                     href="/news/"
-                    className={`nav-link ${
-                      currentPath == "/news/" && "active"
-                    }`}
+                    className={`nav-link ${isActive("/news/") ? "active" : ""}`}
                   >
                     المدونة
                   </Link>
@@ -167,9 +165,7 @@ const Navbar = ({ theme }) => {
                 <li className="nav-item m-rr">
                   <Link
                         href="/training/"
-                        className={`nav-link ${
-                          currentPath == "/training/" && "active"
-                        }`}
+                        className={`nav-link ${isActive("/training/") ? "active" : ""}`}
                       >
                         التدريب
                     </Link>

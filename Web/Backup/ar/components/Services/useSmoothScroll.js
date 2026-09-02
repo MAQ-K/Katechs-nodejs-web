@@ -63,7 +63,12 @@ const PUSH_IDLE_MS = 600;
 // reads as a broken scrollbar; heavy damping reads as resistance.
 const PUSH_RESIST = 0.12;
 
-export default function useSmoothScroll() {
+// `snap` is the area-to-area jumping — the push-to-cross mechanic that only
+// makes sense on a page built out of .wsv-area blocks. It is OFF by default so
+// the plain glide can be mounted globally (components/Shared/SmoothScrollGlobal.js)
+// for every other page, which is exactly what the user asked for: "the slide,
+// not the mechanism". /services opts back in.
+export default function useSmoothScroll({ snap = false } = {}) {
   const target = useRef(0);
   const raf = useRef(null);
   const enabled = useRef(false);
@@ -147,8 +152,9 @@ export default function useSmoothScroll() {
     const applyState = () => {
       enabled.current = !reducedMQ.matches;
       // Jumping is desktop-only; the glide itself is fine at any width, and a
-      // wheel barely exists below it anyway.
-      canSnap.current = enabled.current && desktopMQ.matches;
+      // wheel barely exists below it anyway. `snap` gates it entirely: on every
+      // page but /services this stays false and onWheel skips the whole block.
+      canSnap.current = snap && enabled.current && desktopMQ.matches;
       if (enabled.current) {
         root.classList.add("wsv-smooth");
         target.current = window.scrollY;
@@ -336,7 +342,7 @@ export default function useSmoothScroll() {
       // scrolling disabled.
       root.classList.remove("wsv-smooth");
     };
-  }, [start, stop, step]);
+  }, [start, stop, step, snap]);
 
   return { scrollToY };
 }

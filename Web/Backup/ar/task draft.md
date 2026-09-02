@@ -74,3 +74,47 @@ i want a solid bg not this type of bg
 change the header bg color to be the same as this page 
 services/hosting-services/
 
+
+## navbar 
+when in a page the tap of this page should be diff color
+
+## navboxes
+when chose a service it take is to this service area 
+okay thats right, but when it takes to the servcies no animation add one please
+
+## space bg
+i want the space bg color to be dark blue and the borders up and down of a area have box shadow that make the area like up of the space 
+space and the area on top of it 
+
+
+## plan card bg
+change the bg color of the plans cards the black one to our dark blue
+
+## wordpress area edits
+remove "مثال توضيحي"
+add under the جاهز تبدأ البيع أونلاين؟ banner 2 wide plan cards 
+1st have build ur store 2nd manage ur store
+both have images 
+
+## remove any مثال توضيحي
+
+
+## areas box shadow 
+make it more firm 
+add shodowbox for top of area and end of area
+reduse blur 
+make it look modern
+
+
+
+
+## area bg [web services page] 
+change all areas bg to an off white color 
+
+## fix back to the top btn [web services page] 
+
+## slide scroll for all pages (not machanism just the slide)
+
+## use one plan card stlye ,the same one in web services page
+
+

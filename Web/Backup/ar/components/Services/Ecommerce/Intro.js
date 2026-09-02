@@ -82,9 +82,6 @@ const Intro = ({ area, id }) => {
               </span>
               <span className="wsv-flow-result-line">{journeyResult.line}</span>
               <span className="wsv-flow-result-ref">{journeyResult.ref}</span>
-              {/* Stated on screen, not left to inference: the brief forbids
-                  presenting sample figures as real results. */}
-              <span className="wsv-sample">{journeyResult.note}</span>
             </motion.div>
           </motion.div>
         </motion.div>

@@ -80,17 +80,12 @@ This files table contents are outlined below>>>>>
 /*
 Default Style
 ============================*/
-@import url(https://fonts.googleapis.com/earlyaccess/droidarabickufi.css);
-/*
-$body-font-family: "Open Sans", sans-serif;
-$heading-font-family: "Dosis", sans-serif;
-*/
 body {
   padding: 0;
   margin: 0;
   font-size: 15px;
   line-height: 1.8;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   color: #4d4d4d;
 }
 
@@ -130,7 +125,7 @@ h4,
 h5,
 h6 {
   color: #212121;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
 }
 
@@ -289,6 +284,12 @@ Bg Color Four Area Style
 Go Top Style
 ======================================================*/
 .scroll-to-top .top {
+  /* It is a real <button> now, not a div with an onClick — so it needs the
+     UA button styling stripped, or Windows/Safari draw a border and a grey
+     fill over the intended one. */
+  border: none;
+  padding: 0;
+  appearance: none;
   position: fixed;
   cursor: pointer;
   bottom: 15px;
@@ -1055,6 +1056,29 @@ jumpx Nav Area Style
   background-color: #060c4a;
 }
 
+/* Active tab — the page you are currently on.
+   The template only shifted the link's COLOUR for .active, and used that exact
+   same colour for :hover, so the current page was indistinguishable from
+   whatever the pointer happened to be over. The underline is what actually
+   carries the state now; the weight bump keeps it legible on the navy header.
+   Only defined on .active, so hover never draws a bar and the two states stay
+   readable side by side. */
+.navbar-area .navbar-nav .nav-item a.nav-link.active {
+  position: relative;
+  color: #1dd3f8;
+  font-weight: 700;
+}
+.navbar-area .navbar-nav .nav-item a.nav-link.active::after {
+  content: "";
+  position: absolute;
+  /* Logical, not left/right: this header is rendered under dir="rtl". */
+  inset-inline: 0;
+  bottom: -8px;
+  height: 2px;
+  border-radius: 2px;
+  background-color: #1dd3f8;
+}
+
 .navbar-toggler {
   border: none;
   background: #eee !important;
@@ -1345,7 +1369,7 @@ About Area Style
   margin: 5px 0 0;
 }
 .about-content ul li {
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-size: 16px;
   font-weight: 600;
   color: #212121;
@@ -1849,7 +1873,7 @@ Business  Area Style
 .single-counter h2 span {
   font-size: 50px;
   color: #6b6bd4;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   line-height: 1;
 }
@@ -1859,7 +1883,7 @@ Business  Area Style
   top: 7px;
 }
 .single-counter p {
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-size: 18px;
   font-weight: 500;
   margin: 10px 0 0;
@@ -2150,7 +2174,7 @@ Industries Area Style
   font-size: 15px;
   font-weight: 600;
   color: #212121;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   margin-bottom: 15px;
   box-shadow: 0 0 20px 3px rgba(0, 0, 0, 0.05);
   background-color: #ffffff;
@@ -2535,7 +2559,7 @@ Footer Top Area Style
 }
 .single-widget .information li.address span {
   display: block;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-size: 20px;
   font-weight: 600;
 }
@@ -2835,7 +2859,7 @@ Pricing Area Style
 }
 .single-pricing span {
   font-size: 30px;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   color: #212121;
   font-weight: 700;
   display: block;
@@ -3131,7 +3155,7 @@ Ecommerce Platforms Section Style
 .tab.quote-list-tab .tabs li {
   display: inline-block;
   padding: 0 10px;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   color: #212121;
   font-size: 20px;
   font-weight: 700;
@@ -5546,14 +5570,14 @@ Hosting Services — Hero Section Style
 }
 .hosting-hero .hosting-hero-text span {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
   margin-bottom: 15px;
 }
 .hosting-hero .hosting-hero-text h1 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: 44px;
   margin-bottom: 18px;
@@ -5569,7 +5593,7 @@ Hosting Services — Hero Section Style
   gap: 8px;
   background-color: rgba(29, 211, 248, 0.1);
   color: #1dd3f8;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   padding: 10px 18px;
@@ -5600,7 +5624,7 @@ Hosting Services — Hero Section Style
   font-size: 15px;
 }
 .hosting-hero .hosting-hero-trust .hosting-hero-trust-text {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 14px;
   color: #000000;
@@ -5712,7 +5736,7 @@ Hosting Services — Hero Section Style
   font-size: 16px;
   font-weight: 800;
   color: #000000;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
 }
 .hosting-hero .hosting-hero-speed-card .hosting-hero-speed-ring .hosting-hero-speed-ring-inner i {
   font-size: 12px;
@@ -5750,13 +5774,23 @@ Hosting Services — Pricing Section Style
   padding-top: 100px;
   padding-bottom: 70px;
   background-color: #f7f9fb;
+  /* Same recipe as .wsv-plan on /services — and as .email-plan-card,
+     .app-plan-card, .seo-card/.seo-plan, .dm-plan and .tr-plan, all of which
+     already shared it. This card was the ONLY plan card on the site still on
+     its own look: 20px radius, a single soft drop shadow, 40px padding and
+     centred text. Brought onto the shared one (user request, 2026-09-02).
+
+     The four-layer shadow is the signature: a wide soft drop, a tight contact
+     shadow, an inset darkening at the bottom and an inset white highlight at
+     the top. The last two are what give the card its edge — a single drop
+     shadow reads flat next to them, which is exactly why this one stood out. */
 }
 .hosting-pricing .hosting-pricing-title span {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
 }
 .hosting-pricing .hosting-pricing-title h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
 }
 .hosting-pricing .hosting-pricing-switch {
@@ -5774,7 +5808,7 @@ Hosting Services — Pricing Section Style
   cursor: pointer;
   padding: 10px 26px;
   border-radius: 999px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 14px;
   color: #6084a4;
@@ -5786,33 +5820,49 @@ Hosting Services — Pricing Section Style
 }
 .hosting-pricing .hosting-pricing-card {
   position: relative;
+  /* flex column + height:100% match .wsv-plan and are what let the badge sit
+     in flow at the start edge instead of being absolutely pinned. */
+  display: flex;
+  flex-direction: column;
+  height: 100%;
   background-color: #ffffff;
-  border-radius: 20px;
-  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.06);
-  padding: 40px 30px;
+  border-radius: 16px;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  padding: 34px 28px;
   margin-bottom: 30px;
-  text-align: center;
-  transition: all 0.6s ease;
+  /* Was `center`. Every other plan card on the site reads from the start
+     edge, and under RTL that is the right edge. */
+  text-align: start;
+  /* Specific properties, not $transition (`all 0.6s`): `all` also animates
+     the background-color swap on the popular card and drags it. */
+  transition: box-shadow 0.35s ease;
+  /* In flow at the start edge, matching .wsv-plan-badge / .seo-plan-badge /
+     .app-plan-badge. It used to be absolutely pinned as a notch straddling
+     the card's top edge — which is also why this card needed 40px of top
+     padding to clear it. It is already the first child in the JSX
+     (components/HostingServices/Pricing.js), so nothing there had to move. */
+  /* 20px/700, as .wsv-plan h3 and .app-plan-card h3. Was 22px/800. */
+}
+.hosting-pricing .hosting-pricing-card:hover {
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 .hosting-pricing .hosting-pricing-card .hosting-pricing-badge {
-  position: absolute;
-  top: -14px;
-  left: 50%;
-  transform: translateX(-50%);
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 6px 13px;
+  border-radius: 100px;
   background-color: #1dd3f8;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
-  font-size: 13px;
-  padding: 8px 20px;
-  border-radius: 999px;
+  font-size: 11.5px;
   white-space: nowrap;
 }
 .hosting-pricing .hosting-pricing-card .hosting-pricing-name {
-  font-family: "Cairo", sans-serif;
-  font-weight: 800;
-  font-size: 22px;
-  margin-bottom: 8px;
+  font-family: "Almarai", sans-serif;
+  font-weight: 700;
+  font-size: 20px;
+  margin-bottom: 6px;
 }
 .hosting-pricing .hosting-pricing-card .hosting-pricing-tagline {
   font-size: 14px;
@@ -5824,7 +5874,7 @@ Hosting Services — Pricing Section Style
 }
 .hosting-pricing .hosting-pricing-card .hosting-pricing-price .hosting-pricing-price-value {
   display: block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: 30px;
   color: #000000;
@@ -5840,7 +5890,7 @@ Hosting Services — Pricing Section Style
   width: 100%;
   background-color: #1dd3f8;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 15px;
   padding: 14px;
@@ -5854,8 +5904,12 @@ Hosting Services — Pricing Section Style
 .hosting-pricing .hosting-pricing-card .hosting-pricing-features {
   list-style: none;
   padding: 0;
-  margin: 0;
-  text-align: right;
+  /* margin-top:auto pins the list to the bottom so the CTAs line up
+     across three cards of unequal copy length — the card is a flex
+     column now, which it was not before. */
+  margin: auto 0 0;
+  /* `text-align: right` is gone: it was undoing the card's `center` for
+     this one block, and the card reads from the start edge now. */
 }
 .hosting-pricing .hosting-pricing-card .hosting-pricing-features li {
   display: flex;
@@ -5911,7 +5965,9 @@ Hosting Services — Pricing Section Style
   width: 100%;
   padding: 2px;
   margin-bottom: 30px;
-  border-radius: 22px;
+  /* Card radius + the 2px of padding this ring adds around it. Follow the
+     card if that ever changes, or the ring corners cut across it. */
+  border-radius: 18px;
   overflow: hidden;
   isolation: isolate;
   scale: 1.05;
@@ -5986,7 +6042,7 @@ Hosting Services — cPanel Banner Section Style
   overflow: visible;
 }
 .hosting-cpanel-banner .hosting-cpanel-banner-text h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: 30px;
   margin-bottom: 18px;
@@ -6041,7 +6097,7 @@ Hosting Services — Feature Grid Section Style
   margin-bottom: 40px;
 }
 .hosting-feature-grid-title h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: 30px;
 }
@@ -6069,13 +6125,13 @@ Hosting Services — Feature Grid Section Style
   transition: color 0.3s ease, transform 0.3s ease;
 }
 .hosting-feature-grid .hosting-feature-grid-item h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 18px;
   margin-bottom: 10px;
 }
 .hosting-feature-grid .hosting-feature-grid-item p {
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-size: 14px;
   line-height: 1.8;
   color: #6084a4;
@@ -6203,14 +6259,14 @@ site's cyan $main-color instead of the lab's own palette)
 }
 .email-hero .email-hero-text .email-hero-eyebrow {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
   margin-bottom: 15px;
 }
 .email-hero .email-hero-text h1 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 42px;
   line-height: 1.3;
   margin-bottom: 18px;
@@ -6297,7 +6353,7 @@ Emails Page — Email type cards
   margin-bottom: 20px;
 }
 .email-types .email-type-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 19px;
   line-height: 1.5;
   margin-bottom: 12px;
@@ -6311,7 +6367,7 @@ Emails Page — Email type cards
   display: inline-flex;
   align-items: center;
   gap: 8px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
@@ -6355,14 +6411,14 @@ Emails Page — Pricing (tab bar + plan cards)
 }
 .email-pricing .email-pricing-head .email-pricing-eyebrow {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
   margin-bottom: 12px;
 }
 .email-pricing .email-pricing-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 34px;
   line-height: 1.4;
   margin-bottom: 14px;
@@ -6389,7 +6445,7 @@ Emails Page — Pricing (tab bar + plan cards)
   border: none;
   border-radius: 100px;
   background-color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #212121;
@@ -6416,38 +6472,11 @@ Emails Page — Pricing (tab bar + plan cards)
   color: #ffffff;
 }
 .email-pricing .email-plan-beam {
-  position: relative;
-  border-radius: 18px;
-  padding: 2px;
-  overflow: hidden;
   margin-bottom: 30px;
 }
-.email-pricing .email-plan-beam::before {
-  content: "";
-  position: absolute;
-  left: 50%;
-  top: 50%;
-  width: 180%;
-  aspect-ratio: 1;
-  transform: translate(-50%, -50%);
-  background: conic-gradient(from 0deg, transparent 0deg 250deg, #1dd3f8 300deg, #7dd8ea 340deg, #ffffff 356deg, transparent 360deg);
-  animation: emailBeamSpin 6s linear infinite;
-}
-.email-pricing .email-plan-beam:hover::before {
-  animation-duration: 2.2s;
-}
-.email-pricing .email-plan-beam .email-beam-inner {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-}
 .email-pricing .email-plan-beam .email-plan-card {
+  width: 100%;
   margin-bottom: 0;
-}
-@keyframes emailBeamSpin {
-  to {
-    transform: translate(-50%, -50%) rotate(360deg);
-  }
 }
 .email-pricing .email-plan-card {
   position: relative;
@@ -6475,7 +6504,7 @@ Emails Page — Pricing (tab bar + plan cards)
   margin-bottom: 18px;
 }
 .email-pricing .email-plan-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 18px;
   line-height: 1.5;
   margin-bottom: 16px;
@@ -6487,7 +6516,7 @@ Emails Page — Pricing (tab bar + plan cards)
   margin-bottom: 4px;
 }
 .email-pricing .email-plan-card .email-plan-price strong {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 32px;
   font-weight: 700;
   color: #212121;
@@ -6565,7 +6594,7 @@ Emails Page — Pricing (tab bar + plan cards)
   border-radius: 100px;
   background-color: #1dd3f8;
   color: #0a1f44;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 12px;
 }
@@ -6664,14 +6693,14 @@ supplied reference rather than forcing the lab's card recipe here.
 }
 .email-features .email-features-head .email-features-eyebrow {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
   margin-bottom: 12px;
 }
 .email-features .email-features-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 30px;
   line-height: 1.4;
 }
@@ -6689,7 +6718,7 @@ supplied reference rather than forcing the lab's card recipe here.
   transition: all 0.6s ease;
 }
 .email-features .email-feature-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 18px;
   margin-bottom: 8px;
 }
@@ -6715,7 +6744,7 @@ supplied reference rather than forcing the lab's card recipe here.
   margin-bottom: 26px;
 }
 .email-features .email-feature-card.stat .email-feature-stat-ring span {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 34px;
   font-weight: 700;
   color: #212121;
@@ -6827,7 +6856,7 @@ supplied reference rather than forcing the lab's card recipe here.
   gap: 8px;
 }
 .email-features .email-feature-card.wide .email-feature-team .email-feature-team-badge {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 12px;
   font-weight: 600;
   padding: 7px 14px;
@@ -6867,14 +6896,14 @@ Emails Page — FAQ
 }
 .email-faq .email-faq-head .email-faq-eyebrow {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
   margin-bottom: 12px;
 }
 .email-faq .email-faq-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 30px;
   line-height: 1.4;
 }
@@ -6896,7 +6925,7 @@ Emails Page — FAQ
   gap: 16px;
   padding: 22px 26px;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 16px;
   color: #212121;
@@ -6930,7 +6959,7 @@ Emails Page — FAQ
 
 /*
 App Development Page — Hero (Section 1)
-(theme carried over from the Emails page: Cairo headings, cyan $main-color,
+(theme carried over from the Emails page: $font-family headings, cyan $main-color,
 soft-emboss card recipe, 16px radius. Layout from the user's inspiration
 image: tag eyebrow, oversized headline, dual CTA, framed media card with a
 numbered caption plate.)
@@ -6950,7 +6979,7 @@ numbered caption plate.)
   align-items: center;
   flex-wrap: wrap;
   gap: 10px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 1px;
@@ -6971,7 +7000,7 @@ numbered caption plate.)
   font-weight: 400;
 }
 .app-hero .app-hero-text h1 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 54px;
   font-weight: 700;
   line-height: 1.28;
@@ -7049,7 +7078,7 @@ numbered caption plate.)
   box-shadow: 0 10px 24px -14px rgba(15, 23, 42, 0.35);
 }
 .app-hero .app-hero-caption p {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13.5px;
   font-weight: 500;
   line-height: 1.6;
@@ -7057,7 +7086,7 @@ numbered caption plate.)
   margin-bottom: 0;
 }
 .app-hero .app-hero-caption .app-hero-caption-num {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 30px;
   font-weight: 700;
   line-height: 1;
@@ -7117,7 +7146,7 @@ sections read as one system.)
   margin-bottom: 55px;
 }
 .app-platforms .app-platforms-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 40px;
   font-weight: 700;
   line-height: 1.35;
@@ -7192,7 +7221,7 @@ sections read as one system.)
   padding-top: 0;
 }
 .app-platforms .app-platform-meta h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 15px;
   font-weight: 700;
   color: #ffffff;
@@ -7291,7 +7320,7 @@ so it alternates against the dark Platforms band above it.)
   border: 1px solid #e5e8ec;
   background-color: #ffffff;
   box-shadow: 0 4px 10px -6px rgba(15, 23, 42, 0.12);
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 13px;
   letter-spacing: 0.5px;
@@ -7303,7 +7332,7 @@ so it alternates against the dark Platforms band above it.)
   color: #1dd3f8;
 }
 .app-process .app-process-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 40px;
   font-weight: 700;
   line-height: 1.4;
@@ -7335,7 +7364,7 @@ so it alternates against the dark Platforms band above it.)
   margin-bottom: 8px;
 }
 .app-process .app-step-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.5;
@@ -7523,7 +7552,7 @@ so it alternates against the dark Platforms band above it.)
 }
 .app-process .app-step-bubble-2 {
   align-self: stretch;
-  background-color: #111318;
+  background-color: #0a1f44;
   color: #ffffff;
   text-align: center;
 }
@@ -7581,7 +7610,7 @@ card's bottom edge. Card chrome intentionally matches .email-feature-card
   /* ---- 3. store listing + support bubble ---- */
 }
 .app-features .app-features-title {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 36px;
   font-weight: 700;
   line-height: 1.4;
@@ -7619,7 +7648,7 @@ card's bottom edge. Card chrome intentionally matches .email-feature-card
   margin-bottom: 18px;
 }
 .app-features .app-feature-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 18px;
   font-weight: 700;
   line-height: 1.5;
@@ -7796,7 +7825,7 @@ card's bottom edge. Card chrome intentionally matches .email-feature-card
   gap: 7px;
   padding: 9px 14px;
   border-radius: 10px;
-  background-color: #111318;
+  background-color: #0a1f44;
   color: #ffffff;
   font-size: 11.5px;
   font-weight: 500;
@@ -7847,14 +7876,14 @@ hero #f5f6f8 → platforms dark → process white → pricing #f5f6f8
 }
 .app-pricing .app-pricing-head .app-pricing-eyebrow {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
   margin-bottom: 12px;
 }
 .app-pricing .app-pricing-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 34px;
   font-weight: 700;
   line-height: 1.4;
@@ -7893,7 +7922,7 @@ hero #f5f6f8 → platforms dark → process white → pricing #f5f6f8
   border-radius: 50px;
   background-color: #1dd3f8;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 11.5px;
   font-weight: 600;
 }
@@ -7910,7 +7939,7 @@ hero #f5f6f8 → platforms dark → process white → pricing #f5f6f8
   margin-bottom: 18px;
 }
 .app-pricing .app-plan-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 6px;
@@ -7922,7 +7951,7 @@ hero #f5f6f8 → platforms dark → process white → pricing #f5f6f8
   margin-bottom: 20px;
 }
 .app-pricing .app-plan-price {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 17px;
   font-weight: 700;
   color: #212121;
@@ -8014,14 +8043,14 @@ hero #f5f6f8 → platforms dark → process white → pricing #f5f6f8
 }
 .app-faq .app-faq-head .app-faq-eyebrow {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 14px;
   color: #1dd3f8;
   margin-bottom: 12px;
 }
 .app-faq .app-faq-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 32px;
   font-weight: 700;
   line-height: 1.4;
@@ -8045,7 +8074,7 @@ hero #f5f6f8 → platforms dark → process white → pricing #f5f6f8
   gap: 16px;
   padding: 22px 26px;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 16px;
   color: #212121;
@@ -8176,7 +8205,7 @@ Three ground rules held throughout:
   gap: 7px;
   padding: 9px 15px;
   border-radius: 50px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 12.5px;
   font-weight: 600;
   white-space: nowrap;
@@ -8291,8 +8320,8 @@ Three ground rules held throughout:
 .app-marquee .app-marquee-track {
   display: flex;
   align-items: center;
-  gap: 12px;
   width: max-content;
+  direction: ltr;
   animation: appMarquee 34s linear infinite;
 }
 .app-marquee:hover .app-marquee-track {
@@ -8303,11 +8332,13 @@ Three ground rules held throughout:
   align-items: center;
   gap: 8px;
   flex-shrink: 0;
+  direction: rtl;
+  margin-right: 12px;
   padding: 10px 18px;
   border-radius: 50px;
   border: 1px solid rgba(255, 255, 255, 0.1);
   background-color: rgba(255, 255, 255, 0.04);
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.72);
@@ -8440,7 +8471,7 @@ Three ground rules held throughout:
   flex-shrink: 0;
   padding-top: 11px;
   text-align: center;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 12.5px;
   font-weight: 600;
   color: rgba(255, 255, 255, 0.75);
@@ -8624,7 +8655,7 @@ Three ground rules held throughout:
 }
 .app-stats .app-stat-num {
   display: block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 42px;
   font-weight: 700;
   line-height: 1.2;
@@ -8639,7 +8670,7 @@ Three ground rules held throughout:
 }
 .app-stats .app-stat-label {
   display: block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13.5px;
   color: rgba(255, 255, 255, 0.55);
   margin-top: 6px;
@@ -8871,7 +8902,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .seo-h1 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
   line-height: 1.1;
@@ -8881,7 +8912,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .seo-h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   line-height: 1.25;
@@ -8890,7 +8921,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .seo-h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 17px;
   color: #212121;
@@ -8931,7 +8962,7 @@ marquee, the beam and the ambient hero glow.
   gap: 8px;
   background: #0a1f44;
   color: #ffffff;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 15px;
   padding: 16px 30px;
@@ -9115,7 +9146,7 @@ marquee, the beam and the ambient hero glow.
   width: 45%;
 }
 .seo-serp-row .seo-serp-rank {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: 15px;
   color: #4d4d4d;
@@ -9177,7 +9208,7 @@ marquee, the beam and the ambient hero glow.
 
 .seo-stat-value {
   display: block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
   color: #212121;
@@ -9284,7 +9315,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .seo-step-num {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: 13px;
   color: #9aa2ad;
@@ -9447,7 +9478,7 @@ marquee, the beam and the ambient hero glow.
   gap: 16px;
   padding: 20px 24px;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 16px;
   color: #212121;
@@ -9645,7 +9676,7 @@ marquee, the beam and the ambient hero glow.
   display: inline-block;
   background: #0a1f44;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 12px;
   border-radius: 100px;
@@ -9780,7 +9811,7 @@ marquee, the beam and the ambient hero glow.
   display: flex;
   align-items: center;
   justify-content: center;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 15px;
   color: #212121;
@@ -9808,7 +9839,7 @@ marquee, the beam and the ambient hero glow.
    fights over class names with SEO/Training. T-011: reskinned in place to
    match the App Development page's visual system exactly (components/AppDev
    + its style.scss blocks) — 16px card radius, rgba(15,23,42,.08) hairline
-   borders, Cairo 700 headings, $main-color cyan accents, .default-btn-style
+   borders, $font-family 700 headings, $main-color cyan accents, .default-btn-style
    filled buttons and the soft-emboss pricing-card recipe. The $dm-* tokens
    below are AppDev's own values, not approximations. Replaces
    styles/ux-prototype.css classes on THIS page only; that file stays
@@ -9862,7 +9893,7 @@ marquee, the beam and the ambient hero glow.
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
   padding: 7px 16px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: #212121;
@@ -9882,7 +9913,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-h1 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
   line-height: 1.28;
@@ -9892,7 +9923,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   line-height: 1.4;
@@ -9901,7 +9932,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 17px;
   color: #212121;
@@ -9953,7 +9984,7 @@ marquee, the beam and the ambient hero glow.
   gap: 8px;
   background: #1dd3f8;
   color: #ffffff;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 15px;
   padding: 16px 31px;
@@ -10108,7 +10139,7 @@ marquee, the beam and the ambient hero glow.
   position: absolute;
   top: -14px;
   inset-inline-end: 18px;
-  background: #111318;
+  background: #0a1f44;
   color: #ffffff;
   font-size: 12px;
   font-weight: 700;
@@ -10301,7 +10332,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .dm-step-num {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 13px;
   color: rgba(15, 23, 42, 0.32);
@@ -10473,7 +10504,7 @@ marquee, the beam and the ambient hero glow.
 
 .dm-stat-value {
   display: block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
   color: #212121;
@@ -10560,7 +10591,7 @@ marquee, the beam and the ambient hero glow.
   align-self: flex-start;
   background: #1dd3f8;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 11.5px;
   font-weight: 600;
   border-radius: 100px;
@@ -10600,7 +10631,7 @@ marquee, the beam and the ambient hero glow.
   gap: 16px;
   padding: 20px 24px;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 16px;
   color: #212121;
@@ -10701,7 +10732,7 @@ marquee, the beam and the ambient hero glow.
    over class names with SEO/DM. T-011: reskinned in place to match the App
    Development page's visual system exactly (components/AppDev + its
    style.scss blocks) — 16px card radius, rgba(15,23,42,.08) hairline
-   borders, Cairo 700 headings, $main-color cyan accents, .default-btn-style
+   borders, $font-family 700 headings, $main-color cyan accents, .default-btn-style
    filled buttons and the soft-emboss card/plan recipe — same pass already
    applied to `.seo-*` and `.dm-*` above. The $tr-* tokens below are
    AppDev's own values, not approximations. Replaces
@@ -10757,7 +10788,7 @@ marquee, the beam and the ambient hero glow.
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
   padding: 7px 16px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13px;
   font-weight: 600;
   color: #212121;
@@ -10777,7 +10808,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-h1 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(2.2rem, 4.2vw, 3.4rem);
   line-height: 1.28;
@@ -10787,7 +10818,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   line-height: 1.4;
@@ -10796,7 +10827,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 17px;
   color: #212121;
@@ -10859,7 +10890,7 @@ marquee, the beam and the ambient hero glow.
   gap: 8px;
   background: #1dd3f8;
   color: #ffffff;
-  font-family: "Droid Arabic Kufi", serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 15px;
   padding: 16px 31px;
@@ -11018,7 +11049,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-frame-num {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 15px;
   color: rgba(255, 255, 255, 0.55);
@@ -11052,7 +11083,7 @@ marquee, the beam and the ambient hero glow.
 
 .tr-stat-value {
   display: block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(2rem, 3.6vw, 2.5rem);
   color: #212121;
@@ -11204,7 +11235,7 @@ marquee, the beam and the ambient hero glow.
 }
 
 .tr-step-num {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 13px;
   color: rgba(15, 23, 42, 0.32);
@@ -11376,7 +11407,7 @@ marquee, the beam and the ambient hero glow.
 .tr-table thead th {
   background: #f5f6f8;
   color: #212121;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 13px;
   border-bottom: 1px solid rgba(15, 23, 42, 0.08);
@@ -11439,7 +11470,7 @@ marquee, the beam and the ambient hero glow.
   align-self: flex-start;
   background: #1dd3f8;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 11.5px;
   font-weight: 600;
   border-radius: 100px;
@@ -11531,7 +11562,7 @@ marquee, the beam and the ambient hero glow.
   gap: 16px;
   padding: 20px 24px;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 16px;
   color: #212121;
@@ -11675,7 +11706,7 @@ marquee, the beam and the ambient hero glow.
 === Web Services Page: Area 1 ===
 Hero (video) / Projects carousel / Service navigator.
 Matches the newer service-page system (hosting/emails/app-dev/seo):
-cyan #1dd3f8, hairline rgba(15,23,42,.08), 16px cards, Cairo headings.
+cyan #1dd3f8, hairline rgba(15,23,42,.08), 16px cards, Almarai headings.
 Logical properties throughout so nothing is needed in rtl.css.
 =================================================*/
 /* Per-area grounds. One colour per service area, shared by EVERY section inside
@@ -11721,10 +11752,12 @@ to change a value.
   --ds-line: rgba(15, 23, 42, 0.08);
   --ds-band: #f5f6f8;
   /* -- type -- */
-  /* Cairo for anything structural. The sitewide $heading-font-family is Droid
-     Arabic Kufi and is deliberately NOT changed; this system opts in per rule,
-     which is why every heading below states its family rather than inheriting. */
-  --ds-font: "Cairo", sans-serif;
+  /* One family, site-wide: $font-family (Almarai). This token used to be the
+     opt-in for a SECOND face — Cairo, on a site whose $heading-font-family was
+     Droid Arabic Kufi — which is why every heading rule below still states its
+     family instead of inheriting. Those statements are now redundant rather
+     than load-bearing; harmless, and they keep the layer portable. */
+  --ds-font: Almarai, sans-serif;
   --ds-h2: clamp(1.7rem, 2.8vw, 2.3rem);
   --ds-body-size: 15px;
   --ds-body-line: 1.95;
@@ -11762,7 +11795,7 @@ to change a value.
 
 .wsv-eyebrow {
   display: inline-block;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13px;
   font-weight: 700;
   color: #1dd3f8;
@@ -11860,7 +11893,7 @@ to change a value.
   backdrop-filter: blur(6px);
   -webkit-backdrop-filter: blur(6px);
   color: rgba(255, 255, 255, 0.92);
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.02em;
@@ -11874,7 +11907,7 @@ to change a value.
 /* Dominant, oversized headline — the reference's whole point is that this is
    the one thing on the page you can't miss. */
 .wsv-hero-text h1 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: clamp(36px, 6vw, 72px);
   line-height: 1.15;
@@ -11910,7 +11943,7 @@ to change a value.
   background-color: #ffffff;
   border: 1px solid #ffffff;
   color: #0a1f44;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 15px;
   font-weight: 700;
   box-shadow: 0 12px 28px rgba(0, 0, 0, 0.28);
@@ -12028,7 +12061,7 @@ to change a value.
 }
 
 .wsv-nav-head h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 800;
   font-size: 32px;
   color: #212121;
@@ -12047,14 +12080,29 @@ to change a value.
   padding-bottom: clamp(32px, 4vw, 48px);
   /* The navigator is the last section of the intro (the user calls that whole
      block "area 1"), so the space after it is an AREA gap and has to match the
-     ones between the service areas below — same token as .wsv-area's own
-     margin-bottom, so this boundary can't drift out of step with the rest. */
-  margin-bottom: clamp(64px, 8vw, 140px);
+     ones between the service areas below. That distance is now .wsv-areas
+     padding-top rather than a margin here, so the gap gets painted with the
+     dark space colour instead of leaving a white stripe above it. */
+  margin-bottom: 0;
   background-color: #f5f6f8;
-  /* Navy drop under the section's bottom edge, closing off the intro area.
-     The negative spread cancels the shadow on the other three sides, so only
-     the bottom shows — offset down, then pulled back in by the same amount. */
-  box-shadow: 0 26px 46px -26px rgba(10, 31, 68, 0.35);
+  /* The intro IS an area (the user counts hero + carousel + navigator as area
+     1), so its bottom edge gets the same treatment as the service slabs below:
+     rounded off and lit in $main-color. Same values as
+     `.wsv-areas .wsv-area`'s lower drop — keep the two in step, they are one
+     visual rule split across two rulesets only because the intro is not inside
+     the .wsv-areas wrapper.
+     Only the bottom is rounded and only the bottom casts: the intro's top edge
+     is the top of the document, with no space above it to separate from.
+     The negative spread cancels the shadow on the other three sides — offset
+     down, then pulled back in by the same amount. */
+  border-bottom-left-radius: 18px;
+  border-bottom-right-radius: 18px;
+  /* An INSET hairline, where the slabs below use an outset ring. The ring
+     would trace all four sides, and this element's top edge sits mid-page
+     between the carousel and the navigator — a line there would cut the
+     intro in half. Inset draws it just inside the bottom edge only.
+     The throw matches the slabs' lower one exactly; keep the two in step. */
+  box-shadow: inset 0 -1px 0 rgba(29, 211, 248, 0.3), 0 16px 26px -12px rgba(29, 211, 248, 0.55);
 }
 
 .wsv-nav-head {
@@ -12101,7 +12149,7 @@ to change a value.
   pointer-events: none;
 }
 .wsv-nav-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: 20px;
   color: #212121;
@@ -12263,7 +12311,7 @@ to change a value.
   border: 0;
   background: none;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 12px;
   font-weight: 600;
   line-height: 1.3;
@@ -12318,7 +12366,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 }
 
 .wsv-h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   font-size: clamp(1.7rem, 2.8vw, 2.3rem);
   line-height: 1.45;
@@ -12419,7 +12467,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 /* Secondary reads as a link, not a second button, so the solid one stays the
    only dominant shape — same balance as the hero's .wsv-btn-ghost. */
 .wsv-about-link {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 15px;
   font-weight: 700;
   color: #0a1f44;
@@ -12465,17 +12513,17 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   border-radius: 100px;
   background: none;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: #6084a4;
   transition: background-color 0.25s ease, color 0.25s ease;
 }
 .wsv-cur-switch button:hover {
-  color: #111111;
+  color: #0a1f44;
 }
 .wsv-cur-switch button.is-active {
-  background-color: #111111;
+  background-color: #0a1f44;
   color: #ffffff;
 }
 
@@ -12505,7 +12553,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
 }
 .wsv-plan h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 20px;
   font-weight: 700;
   margin-bottom: 6px;
@@ -12518,9 +12566,9 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   margin-bottom: 14px;
   padding: 6px 13px;
   border-radius: 100px;
-  background-color: #111111;
+  background-color: #0a1f44;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 11.5px;
   font-weight: 700;
 }
@@ -12531,7 +12579,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   margin-bottom: 18px;
   border-radius: 14px;
   background-color: #f4f4f5;
-  color: #111111;
+  color: #0a1f44;
   font-size: 26px;
   display: flex;
   align-items: center;
@@ -12556,7 +12604,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 }
 
 .wsv-plan-amount {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 28px;
   font-weight: 800;
   line-height: 1;
@@ -12564,7 +12612,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 }
 
 .wsv-plan-cur {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: #6084a4;
@@ -12600,8 +12648,8 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   height: 20px;
   margin-top: 4px;
   border-radius: 50%;
-  background-color: rgba(17, 17, 17, 0.08);
-  color: #111111;
+  background-color: rgba(10, 31, 68, 0.08);
+  color: #0a1f44;
   font-size: 14px;
   display: flex;
   align-items: center;
@@ -12617,16 +12665,16 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   width: 100%;
   padding: 15px 20px;
   border-radius: 10px;
-  background-color: #111111;
+  background-color: #0a1f44;
   color: #ffffff;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 15px;
   font-weight: 700;
   text-align: center;
   transition: all 0.6s ease;
 }
 .wsv-plan-btn:hover {
-  background-color: #2b2a2a;
+  background-color: #0f2f68;
   color: #ffffff;
 }
 
@@ -12635,7 +12683,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
    already carries a moving hero and a moving carousel. Same palette swap the
    hero's on-dark state uses. */
 .wsv-plan.is-popular {
-  background-color: #111111;
+  background-color: #0a1f44;
   /* Inverted so the recommended card's CTA stays the most prominent one. */
 }
 .wsv-plan.is-popular h3 {
@@ -12665,11 +12713,11 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 }
 .wsv-plan.is-popular .wsv-plan-btn {
   background-color: #ffffff;
-  color: #111111;
+  color: #0a1f44;
 }
 .wsv-plan.is-popular .wsv-plan-btn:hover {
   background-color: #e5e5e5;
-  color: #111111;
+  color: #0a1f44;
 }
 
 .wsv-plans-note {
@@ -12712,7 +12760,7 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   gap: 16px;
   padding: 20px 24px;
   cursor: pointer;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 600;
   font-size: 15.5px;
   color: #212121;
@@ -12750,23 +12798,27 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 }
 
 /*-- Section 6b: area grounds --*/
-/* One colour per area, carried by the area wrapper so every section inside it
-   shares that ground. Areas are separated by MARGIN, not padding — the white
-   page shows through between them, so the areas read as distinct blocks with
-   real air between:
+/* ONE off-white for every area, carried by the area wrapper so every section
+   inside it shares that ground. Areas are separated by MARGIN, not padding —
+   .wsv-areas' dark ground shows through between them, so the areas read as
+   lit slabs with real air between:
        [ area 1 ]
          (gap)
        [ area 2 ]
    That is also why no area is pure white: it would dissolve into the gap. */
 .wsv-area {
-  /* margin, not padding: this space must be plain white page, not tinted by
-     the area's own background. Padding would have been INSIDE the coloured
-     box; margin sits OUTSIDE it, same as $wsv-gap-area, so the two combine
-     into one continuous white gap rather than colour-then-white. */
+  /* One off-white ground for every area. This used to be four
+     [data-area=...] rules, one tint each; adding an area now needs no new
+     rule. Same value as the intro area, so the whole page reads as one
+     surface interrupted by the dark gaps rather than as five materials. */
+  background-color: #f5f6f8;
+  /* margin, not padding: this space must be the dark ground .wsv-areas
+     paints, not the area's own off-white. Padding would have been INSIDE the
+     area's box; margin sits OUTSIDE it, so the gap shows the ground through. */
   margin-bottom: clamp(64px, 8vw, 140px);
   /* General containment for the area's own ground — keeps anything absolutely
      positioned inside (a decorative layer, a card's hover glow) from bleeding
-     across the white gap into the next area. */
+     across the gap into the next area. */
   position: relative;
   overflow: hidden;
 }
@@ -12780,27 +12832,96 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   margin-bottom: 0;
 }
 
+/* The ground the service areas float on. The gaps between areas used to be
+   plain white page, which made them read as "nothing here yet" rather than as
+   deliberate space. Dark blue turns the same distance into a backdrop, and the
+   areas become lit slabs sitting on top of it.
+
+   padding-top replaces the margin-bottom .wsv-nav used to carry, so the FIRST
+   gap is part of this ground too rather than a white stripe above it — the
+   distance is unchanged, only its colour is.
+
+   No padding-bottom on purpose: the last area still meets the footer directly,
+   which is the trailing-gap removal asked for earlier and would otherwise come
+   straight back as a navy band.
+
+   Deliberately NOT positioned. pages/services/index.js measures area tops with
+   getBoundingClientRect now, but .wsv-rail and .navbar-area are position:fixed
+   descendants of this subtree — giving this wrapper a transform or a filter
+   would make it their containing block and tear them off the viewport. */
+.wsv-areas {
+  background-color: #060c4a;
+  padding-top: clamp(64px, 8vw, 140px);
+}
+
+/* Elevation. Two shadows, not one: the lower is the real drop (the slab's
+   weight on the ground), the upper is a much shorter counter-shadow so the top
+   edge is separated from the space above it too. Both use negative spread so
+   they stay off the left and right edges, where a full-bleed area has no
+   visible border to cast from.
+
+   Cyan rather than black. A black shadow on a #060c4a ground is nearly
+   invisible — there is almost nothing darker to fall to — so the slabs read as
+   sitting flush. The accent reads as light spilling out from under the slab
+   instead, which separates it from the space far more strongly, and ties the
+   edge to the same $main-color the eyebrows, links and the active nav tab use.
+
+   THREE layers, in paint order:
+     1. A 1px ring at zero offset and zero blur. This is what makes the edge
+        read as firm — a blurred glow alone has no line in it, so the slab
+        looks soft no matter how far the opacity is pushed. The ring traces
+        the radius, so the top and bottom edges get a crisp hairline and the
+        left/right sides fall outside the viewport where the slab is
+        full-bleed. Definition comes from here, not from opacity.
+     2 + 3. Short throws up and down. Blur is deliberately about a third of
+        what it was (60px -> 26px): a wide blur spreads the same light over
+        more pixels, which is exactly what reads as hazy rather than solid.
+        Tight and brighter beats wide and faint.
+   Negative spread on both keeps them off the left and right edges, where a
+   full-bleed area has no visible border to cast from. */
+.wsv-areas .wsv-area {
+  border-radius: 18px;
+  box-shadow: 0 0 0 1px rgba(29, 211, 248, 0.22), 0 -10px 18px -10px rgba(29, 211, 248, 0.5), 0 16px 26px -12px rgba(29, 211, 248, 0.55);
+}
+
+/* Arrival cue for a navigator/rail jump — see scrollTo() in
+   pages/services/index.js, which adds .wsv-area-arrive to the destination.
+   A ring rather than a background wash: it traces the slab you were sent to
+   without recolouring the content you are meant to start reading. */
+.wsv-area.wsv-area-arrive::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  /* Above .wsv-area > section, which is z-index 1. */
+  z-index: 2;
+  pointer-events: none;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 2px #1dd3f8;
+  animation: wsv-area-arrive 1.2s cubic-bezier(0.22, 1, 0.36, 1) forwards;
+}
+
+@keyframes wsv-area-arrive {
+  0% {
+    opacity: 0;
+  }
+  16% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wsv-area.wsv-area-arrive::after {
+    animation: none;
+    opacity: 0;
+  }
+}
 /* The blobs sit at z-index 0; the real sections have to stay above them.
    Without this the ambient layer paints over the content. */
 .wsv-area > section {
   position: relative;
   z-index: 1;
-}
-
-.wsv-area[data-area=business-websites] {
-  background-color: #dff9fe;
-}
-
-.wsv-area[data-area=type-2] {
-  background-color: #e2e4e9;
-}
-
-.wsv-area[data-area=type-3] {
-  background-color: #d2f6fe;
-}
-
-.wsv-area[data-area=type-4] {
-  background-color: #d8dbe1;
 }
 
 /* The width cap used to live on <main>, which meant a background on an area
@@ -12886,7 +13007,7 @@ html.wsv-smooth {
   background-color: #ffffff;
   border: 1px solid rgba(15, 23, 42, 0.08);
   text-align: center;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13.5px;
   font-weight: 600;
   color: #0a1f44;
@@ -12942,7 +13063,7 @@ html.wsv-smooth {
 .wsv-sample {
   display: inline-block;
   margin-top: 6px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 10.5px;
   font-weight: 600;
   letter-spacing: 0.3px;
@@ -12963,7 +13084,7 @@ html.wsv-smooth {
 .wsv-caps-title {
   display: block;
   margin-bottom: 18px;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 13px;
   font-weight: 700;
   letter-spacing: 0.4px;
@@ -13049,7 +13170,7 @@ html.wsv-smooth {
   gap: 2px;
 }
 .wsv-caps-text strong {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 15px;
   font-weight: 700;
   color: #212121;
@@ -13109,7 +13230,7 @@ html.wsv-smooth {
   gap: 2px;
 }
 .wsv-check-grid strong {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 14.5px;
   font-weight: 700;
   color: #212121;
@@ -13144,7 +13265,7 @@ html.wsv-smooth {
   box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08);
 }
 .wsv-diag-card h3 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 17px;
   font-weight: 700;
   color: #212121;
@@ -13153,7 +13274,7 @@ html.wsv-smooth {
 
 /* Numbered so the three read as a sequence rather than three parallel options. */
 .wsv-diag-step {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 12px;
   font-weight: 800;
   letter-spacing: 1px;
@@ -13183,7 +13304,7 @@ html.wsv-smooth {
   color: #4d4d4d;
 }
 .wsv-diag-metric-top strong {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-weight: 700;
   color: #212121;
 }
@@ -13227,7 +13348,7 @@ html.wsv-smooth {
 .wsv-tag {
   flex-shrink: 0;
   font-style: normal;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 11px;
   font-weight: 700;
   padding: 3px 10px;
@@ -13265,7 +13386,7 @@ html.wsv-smooth {
   border-bottom: 0;
 }
 .wsv-diag-plan strong {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 14px;
   font-weight: 700;
   color: #212121;
@@ -13291,7 +13412,7 @@ html.wsv-smooth {
   text-align: center;
 }
 .wsv-cta-inner h2 {
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: clamp(1.4rem, 2.4vw, 1.9rem);
   font-weight: 700;
   color: #ffffff;
@@ -13309,7 +13430,7 @@ html.wsv-smooth {
   border-radius: 10px;
   background-color: #ffffff;
   color: #0a1f44;
-  font-family: "Cairo", sans-serif;
+  font-family: "Almarai", sans-serif;
   font-size: 15px;
   font-weight: 700;
   transition: all 0.6s ease;
@@ -13317,6 +13438,150 @@ html.wsv-smooth {
 .wsv-cta-btn:hover {
   background-color: #1dd3f8;
   color: #0a1f44;
+}
+
+/*-- Section 10: area 4 — the build / manage pair --*/
+/* Two wide cards closing the e-commerce area: "we build it" then "you run it".
+   Shape reused from brain/ui-library/inspiration/general-dual-feature-cards-hostinger.md.
+
+   NO prices, deliberately: `rest of web servicespage areas.md` rules pricing
+   cards out of this area, so each card closes with a soft text link and the
+   navy CTA banner above stays the only heavy call to action. */
+.wsv-store {
+  padding-bottom: clamp(32px, 4vw, 48px);
+}
+
+.wsv-store-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 24px;
+}
+
+.wsv-store-card {
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  background-color: #ffffff;
+  box-shadow: var(--ds-shadow-card);
+  /* Clips the photo to the card's radius. It also means an image can never
+     bleed past the bottom edge here — see the note in StorePlans.js: the
+     .wsv-area wrapper is itself overflow:hidden, so an overhang would be cut
+     by the AREA rather than by the card. */
+  overflow: hidden;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+}
+.wsv-store-card:hover {
+  box-shadow: var(--ds-shadow-card-hover);
+  transform: translateY(-4px);
+}
+
+/* flex: 1 is what lines the two photos up. The grid stretches both cards to
+   the same height, the bodies then absorb the difference in copy length, and
+   the media below starts at the same y in both. Without it the shorter card's
+   image would float mid-card. */
+.wsv-store-body {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  padding: 30px 28px;
+}
+
+.wsv-store-tag {
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 5px 12px;
+  border-radius: 100px;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: #0a1f44;
+  font-family: "Almarai", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+}
+
+.wsv-store-body h3 {
+  margin-bottom: 10px;
+  font-family: "Almarai", sans-serif;
+  font-size: 22px;
+  font-weight: 700;
+  color: #212121;
+}
+
+.wsv-store-body p {
+  margin-bottom: 20px;
+  font-size: 14.5px;
+  line-height: 1.9;
+  color: #4d4d4d;
+}
+
+.wsv-store-points {
+  list-style: none;
+  padding: 0;
+  margin: 0 0 24px;
+  display: grid;
+  gap: 11px;
+}
+.wsv-store-points li {
+  display: flex;
+  /* flex-start, not center: a wrapped two-line item must align its tick to
+     the FIRST line rather than to the middle of the block. */
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 14px;
+  line-height: 1.7;
+  color: #4d4d4d;
+}
+.wsv-store-points i {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 3px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.16);
+  color: #0a1f44;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* margin-top:auto pins the link to the bottom of the body, so both cards'
+   links sit on one line even when one has a longer paragraph. */
+.wsv-store-link {
+  margin-top: auto;
+  align-self: flex-start;
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  font-family: "Almarai", sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  color: #0a1f44;
+  transition: color 0.25s ease;
+}
+.wsv-store-link i {
+  font-size: 18px;
+  transition: transform 0.25s ease;
+}
+.wsv-store-link:hover {
+  color: #1dd3f8;
+  /* Negative X: the arrow points left because the page is RTL, so it has to
+     travel left to read as "onward". */
+}
+.wsv-store-link:hover i {
+  transform: translateX(-4px);
+}
+
+.wsv-store-media {
+  /* Reserves the box before the image decodes, so the card does not jump.
+     3:2 matches the 1536x1024 sources, so `cover` crops nothing on desktop. */
+  aspect-ratio: 3/2;
+  background-color: #f5f6f8;
+}
+.wsv-store-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
 }
 
 /*-- Responsive --*/
@@ -13336,6 +13601,11 @@ html.wsv-smooth {
   .wsv-caps-grid,
   .wsv-check-grid {
     grid-template-columns: repeat(2, 1fr);
+  }
+  /* Two wide cards side by side stop being wide below this — and the photo
+     in each is the point of the card, so it needs the full column. */
+  .wsv-store-grid {
+    grid-template-columns: 1fr;
   }
   /* The diagnostic stacks rather than shrinks: three dashboard cards side by
      side below this width would compress the score bars and the priority
@@ -14037,23 +14307,23 @@ Documented live at /lab/design-system/.
 }
 
 .ds-new-btn-dark {
-  background-color: #111111;
-  border-color: #111111;
+  background-color: #0a1f44;
+  border-color: #0a1f44;
   color: #ffffff;
   box-shadow: 0 10px 22px rgba(0, 0, 0, 0.22);
 }
 .ds-new-btn-dark:hover {
-  background-color: #2b2a2a;
-  border-color: #2b2a2a;
+  background-color: #0f2f68;
+  border-color: #0f2f68;
 }
 
 .ds-new-btn-outline {
   background-color: #ffffff;
   border-color: var(--ds-line);
-  color: #111111;
+  color: #0a1f44;
 }
 .ds-new-btn-outline:hover {
-  border-color: #111111;
+  border-color: #0a1f44;
 }
 
 /* ---------- stat card ---------- */
@@ -14202,7 +14472,7 @@ Documented live at /lab/design-system/.
   padding: 0 18px;
   background-color: #ffffff;
   border-color: #ffffff;
-  color: #111111;
+  color: #0a1f44;
 }
 .ds-new-media-card-body .ds-new-btn:hover {
   background-color: #f0f0f0;
@@ -14527,4 +14797,527 @@ the /services hub, and BOTH were explicitly excluded from this migration.
   color: var(--ds-body);
 }
 
-/*# sourceMappingURL=style.css.map */
+/*================================================
+===  PLAN CARD — ONE STYLE (style A, .wsv-plan)  ===
+
+Every plan card on every services page, brought onto the /services card's look.
+Chosen by the user 2026-09-02, along with the scope: LOOKS ONLY. No JSX changes,
+no class renames, no shared component — each page keeps its own markup and its
+own class names, and this block makes them render identically.
+
+Three anatomies existed: the icon-well family (.wsv-plan, .app-plan-card,
+.email-plan-card), the stat family (.seo-plan, .dm-plan, .tr-plan), and hosting's
+own. The card SURFACE was already unified earlier today — 16px radius, the
+four-layer shadow, navy popular card. What is left is everything inside: badge,
+title, summary, price rule, tick wells, and the CTA.
+
+WHY THIS BLOCK SITS AT THE END OF THE FILE
+Each page's rules are nested two or three classes deep (e.g.
+`.hosting-pricing .hosting-pricing-card .hosting-pricing-badge`). A flat
+`.hosting-pricing-badge` here would lose on specificity, so every selector below
+MATCHES its page's depth and relies on being later in source order to win the
+tie. Do not "tidy" these into shorter selectors — they will silently stop
+applying. Do not move this block earlier in the file, for the same reason.
+
+WHAT IS DELIBERATELY NOT UNIFIED
+- The icon well exists only where the markup has an element for it. CSS cannot
+  invent one, so seo/dm/tr keep their badge-led top.
+- seo/dm/tr show their badge ONLY on the popular card (`display: none` by
+  default). That is an editorial choice, not drift, so the show/hide logic is
+  left alone — only the badge's appearance is normalised.
+=================================================*/
+/* ---------- 1. inner padding ---------- */
+/* .wsv-plan's 32px 26px. The others ranged from 30px to 40px. */
+.hosting-pricing .hosting-pricing-card,
+.email-pricing .email-plan-card,
+.app-pricing .app-plan-card,
+.seo-card.seo-plan,
+.dm-card.dm-plan,
+.tr-card.tr-plan {
+  padding: 32px 26px;
+}
+
+/* ---------- 2. the badge ---------- */
+/* Cyan fill, navy text, in flow at the start edge.
+   This is the ONE place the unified card departs from .wsv-plan as it stood.
+   .wsv-plan-badge was navy on white, and .wsv-plan.is-popular never restyled it
+   — so on the recommended card it was navy on navy: invisible. It had the same
+   bug in its earlier black-on-black form, so this is long-standing rather than
+   new. Cyan reads on both grounds, and it is what seo/dm/tr and email already
+   used. */
+.wsv-plan .wsv-plan-badge,
+.hosting-pricing .hosting-pricing-card .hosting-pricing-badge,
+.email-pricing .email-plan-card .email-plan-badge,
+.email-pricing .email-plan-card.is-popular .email-plan-badge,
+.app-pricing .app-plan-card .app-plan-badge,
+.seo-card.seo-plan .seo-plan-badge,
+.dm-card.dm-plan .dm-plan-badge,
+.tr-card.tr-plan .tr-plan-badge {
+  /* app and email pinned theirs to the card's top corner; everyone else had it
+     in flow. In flow wins — an absolutely placed badge forces extra top padding
+     on the card to clear it, which is exactly why hosting carried 40px. */
+  position: static;
+  align-self: flex-start;
+  margin-bottom: 14px;
+  padding: 6px 13px;
+  border-radius: 100px;
+  background-color: #1dd3f8;
+  color: #0a1f44;
+  font-family: "Almarai", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+
+/* ---------- 3. the title ---------- */
+.hosting-pricing .hosting-pricing-card .hosting-pricing-name,
+.email-pricing .email-plan-card h3,
+.app-pricing .app-plan-card h3,
+.seo-card.seo-plan .seo-h3,
+.dm-card.dm-plan .dm-h3,
+.tr-card.tr-plan .tr-h3 {
+  font-family: "Almarai", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 6px;
+  color: #212121;
+}
+
+/* ---------- 4. the supporting line ---------- */
+.hosting-pricing .hosting-pricing-card .hosting-pricing-tagline,
+.app-pricing .app-plan-card .app-plan-summary,
+.seo-card.seo-plan .seo-p,
+.dm-card.dm-plan .dm-p,
+.tr-card.tr-plan .tr-p {
+  font-size: 14px;
+  line-height: 1.75;
+  color: #4d4d4d;
+  margin-bottom: 20px;
+}
+
+/* ---------- 5. the price rule ---------- */
+/* .wsv-plan-price is a single hairline UNDER the price, separating it from the
+   feature list. seo/dm/tr had a line above as well as below; hosting had none. */
+.hosting-pricing .hosting-pricing-card .hosting-pricing-price,
+.seo-card.seo-plan .seo-plan-price,
+.dm-card.dm-plan .dm-plan-price,
+.tr-card.tr-plan .tr-plan-price {
+  padding: 0 0 20px;
+  margin-bottom: 20px;
+  border-top: 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+/* ---------- 6. the tick wells ---------- */
+/* Navy on a navy tint, not cyan on a cyan tint. The cyan accent is reserved for
+   the badge and for hover, so a column of cyan ticks was competing with it. */
+.app-pricing .app-plan-card .app-plan-features li i,
+.email-pricing .email-plan-card .email-plan-features li i,
+.seo-card.seo-plan .seo-list li i,
+.dm-card.dm-plan .dm-list li i,
+.tr-card.tr-plan .tr-list li i,
+.hosting-pricing .hosting-pricing-card .hosting-pricing-features li .hosting-pricing-check {
+  flex-shrink: 0;
+  width: 20px;
+  height: 20px;
+  margin-top: 4px;
+  border-radius: 50%;
+  background-color: rgba(10, 31, 68, 0.08);
+  color: #0a1f44;
+  font-size: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* hosting nests a real <i> inside its .hosting-pricing-check span. */
+.hosting-pricing .hosting-pricing-card .hosting-pricing-features li .hosting-pricing-check i {
+  font-size: 14px;
+  color: inherit;
+}
+
+/* On the recommended card the same wells invert, or they vanish into the navy. */
+.email-pricing .email-plan-card.is-popular .email-plan-features li i,
+.app-pricing .app-plan-card.is-popular .app-plan-features li i,
+.seo-card.seo-plan.is-popular .seo-list li i,
+.dm-card.dm-plan.is-popular .dm-list li i,
+.tr-card.tr-plan.is-popular .tr-list li i,
+.hosting-pricing .hosting-pricing-card.hosting-pricing-card-popular .hosting-pricing-features li .hosting-pricing-check {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+
+/* ---------- 7. the CTA ---------- */
+/* Full-width navy block — .wsv-plan-btn exactly. app and email route theirs
+   through the global .default-btn, which brings its own ::before/::after sweep;
+   killed here rather than globally, since .default-btn is shared with the
+   homepage and must not be restyled for one section. */
+.hosting-pricing .hosting-pricing-card .hosting-pricing-cta,
+.email-pricing .email-plan-card .default-btn,
+.app-pricing .app-plan-card .default-btn,
+.seo-card.seo-plan .seo-btn-block,
+.dm-card.dm-plan .dm-btn-block,
+.tr-card.tr-plan .tr-btn-block {
+  display: block;
+  width: 100%;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #0a1f44;
+  background-image: none;
+  color: #ffffff;
+  font-family: "Almarai", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.hosting-pricing .hosting-pricing-card .hosting-pricing-cta::before, .hosting-pricing .hosting-pricing-card .hosting-pricing-cta::after,
+.email-pricing .email-plan-card .default-btn::before,
+.email-pricing .email-plan-card .default-btn::after,
+.app-pricing .app-plan-card .default-btn::before,
+.app-pricing .app-plan-card .default-btn::after,
+.seo-card.seo-plan .seo-btn-block::before,
+.seo-card.seo-plan .seo-btn-block::after,
+.dm-card.dm-plan .dm-btn-block::before,
+.dm-card.dm-plan .dm-btn-block::after,
+.tr-card.tr-plan .tr-btn-block::before,
+.tr-card.tr-plan .tr-btn-block::after {
+  display: none;
+}
+.hosting-pricing .hosting-pricing-card .hosting-pricing-cta:hover,
+.email-pricing .email-plan-card .default-btn:hover,
+.app-pricing .app-plan-card .default-btn:hover,
+.seo-card.seo-plan .seo-btn-block:hover,
+.dm-card.dm-plan .dm-btn-block:hover,
+.tr-card.tr-plan .tr-btn-block:hover {
+  background-color: #0f2f68;
+  color: #ffffff;
+}
+
+/* Inverted on the recommended card so it stays the most prominent CTA. */
+.hosting-pricing .hosting-pricing-card.hosting-pricing-card-popular .hosting-pricing-cta,
+.email-pricing .email-plan-card.is-popular .default-btn,
+.app-pricing .app-plan-card.is-popular .default-btn,
+.seo-card.seo-plan.is-popular .seo-btn-block,
+.dm-card.dm-plan.is-popular .dm-btn-block,
+.tr-card.tr-plan.is-popular .tr-btn-block {
+  background-color: #ffffff;
+  color: #0a1f44;
+}
+.hosting-pricing .hosting-pricing-card.hosting-pricing-card-popular .hosting-pricing-cta:hover,
+.email-pricing .email-plan-card.is-popular .default-btn:hover,
+.app-pricing .app-plan-card.is-popular .default-btn:hover,
+.seo-card.seo-plan.is-popular .seo-btn-block:hover,
+.dm-card.dm-plan.is-popular .dm-btn-block:hover,
+.tr-card.tr-plan.is-popular .tr-btn-block:hover {
+  background-color: #e5e5e5;
+  color: #0a1f44;
+}
+
+/* ---------- 8. hosting: CTA below the features ---------- */
+/* Hosting was the only card putting its CTA ABOVE the list. Reordered with flex
+   `order` rather than by editing the JSX, which the chosen scope rules out — the
+   card is a flex column, so this is a one-line move. A screen reader still
+   follows DOM order, which is acceptable here: the button keeps its own label
+   and stays reachable, it is only relocated visually. */
+.hosting-pricing .hosting-pricing-card .hosting-pricing-features {
+  order: 1;
+  flex: 1 1 auto;
+  margin: 0 0 24px;
+}
+
+.hosting-pricing .hosting-pricing-card .hosting-pricing-cta-magnet {
+  order: 2;
+  margin-top: 0;
+}
+
+.hosting-pricing .hosting-pricing-card .hosting-pricing-cta {
+  margin-bottom: 0;
+}
+
+/* ---------- 9. phones ---------- */
+/* .wsv-plan already tightened to 26px 22px at 767px (see the .wsv-* responsive
+   group above); without this the other five cards would keep 32px 26px there
+   and stop matching on exactly the width where the extra padding costs the most.
+   It has to live HERE rather than being added to that earlier media rule: a
+   media query adds no specificity, so section 1 of this block — being later in
+   the file — would simply beat it. */
+@media only screen and (max-width: 767px) {
+  .hosting-pricing .hosting-pricing-card,
+  .email-pricing .email-plan-card,
+  .app-pricing .app-plan-card,
+  .seo-card.seo-plan,
+  .dm-card.dm-plan,
+  .tr-card.tr-plan {
+    padding: 26px 22px;
+  }
+}
+/* ---------- Free-audit bar (components/Seo/AuditForm.js) ---------- */
+/* These four classes had NO styles anywhere — not in this file, not in
+   bootstrap. The component shipped referencing them, so the section rendered as
+   three raw browser controls on the dark band: no bar, no border, an unstyled
+   submit. That is the whole of what was broken.
+
+   Shape follows the reference the component cites
+   (brain/ui-library/inspiration/seo page/2ndsec.png): ONE bordered bar holding
+   both fields and the button, not stacked labelled fields above a detached
+   button. */
+.seo-audit-bar {
+  display: flex;
+  align-items: stretch;
+  gap: 8px;
+  padding: 8px;
+  border-radius: 14px;
+  /* On .seo-dark the ground is navy, so the bar is a lighter pane on it rather
+     than a white card — a white bar here would out-shout the heading above it. */
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background-color: rgba(255, 255, 255, 0.06);
+  transition: border-color 0.25s ease, box-shadow 0.25s ease;
+  /* Focus lands on the BAR, not on the individual input: the bar is what reads
+     as the control here, and a ring around one of two fields inside a shared
+     border looks like a rendering fault. */
+}
+.seo-audit-bar:focus-within {
+  border-color: #1dd3f8;
+  box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.16);
+}
+
+.seo-audit-bar-error {
+  border-color: #ff6b6b;
+}
+
+.seo-audit-bar-field {
+  flex: 1 1 0;
+  /* Without this a flex item refuses to shrink below its content width, and the
+     two fields push the submit button out of the bar on narrow screens. */
+  min-width: 0;
+}
+.seo-audit-bar-field input {
+  width: 100%;
+  height: 100%;
+  padding: 13px 14px;
+  border: 0;
+  border-radius: 10px;
+  background: transparent;
+  color: #ffffff;
+  font-family: "Almarai", sans-serif;
+  font-size: 14.5px;
+  /* The bar owns the focus ring — see :focus-within above. */
+  outline: none;
+  /* Chrome paints its own pale-yellow fill over autofilled inputs, which on a
+     navy bar is unreadable. There is no property to disable it; a very long
+     inset shadow is the standard way to repaint the box. */
+}
+.seo-audit-bar-field input::placeholder {
+  color: rgba(255, 255, 255, 0.45);
+}
+.seo-audit-bar-field input:-webkit-autofill, .seo-audit-bar-field input:-webkit-autofill:focus {
+  -webkit-text-fill-color: #ffffff;
+  -webkit-box-shadow: 0 0 0 1000px #0d2450 inset;
+  caret-color: #ffffff;
+}
+
+/* The divider between the two fields. A border on the field itself would also
+   draw at the bar's edge; this only ever appears between siblings. */
+.seo-audit-bar-field + .seo-audit-bar-field {
+  border-inline-start: 1px solid rgba(255, 255, 255, 0.12);
+}
+
+.seo-audit-bar-submit {
+  flex-shrink: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 24px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #1dd3f8;
+  color: #0a1f44;
+  font-family: "Almarai", sans-serif;
+  font-size: 14.5px;
+  font-weight: 700;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: background-color 0.25s ease, transform 0.25s ease;
+}
+.seo-audit-bar-submit i {
+  font-size: 18px;
+  transition: transform 0.25s ease;
+}
+.seo-audit-bar-submit:hover {
+  background-color: #ffffff;
+  /* Negative X: the arrow points left because the page is RTL, so left is
+     "onward". */
+}
+.seo-audit-bar-submit:hover i {
+  transform: translateX(-4px);
+}
+
+/* Stacked below the bar's natural width. Two inputs and a button side by side
+   stop being usable well before the page's own 767 breakpoint, so this one is
+   set on the control rather than on the layout. */
+@media only screen and (max-width: 620px) {
+  .seo-audit-bar {
+    flex-direction: column;
+    gap: 6px;
+  }
+  .seo-audit-bar-field + .seo-audit-bar-field {
+    border-inline-start: 0;
+    border-top: 1px solid rgba(255, 255, 255, 0.12);
+  }
+  .seo-audit-bar-submit {
+    justify-content: center;
+  }
+}
+/* ---------- Floating shortcut to the plans (components/Seo/PlansFab.js) ---------- */
+/* The SEO page runs eight sections before it reaches pricing, so this keeps
+   "what does it cost" one click away throughout. */
+.seo-plans-fab {
+  position: fixed;
+  bottom: 22px;
+  /* Under RTL, inset-inline-end resolves to the LEFT edge — which is the point.
+     The global back-to-top button (.scroll-to-top .top) is pinned with the
+     PHYSICAL `right: 15px`, so it stays on the right whatever the direction.
+     Anchoring this one to the inline end keeps the two apart instead of stacking
+     them in the same corner. */
+  inset-inline-end: 22px;
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 13px 20px;
+  border: 0;
+  border-radius: 100px;
+  background-color: #0a1f44;
+  color: #ffffff;
+  font-family: "Almarai", sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  box-shadow: 0 14px 30px -12px rgba(10, 31, 68, 0.55);
+  /* Kept mounted and hidden rather than unmounted, so it can animate both ways.
+     visibility (not just opacity) is what stops it swallowing clicks over the
+     footer while invisible — pointer-events alone would leave it in the
+     accessibility tree. */
+  opacity: 0;
+  visibility: hidden;
+  transform: translateY(14px);
+  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s, background-color 0.25s ease;
+}
+.seo-plans-fab i {
+  font-size: 19px;
+  color: #1dd3f8;
+  transition: color 0.25s ease;
+}
+.seo-plans-fab.is-visible {
+  opacity: 1;
+  visibility: visible;
+  transform: translateY(0);
+}
+.seo-plans-fab:hover {
+  background-color: #0f2f68;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .seo-plans-fab {
+    transition: opacity 0.2s ease, visibility 0.2s;
+    transform: none;
+  }
+  .seo-plans-fab.is-visible {
+    transform: none;
+  }
+}
+/* Phones: the label costs more width than it earns next to a footer CTA. */
+@media only screen and (max-width: 575px) {
+  .seo-plans-fab {
+    bottom: 16px;
+    inset-inline-end: 16px;
+    padding: 12px 16px;
+    font-size: 13px;
+  }
+}
+/* ---------- Floating WhatsApp button (components/Shared/WhatsAppFab.js) ---------- */
+/* `.floatwhats` and `.my-floatwhats` had NO rules anywhere in this codebase, so
+   the button never floated: a 512x512 PNG sat in normal flow at its natural
+   size, directly above the footer, on the seven pages that happened to include
+   it. It is one shared component mounted in _app.js now, so it is on all 42
+   pages and there is one phone number to maintain.
+
+   THE THREE FLOATING CONTROLS, and why each sits where it does:
+     .scroll-to-top .top  — bottom RIGHT. Pinned with the physical `right: 15px`,
+                            so it does not move under RTL. Appears past 300px.
+     .floatwhats          — bottom, inline END (= LEFT under RTL). Always on.
+     .seo-plans-fab       — same edge, stacked ABOVE this one (see its own rule).
+   Anything added later needs a fourth slot; do not reuse these two corners. */
+.floatwhats {
+  position: fixed;
+  bottom: 22px;
+  inset-inline-end: 22px;
+  /* Above the page, below the navbar. .wsv-rail is 4 and .navbar-area is higher;
+     this must not cover a fixed header on a short viewport. */
+  z-index: 5;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  /* WhatsApp brand green. The PNG carries its own circle, but the backing colour
+     means there is no white ring if the asset is ever swapped for a flat mark. */
+  background-color: #25d366;
+  box-shadow: 0 12px 26px -10px rgba(37, 211, 102, 0.6);
+  transition: transform 0.25s ease, box-shadow 0.25s ease;
+  /* next/image emits its own width/height attributes; this makes the rendered
+     size the one the circle expects regardless of what the source is. */
+  /* A visible focus ring: it is a link, and the only keyboard cue it had was the
+     browser default, which the circle was clipping. */
+}
+.floatwhats img {
+  width: 56px;
+  height: 56px;
+  border-radius: 50%;
+  display: block;
+}
+.floatwhats:hover {
+  transform: translateY(-3px) scale(1.04);
+  box-shadow: 0 16px 30px -10px rgba(37, 211, 102, 0.75);
+}
+.floatwhats:focus-visible {
+  outline: 3px solid rgba(37, 211, 102, 0.45);
+  outline-offset: 3px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .floatwhats {
+    transition: box-shadow 0.25s ease;
+  }
+  .floatwhats:hover {
+    transform: none;
+  }
+}
+@media only screen and (max-width: 575px) {
+  .floatwhats {
+    bottom: 16px;
+    inset-inline-end: 16px;
+    width: 50px;
+    height: 50px;
+  }
+  .floatwhats img {
+    width: 50px;
+    height: 50px;
+  }
+}
+/* The SEO page's plans shortcut shares this edge, so it stacks above the
+   WhatsApp button instead of landing on top of it: 22 (bottom) + 56 (button)
+   + 14 (gap) = 92. Keep these in step if either size changes. */
+.seo-plans-fab {
+  bottom: 92px;
+}
+
+@media only screen and (max-width: 575px) {
+  .seo-plans-fab {
+    bottom: 78px;
+  }
+}

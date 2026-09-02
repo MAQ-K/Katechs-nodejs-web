@@ -35,7 +35,7 @@ const TextSplitReveal = () => {
         }
         .ajs-text-heading {
           margin: 0;
-          font-family: "Cairo", sans-serif;
+          font-family: "Almarai", sans-serif;
           font-weight: 800;
           font-size: 26px;
           color: #14161a;

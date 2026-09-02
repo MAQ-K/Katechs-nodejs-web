@@ -126,7 +126,7 @@ const Section = ({ title, note, children }) => (
         border-top: 2px solid var(--lab-line);
       }
       .dsl-section h2 {
-        font-family: "Cairo", sans-serif;
+        font-family: "Almarai", sans-serif;
         font-size: 19px;
         font-weight: 700;
         margin: 12px 0 6px;
@@ -175,7 +175,7 @@ const DesignSystemLab = () => {
 
       <Section
         title="Typography"
-        note="Cairo for anything structural. The sitewide heading font stays Droid Arabic Kufi — this system opts in per element rather than overriding it globally, which is why every rule states its family."
+        note="Almarai, everywhere. It is the single site-wide family as of 2026-09-02, replacing both Droid Arabic Kufi and Cairo. Note it ships only four weights — 300, 400, 700, 800 — so a rule asking for 500 renders at 400 and one asking for 600 renders at 700."
       >
         <Block title="Eyebrow" cls=".ds-eyebrow">
           <span className="ds-eyebrow">اختر ما يناسبك</span>
@@ -786,7 +786,7 @@ const DesignSystemLab = () => {
           justify-content: center;
           background: #e6edf5;
           color: #6084a4;
-          font-family: "Cairo", sans-serif;
+          font-family: "Almarai", sans-serif;
           font-size: 14px;
         }
 

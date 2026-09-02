@@ -46,7 +46,7 @@ const DraggableCard = () => {
           border-radius: 14px;
           background: #0a1f44;
           color: #fff;
-          font-family: "Cairo", sans-serif;
+          font-family: "Almarai", sans-serif;
           font-weight: 700;
           font-size: 13px;
           display: flex;

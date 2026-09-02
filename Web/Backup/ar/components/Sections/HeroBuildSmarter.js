@@ -236,9 +236,9 @@ export default function HeroBuildSmarter({
           width: 100%;
           background: var(--hbs-surface);
           box-shadow: 0 18px 40px rgba(10, 31, 68, 0.16);
-          /* Cairo first so Arabic copy matches the rest of the site; the Latin
+          /* Almarai first so Arabic copy matches the rest of the site; the Latin
              stack behind it keeps the file portable to a project without it. */
-          font-family: "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          font-family: "Almarai", -apple-system, BlinkMacSystemFont, "Segoe UI",
             Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 
@@ -342,7 +342,7 @@ export default function HeroBuildSmarter({
           /* Stated outright, not inherited: a host project's global h1
              font-family reset beats inheritance from .hbs-root on specificity,
              which is exactly what this site's style.scss does. */
-          font-family: "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          font-family: "Almarai", -apple-system, BlinkMacSystemFont, "Segoe UI",
             Roboto, "Helvetica Neue", Arial, sans-serif;
           margin: 0 0 36px;
           font-weight: 800;

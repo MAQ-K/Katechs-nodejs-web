@@ -392,7 +392,7 @@ export default function CoverflowCarousel({
           --cf-surface: #ffffff;
 
           width: 100%;
-          font-family: "Cairo", -apple-system, BlinkMacSystemFont, "Segoe UI",
+          font-family: "Almarai", -apple-system, BlinkMacSystemFont, "Segoe UI",
             Roboto, "Helvetica Neue", Arial, sans-serif;
         }
 

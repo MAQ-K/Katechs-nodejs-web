@@ -563,14 +563,15 @@ export const ecommerce = {
     { id: "checkout", icon: "bx bx-credit-card", label: "الدفع" },
   ],
   // The payoff card, deliberately heavier than the steps before it.
-  // NOTE: the order number is illustrative and labelled as such on screen —
-  // the brief forbids implying real figures.
+  // The on-screen "مثال توضيحي" label was removed on user request. The order
+  // number stays: it is the last cell of a four-step DIAGRAM (المنتج ← صفحة
+  // المنتج ← السلة ← الدفع), read as a mockup rather than as a claim about
+  // real sales. Do not add a figure here that could be read as a metric.
   journeyResult: {
     icon: "bx bx-check-circle",
     title: "طلب جديد",
     line: "تم الدفع بنجاح",
     ref: "طلب #1842",
-    note: "مثال توضيحي",
   },
 
   capabilitiesTitle: "ما الذي تديره بنفسك",
@@ -588,6 +589,54 @@ export const ecommerce = {
     note: "أخبرنا باحتياجك ونقترح عليك الإعداد المناسب.",
     action: { label: "اطلب عرضاً لمتجرك", href: "/contactWeb" },
   },
+
+  // Two wide cards under the closing CTA (user request, 2026-09-02).
+  // The pair is the area's two halves of the same job: we BUILD it, then you
+  // RUN it — which is the objection this area has to answer, since the
+  // capabilities strip above already promises "you manage it yourself".
+  //
+  // Deliberately no prices. `rest of web servicespage areas.md` rules pricing
+  // cards out of this area entirely: e-commerce scope swings too widely
+  // (catalogue size, gateways, shipping, countries, languages, ERP) to put a
+  // number on a card. Each card closes with a soft text link instead, so the
+  // CTA above stays the only heavy call to action in the area.
+  storePlans: [
+    {
+      id: "build",
+      tag: "الإطلاق",
+      title: "نبني متجرك",
+      text: "من الصفر إلى متجر جاهز للبيع: التصميم، رفع المنتجات، بوابات الدفع والشحن، والدومين — تستلمه شغّالاً.",
+      points: [
+        "تصميم متجر يعكس علامتك",
+        "إعداد المنتجات وبوابات الدفع والشحن",
+        "دومين واستضافة وشهادة أمان",
+      ],
+      link: { label: "اطلب عرضاً لمتجرك", href: "/contactWeb" },
+      // Browser bar reading yourstore.com over a merchant setting her shop up
+      // — the launch moment, which is what this card is about.
+      image: "/images/ecommerce/salla-store-card.webp",
+      imageW: 1120,
+      imageH: 747,
+      alt: "متجر إلكتروني جاهز للإطلاق على نطاق خاص بالعميل",
+    },
+    {
+      id: "manage",
+      tag: "التشغيل",
+      title: "تدير متجرك",
+      text: "لوحة تحكم عربية تتابع منها الطلبات والمخزون والمدفوعات، مع تدريب عملي ودعم بعد الإطلاق.",
+      points: [
+        "متابعة الطلبات والمخزون",
+        "تقارير مبيعات تفهمها",
+        "تدريب عملي ودعم مستمر",
+      ],
+      link: { label: "تعرف على الدعم", href: "/support" },
+      // An admin dashboard being read by its owners — the running-it half.
+      image: "/images/ecommerce/shopify-store-card.webp",
+      imageW: 1120,
+      imageH: 747,
+      alt: "صاحب متجر يتابع الطلبات والمبيعات من لوحة التحكم",
+    },
+  ],
 };
 
 // ===========================================================================

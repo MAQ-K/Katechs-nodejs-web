@@ -30,7 +30,7 @@ const Area = ({ color, label, tall }) => (
         display: flex;
         align-items: center;
         justify-content: center;
-        font-family: "Cairo", sans-serif;
+        font-family: "Almarai", sans-serif;
         font-weight: 700;
         font-size: 22px;
         color: rgba(10, 31, 68, 0.55);

@@ -17,9 +17,6 @@ import SeoShowcase from "../components/Common/SeoShowcase";
 import Footer from "../components/Layouts/Footer";
 import { Fragment } from 'react'
 import Head from "next/head";
-import Image from "next/image";
-import whatsimg from "../public/images/whatsapp.png";
-
 
 export default function Index2Page() {
   return (
@@ -30,7 +27,6 @@ export default function Index2Page() {
       <meta name="description" content="اعثر على كل ما تحتاج إليه لاستضافة وبرمجة مواقع الإنترنت  و الشهرة والتألق على الانترنت لجذب الكثير من العملاء عبر الانترنت"/>
       <meta property="og:title" content="استضافة وبرمجة مواقع الانترنت" />
     </Head>
-
 
       <Navbar />
 
@@ -56,9 +52,6 @@ export default function Index2Page() {
 
       {/* <Testimonials /> */}
 
-
-
-
       <div className="pt-70">
         <Partner />
       </div>
@@ -67,15 +60,7 @@ export default function Index2Page() {
 
       <FaqHorizontal />
 
-      <a href="https://wa.me/+201555085828" className="floatwhats" target="_blank" rel="noreferrer" aria-label="تواصل معنا عبر واتساب">
-      <Image src={whatsimg} className="my-floatwhats" alt="تواصل معنا عبر واتساب" />
-      </a>
-
       
-
-
-
-
 
      {/*  <a href="https://form.jotform.com/241284812756562" className="float" target="_blank"  rel="noreferrer">
       طلب استشاره

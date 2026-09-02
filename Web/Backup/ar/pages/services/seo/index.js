@@ -11,6 +11,7 @@ import Reporting from "../../../components/Seo/Reporting";
 import Pricing from "../../../components/Seo/Pricing";
 import Faq from "../../../components/Seo/Faq";
 import CtaBand from "../../../components/Seo/CtaBand";
+import PlansFab from "../../../components/Seo/PlansFab";
 import Footer from "../../../components/Layouts/Footer";
 
 export default function SeoPage() {
@@ -41,6 +42,10 @@ export default function SeoPage() {
       <CtaBand />
 
       <Footer />
+
+      {/* Floating shortcut to #pricing. Last in the tree so it paints above
+          everything; it positions itself fixed. */}
+      <PlansFab />
     </>
   );
 }

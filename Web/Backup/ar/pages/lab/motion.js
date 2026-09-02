@@ -529,7 +529,7 @@ const MotionLab = ({ only, dir, ground }) => {
           background: #fff;
           border: 1px solid #e3e6ea;
           box-shadow: 0 26px 46px -30px rgba(12, 12, 14, 0.2);
-          font-family: "Cairo", sans-serif;
+          font-family: "Almarai", sans-serif;
           font-weight: 700;
           text-align: center;
           color: #14161a;

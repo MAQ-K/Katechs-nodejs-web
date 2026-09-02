@@ -44,7 +44,7 @@ const FlipCard3D = ({
           display: flex;
           align-items: center;
           justify-content: center;
-          font-family: "Cairo", sans-serif;
+          font-family: "Almarai", sans-serif;
           font-weight: 700;
           font-size: 15px;
         }

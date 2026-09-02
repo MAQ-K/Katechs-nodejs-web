@@ -15,6 +15,7 @@ import AreaFaq from "../../components/Services/ServiceArea/Faq";
 import AreaCta from "../../components/Services/ServiceArea/Cta";
 import EcomIntro from "../../components/Services/Ecommerce/Intro";
 import EcomCapabilities from "../../components/Services/Ecommerce/Capabilities";
+import EcomStorePlans from "../../components/Services/Ecommerce/StorePlans";
 import ConsIntro from "../../components/Services/Consulting/Intro";
 import ConsDiagnostic from "../../components/Services/Consulting/Diagnostic";
 import {
@@ -212,7 +213,12 @@ export default function ServicesHubWireframe() {
   // Eased "sliding" wheel scrolling. Returns scrollToY so the rail's own jump
   // below rides the same easing — the hook disables CSS smooth scrolling, so a
   // plain scrollTo({behavior:"smooth"}) would land instantly instead.
-  const { scrollToY } = useSmoothScroll();
+  // snap:true is this page only — the area-to-area push-to-cross mechanic.
+  // Every other route gets the plain glide from SmoothScrollGlobal, mounted
+  // in _app.js. Exactly one of the two is ever live: _app skips its own when
+  // the route is /services, because two instances would both preventDefault
+  // the same wheel event and both write scrollTo.
+  const { scrollToY } = useSmoothScroll({ snap: true });
 
   const [heroSlide, setHeroSlide] = useState(0);
   const [heroPaused, setHeroPaused] = useState(false);
@@ -251,7 +257,12 @@ export default function ServicesHubWireframe() {
       let current = areas[0].id;
       areas.forEach((a) => {
         const el = areaRefs.current[a.id];
-        if (el && el.offsetTop <= scrollPos) {
+        // getBoundingClientRect + scrollY, not offsetTop: offsetTop is measured
+        // from the nearest POSITIONED ancestor, so wrapping the areas in
+        // anything with position:relative would silently shift every reading
+        // here while useSmoothScroll (which already measures this way) carried
+        // on agreeing with the viewport. Same number, no such trap.
+        if (el && el.getBoundingClientRect().top + window.scrollY <= scrollPos) {
           current = a.id;
         }
       });
@@ -287,6 +298,11 @@ export default function ServicesHubWireframe() {
   // scrollIntoView({block:"start"}) puts it at y=0, where .navbar-area covers the
   // heading, so the area looks like it starts part-way in. Measure the navbar at
   // click time - its height changes with .is-sticky - and subtract it.
+  // Cleared on unmount so a jump started just before a route change cannot
+  // touch a detached node.
+  const arriveTimer = useRef(null);
+  useEffect(() => () => clearTimeout(arriveTimer.current), []);
+
   const scrollTo = (id) => {
     const el = areaRefs.current[id] || document.getElementById(id);
     if (!el) return;
@@ -294,6 +310,20 @@ export default function ServicesHubWireframe() {
     const offset = (nav ? nav.getBoundingClientRect().height : 0) + 16;
     const top = el.getBoundingClientRect().top + window.scrollY - offset;
     scrollToY(Math.max(0, top));
+
+    // Arrival cue. The glide alone moves the page but says nothing about WHICH
+    // block you asked for, and every area looks alike from the top edge; this
+    // lifts the destination for a beat as it settles. Toggled off-then-on with
+    // a forced reflow between so picking the same area twice replays it rather
+    // than doing nothing.
+    el.classList.remove("wsv-area-arrive");
+    void el.offsetWidth;
+    el.classList.add("wsv-area-arrive");
+    clearTimeout(arriveTimer.current);
+    arriveTimer.current = setTimeout(
+      () => el.classList.remove("wsv-area-arrive"),
+      1400
+    );
   };
 
   return (
@@ -354,9 +384,14 @@ export default function ServicesHubWireframe() {
         />
       </div>
       <Projects />
-      <ServiceNav />
+      <ServiceNav onNavigate={scrollTo} />
       </div>
 
+      {/* The dark ground the areas float on. Deliberately UNPOSITIONED — see
+          the scroll-spy note above; it exists only to paint the gaps between
+          areas and to supply the first and last gap, which no area’s own
+          margin can provide. */}
+      <div className="wsv-areas">
       {/* ===== BUILT AREAS ===== */}
       {/* Rendered outside <main> on purpose: these sections are full-bleed and
           bring their own .container, so the wireframe wrapper's 1140px cap and
@@ -389,6 +424,12 @@ export default function ServicesHubWireframe() {
               <EcomIntro area={data} id={`${id}-intro`} />
               <EcomCapabilities area={data} id={`${id}-caps`} />
               <AreaCta cta={data.cta} id={`${id}-cta`} />
+              {/* Placed AFTER the CTA banner on user request (2026-09-02).
+                  Worth knowing: this puts content below the area's close, so
+                  the banner is no longer the last thing read. The two cards
+                  carry soft text links rather than buttons precisely so they
+                  do not compete with it. */}
+              <EcomStorePlans area={data} id={`${id}-store`} />
             </>
           )}
 
@@ -446,6 +487,7 @@ export default function ServicesHubWireframe() {
           </div>
         ))}
       </main>
+      </div>
 
       <Footer />
     </>

@@ -21,9 +21,21 @@ import "../styles/homepage-sections.css";
 import "../styles/ux-prototype.css";
 
 import Head from "next/head";
+import { useRouter } from "next/router";
 import GoTop from "../components/Shared/GoTop";
+import SmoothScrollGlobal from "../components/Shared/SmoothScrollGlobal";
+import WhatsAppFab from "../components/Shared/WhatsAppFab";
 
 function MyApp({ Component, pageProps }) {
+  const router = useRouter();
+
+  // /services mounts its own useSmoothScroll with the area-snap enabled, so
+  // the global one must not also be live there: two instances would both
+  // preventDefault the same wheel event and both write window.scrollTo,
+  // fighting each other every frame. pathname, not asPath — asPath carries the
+  // trailing slash and any #hash, and would stop matching on a deep link.
+  const pageOwnsScroll = router.pathname === "/services";
+
   React.useEffect(() => {
     AOS.init();
   }, []);
@@ -34,10 +46,17 @@ function MyApp({ Component, pageProps }) {
         <title> كنوز الجيل للتكنولوجيا المتطورة (KATECHS): رواد استضافة وتصميم مواقع الكترونية </title>
       </Head>
 
+      {/* The sliding scroll, everywhere except the page that brings its own. */}
+      {!pageOwnsScroll && <SmoothScrollGlobal />}
+
       <Component {...pageProps} />
 
-      {/* Go Top Button */}
-      <GoTop scrollStepInPx="100" delayInMs="10.50" />
+      {/* Floating contact + back to top. Mounted here so they exist on every
+          page — the WhatsApp button used to be pasted into seven page files and
+          missing from the other thirty-five. */}
+      <WhatsAppFab />
+
+      <GoTop />
     </>
   );
 }
