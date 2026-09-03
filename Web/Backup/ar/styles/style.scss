@@ -17373,3 +17373,412 @@ WHAT IS DELIBERATELY NOT UNIFIED
     bottom: 78px;
   }
 }
+
+/*================================================
+===  SUB-PAGE: /about-us  ===
+
+Third pass of the sub-page migration (T-015). The 2026-08-31 pass covered the
+16 routes whose components could be re-pointed wholesale; it explicitly listed
+`about-us` as "not yet migrated - needs per-component work". This is that work.
+
+EVERY SELECTOR HERE IS SCOPED UNDER `.about-page`, and that is not cosmetic:
+
+  1. MakeYourBusiness and Testimonials live in components/Common/** and are
+     shared with pages/index.js, which is FROZEN for the homepage rebuild
+     (T-018). Scoping is what lets this page's versions be restyled without
+     touching the homepage's.
+  2. styles/rtl.css is imported AFTER style.css in _app.js and sets FLAT
+     `.choose-card` / `.about-content ul li` rules. A flat selector appended
+     here would lose that tie on source order alone. `.about-page .choose-card`
+     is (0,2,0) vs the rtl.css (0,1,0), so it wins on specificity regardless of
+     which file loads last - which is also why the physical-direction values
+     rtl.css sets can be replaced with logical ones below.
+
+The wrapper is in pages/about-us.js. Delete it and this whole block goes dead.
+
+SAFE TO RESTYLE UNSCOPED, BUT DELIBERATELY NOT: `.about-area`, `.about-img`,
+`.about-content`, `.choose-ue-area` and `.choose-card` resolve to live markup
+ONLY on this page - every other component using them (AboutTwo, HomeOne,
+HomeThree, HomeFour, HomeFive, WebOfferAbout, why-katechs) is orphaned, nothing
+imports it. They are still scoped, because rtl.css reason (2) applies to them
+regardless, and because "orphaned today" is not a guarantee.
+=================================================*/
+
+.about-page {
+  /* ---------- 1. the split intro (components/AboutOne/About.js) ---------- */
+  .about-area {
+    /* The component carries `pt-100` and no bottom padding at all, so the
+       section ran straight into the next one. Section rhythm comes from the
+       token now; `.about-page .about-area` (0,2,0) beats the `.pt-100`
+       utility (0,1,0), so the class can stay on the JSX. */
+    padding-top: var(--ds-gap-section);
+    padding-bottom: var(--ds-gap-section);
+  }
+
+  /* Framed media with an angled panel behind it - the mechanic filed in
+     brain/ui-library/inspiration/general-split-feature-mockup-hostinger.md.
+     A flat PNG on white was the flattest thing on the page; the offset panel
+     gives it depth without a new asset, a library, or any motion cost. */
+  .about-img {
+    position: relative;
+    display: inline-block;
+    max-width: 100%;
+
+    &::before {
+      content: "";
+      position: absolute;
+      z-index: 0;
+      /* Logical insets, not `inset`: the panel has to peek out on the page's
+         START side under RTL, and the shorthand is physical. */
+      top: 16px;
+      bottom: -16px;
+      inset-inline-start: -16px;
+      inset-inline-end: 16px;
+      border-radius: var(--ds-r-card);
+      background: linear-gradient(
+        145deg,
+        rgba(29, 211, 248, 0.16),
+        rgba(10, 31, 68, 0.1)
+      );
+      transform: rotate(-3deg);
+    }
+
+    img {
+      position: relative;
+      z-index: 1;
+      max-width: 100%;
+      height: auto;
+      border-radius: var(--ds-r-card);
+    }
+  }
+
+  .about-content {
+    margin-top: 0;
+
+    /* The component renders an h3 here, not the h2 the legacy rule styled -
+       so the heading had been falling through to the base h3 size the whole
+       time. Sized on the section-heading token like every other page. */
+    h3 {
+      font-family: var(--ds-font);
+      font-size: var(--ds-h2);
+      font-weight: 700;
+      line-height: 1.45;
+      color: var(--ds-heading);
+      margin-bottom: 16px;
+    }
+
+    p {
+      font-size: var(--ds-body-size);
+      line-height: var(--ds-body-line);
+      color: var(--ds-body);
+    }
+
+    strong {
+      color: var(--ds-navy);
+      font-weight: 700;
+    }
+
+    /* The tick list, on the system's well recipe. Navy on a navy tint, not
+       cyan on cyan - matching the plan-card ticks, where cyan is reserved for
+       the badge and for hover so a column of ticks cannot compete with it. */
+    ul {
+      list-style-type: none;
+      padding: 0;
+      margin: 22px 0 0;
+
+      li {
+        display: flex;
+        align-items: flex-start;
+        gap: 10px;
+        /* Replaces the physical padding-left + absolutely-positioned icon
+           that rtl.css had to flip by hand. Flex needs neither. */
+        padding: 0;
+        margin-bottom: 12px;
+        font-family: var(--ds-font);
+        font-size: 14.5px;
+        font-weight: 600;
+        line-height: 1.7;
+        color: var(--ds-heading);
+
+        &:last-child {
+          margin-bottom: 0;
+        }
+
+        i {
+          position: static;
+          flex-shrink: 0;
+          display: flex;
+          align-items: center;
+          justify-content: center;
+          width: 22px;
+          height: 22px;
+          margin-top: 3px;
+          border-radius: 50%;
+          background-color: rgba(10, 31, 68, 0.08);
+          color: var(--ds-navy);
+          font-size: 11px;
+        }
+      }
+    }
+
+    .default-btn {
+      display: inline-block;
+      margin-top: 28px;
+      padding: 15px 34px;
+      border: 1px solid var(--ds-navy);
+      border-radius: var(--ds-r-btn);
+      background-color: var(--ds-navy);
+      background-image: none;
+      color: var(--ds-white);
+      font-family: var(--ds-font);
+      font-size: 15px;
+      font-weight: 700;
+      transition: background-color 0.25s ease, border-color 0.25s ease,
+        color 0.25s ease, transform 0.25s ease;
+
+      /* The template button ships a ::before/::after sweep. Killed here only -
+         .default-btn is shared with the homepage and must not be restyled
+         globally, which is the same rule the 2026-08-31 block follows. */
+      &::before,
+      &::after {
+        display: none;
+      }
+
+      &:hover {
+        background-color: var(--ds-cyan);
+        border-color: var(--ds-cyan);
+        color: var(--ds-navy);
+        transform: translateY(-2px);
+      }
+    }
+  }
+
+  /* ---------- 2. MakeYourBusiness (components/Common/MakeYourBusiness.js) ---------- */
+  /* SHARED with the frozen homepage - scoped restyle only, no JSX touched. */
+  .business-area {
+    .business-content h2,
+    .single-business h3 {
+      font-family: var(--ds-font);
+      color: var(--ds-heading);
+    }
+
+    .business-content h2 {
+      font-size: var(--ds-h2);
+      font-weight: 700;
+      line-height: 1.45;
+      margin-bottom: 26px;
+    }
+
+    .single-business {
+      /* rtl.css flips this with padding-right; the logical property does it
+         without a second rule, and the scope means it applies here only. */
+      padding-inline-start: 70px;
+      padding-inline-end: 0;
+
+      h3 {
+        font-size: 18px;
+        font-weight: 700;
+        margin-bottom: 6px;
+      }
+
+      p {
+        font-size: 14.5px;
+        line-height: 1.85;
+        color: var(--ds-body);
+      }
+    }
+
+    .single-counter {
+      h2 {
+        font-family: var(--ds-font);
+        font-weight: 700;
+      }
+
+      p {
+        font-size: 14.5px;
+        color: var(--ds-body);
+      }
+    }
+  }
+
+  /* ---------- 3. WhyChooseUs (components/AboutOne/WhyChooseUs.js) ---------- */
+  .choose-ue-area {
+    padding-top: var(--ds-gap-section);
+    padding-bottom: var(--ds-gap-section);
+    background-color: var(--ds-band);
+
+    .section-title {
+      margin-bottom: 38px;
+
+      h2 {
+        font-family: var(--ds-font);
+        font-size: var(--ds-h2);
+        font-weight: 700;
+        line-height: 1.45;
+        color: var(--ds-heading);
+        margin-bottom: 0;
+      }
+    }
+
+    /* Equal-height cards. The row is already flex (Bootstrap); making the
+       columns flex too is what lets the card stretch to the tallest in its
+       row instead of leaving a ragged bottom edge. */
+    .row > [class*="col-"] {
+      display: flex;
+    }
+  }
+
+  .choose-card {
+    width: 100%;
+    height: 100%;
+    /* The legacy card reserved a 120px gutter for an absolutely-positioned
+       number blob (padding-left here, padding-right in rtl.css). The number
+       is in normal flow now, so the gutter goes - this is the single biggest
+       change to the card. */
+    padding: 30px 26px;
+    margin-bottom: 26px;
+    border: 0;
+    border-radius: var(--ds-r-card);
+    background-color: var(--ds-white);
+    box-shadow: var(--ds-shadow-card);
+    transition: box-shadow 0.35s ease, transform 0.35s ease;
+
+    &:hover {
+      box-shadow: var(--ds-shadow-card-hover);
+      transform: translateY(-6px);
+    }
+
+    /* The number + icon row. Was a 70px dotted circle running a 7s infinite
+       `border-transform` blob animation, with a second 40px circle absolutely
+       positioned across its edge - the one piece of always-on motion on the
+       page, and it had to be re-anchored twice in rtl.css and once more in a
+       media query with !important. All of it is replaced by one static row. */
+    span {
+      position: static;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      width: auto;
+      height: auto;
+      line-height: 1;
+      margin: 0 0 18px;
+      border: 0;
+      border-radius: 0;
+      background-color: transparent;
+      box-shadow: none;
+      animation: none;
+      font-family: var(--ds-font);
+      font-size: 15px;
+      font-weight: 700;
+      color: var(--ds-muted);
+
+      /* The icon well. `!important` is used ONLY on the two properties
+         rtl.css itself sets with !important (inside its <=767px block) -
+         without it the icon would jump back to `right: 70px` on phones. */
+      i {
+        position: static !important;
+        inset-inline-end: auto !important;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 46px;
+        height: 46px;
+        border-radius: var(--ds-r-well);
+        background-color: #f6fdff;
+        box-shadow: none;
+        font-size: 22px;
+        color: var(--ds-cyan);
+        transition: background-color 0.25s ease, color 0.25s ease;
+      }
+    }
+
+    &:hover span i {
+      background-color: var(--ds-cyan);
+      color: var(--ds-white);
+    }
+
+    h3 {
+      font-family: var(--ds-font);
+      font-size: 19px;
+      font-weight: 700;
+      line-height: 1.5;
+      color: var(--ds-heading);
+      margin-bottom: 8px;
+    }
+
+    p {
+      font-size: 14.5px;
+      line-height: 1.85;
+      color: var(--ds-body);
+      margin-bottom: 0;
+    }
+  }
+
+  /* ---------- 4. testimonials (components/Common/Testimonials.js) ---------- */
+  /* SHARED with the frozen homepage - scoped restyle only. */
+  .client-area {
+    padding-top: var(--ds-gap-section);
+    padding-bottom: var(--ds-gap-section);
+
+    .section-title {
+      margin-bottom: 38px;
+
+      h2 {
+        font-family: var(--ds-font);
+        font-size: var(--ds-h2);
+        font-weight: 700;
+        line-height: 1.45;
+        color: var(--ds-heading);
+      }
+    }
+
+    .single-client {
+      height: auto;
+      padding: 30px 26px;
+      border: 0;
+      border-radius: var(--ds-r-card);
+      background-color: var(--ds-white);
+      box-shadow: var(--ds-shadow-card);
+
+      p {
+        font-size: 15px;
+        line-height: 1.9;
+        color: var(--ds-body);
+      }
+
+      .quotes {
+        color: rgba(29, 211, 248, 0.35);
+      }
+
+      .rating i {
+        color: #f5a623;
+      }
+    }
+  }
+
+  /* ---------- 5. phones ---------- */
+  @media only screen and (max-width: 767px) {
+    .about-img::before {
+      /* The angled panel needs room to peek out. At phone width the image is
+         full-bleed and there is none, so it would just clip at the edges. */
+      display: none;
+    }
+
+    .choose-card {
+      padding: 26px 22px;
+    }
+
+    .business-area .single-business {
+      padding-inline-start: 60px;
+    }
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    .choose-card,
+    .choose-card:hover,
+    .about-content .default-btn {
+      transition: none;
+      transform: none;
+    }
+  }
+}

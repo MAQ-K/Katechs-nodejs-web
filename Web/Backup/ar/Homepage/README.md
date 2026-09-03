@@ -33,7 +33,14 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 
 | # | Section | Status | File | Notes |
 |---|---------|--------|------|-------|
-| — | _(awaiting your sketch + section list)_ | TODO | — | |
+| 1 | Hero slider | SKETCH → REVIEW | `components/HpNew/HeroSlider.js` | Video bg, 3 cross-fading text slides, dots bottom-right, autoplay + pause on hover |
+| 2 | Domain search | SKETCH → REVIEW | `components/HpNew/DomainSearch.js` | GET form, hands off to WHMCS. ⚠️ target host is a placeholder — needs confirming |
+| 3 | Floating section nav | SKETCH → REVIEW | `components/HpNew/SectionNav.js` | 5 pills, scroll-spy highlight, floats past the domain bar |
+| 4 | Web services — brief | SKETCH → REVIEW | `components/HpNew/WebServicesBrief.js` | Talk LEFT / image RIGHT per sketch. Reuses `businessWebsites.overview` + the Tabqat screenshot |
+| 5 | Web services — projects marquee | SKETCH → REVIEW | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover |
+| 6 | Web services — plans | SKETCH → REVIEW | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO |
+| 7 | Hero top nav (page-scoped) | SKETCH → REVIEW | `components/HpNew/HeroNav.js` | Tabs ON the hero. Transparent over it, glassy past it. ⚠️ hp-new only — the shared `Layouts/Navbar.js` is untouched |
+| — | Section slots (app-dev, mail, marketing) | TODO | `pages/hp-new.js` | Empty labelled placeholders, so the nav has real targets |
 
 ## For reference — what the current homepage is made of
 

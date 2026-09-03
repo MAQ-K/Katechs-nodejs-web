@@ -4,7 +4,7 @@ const WhyChooseUs = () => {
   return (
     <>
       <div className="choose-ue-area pt-100">
-        <div className="container" style={{marginBottom: 10 + 'em'}}>
+        <div className="container">
           <div className="section-title">
 
             <h2>
