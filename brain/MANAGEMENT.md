@@ -130,7 +130,7 @@ Status vocabulary: `TODO` · `CLAIMED` · `IN PROGRESS` · `REVIEW` (waiting on 
 | T-013 | Main components UI — header, plan cards, buttons, font | `/ag-ui-build` | TODO | `components/Layouts/**`, `Common/**` | ⚠️ **Shared. Manager-gated. Runs alone** |
 | T-015 | Sub-pages — design, UX, content | `/ag-ui-build` + `/ag-content` | TODO | per page | |
 | T-016 | Refactor pattern — all common components look the same | `/ag-ui-build` | TODO | `components/Common/**` | ⚠️ **Audit first. Runs alone** |
-| T-018 | Homepage | `/ag-ui-build` | TODO | `components/HomeOne/**` | After G4 — it consumes the common components |
+| T-018 | Homepage | `/ag-ui-build` | IN PROGRESS | `pages/hp-new.js`, `components/HpNew/**`, `Homepage/**` | **Rebuild started 2026-09-03, section by section (sketch → design → finish) on an independent route `/hp-new`.** WARNING zone corrected: `components/HomeOne/**` is **orphaned — nothing imports it**. The live homepage is `HomeTwo/` + `Services/Services.js` + `PricingWebsite/**` + **8 sections from `components/Common/**`** — which is exactly why the rebuild runs on a parallel route instead of in place. `pages/index.js` untouched until the swap is approved. Working folder + section tracker: `Web/Backup/ar/Homepage/README.md`. See `brain/logs/2026-09-03.md` |
 | **G6–G7** |
 | T-019 | Full-site strict test sweep | `/ag-test` | TODO | — | After G1–G5 |
 | T-020 | Content sweep — kill remaining lorem ipsum, all copy data-driven | `/ag-content` | TODO | `data/**` | Known: `AboutTwo/*`, `degital-markiting-/WhatWeOffer/*`, `ComingSoon/*` |

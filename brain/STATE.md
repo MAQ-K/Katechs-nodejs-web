@@ -9,6 +9,17 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-09-03 · Manager — the homepage rebuild has started, on its own route. `pages/index.js` is
+  frozen.** New homepage is being built section by section (sketch → design → finish, user confirms
+  each) at **`pages/hp-new.js` → `http://localhost:3000/hp-new`**, with sections in
+  **`components/HpNew/`**. Working folder, vision and the section tracker:
+  `Web/Backup/ar/Homepage/` (`README.md`, `VISION.md`, `structure-drafts/`, `inspirations/`).
+  **Why a parallel route:** eight of the live homepage's twelve sections come from
+  `components/Common/**` — restyling in place would restyle the whole site at once.
+  **`components/HomeOne/` is orphaned, nothing imports it** — the old T-018 zone was wrong, now fixed.
+  `components/HpNew/` follows the `components/Sections/` isolation contract: styled-jsx only,
+  **zero writes to `styles/style.scss`**, so the SCSS lock zone stays free for T-023. Anyone touching
+  the homepage next: read `Web/Backup/ar/Homepage/README.md` and `brain/logs/2026-09-03.md` first.
 - **2026-08-30 · 10 more Motion Lab specimens — `components/Motion/`, ambient + CSS-3D.**
   Pure CSS, no rAF, no WebGL, reduced-motion respected: `FloatingBlobs`, `GradientAurora`,
   `FloatingIcons`, `WaveDivider`, `OrbitRing` (always-moving ambient loops) and `Cube3D`,
