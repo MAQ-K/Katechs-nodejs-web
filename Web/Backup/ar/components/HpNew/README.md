@@ -52,9 +52,17 @@ Sketch → design → finish. One section at a time, confirmed before moving on:
 
 Tracker: `Homepage/README.md`.
 
-## The one allowed exception to rule 2
+## The allowed exceptions to rule 2
 
-`HeroNav.js` uses the global `.default-btn` from `styles/style.scss` for the support button. That is
-deliberate: the user asked for the site's existing button, and reusing the class means it cannot
-drift from the other pages and follows any future restyle. It is the only dependency on `style.scss`
-in this folder — keep it that way.
+**`HeroNav.js`** uses the global `.default-btn` from `styles/style.scss` for the support button. The
+user asked for the site's existing button, and reusing the class means it cannot drift from the
+other pages and follows any future restyle.
+
+**`AppServices.js`** imports `components/AppDev/AppOrbit.js` and wraps it in `.app-platforms`. The
+user asked for "the same as the one on the app dev page", so it renders that component rather than a
+copy. AppOrbit is styled entirely from `styles/style.scss` and every rule is nested inside
+`.app-platforms`, so the wrapper MUST carry that class or the orbit renders unstyled. `.app-platforms`
+is also a section-level rule (navy background, 100px padding) — `.hp-app-orbit-host` cancels that
+half.
+
+Those two are the only dependencies on `style.scss` in this folder — keep it that way.

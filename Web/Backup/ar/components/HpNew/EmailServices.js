@@ -5,9 +5,13 @@ import { emailServices } from "../../data/home-new/data";
 // Email services — three tabs down the SIDE, each panel with talk on top and a
 // wide image beneath (Homepage/structure-drafts/email services section .png).
 //
-// In RTL the rail sits on the right, which is the start edge and where the
-// sketch draws it, so no order swap is needed here — unlike the web services
-// brief, this one agrees with the document direction already.
+// Layout (user, 2026-09-04): boxes on the LEFT, content on the RIGHT — the
+// opposite of where RTL puts them by default, so the columns are swapped with
+// `order`. The DOM keeps tablist before tabpanel, which is what the ARIA
+// pattern and the tab order require.
+//
+// The rail is the same height as the panel and its three boxes divide that
+// height equally, so they run top to bottom rather than hugging their content.
 //
 // The three tabs are imported from data/emails/data.js, so the homepage cannot
 // drift into offering a different set of products than the emails page.
@@ -89,6 +93,33 @@ const EmailServices = ({ content = emailServices }) => {
             <div className="hp-mail-talk">
               <h3>{tab.label}</h3>
               <p>{tab.body}</p>
+
+              {/* Real feature lines from this product's most inclusive plan on
+                  the emails page — see data/home-new/data.js. Nothing here is
+                  written for the homepage, so the two pages cannot disagree. */}
+              {tab.points && tab.points.length > 0 && (
+                <ul className="hp-mail-points">
+                  {tab.points.map((p) => (
+                    <li key={p}>
+                      <svg
+                        viewBox="0 0 24 24"
+                        width="16"
+                        height="16"
+                        fill="none"
+                        stroke="currentColor"
+                        strokeWidth="2.5"
+                        strokeLinecap="round"
+                        strokeLinejoin="round"
+                        aria-hidden="true"
+                      >
+                        <polyline points="20 6 9 17 4 12" />
+                      </svg>
+                      <span>{p}</span>
+                    </li>
+                  ))}
+                </ul>
+              )}
+
               <Link href={content.cta.href} className="hp-mail-btn">
                 {content.cta.label}
               </Link>
@@ -131,15 +162,29 @@ const EmailServices = ({ content = emailServices }) => {
         }
         .hp-mail-body {
           display: grid;
-          /* Rail first in the grid; in RTL that puts it on the right, which is
-             where the sketch has it. */
-          grid-template-columns: minmax(220px, 300px) 1fr;
+          /* The rail is the NARROW column and the panel the wide one. In RTL the
+             first column lands on the right, so the columns are written
+             panel-first and the order property below does the visual placing: the DOM
+             keeps tablist before tabpanel, which is what the ARIA pattern and
+             the tab order need. */
+          grid-template-columns: 1fr minmax(220px, 300px);
           gap: clamp(20px, 3vw, 40px);
-          align-items: start;
+          /* stretch, not start: the rail has to be as tall as the panel so its
+             three boxes can divide that height between them. */
+          align-items: stretch;
         }
+        /* Boxes on the LEFT, content on the RIGHT (user, 2026-09-04). In RTL
+           order:2 is the left-hand column. */
         .hp-mail-rail {
+          order: 2;
           display: grid;
+          /* One equal row per tab, so the three boxes split the section's full
+             height top to bottom instead of hugging their own content. */
+          grid-auto-rows: 1fr;
           gap: 12px;
+        }
+        .hp-mail-panel {
+          order: 1;
         }
         .hp-mail-tab {
           display: flex;
@@ -196,7 +241,27 @@ const EmailServices = ({ content = emailServices }) => {
           font-size: clamp(14px, 1.4vw, 16px);
           line-height: 2;
           color: #555;
-          margin: 0 0 20px;
+          margin: 0 0 18px;
+        }
+        .hp-mail-points {
+          list-style: none;
+          margin: 0 0 22px;
+          padding: 0;
+          display: grid;
+          gap: 10px;
+        }
+        .hp-mail-points li {
+          display: flex;
+          align-items: flex-start;
+          gap: 10px;
+          font-size: clamp(13px, 1.3vw, 15px);
+          line-height: 1.8;
+          color: #333;
+        }
+        .hp-mail-points svg {
+          flex: 0 0 auto;
+          margin-top: 4px;
+          color: #111;
         }
         /* :global() because next/link renders the anchor — see
            components/HpNew/README.md #9. */
@@ -227,9 +292,17 @@ const EmailServices = ({ content = emailServices }) => {
           display: block;
           width: 100%;
           height: auto;
-          /* The three images are different shapes; a fixed band keeps the panel
-             from resizing every time a tab is picked. */
-          aspect-ratio: 16 / 9;
+          /* A wide band, not 16/9: at 16/9 the image dominated the panel and
+             pushed the text into a strip (user, 2026-09-04). Still a FIXED
+             ratio, because the three source images are different shapes and the
+             panel must not resize every time a tab is picked. */
+          aspect-ratio: 2.6 / 1;
+          /* The ratio alone is not enough: this panel is ~980px wide on a
+             desktop, so even 2.6/1 came out 351px tall and still took half the
+             panel. The cap is what actually keeps the text the larger half.
+             object-fit: cover means clamping the height crops rather than
+             squashes. */
+          max-height: 260px;
           object-fit: cover;
         }
         @media (max-width: 991px) {
@@ -242,9 +315,16 @@ const EmailServices = ({ content = emailServices }) => {
             grid-template-columns: 1fr;
           }
           .hp-mail-rail {
+            /* Back above the panel: the left/right swap and the equal-height
+               split both only mean something in the two-column layout. */
+            order: 1;
             grid-auto-flow: column;
             grid-auto-columns: 1fr;
+            grid-auto-rows: auto;
             gap: 8px;
+          }
+          .hp-mail-panel {
+            order: 2;
           }
           .hp-mail-tab {
             flex-direction: column;

@@ -11,6 +11,7 @@ import WebServicesPlans from "../components/HpNew/WebServicesPlans";
 import AppServices from "../components/HpNew/AppServices";
 import EmailServices from "../components/HpNew/EmailServices";
 import Stores from "../components/HpNew/Stores";
+import useSmoothScroll from "../components/Services/useSmoothScroll";
 import { sectionNav } from "../data/home-new/data";
 
 // === New homepage — independent rebuild ===
@@ -23,12 +24,18 @@ import { sectionNav } from "../data/home-new/data";
 // pages/services/index.js owns it for its SideRail: the nav component is
 // presentational, the page decides what is active and when it floats.
 //
-// NOTE: do NOT call useSmoothScroll() here. _app.js already mounts
-// SmoothScrollGlobal on every route except /services, and two live instances
-// both preventDefault the same wheel event and both write window.scrollTo.
-// The native smooth scroll below still animates: html.wsv-smooth sets
-// `scroll-behavior: auto`, which only changes the default for behavior:"auto"
-// calls, not an explicit behavior:"smooth".
+// This page mounts its OWN useSmoothScroll, so _app.js must leave
+// SmoothScrollGlobal out for /hp-new (it does — see pageOwnsScroll there).
+// Exactly one instance may be live: two would both preventDefault the same
+// wheel event and both write window.scrollTo.
+//
+// Jumps go through the hook own scrollToY, NOT window.scrollTo({behavior:
+// "smooth"}). An earlier revision used the native call and the pills did
+// nothing at all: once the hook has handled a single wheel event its rAF loop
+// keeps writing the scroll position with behavior:"instant" every frame, which
+// cancels the native animation immediately. Verified in a headless browser —
+// the loop was pinning scrollY and firing scrollTo ~60x a second. GoTop.js ran
+// into the same wall and documents it too.
 
 // Breathing room between a fixed bar and the thing it must not cover.
 const GAP = 16;
@@ -52,6 +59,11 @@ const navbarHeight = () => {
 };
 
 export default function HpNewPage() {
+  // Owns the sliding wheel scroll for this route, and hands back the eased
+  // programmatic jump the navigator needs. snap:false (the default) — the
+  // push-to-cross area mechanic stays exclusive to /services.
+  const { scrollToY } = useSmoothScroll();
+
   const [activeId, setActiveId] = useState(sectionNav[0].id);
   const [floating, setFloating] = useState(false);
   const [navTop, setNavTop] = useState(90);
@@ -117,13 +129,18 @@ export default function HpNewPage() {
 
   // Land the section's top edge clear of BOTH fixed bars. Ignoring the floating
   // nav is what leaves every heading half-covered.
-  const scrollTo = useCallback((id) => {
-    const el = document.getElementById(id);
-    if (!el) return;
-    const offset = navbarHeight() + slotHeight.current + GAP;
-    const top = el.getBoundingClientRect().top + window.scrollY - offset;
-    window.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
-  }, []);
+  const scrollTo = useCallback(
+    (id) => {
+      const el = document.getElementById(id);
+      if (!el) return;
+      const offset = navbarHeight() + slotHeight.current + GAP;
+      const top = el.getBoundingClientRect().top + window.scrollY - offset;
+      // scrollToY, never window.scrollTo({behavior:"smooth"}) — see the note at
+      // the top of this file. The native call did nothing at all here.
+      scrollToY(Math.max(0, top));
+    },
+    [scrollToY]
+  );
 
   return (
     <Fragment>

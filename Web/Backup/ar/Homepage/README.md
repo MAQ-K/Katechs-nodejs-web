@@ -40,7 +40,7 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 | 5 | Web services — projects marquee | SKETCH → REVIEW | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover |
 | 6 | Web services — plans | SKETCH → REVIEW | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO |
 | 7 | Hero top nav (page-scoped) | SKETCH → REVIEW | `components/HpNew/HeroNav.js` | Tabs ON the hero. Transparent over it, glassy past it. ⚠️ hp-new only — the shared `Layouts/Navbar.js` is untouched |
-| 8 | App services | SKETCH → REVIEW | `components/HpNew/AppServices.js` | 100% width, talk left, 3D stage right. Real render is the FRONT FACE of a 3D slab (rails + drawn back) so it turns a full 360; 6 CSS phones orbit behind |
+| 8 | App services | SKETCH → REVIEW | `components/HpNew/AppServices.js` | 100% width, talk left. Stage renders `components/AppDev/AppOrbit.js` ITSELF — the same orbit as the app dev page, not a copy |
 | 9 | Email services | SKETCH → REVIEW | `components/HpNew/EmailServices.js` | 3 vertical side tabs, panel = talk over image. Tabs imported from `data/emails/data.js`. ⚠️ panel images are placeholders |
 | 10 | Stores (e-commerce) | SKETCH → REVIEW | `components/HpNew/Stores.js` | 3 pill tabs over the web services `ecommerce` area. ⚠️ no nav pill - the user fixed 5 |
 | — | Section slot (marketing) | TODO | `pages/hp-new.js` | Empty labelled placeholder |

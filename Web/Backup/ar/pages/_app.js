@@ -34,7 +34,13 @@ function MyApp({ Component, pageProps }) {
   // preventDefault the same wheel event and both write window.scrollTo,
   // fighting each other every frame. pathname, not asPath — asPath carries the
   // trailing slash and any #hash, and would stop matching on a deep link.
-  const pageOwnsScroll = router.pathname === "/services";
+  // /hp-new joins /services: its floating section navigator has to jump through
+  // the hook own scrollToY. A plain scrollTo({behavior:"smooth"}) is dead on any
+  // page where this hook is live — its rAF loop writes the scroll position with
+  // behavior:"instant" and cancels the native animation on the first frame.
+  // GoTop.js hit the same wall and documents it too.
+  const pageOwnsScroll =
+    router.pathname === "/services" || router.pathname === "/hp-new";
 
   React.useEffect(() => {
     AOS.init();

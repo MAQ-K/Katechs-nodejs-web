@@ -142,16 +142,9 @@ export const webServices = {
 // --- App services section ----------------------------------------------------
 // 100% width, talk on the left, a 3D stage on the right.
 //
-// The stage is the real KATECHS phone render in front, tilting as you drag it,
-// with a ring of CSS-drawn phones orbiting behind (user's choice, 2026-09-03).
+// The stage is components/AppDev/AppOrbit.js — the very component the app dev
+// page renders, imported rather than copied (user, 2026-09-04).
 //
-// Why not spin the real phone a full 360 like components/AppDev/AppOrbit.js:
-// that ring works because its phones are DRAWN, so every one is a flat plane
-// that can face any direction. app-mockup.png is a photograph with its 3/4
-// perspective baked in — turned side-on it would read as a paper sliver. So the
-// render tilts within a believable range and the drawn phones do the orbiting.
-//
-// STRUCTURE PASS: copy below is placeholder-grade.
 export const appServices = {
   eyebrow: "تطبيقات الجوال",
   heading: "تطبيق جوال يليق بعملك، على iOS وأندرويد",
@@ -165,22 +158,10 @@ export const appServices = {
   cta: { label: "اطلب تطبيقك الآن", href: "/services/app-development/" },
   secondary: { label: "تحدث معنا أولاً", href: "/contact" },
 
-  // The one photographic render we have. Transparent cut-out, 1024x1536.
-  phone: {
-    src: "/images/mobile-app/app-mockup.png",
-    alt: "تطبيق جوال من تصميم كاتكس معروضاً على هاتف",
-  },
-
-  // The drawn phones on the ring behind. Same six the app dev page orbits, so
-  // the two pages describe the same capability set.
-  orbit: [
-    { icon: "bx bx-store", label: "متجر إلكتروني" },
-    { icon: "bx bx-wallet", label: "محفظة ودفع" },
-    { icon: "bx bx-calendar-check", label: "حجز مواعيد" },
-    { icon: "bx bx-map-alt", label: "توصيل وتتبّع" },
-    { icon: "bx bx-line-chart", label: "لوحة تحكم" },
-    { icon: "bx bx-chat", label: "تواصل ودعم" },
-  ],
+  // No `phone` or `orbit` keys here on purpose: the section renders
+  // components/AppDev/AppOrbit.js itself (user, 2026-09-04 — "the same as the
+  // one on the app dev page"), and that component owns its own six screens.
+  // Duplicating the list here would be a second copy to keep in step.
 };
 
 // --- Email services section --------------------------------------------------
@@ -214,13 +195,27 @@ const emailShots = {
 export const emailServices = {
   eyebrow: "البريد الإلكتروني",
   heading: "بريد باسم شركتك، لا بريد مجاني",
-  tabs: emailTypes.map((t) => ({
-    id: t.id,
-    label: t.label,
-    icon: t.icon,
-    body: t.desc,
-    image: emailShots[t.id],
-  })),
+  tabs: emailTypes.map((t) => {
+    // "talk so little add more" (user, 2026-09-04). `desc` is a single sentence,
+    // so each tab now also lists what the product actually includes. These are
+    // NOT written here — they are the real feature lines from the type most
+    // inclusive plan on the emails page, so the homepage cannot promise
+    // something the emails page does not.
+    const best = t.plans[t.plans.length - 1];
+    const points = (best ? best.features : [])
+      .filter((f) => f.included)
+      .slice(0, 4)
+      .map((f) => f.text);
+
+    return {
+      id: t.id,
+      label: t.label,
+      icon: t.icon,
+      body: t.desc,
+      points,
+      image: emailShots[t.id],
+    };
+  }),
   cta: { label: "تصفّح باقات البريد", href: "/services/emails/" },
 };
 

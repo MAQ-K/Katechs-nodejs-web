@@ -117,4 +117,7 @@ change all areas bg to an off white color
 
 ## use one plan card stlye ,the same one in web services page
 
+----------------------------------------------------
 
+# homepage new - structure edits 
+## 
