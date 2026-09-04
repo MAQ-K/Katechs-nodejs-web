@@ -136,3 +136,47 @@ export const webServices = {
     },
   ],
 };
+
+// --- App services section ----------------------------------------------------
+// 100% width, talk on the left, a 3D stage on the right.
+//
+// The stage is the real KATECHS phone render in front, tilting as you drag it,
+// with a ring of CSS-drawn phones orbiting behind (user's choice, 2026-09-03).
+//
+// Why not spin the real phone a full 360 like components/AppDev/AppOrbit.js:
+// that ring works because its phones are DRAWN, so every one is a flat plane
+// that can face any direction. app-mockup.png is a photograph with its 3/4
+// perspective baked in — turned side-on it would read as a paper sliver. So the
+// render tilts within a believable range and the drawn phones do the orbiting.
+//
+// STRUCTURE PASS: copy below is placeholder-grade.
+export const appServices = {
+  eyebrow: "تطبيقات الجوال",
+  heading: "تطبيق جوال يليق بعملك، على iOS وأندرويد",
+  body:
+    "من الفكرة إلى المتجر: نصمّم تجربة الاستخدام، نبني التطبيق بأداء عالٍ، وننشره على المتجرين — ثم نبقى معك بعد الإطلاق.",
+  points: [
+    "تطبيق واحد يعمل على iOS وأندرويد بنفس الجودة",
+    "لوحة تحكم تدير منها المحتوى والطلبات والإشعارات",
+    "نشر على App Store و Google Play، ومتابعة بعد الإطلاق",
+  ],
+  cta: { label: "اطلب تطبيقك الآن", href: "/services/app-development/" },
+  secondary: { label: "تحدث معنا أولاً", href: "/contact" },
+
+  // The one photographic render we have. Transparent cut-out, 1024x1536.
+  phone: {
+    src: "/images/mobile-app/app-mockup.png",
+    alt: "تطبيق جوال من تصميم كاتكس معروضاً على هاتف",
+  },
+
+  // The drawn phones on the ring behind. Same six the app dev page orbits, so
+  // the two pages describe the same capability set.
+  orbit: [
+    { icon: "bx bx-store", label: "متجر إلكتروني" },
+    { icon: "bx bx-wallet", label: "محفظة ودفع" },
+    { icon: "bx bx-calendar-check", label: "حجز مواعيد" },
+    { icon: "bx bx-map-alt", label: "توصيل وتتبّع" },
+    { icon: "bx bx-line-chart", label: "لوحة تحكم" },
+    { icon: "bx bx-chat", label: "تواصل ودعم" },
+  ],
+};

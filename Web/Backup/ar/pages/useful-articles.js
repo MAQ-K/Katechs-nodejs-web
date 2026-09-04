@@ -16,7 +16,13 @@ export default function UsefulArticlesPage() {
 
       <PageBanner pageTitle="مقالات مفيدة" homePageUrl="/" />
 
-      <News />
+      {/* Same wrapper/scope as pages/news/index.js — components/Common/News.js
+          renders the identical `.single-news` markup as News/NewsGridCard.js,
+          so one SCSS block ("=== SUB-PAGE: /news + /useful-articles ===")
+          covers both pages. */}
+      <div className="news-grid-page">
+        <News />
+      </div>
 
       <Footer />
     </>

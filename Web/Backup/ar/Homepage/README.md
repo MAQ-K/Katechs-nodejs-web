@@ -40,7 +40,8 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 | 5 | Web services — projects marquee | SKETCH → REVIEW | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover |
 | 6 | Web services — plans | SKETCH → REVIEW | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO |
 | 7 | Hero top nav (page-scoped) | SKETCH → REVIEW | `components/HpNew/HeroNav.js` | Tabs ON the hero. Transparent over it, glassy past it. ⚠️ hp-new only — the shared `Layouts/Navbar.js` is untouched |
-| — | Section slots (app-dev, mail, marketing) | TODO | `pages/hp-new.js` | Empty labelled placeholders, so the nav has real targets |
+| 8 | App services | SKETCH → REVIEW | `components/HpNew/AppServices.js` | 100% width, talk left, 3D stage right. Real render is the FRONT FACE of a 3D slab (rails + drawn back) so it turns a full 360; 6 CSS phones orbit behind |
+| — | Section slots (mail, marketing) | TODO | `pages/hp-new.js` | Empty labelled placeholders, so the nav has real targets |
 
 ## For reference — what the current homepage is made of
 

@@ -25,7 +25,13 @@ export default function NewsGridPage() {
         activePageText=""
       />
 
-      <NewsGridCard />
+      {/* `.news-grid-page` — see "=== SUB-PAGE: /news + /useful-articles ===" in
+          styles/style.scss. Scoped for the same two reasons as .about-page:
+          rtl.css sets flat `.single-news` rules after style.css loads, and
+          this wrapper's specificity beats it regardless of load order. */}
+      <div className="news-grid-page">
+        <NewsGridCard />
+      </div>
 
       <Footer />
     </>

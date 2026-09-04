@@ -28,6 +28,10 @@ _(what the homepage must accomplish — who it speaks to, what action it should 
 | 2026-09-03 | Nav is transparent over the hero, glassy after it | `descrition.md` said "invisable navbar or glassy" — this is both, in that order. Keeping it fixed means site navigation does not disappear once you scroll |
 | 2026-09-03 | Plan prices stay as "—" | The source data marks them `TODO(prices)` with an explicit note that published prices are a commitment to customers and must never be inferred |
 
+| 2026-09-03 | App section: real phone render in FRONT tilting on drag, CSS phones orbiting BEHIND | The user wanted the app dev page's rotation with a real phone instead of a drawn figure. Only ONE render of the KATECHS phone exists and its 3/4 perspective is baked in, so a full 360 would show it as a paper sliver. The drawn phones do the orbiting; the render tilts within a believable range. User picked this over a full ring |
+| 2026-09-03 | The phone turns a FULL 360 — the render became one face of a real 3D slab | Tilting a flat photo was not what was wanted. Giving it CSS side rails and a drawn glass back makes it an object with geometry, so the baked-in perspective stops being the limit. Parked at -20deg so the slab orientation agrees with the perspective in the pixels |
+| 2026-09-03 | New derived asset `app-mockup-phone.png` | Cropped from `app-mockup.png` to the phone alone. The original has floating Android/iOS badges either side which would swing around with a rotating slab |
+
 ## Open questions
 
 - Which of the 12 current sections survive into the new homepage, and in what order?

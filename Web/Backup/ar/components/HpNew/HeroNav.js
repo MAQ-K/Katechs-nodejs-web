@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import Link from "next/link";
 import Image from "next/image";
 import { useRouter } from "next/router";
-import whiteLogo from "../../public/images/white-logo.png";
+import logo from "../../public/images/logo-konoz-ar.png";
 
 // The homepage's own top navigation — tabs sitting ON the hero slide rather
 // than in a bar above it, per Homepage/structure-drafts/taps style example .png
@@ -22,9 +22,29 @@ import whiteLogo from "../../public/images/white-logo.png";
 //
 // Transparent over the hero, glassy once the hero has scrolled past. The brief
 // said "invisible navbar or glassy"; this is both, in the order they make sense.
-// Logo and links stay white throughout, which is why the glassy state is dark
-// rather than light — a white-on-white bar would need a logo swap and a colour
-// swap on every link.
+// The glassy state is DARK so the white links need no second colour scheme.
+//
+// ---- brand and support button are the SITE'S, not this file's ----
+// The instruction was "just the way it above the hero, not the whole style", so:
+//   * the logo is logo-konoz-ar.png, the same asset Layouts/Navbar.js uses,
+//     untouched and at its real 180x37 wordmark ratio. (An earlier revision used
+//     white-logo.png — that is the JUMPX TEMPLATE's logo, not Katechs'. Do not
+//     reintroduce it.)
+//   * the support button uses the global `.default-btn` from styles/style.scss,
+//     icon and all, so it is pixel-identical to every other page and follows any
+//     future restyle of that button.
+//
+// That `.default-btn` is a DELIBERATE EXCEPTION to the components/HpNew/ rule of
+// taking nothing from style.scss — chosen so the button cannot drift from the
+// rest of the site. It is the only such dependency in this folder.
+//
+// ---- styled-jsx and <Link> ----
+// styled-jsx only adds its scope class to DOM elements it renders ITSELF, never
+// to a component. A rule written as `.hp-topnav-cta { }` compiles to
+// `.hp-topnav-cta.jsx-hash` and can never match the <a> that next/link renders,
+// so it silently does nothing and the link falls back to Bootstrap's blue.
+// Every rule below that targets a <Link> is therefore anchored on its scoped
+// PARENT and wraps the target in :global().
 
 const NAV_LINKS = [
   { href: "/about-us/", label: "عن الشركة" },
@@ -95,9 +115,18 @@ const HeroNav = () => {
       }
     >
       <div className="hp-topnav-inner">
-        <Link href="/" className="hp-topnav-brand" aria-label="الصفحة الرئيسية">
-          <Image src={whiteLogo} alt="كنوز الجيل للتكنولوجيا المتطورة" height={34} />
-        </Link>
+        <div className="hp-topnav-brand">
+          <Link href="/" aria-label="الصفحة الرئيسية">
+            {/* Same asset and same 180x37 as Layouts/Navbar.js — the wordmark is
+                wide, and forcing a height alone would squash it. */}
+            <Image
+              src={logo}
+              alt="كنوز الجيل للتكنولوجيا المتطورة"
+              width={180}
+              height={37}
+            />
+          </Link>
+        </div>
 
         <nav className="hp-topnav-links" aria-label="القائمة الرئيسية">
           {NAV_LINKS.map((item) => (
@@ -112,9 +141,13 @@ const HeroNav = () => {
           ))}
         </nav>
 
-        <Link href={CTA.href} className="hp-topnav-cta">
-          {CTA.label}
-        </Link>
+        {/* The site's own button, global class and all — see the header note.
+            The wrapper owns placement so the class owns appearance. */}
+        <div className="hp-topnav-cta">
+          <Link href={CTA.href} className="default-btn">
+            {CTA.label} <i className="bx bx-log-in-circle"></i>
+          </Link>
+        </div>
 
         <button
           type="button"
@@ -141,8 +174,8 @@ const HeroNav = () => {
             {item.label}
           </Link>
         ))}
-        <Link href={CTA.href} className="hp-topnav-panel-cta">
-          {CTA.label}
+        <Link href={CTA.href} className="default-btn hp-topnav-panel-cta">
+          {CTA.label} <i className="bx bx-log-in-circle"></i>
         </Link>
       </div>
 
@@ -185,7 +218,9 @@ const HeroNav = () => {
           justify-content: center;
           gap: clamp(10px, 1.6vw, 28px);
         }
-        .hp-topnav-links a {
+        /* :global() because next/link renders the <a> — see the header note.
+           Anchored on .hp-topnav-links, which IS scoped, so this cannot leak. */
+        .hp-topnav-links :global(a) {
           position: relative;
           color: #fff;
           font-family: "Cairo", system-ui, sans-serif;
@@ -197,17 +232,17 @@ const HeroNav = () => {
           opacity: 0.9;
           transition: opacity 0.2s ease;
         }
-        .hp-topnav-links a:hover {
+        .hp-topnav-links :global(a:hover) {
           opacity: 1;
           color: #fff;
         }
         /* Underline drawn only on the active link, so hover and active never
            read the same — the exact fix Layouts/Navbar.js needed. */
-        .hp-topnav-links a.is-active {
+        .hp-topnav-links :global(a.is-active) {
           opacity: 1;
           font-weight: 700;
         }
-        .hp-topnav-links a.is-active::after {
+        .hp-topnav-links :global(a.is-active)::after {
           content: "";
           position: absolute;
           inset-block-end: 0;
@@ -215,23 +250,12 @@ const HeroNav = () => {
           height: 2px;
           background: #fff;
         }
+        /* Placement only. Appearance belongs to the global .default-btn so this
+           button stays identical to the one on every other page. */
         .hp-topnav-cta {
           flex: 0 0 auto;
-          display: inline-block;
-          padding: 11px 26px;
-          border-radius: 999px;
-          background: #fff;
-          color: #0a1628;
-          font-family: "Cairo", system-ui, sans-serif;
-          font-size: 14px;
-          font-weight: 700;
-          text-decoration: none;
-          white-space: nowrap;
-          transition: opacity 0.2s ease;
-        }
-        .hp-topnav-cta:hover {
-          opacity: 0.86;
-          color: #0a1628;
+          display: inline-flex;
+          align-items: center;
         }
         .hp-topnav-toggle {
           display: none;
@@ -259,7 +283,7 @@ const HeroNav = () => {
           gap: 2px;
           padding: 8px 24px 20px;
         }
-        .hp-topnav-panel a {
+        .hp-topnav-panel :global(a) {
           color: #fff;
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 15px;
@@ -268,17 +292,15 @@ const HeroNav = () => {
           padding-block: 11px;
           border-bottom: 1px solid rgba(255, 255, 255, 0.12);
         }
-        .hp-topnav-panel a.is-active {
+        .hp-topnav-panel :global(a.is-active) {
           font-weight: 800;
         }
-        .hp-topnav-panel-cta {
-          margin-top: 14px;
+        /* The panel CTA carries .default-btn too, so it only needs spacing and
+           the panel's own link border removed. */
+        .hp-topnav-panel :global(.hp-topnav-panel-cta) {
+          margin-top: 16px;
           text-align: center;
-          border: 0 !important;
-          border-radius: 999px;
-          background: #fff;
-          color: #0a1628 !important;
-          padding-block: 13px !important;
+          border-bottom: 0;
         }
 
         /* The nine links stop fitting well before the bar does. */
@@ -289,7 +311,7 @@ const HeroNav = () => {
           }
           .hp-topnav-links,
           .hp-topnav-cta {
-            display: none;
+            display: none !important;
           }
           .hp-topnav-toggle {
             display: block;

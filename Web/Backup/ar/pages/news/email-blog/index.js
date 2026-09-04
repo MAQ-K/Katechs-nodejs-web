@@ -24,9 +24,14 @@ export default function NewsDetailsPage() {
         homePageText=""
         activePageText=" "
       />
-
-      <NewsDetailsContent />
-     
+      {/* `.news-details-page` — see "=== SUB-PAGE: /news/*-blog ===" in
+          styles/style.scss. rtl.css sets flat, three-levels-deep
+          `.news-details-area .widget-area ...` rules after style.css loads;
+          this wrapper's extra scope level beats them regardless of load
+          order, the same mechanism as .about-page. */}
+      <div className="news-details-page">
+        <NewsDetailsContent />
+      </div>
 
       <Footer />
     </>

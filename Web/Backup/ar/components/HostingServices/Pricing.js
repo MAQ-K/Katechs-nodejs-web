@@ -1,15 +1,18 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import { useReducedMotion } from "framer-motion";
 
 import { pricing } from "../../data/hosting-services/data";
 import Reveal from "../Common/Reveal";
 import Magnetic from "../Common/Magnetic";
+import ComingSoonModal from "../Common/ComingSoonModal";
 
 const Pricing = () => {
   const [currency, setCurrency] = useState("EG");
   const active = pricing.currencies[currency];
   const reduced = useReducedMotion();
+  // The order form is not built yet — pressing a plan CTA opens a placeholder
+  // instead of navigating to plan.cta.href, which does not exist.
+  const [pendingPlan, setPendingPlan] = useState(null);
 
   return (
     <section className="hosting-pricing">
@@ -73,9 +76,13 @@ const Pricing = () => {
                 </div>
 
                 <Magnetic strength={0.2} className="hosting-pricing-cta-magnet">
-                  <Link href={plan.cta.href} className="hosting-pricing-cta">
+                  <button
+                    type="button"
+                    className="hosting-pricing-cta"
+                    onClick={() => setPendingPlan(plan.name)}
+                  >
                     {plan.cta.text}
-                  </Link>
+                  </button>
                 </Magnetic>
 
                 <ul className="hosting-pricing-features">
@@ -103,6 +110,12 @@ const Pricing = () => {
           })}
         </div>
       </div>
+
+      <ComingSoonModal
+        open={Boolean(pendingPlan)}
+        onClose={() => setPendingPlan(null)}
+        planName={pendingPlan}
+      />
     </section>
   );
 };

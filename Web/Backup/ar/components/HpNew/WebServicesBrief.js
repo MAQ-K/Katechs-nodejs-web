@@ -137,7 +137,11 @@ const WebServicesBrief = ({ brief = webServices.brief }) => {
           flex-wrap: wrap;
           gap: 12px;
         }
-        .hp-brief-btn {
+        /* :global() because next/link renders these <a>s — styled-jsx scopes
+           only DOM elements it renders itself, so a bare .hp-brief-btn rule
+           never matches and the buttons fall back to Bootstrap's blue link.
+           Anchored on .hp-brief-cta, which IS scoped, so nothing leaks. */
+        .hp-brief-cta :global(.hp-brief-btn) {
           display: inline-block;
           padding: 13px 30px;
           border-radius: 10px;
@@ -150,15 +154,15 @@ const WebServicesBrief = ({ brief = webServices.brief }) => {
           text-decoration: none;
           transition: opacity 0.25s ease;
         }
-        .hp-brief-btn:hover {
+        .hp-brief-cta :global(.hp-brief-btn:hover) {
           opacity: 0.85;
           color: #fff;
         }
-        .hp-brief-btn.is-ghost {
+        .hp-brief-cta :global(.hp-brief-btn.is-ghost) {
           background: transparent;
           color: #111;
         }
-        .hp-brief-btn.is-ghost:hover {
+        .hp-brief-cta :global(.hp-brief-btn.is-ghost:hover) {
           background: #f2f2f2;
           color: #111;
           opacity: 1;
@@ -189,7 +193,7 @@ const WebServicesBrief = ({ brief = webServices.brief }) => {
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hp-brief-btn {
+          .hp-brief-cta :global(.hp-brief-btn) {
             transition: none;
           }
         }

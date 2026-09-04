@@ -8,6 +8,7 @@ import SectionNav from "../components/HpNew/SectionNav";
 import WebServicesBrief from "../components/HpNew/WebServicesBrief";
 import ProjectsMarquee from "../components/HpNew/ProjectsMarquee";
 import WebServicesPlans from "../components/HpNew/WebServicesPlans";
+import AppServices from "../components/HpNew/AppServices";
 import { sectionNav } from "../data/home-new/data";
 
 // === New homepage — independent rebuild ===
@@ -33,7 +34,6 @@ const GAP = 16;
 // Section slots the navigator points at that are not built yet. The domain bar
 // and web-services are real sections above and carry their own ids.
 const PLACEHOLDERS = [
-  { id: "app-dev", label: "تطبيقات الجوال" },
   { id: "mail", label: "البريد الإلكتروني" },
   { id: "marketing", label: "التسويق" },
 ];
@@ -158,6 +158,11 @@ export default function HpNewPage() {
           <WebServicesBrief />
           <ProjectsMarquee />
           <WebServicesPlans />
+        </section>
+
+        {/* --- App services: talk + the 3D phone stage --- */}
+        <section id="app-dev">
+          <AppServices />
         </section>
 
         {/* --- section slots — nothing designed yet --- */}

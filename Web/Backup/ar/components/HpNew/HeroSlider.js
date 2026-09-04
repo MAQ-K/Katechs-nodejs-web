@@ -166,7 +166,12 @@ const HeroSlider = ({ media = heroMedia, slides = heroSlides }) => {
           margin: 0 0 28px;
           color: rgba(255, 255, 255, 0.86);
         }
-        .hp-hero-btn {
+        /* :global() because next/link renders this <a>, and styled-jsx only
+           scopes DOM elements it renders itself — without this the rule compiles
+           to .hp-hero-btn.jsx-hash, never matches, and the button falls back to
+           Bootstrap's blue link colour. Anchored on .hp-hero-text, which IS
+           scoped, so nothing leaks. */
+        .hp-hero-text :global(.hp-hero-btn) {
           display: inline-block;
           padding: 14px 34px;
           border-radius: 10px;
@@ -178,7 +183,7 @@ const HeroSlider = ({ media = heroMedia, slides = heroSlides }) => {
           text-decoration: none;
           transition: opacity 0.25s ease;
         }
-        .hp-hero-btn:hover {
+        .hp-hero-text :global(.hp-hero-btn:hover) {
           opacity: 0.86;
           color: #111;
         }
@@ -215,7 +220,7 @@ const HeroSlider = ({ media = heroMedia, slides = heroSlides }) => {
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hp-hero-btn {
+          .hp-hero-text :global(.hp-hero-btn) {
             transition: none;
           }
         }

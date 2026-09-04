@@ -1,14 +1,17 @@
 import React, { useState } from "react";
-import Link from "next/link";
 import { motion, AnimatePresence } from "framer-motion";
 import { emailTypes, pricingSection } from "../../data/emails/data";
 import BorderBeam from "./BorderBeam";
+import ComingSoonModal from "../Common/ComingSoonModal";
 
 const EASE = [0.22, 1, 0.36, 1];
 
 const PricingFlow = () => {
   const [activeType, setActiveType] = useState(0);
   const active = emailTypes[activeType];
+  // The order form is not built yet — pressing a plan CTA opens a placeholder
+  // instead of navigating to pricingSection.ctaHref, which does not exist.
+  const [pendingPlan, setPendingPlan] = useState(null);
 
   return (
     <>
@@ -143,10 +146,14 @@ const PricingFlow = () => {
                       ))}
                     </ul>
 
-                    <Link href={pricingSection.ctaHref} className="default-btn">
+                    <button
+                      type="button"
+                      className="default-btn"
+                      onClick={() => setPendingPlan(plan.name)}
+                    >
                       {pricingSection.ctaText}
                       <i className="bx bx-right-arrow-alt"></i>
-                    </Link>
+                    </button>
 
                     <span className="email-plan-note">
                       {pricingSection.perUserNote}
@@ -181,6 +188,12 @@ const PricingFlow = () => {
           </div>
         </div>
       </section>
+
+      <ComingSoonModal
+        open={Boolean(pendingPlan)}
+        onClose={() => setPendingPlan(null)}
+        planName={pendingPlan}
+      />
     </>
   );
 };

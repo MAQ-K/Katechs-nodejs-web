@@ -251,7 +251,11 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           line-height: 1.7;
           color: #444;
         }
-        .hp-plan-cta {
+        /* :global() because next/link renders this <a> — styled-jsx scopes only
+           DOM elements it renders itself, so a bare .hp-plan-cta rule never
+           matches and the CTA falls back to Bootstrap's blue link. Anchored on
+           .hp-plan, which IS scoped, so nothing leaks. */
+        .hp-plan :global(.hp-plan-cta) {
           display: block;
           text-align: center;
           padding: 13px 20px;
@@ -265,7 +269,7 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           text-decoration: none;
           transition: opacity 0.25s ease;
         }
-        .hp-plan-cta:hover {
+        .hp-plan :global(.hp-plan-cta:hover) {
           opacity: 0.85;
           color: #fff;
         }
@@ -278,8 +282,10 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hp-plans-tab,
-          .hp-plan-cta {
+          .hp-plans-tab {
+            transition: none;
+          }
+          .hp-plan :global(.hp-plan-cta) {
             transition: none;
           }
         }
