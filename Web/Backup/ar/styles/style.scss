@@ -13861,6 +13861,14 @@ to change a value.
   overflow: hidden;
 }
 
+/* Section heading, added 2026-09-04 when the per-project name/type caption
+   under the carousel was removed — the section previously had no VISIBLE
+   heading at all, only an aria-label on the carousel region. */
+.wsv-projects-head {
+  margin-bottom: 32px;
+  text-align: center;
+}
+
 .wsv-nav-head {
   margin-bottom: 40px;
 }
@@ -15378,9 +15386,14 @@ html.wsv-smooth {
   padding-bottom: $wsv-gap-section;
 }
 
+/* auto-fit rather than a fixed count: a third card (the landing-page option,
+   added 2026-09-04) needed to fit alongside the original two without a second
+   breakpoint rule. At 2 cards each takes ~558px (matching the original
+   `repeat(2, 1fr)` width exactly); at 3 they settle near 364px each — still
+   comfortably above the 280px floor a card's image + 3-point list needs. */
 .wsv-store-grid {
   display: grid;
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
   gap: 24px;
 }
 
@@ -17206,82 +17219,6 @@ WHAT IS DELIBERATELY NOT UNIFIED
   }
 }
 
-/* ---------- Floating shortcut to the plans (components/Seo/PlansFab.js) ---------- */
-/* The SEO page runs eight sections before it reaches pricing, so this keeps
-   "what does it cost" one click away throughout. */
-.seo-plans-fab {
-  position: fixed;
-  bottom: 22px;
-  /* Under RTL, inset-inline-end resolves to the LEFT edge — which is the point.
-     The global back-to-top button (.scroll-to-top .top) is pinned with the
-     PHYSICAL `right: 15px`, so it stays on the right whatever the direction.
-     Anchoring this one to the inline end keeps the two apart instead of stacking
-     them in the same corner. */
-  inset-inline-end: 22px;
-  z-index: 5;
-
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  padding: 13px 20px;
-  border: 0;
-  border-radius: 100px;
-  background-color: $wsv-navy;
-  color: $white-color;
-  font-family: $font-family;
-  font-size: 14px;
-  font-weight: 700;
-  cursor: pointer;
-  box-shadow: 0 14px 30px -12px rgba(10, 31, 68, 0.55);
-
-  /* Kept mounted and hidden rather than unmounted, so it can animate both ways.
-     visibility (not just opacity) is what stops it swallowing clicks over the
-     footer while invisible — pointer-events alone would leave it in the
-     accessibility tree. */
-  opacity: 0;
-  visibility: hidden;
-  transform: translateY(14px);
-  transition: opacity 0.3s ease, transform 0.3s ease, visibility 0.3s,
-    background-color 0.25s ease;
-
-  i {
-    font-size: 19px;
-    color: $main-color;
-    transition: color 0.25s ease;
-  }
-
-  &.is-visible {
-    opacity: 1;
-    visibility: visible;
-    transform: translateY(0);
-  }
-
-  &:hover {
-    background-color: lighten($wsv-navy, 8%);
-  }
-}
-
-@media (prefers-reduced-motion: reduce) {
-  .seo-plans-fab {
-    transition: opacity 0.2s ease, visibility 0.2s;
-    transform: none;
-  }
-
-  .seo-plans-fab.is-visible {
-    transform: none;
-  }
-}
-
-/* Phones: the label costs more width than it earns next to a footer CTA. */
-@media only screen and (max-width: 575px) {
-  .seo-plans-fab {
-    bottom: 16px;
-    inset-inline-end: 16px;
-    padding: 12px 16px;
-    font-size: 13px;
-  }
-}
-
 /* ---------- Floating WhatsApp button (components/Shared/WhatsAppFab.js) ---------- */
 /* `.floatwhats` and `.my-floatwhats` had NO rules anywhere in this codebase, so
    the button never floated: a 512x512 PNG sat in normal flow at its natural
@@ -17289,12 +17226,13 @@ WHAT IS DELIBERATELY NOT UNIFIED
    it. It is one shared component mounted in _app.js now, so it is on all 42
    pages and there is one phone number to maintain.
 
-   THE THREE FLOATING CONTROLS, and why each sits where it does:
+   THE TWO FLOATING CONTROLS, and why each sits where it does:
      .scroll-to-top .top  — bottom RIGHT. Pinned with the physical `right: 15px`,
                             so it does not move under RTL. Appears past 300px.
      .floatwhats          — bottom, inline END (= LEFT under RTL). Always on.
-     .seo-plans-fab       — same edge, stacked ABOVE this one (see its own rule).
-   Anything added later needs a fourth slot; do not reuse these two corners. */
+   (A third, .seo-plans-fab, used to share this edge — removed 2026-09-04 along
+   with the SEO pricing section it pointed at. If a floating control is added
+   here again, give it its own slot rather than reusing either corner.) */
 .floatwhats {
   position: fixed;
   bottom: 22px;
@@ -17358,19 +17296,6 @@ WHAT IS DELIBERATELY NOT UNIFIED
       width: 50px;
       height: 50px;
     }
-  }
-}
-
-/* The SEO page's plans shortcut shares this edge, so it stacks above the
-   WhatsApp button instead of landing on top of it: 22 (bottom) + 56 (button)
-   + 14 (gap) = 92. Keep these in step if either size changes. */
-.seo-plans-fab {
-  bottom: 92px;
-}
-
-@media only screen and (max-width: 575px) {
-  .seo-plans-fab {
-    bottom: 78px;
   }
 }
 
@@ -18237,5 +18162,144 @@ too. Out of scope for a styling pass — see T-020.
         margin: -24px -20px 24px;
       }
     }
+  }
+}
+
+/* ---------- "form not ready yet" modal (components/Common/ComingSoonModal.js) ---------- */
+/* Shared by the Emails and Hosting plan cards — pressing a plan's CTA opens this
+   instead of navigating to an order form that does not exist yet. Built on the
+   --ds-* tokens (styles/style.scss "DESIGN SYSTEM TOKENS") rather than either
+   page's own $wsv-, $dm-, etc. variables, since it has to look the same
+   wherever it is triggered from and those tokens are already global. */
+.csm-overlay {
+  position: fixed;
+  inset: 0;
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 20px;
+  background-color: rgba(10, 31, 68, 0.55);
+  backdrop-filter: blur(3px);
+}
+
+.csm-panel {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  padding: 40px 32px 32px;
+  border-radius: var(--ds-r-card);
+  background-color: var(--ds-white);
+  box-shadow: var(--ds-shadow-card-hover);
+  text-align: center;
+}
+
+.csm-close {
+  position: absolute;
+  top: 14px;
+  /* Physical, not inset-inline: a dialog's own chrome (close button, drag
+     handle) conventionally stays put regardless of writing direction — moving
+     it would be surprising for a bilingual user who has learned "top-right
+     closes things" from every other RTL/LTR app they use. */
+  right: 14px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 32px;
+  height: 32px;
+  border: 0;
+  border-radius: 50%;
+  background: transparent;
+  color: var(--ds-muted);
+  font-size: 20px;
+  cursor: pointer;
+  transition: background-color 0.2s ease, color 0.2s ease;
+
+  &:hover {
+    background-color: var(--ds-band);
+    color: var(--ds-navy);
+  }
+}
+
+.csm-icon {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 56px;
+  height: 56px;
+  margin-bottom: 18px;
+  border-radius: 50%;
+  background-color: rgba(29, 211, 248, 0.14);
+  color: var(--ds-cyan);
+  font-size: 28px;
+}
+
+.csm-panel h3 {
+  margin-bottom: 10px;
+  font-family: var(--ds-font);
+  font-size: 19px;
+  font-weight: 700;
+  color: var(--ds-heading);
+}
+
+.csm-panel p {
+  margin-bottom: 26px;
+  font-size: 14px;
+  line-height: 1.85;
+  color: var(--ds-body);
+}
+
+.csm-actions {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.csm-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  width: 100%;
+  padding: 13px 20px;
+  border-radius: var(--ds-r-btn);
+  font-family: var(--ds-font);
+  font-size: 14.5px;
+  font-weight: 700;
+  transition: background-color 0.25s ease, color 0.25s ease, transform 0.2s ease;
+
+  &:hover {
+    transform: translateY(-2px);
+  }
+}
+
+.csm-btn-solid {
+  background-color: var(--ds-navy);
+  color: var(--ds-white);
+
+  &:hover {
+    background-color: var(--ds-cyan);
+    color: var(--ds-navy);
+  }
+}
+
+.csm-btn-ghost {
+  border: 1px solid var(--ds-line);
+  color: var(--ds-heading);
+
+  i {
+    font-size: 18px;
+    color: #25d366;
+  }
+
+  &:hover {
+    border-color: #25d366;
+    background-color: rgba(37, 211, 102, 0.08);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .csm-panel {
+    transition: none;
   }
 }

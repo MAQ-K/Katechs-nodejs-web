@@ -47,3 +47,14 @@ export default function TrainingPage() {
     </>
   );
 }
+
+// Page hidden for now (user request, 2026-09-04: "hide whole page for now").
+// notFound routes this to pages/404.js instead of rendering the page below —
+// reversible by deleting this export alone. The nav link is also commented
+// out in components/Layouts/Navbar.js so the route isn't discoverable, but a
+// direct visit to /training/ still has to 404 on its own; this is what does
+// that. All imports/JSX above are untouched and come straight back once this
+// is removed.
+export async function getStaticProps() {
+  return { notFound: true };
+}

@@ -162,6 +162,9 @@ const Navbar = ({ theme }) => {
                 </li>
                 */}
 
+                {/* Training page hidden for now (user request, 2026-09-04) —
+                    pages/training/index.js returns notFound so the route itself
+                    404s too; this keeps it from being found from the nav.
                 <li className="nav-item m-rr">
                   <Link
                         href="/training/"
@@ -170,6 +173,7 @@ const Navbar = ({ theme }) => {
                         التدريب
                     </Link>
                 </li>
+                */}
 
 
 

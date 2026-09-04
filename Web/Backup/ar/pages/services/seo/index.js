@@ -8,10 +8,8 @@ import AiSearch from "../../../components/Seo/AiSearch";
 import Process from "../../../components/Seo/Process";
 import CaseStudies from "../../../components/Seo/CaseStudies";
 import Reporting from "../../../components/Seo/Reporting";
-import Pricing from "../../../components/Seo/Pricing";
 import Faq from "../../../components/Seo/Faq";
 import CtaBand from "../../../components/Seo/CtaBand";
-import PlansFab from "../../../components/Seo/PlansFab";
 import Footer from "../../../components/Layouts/Footer";
 
 export default function SeoPage() {
@@ -35,17 +33,11 @@ export default function SeoPage() {
 
       <Reporting />
 
-      <Pricing />
-
       <Faq />
 
       <CtaBand />
 
       <Footer />
-
-      {/* Floating shortcut to #pricing. Last in the tree so it paints above
-          everything; it positions itself fixed. */}
-      <PlansFab />
     </>
   );
 }

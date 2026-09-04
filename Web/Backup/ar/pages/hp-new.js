@@ -9,6 +9,8 @@ import WebServicesBrief from "../components/HpNew/WebServicesBrief";
 import ProjectsMarquee from "../components/HpNew/ProjectsMarquee";
 import WebServicesPlans from "../components/HpNew/WebServicesPlans";
 import AppServices from "../components/HpNew/AppServices";
+import EmailServices from "../components/HpNew/EmailServices";
+import Stores from "../components/HpNew/Stores";
 import { sectionNav } from "../data/home-new/data";
 
 // === New homepage — independent rebuild ===
@@ -34,7 +36,6 @@ const GAP = 16;
 // Section slots the navigator points at that are not built yet. The domain bar
 // and web-services are real sections above and carry their own ids.
 const PLACEHOLDERS = [
-  { id: "mail", label: "البريد الإلكتروني" },
   { id: "marketing", label: "التسويق" },
 ];
 
@@ -163,6 +164,19 @@ export default function HpNewPage() {
         {/* --- App services: talk + the 3D phone stage --- */}
         <section id="app-dev">
           <AppServices />
+        </section>
+
+        {/* --- Email services: side tabs, talk over image --- */}
+        <section id="mail">
+          <EmailServices />
+        </section>
+
+        {/* --- Stores: the web services page e-commerce area.
+            No nav pill: the floating navigator has the five the user fixed
+            (domain, web services, app dev, mail, marketing) and stores is not
+            one of them. Add a row to sectionNav if that changes. --- */}
+        <section id="stores">
+          <Stores />
         </section>
 
         {/* --- section slots — nothing designed yet --- */}

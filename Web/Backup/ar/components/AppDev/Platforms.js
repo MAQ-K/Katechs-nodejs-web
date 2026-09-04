@@ -66,8 +66,12 @@ const Platforms = () => {
                     <span>{item.meta}</span>
                   </div>
 
-                  <Link href="#pricing" className="app-platform-link">
-                    الباقات
+                  {/* Was "الباقات" -> #pricing. The pricing section was removed
+                      from this page (user request, 2026-09-04: "remove plans
+                      its open no plans") — repointed to the real conversion
+                      target every other CTA on this page already uses. */}
+                  <Link href="/contactWeb" className="app-platform-link">
+                    اطلب الآن
                     <i className="bx bx-left-arrow-alt"></i>
                   </Link>
                 </div>

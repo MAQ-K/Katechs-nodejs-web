@@ -139,12 +139,16 @@ const Footer = () => {
                   </li>
                
                 
+                  {/* Training page hidden for now (user request, 2026-09-04) —
+                      see components/Layouts/Navbar.js for the matching nav-link
+                      removal and pages/training/index.js for the notFound.
                   <li>
                     <Link href="/training/">
                       <i className="right-icon bx bx-chevrons-right"></i>
                       تدريب
                     </Link>
                   </li>
+                  */}
                   <li>
                     <Link href="/contact">
                       <i className="right-icon bx bx-chevrons-right"></i>

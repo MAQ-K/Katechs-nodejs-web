@@ -107,8 +107,12 @@ const Hero = () => {
                     <i className="bx bx-left-arrow-alt"></i>
                   </Link>
                 </Magnetic>
-                <Link href="#pricing" className="seo-link-btn">
-                  شاهد الباقات
+                {/* Was "شاهد الباقات" -> #pricing. The pricing section was
+                    removed from this page (user request, 2026-09-04: "remove
+                    plans its open no plans") — repointed to the real contact
+                    CTA every other page uses once pricing is gone. */}
+                <Link href="/contactWeb" className="seo-link-btn">
+                  تواصل معنا
                   <i className="bx bx-left-arrow-alt"></i>
                 </Link>
               </div>

@@ -14,8 +14,10 @@
 import {
   businessWebsites,
   wordpress,
+  ecommerce,
   projects as clientProjects,
 } from "../services/data";
+import { emailTypes } from "../emails/data";
 
 // --- Hero -------------------------------------------------------------------
 // One fixed background video for the whole slider. Only the text cross-fades;
@@ -178,5 +180,86 @@ export const appServices = {
     { icon: "bx bx-map-alt", label: "توصيل وتتبّع" },
     { icon: "bx bx-line-chart", label: "لوحة تحكم" },
     { icon: "bx bx-chat", label: "تواصل ودعم" },
+  ],
+};
+
+// --- Email services section --------------------------------------------------
+// Three tabs down the side, each with talk on top and an image beneath
+// (Homepage/structure-drafts/email services section .png). In RTL the rail sits
+// on the right — the start edge — and the panel fills the space to its left.
+//
+// The three tabs ARE the three products the emails page already sells, imported
+// from data/emails/data.js so the homepage cannot end up offering a different
+// set. Label and copy come straight from there.
+//
+// ⚠️ `image` is the one thing invented here: emailTypes carries only a small
+// logo `icon`, and the sketch wants a wide image under the text. These are
+// existing library images chosen to match each product; treat them as
+// PLACEHOLDER and let the content pass replace them with real screenshots.
+const emailShots = {
+  pro: {
+    src: "/images/email-web.png",
+    alt: "بريد إلكتروني احترافي على النطاق الخاص بشركتك",
+  },
+  google: {
+    src: "/images/google-meeting.webp",
+    alt: "أدوات Google Workspace للتعاون والاجتماعات",
+  },
+  microsoft: {
+    src: "/images/office-365-1.webp",
+    alt: "تطبيقات مايكروسوفت 365 للعمل والإنتاجية",
+  },
+};
+
+export const emailServices = {
+  eyebrow: "البريد الإلكتروني",
+  heading: "بريد باسم شركتك، لا بريد مجاني",
+  tabs: emailTypes.map((t) => ({
+    id: t.id,
+    label: t.label,
+    icon: t.icon,
+    body: t.desc,
+    image: emailShots[t.id],
+  })),
+  cta: { label: "تصفّح باقات البريد", href: "/services/emails/" },
+};
+
+// --- Stores (e-commerce) section ---------------------------------------------
+// "this is the part of ecommerce from web services page" — so everything here
+// comes from the `ecommerce` area of data/services/data.js, imported above. No
+// new copy, and nothing borrowed from the homepage's own EcommercePlatforms.
+//
+// Structure (the sketch shows a 3-tab pill row over two large boxes, and left
+// the rest to us): the area's content splits naturally into exactly three
+// views, and the FIRST is the two-box one — so the section's resting state is
+// what the sketch draws.
+//   1. نبني ونشغّل   -> storePlans, the wide cards WITH images      <- the sketch
+//      (the sketch drew two; the shared data now holds three — the grid is
+//       auto-fit so it follows whatever data/services/data.js has)
+//   2. رحلة الشراء   -> the four-step journey and its result card
+//   3. ما تديره بنفسك -> the six capabilities
+export const stores = {
+  intro: ecommerce.intro,
+  cta: ecommerce.cta,
+  tabs: [
+    {
+      id: "build",
+      label: "نبني ونشغّل",
+      kind: "cards",
+      cards: ecommerce.storePlans,
+    },
+    {
+      id: "journey",
+      label: "رحلة الشراء",
+      kind: "journey",
+      steps: ecommerce.journey,
+      result: ecommerce.journeyResult,
+    },
+    {
+      id: "capabilities",
+      label: ecommerce.capabilitiesTitle,
+      kind: "capabilities",
+      items: ecommerce.capabilities,
+    },
   ],
 };

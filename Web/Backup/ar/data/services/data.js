@@ -636,6 +636,28 @@ export const ecommerce = {
       imageH: 747,
       alt: "صاحب متجر يتابع الطلبات والمبيعات من لوحة التحكم",
     },
+    {
+      // Added on user request (2026-09-04): "add making landing page service".
+      // A lighter third option next to build/manage — for a single product,
+      // offer or ad campaign that does not need a full store. Reuses the
+      // asset that was already sitting in public/images/ecommerce/ unused
+      // (landing-page-store.png — a funnel/conversion illustration, a closer
+      // fit here than it would have been on either of the other two cards).
+      id: "landing",
+      tag: "الإطلاق السريع",
+      title: "نبني لك صفحة هبوط",
+      text: "لعرض واحد أو منتج واحد أو حملة إعلانية — صفحة مخصصة لهدف واحد، بلا تشتيت وبلا الحاجة لمتجر كامل.",
+      points: [
+        "مثالية لحملات الإعلانات والعروض",
+        "تصميم يركّز على هدف تحويل واحد",
+        "جاهزة للإطلاق خلال أيام",
+      ],
+      link: { label: "اطلب صفحة هبوط", href: "/contactWeb" },
+      image: "/images/ecommerce/landing-page-store-card.webp",
+      imageW: 1120,
+      imageH: 747,
+      alt: "صفحة هبوط مخصصة لعرض أو حملة تسويقية واحدة",
+    },
   ],
 };
 
