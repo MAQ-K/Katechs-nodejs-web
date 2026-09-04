@@ -9,6 +9,21 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-09-03 · Sub-pages (T-015) — two rules for anyone restyling a legacy page.**
+  **1. `styles/rtl.css` is imported AFTER `styles/style.css` in `_app.js`**, and it carries FLAT rules for
+  classes the legacy pages use (`.choose-card`, `.about-content ul li`, `.single-business`, `.single-news`…).
+  A flat selector appended to the end of `style.scss` **loses that tie and silently does nothing.** Scope every
+  new rule under a page wrapper — `.about-page .choose-card` (0,2,0) beats rtl.css's (0,1,0) whatever the load
+  order. `pages/about-us.js` is the precedent. Bonus: it also lets rtl.css's hand-flipped `padding-right`/`right`
+  values be replaced with logical properties.
+  **2. That same wrapper is how a `components/Common/**` section gets restyled on one page without touching the
+  others** — `MakeYourBusiness` and `Testimonials` were restyled on /about-us with **zero edits to
+  `components/Common/`**, which keeps the frozen homepage (T-018) safe.
+  `/about-us` is migrated but **has not been seen rendering** — :3000 was stuck when the pass finished.
+  Still TODO: `news/*`, `useful-articles`, `case-studies-details`. See `brain/logs/2026-09-03.md`.
+- **2026-09-03 · styled-jsx: never put a backtick in a CSS comment.** A `` `order` `` inside a `/* … */` comment
+  in `components/HpNew/DomainSearch.js` terminated the template literal and took the whole dev server down —
+  SWC reports it as `Expected '}', got 'order'`, which points at the wrong line. Fixed by the homepage session.
 - **2026-09-03 · Manager — the homepage rebuild has started, on its own route. `pages/index.js` is
   frozen.** New homepage is being built section by section (sketch → design → finish, user confirms
   each) at **`pages/hp-new.js` → `http://localhost:3000/hp-new`**, with sections in
