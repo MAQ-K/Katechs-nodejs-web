@@ -164,6 +164,54 @@ export const appServices = {
   // Duplicating the list here would be a second copy to keep in step.
 };
 
+// --- Why choose us -----------------------------------------------------------
+// Talk on the right, a vertical carousel of real client work on the left
+// (user, 2026-09-05: "the left image is a scrollable vertical carousel").
+//
+// The four reasons are the OLD homepage's own, copied verbatim from
+// components/Common/MakeYourBusiness.js ("لماذا تختار كاتكس؟"). Not rewritten:
+// the two pages should make the same promises, and the 14-day refund figure in
+// particular is a commitment, not copy to improvise on.
+//
+// Icons are inline SVG rather than the flaticon-* classes MakeYourBusiness uses,
+// because those live in styles/flaticon.css and components/HpNew/ owns its own
+// styling. Same call HeroNav/EmailServices already made.
+export const whyUs = {
+  eyebrow: "لماذا كاتكس",
+  heading: "لماذا تختار كاتكس؟",
+  body:
+    "أربعة أسباب تسمعها من كل عميل تعامل معنا — والشغل نفسه معروض بجانبها.",
+  points: [
+    {
+      id: "experience",
+      title: "الخبرة",
+      text:
+        "فريق متخصص ذو خبرة عالية في الحلول الرقمية داخل مصر ودول الخليج العربي",
+    },
+    {
+      id: "support",
+      title: "الدعم",
+      text:
+        "دعم متواصل وتعاون شفاف مع العميل، مع فريق جاهز لمساعدتك في كل خطوة",
+    },
+    {
+      id: "integrated",
+      title: "الحلول المتكاملة",
+      text:
+        "كل ما يحتاجه بيزنسك تحت سقف واحد: تصميم، استضافة، تسويق، وحماية",
+    },
+    {
+      id: "guarantee",
+      title: "جودة التزام وضمان استرداد",
+      text: "أعلى معايير الجودة و الالتزام بالمواعيد وضمان استرداد 14 يوم",
+    },
+  ],
+  cta: { label: "تعرّف علينا أكثر", href: "/about-us" },
+  // The carousel content: the same six client screenshots the projects marquee
+  // uses, so the section shows real work rather than stock art.
+  gallery: clientProjects,
+};
+
 // --- Email services section --------------------------------------------------
 // Three tabs down the side, each with talk on top and an image beneath
 // (Homepage/structure-drafts/email services section .png). In RTL the rail sits

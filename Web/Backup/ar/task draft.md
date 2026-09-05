@@ -120,4 +120,22 @@ change all areas bg to an off white color
 ----------------------------------------------------
 
 # homepage new - structure edits 
-## 
+
+## some edits
+
+### subnavbar dont work
+
+
+### email section
+the full heigth of the section is devide on the 3 service type boxes ,so they start from top to bottom 
+
+switch between boxes place and content place 
+boxes on left content on right
+
+the content part :
+ image to tall decrese height 
+ talk so little add more 
+
+
+## app dev 
+https://sketchfab.com/3d-models/apple-iphone-18-v1-47acb111fbe044d39ca4f6cda667a6be

@@ -11,6 +11,20 @@ import WebServicesPlans from "../components/HpNew/WebServicesPlans";
 import AppServices from "../components/HpNew/AppServices";
 import EmailServices from "../components/HpNew/EmailServices";
 import Stores from "../components/HpNew/Stores";
+// --- four sections lifted whole from the OLD homepage (user, 2026-09-05) ---
+// Imported, not copied — same components pages/index.js renders, so they cannot
+// drift. Their CSS is global already: homepage-sections.css (imported in
+// _app.js) covers the SEO, trust and FAQ areas, and .logo-section lives in
+// style.scss — so unlike AppOrbit these need no wrapper class to style up.
+import SeoShowcase from "../components/Common/SeoShowcase";
+import Partner from "../components/Common/Partner";
+import TrustedCustomers from "../components/Common/TrustedCustomers";
+import FaqHorizontal from "../components/Common/FaqHorizontal";
+// Marketing: the digital marketing page's own channels section (user, 2026-09-05
+// — "same stuff in the old one"). .dm-section is top-level in style.scss, so
+// unlike AppOrbit it needs no wrapper class to style up.
+import Channels from "../components/DigitalMarketing/Channels";
+import WhyChooseUs from "../components/HpNew/WhyChooseUs";
 import useSmoothScroll from "../components/Services/useSmoothScroll";
 import { sectionNav } from "../data/home-new/data";
 
@@ -40,11 +54,11 @@ import { sectionNav } from "../data/home-new/data";
 // Breathing room between a fixed bar and the thing it must not cover.
 const GAP = 16;
 
-// Section slots the navigator points at that are not built yet. The domain bar
-// and web-services are real sections above and carry their own ids.
-const PLACEHOLDERS = [
-  { id: "marketing", label: "التسويق" },
-];
+// Section slots the navigator points at that are not built yet. EMPTY as of
+// 2026-09-05 — marketing was the last placeholder and is now a real section.
+// Kept (with .hp-slot below) because the homepage is not finished: add a row
+// here to stub the next section.
+const PLACEHOLDERS = [];
 
 // Measured per call, never cached: this bar changes height at the 1199px
 // breakpoint, and the shared .navbar-area it replaced also shrank when it gained
@@ -196,6 +210,27 @@ export default function HpNewPage() {
           <Stores />
         </section>
 
+        {/* --- SEO: تصدّر نتائج البحث --- */}
+        <section id="seo">
+          <SeoShowcase />
+        </section>
+
+        {/* --- Marketing: the channels grid, lifted from the digital marketing
+            page. Full-bleed already — .dm-section is a 100%-width band and
+            .dm-dark paints it, so no wrapper is needed to make it span.
+            showNote={false} drops that page's trailing open-question note. --- */}
+        <section id="marketing">
+          <Channels showNote={false} />
+        </section>
+
+        {/* --- Why choose us: the four reasons, with a vertical carousel of
+            client work running alongside. Sits between the marketing band and
+            the trust band, which is the argument it sets up. No nav pill —
+            sectionNav has the five the user fixed. --- */}
+        <section id="why-us">
+          <WhyChooseUs />
+        </section>
+
         {/* --- section slots — nothing designed yet --- */}
         {PLACEHOLDERS.map((s) => (
           <section key={s.id} id={s.id} className="hp-slot">
@@ -203,6 +238,18 @@ export default function HpNewPage() {
             <span className="hp-slot-note">قسم قيد التصميم</span>
           </section>
         ))}
+
+        {/* --- trust band: the tech stack strip, then the years-of-trust
+            testimonials, then five FAQs. Same order the old homepage uses. --- */}
+        <div className="pt-70">
+          <Partner />
+        </div>
+
+        <TrustedCustomers />
+
+        {/* 5 of the 10, per the user. FaqHorizontal keeps all ten by default so
+            pages/index.js is unaffected. */}
+        <FaqHorizontal limit={5} />
       </main>
 
       <Footer />

@@ -41,7 +41,11 @@ const channels = [
   },
 ];
 
-const Channels = () => {
+// `showNote` gates the trailing open question, which is a note to OURSELVES
+// ("which ad platforms do we name?"), not customer-facing copy. Defaults true
+// so /services/digital-marketing is unchanged; /hp-new passes false — an
+// unanswered internal question has no business on the homepage.
+const Channels = ({ showNote = true }) => {
   return (
     <section className="dm-section dm-dark" id="channels">
       <div className="container">
@@ -82,12 +86,14 @@ const Channels = () => {
           ))}
         </motion.div>
 
-        <Reveal delay={0.1}>
-          <p className="dm-note">
-            سؤال مفتوح: أي منصات إعلانية نذكرها بالاسم — Google، Meta،
-            TikTok، Snapchat، X؟
-          </p>
-        </Reveal>
+        {showNote && (
+          <Reveal delay={0.1}>
+            <p className="dm-note">
+              سؤال مفتوح: أي منصات إعلانية نذكرها بالاسم — Google، Meta،
+              TikTok، Snapchat، X؟
+            </p>
+          </Reveal>
+        )}
       </div>
     </section>
   );

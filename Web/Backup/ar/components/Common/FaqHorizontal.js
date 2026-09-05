@@ -50,7 +50,12 @@ const faqs = [
   },
 ];
 
-const FaqHorizontal = () => {
+// `limit` trims the list from the top. Optional and undefined by default, so
+// pages/index.js keeps all ten questions untouched; /hp-new passes 5 (user,
+// 2026-09-05 — "5 FAQ only").
+const FaqHorizontal = ({ limit }) => {
+  const items = limit ? faqs.slice(0, limit) : faqs;
+
   return (
     <section className="faq-vertical-area pt-100 pb-100">
       <div className="container">
@@ -61,7 +66,7 @@ const FaqHorizontal = () => {
 
         <div className="faq-vertical-accordion">
           <Accordion allowZeroExpanded preExpanded={["0"]}>
-            {faqs.map((item, index) => (
+            {items.map((item, index) => (
               <AccordionItem key={index} uuid={String(index)}>
                 <AccordionItemHeading>
                   <AccordionItemButton>
