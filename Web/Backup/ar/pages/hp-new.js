@@ -20,10 +20,6 @@ import SeoShowcase from "../components/Common/SeoShowcase";
 import Partner from "../components/Common/Partner";
 import TrustedCustomers from "../components/Common/TrustedCustomers";
 import FaqHorizontal from "../components/Common/FaqHorizontal";
-// Marketing: the digital marketing page's own channels section (user, 2026-09-05
-// — "same stuff in the old one"). .dm-section is top-level in style.scss, so
-// unlike AppOrbit it needs no wrapper class to style up.
-import Channels from "../components/DigitalMarketing/Channels";
 import WhyChooseUs from "../components/HpNew/WhyChooseUs";
 import useSmoothScroll from "../components/Services/useSmoothScroll";
 import { sectionNav } from "../data/home-new/data";
@@ -54,11 +50,15 @@ import { sectionNav } from "../data/home-new/data";
 // Breathing room between a fixed bar and the thing it must not cover.
 const GAP = 16;
 
-// Section slots the navigator points at that are not built yet. EMPTY as of
-// 2026-09-05 — marketing was the last placeholder and is now a real section.
-// Kept (with .hp-slot below) because the homepage is not finished: add a row
-// here to stub the next section.
-const PLACEHOLDERS = [];
+// Section slots the navigator points at that are not built yet.
+//
+// marketing is a placeholder AGAIN as of 2026-09-06: the user had the digital
+// marketing page's channels grid here, then removed it. The pill stays in
+// sectionNav (the user fixed those five), so the id has to keep existing or the
+// scroll-spy never matches it and its jump silently does nothing.
+const PLACEHOLDERS = [
+  { id: "marketing", label: "التسويق" },
+];
 
 // Measured per call, never cached: this bar changes height at the 1199px
 // breakpoint, and the shared .navbar-area it replaced also shrank when it gained
@@ -213,14 +213,6 @@ export default function HpNewPage() {
         {/* --- SEO: تصدّر نتائج البحث --- */}
         <section id="seo">
           <SeoShowcase />
-        </section>
-
-        {/* --- Marketing: the channels grid, lifted from the digital marketing
-            page. Full-bleed already — .dm-section is a 100%-width band and
-            .dm-dark paints it, so no wrapper is needed to make it span.
-            showNote={false} drops that page's trailing open-question note. --- */}
-        <section id="marketing">
-          <Channels showNote={false} />
         </section>
 
         {/* --- Why choose us: the four reasons, with a vertical carousel of
