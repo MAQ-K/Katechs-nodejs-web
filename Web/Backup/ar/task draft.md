@@ -139,3 +139,12 @@ the content part :
 
 ## app dev 
 https://sketchfab.com/3d-models/apple-iphone-18-v1-47acb111fbe044d39ca4f6cda667a6be
+
+
+## markiting section 
+it a 100% width section have same stuff in the old one  
+
+
+## why chose us
+look this section have a twist 
+the left image is a scroablle vertical carusel 
