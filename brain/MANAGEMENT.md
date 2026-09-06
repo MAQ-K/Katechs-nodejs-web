@@ -90,7 +90,7 @@ row in `BUILT_AREAS` (pages/services/index.js) plus a data key; the section comp
 
 ### Known Issues / Debt (open)
 1. **[Critical]** Hardcoded live SendGrid API key in `pages/api/contact.js:7` and `pages/api/web.js:7` → rotate + `process.env.SENDGRID_API_KEY`.
-2. **[Critical]** `.gitignore` line meant to ignore `sendgrid.env` is corrupted — a plain `git add .` can commit a raw API key.
+2. ~~**[Critical]** `.gitignore` line meant to ignore `sendgrid.env` is corrupted~~ — **RESOLVED 2026-09-04.** Investigated after a `git add .` in `Web/Backup/ar` (against the standing rule) prompted a check: `.gitignore` had two VALID working rules for `sendgrid.env` all along (`sendgrid.env` exact match on line 2, `*.env` wildcard on line 3) — verified with `grep -a` and a hex dump. `file` reported it as binary because of a harmless null-byte-corrupted duplicate line appended at the very end (read: "buildsendgrid.env", not even the right filename) — inert garbage, not a bypass. Truncated the file at the byte offset to drop it; the two real rules are untouched. `git add .` in this folder is still the wrong habit (nothing stops OTHER stray files — logs, screenshots, zips — Known Issue #7 lists what's already been swept in historically), but `sendgrid.env` specifically was never actually at risk from it. Known Issue #1 (the hardcoded key already committed in `pages/api/*`) is the real, still-open exposure — independent of this and not fixed by this.
 3. **[Critical]** `npm audit`: 32 vulns (9 critical, 14 high), incl. prototype pollution in `swiper`.
 4. **[Medium]** reCAPTCHA never verified server-side — the API routes are callable directly.
 5. **[Medium]** No input escaping before form fields are interpolated into email HTML.
