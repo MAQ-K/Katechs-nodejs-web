@@ -1,3 +1,7 @@
+#
+#
+#
+# - #
 ## hero section 
 video background
 3 slides
@@ -52,4 +56,35 @@ this is the part of ecommerce from web services page
 u do the strucuter it need 
 
 
-## seo
+<!-- start last structures edits -->
+## subnavbar 
+when i press on domains it dont get me to the the part it should be i want it give me the part i type on the domain
+
+## projects carusel
+type above it projects 
+
+
+## app dev section 
+i want each mobile screen to have an image on it as a design 
+
+
+## Ecommerce part 
+remove the nav have نبني ونشغّل
+رحلة الشراء
+ما الذي تديره بنفسك
+
+make them 4 cards 3 beside each other 
+and a wide one under them 
+1) build 2) manage 3) build + manage 4) landing page 
+
+
+## markiting 
+this section have تصدّر نتائج البحث، يوميًا وباستمرار is the marking section 
+make it full width 
+talk on right and that other element on left 
+
+
+## why chose katecks 
+i want when i scroll the box on the left change 
+example => when i arrive after scrolling to this part when i scroll again it switch with a smooth effect to the box after it and they are 4 boxes each box have a point 
+<!-- end last structures edits -->
