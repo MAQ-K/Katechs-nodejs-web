@@ -1,0 +1,658 @@
+<title>Katechs Service Briefs</title>
+<style>
+  :root{
+    --ground:#F3F4F2;
+    --paper:#FBFBFA;
+    --ink:#14171A;
+    --ink-soft:#565D5F;
+    --line:#DADDD9;
+    --accent:#2E6F68;
+    --accent-soft:#E4EFEC;
+    --chip-bg:#EEF0EE;
+  }
+  @media (prefers-color-scheme: dark){
+    :root:not([data-theme="light"]){
+      --ground:#111413;
+      --paper:#171B19;
+      --ink:#ECEEEC;
+      --ink-soft:#9AA39F;
+      --line:#2A302D;
+      --accent:#5FBAB0;
+      --accent-soft:#1D2D2A;
+      --chip-bg:#1E2321;
+    }
+  }
+  :root[data-theme="dark"]{
+    --ground:#111413;
+    --paper:#171B19;
+    --ink:#ECEEEC;
+    --ink-soft:#9AA39F;
+    --line:#2A302D;
+    --accent:#5FBAB0;
+    --accent-soft:#1D2D2A;
+    --chip-bg:#1E2321;
+  }
+
+  *{box-sizing:border-box;}
+  body{
+    margin:0;
+    background:var(--ground);
+    color:var(--ink);
+    font-family:"Tajawal","Segoe UI",sans-serif;
+    -webkit-font-smoothing:antialiased;
+  }
+  .ar{ font-family:"Tajawal","Segoe UI",sans-serif; }
+
+  .wrap{
+    max-width:920px;
+    margin:0 auto;
+    padding:48px 24px 96px;
+  }
+
+  /* ---- top matter ---- */
+  .masthead{
+    display:flex;
+    justify-content:space-between;
+    align-items:flex-end;
+    gap:24px;
+    padding-bottom:22px;
+    border-bottom:2px solid var(--ink);
+    margin-bottom:8px;
+  }
+  .masthead h1{
+    font-family:"Cairo",sans-serif;
+    font-weight:800;
+    font-size:clamp(28px,4vw,40px);
+    line-height:1.05;
+    margin:0 0 8px;
+    text-wrap:balance;
+  }
+  .masthead p{
+    margin:0;
+    color:var(--ink-soft);
+    font-size:15px;
+    max-width:56ch;
+  }
+  .masthead .meta{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:.04em;
+    color:var(--ink-soft);
+    text-align:end;
+    white-space:nowrap;
+  }
+
+  /* ---- table of contents ---- */
+  .toc{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:2px;
+    margin:28px 0 56px;
+    border:1px solid var(--line);
+    background:var(--line);
+  }
+  .toc a{
+    display:flex;
+    align-items:baseline;
+    gap:8px;
+    background:var(--paper);
+    color:var(--ink);
+    text-decoration:none;
+    padding:10px 12px;
+    font-size:13.5px;
+  }
+  .toc a:hover{ background:var(--accent-soft); }
+  .toc a:focus-visible{ outline:2px solid var(--accent); outline-offset:-2px; }
+  .toc .n{
+    font-family:"IBM Plex Mono",monospace;
+    color:var(--accent);
+    font-size:12px;
+  }
+  @media (max-width:640px){ .toc{ grid-template-columns:1fr 1fr; } }
+
+  /* ---- one sheet per service ---- */
+  .sheet{
+    background:var(--paper);
+    border:1px solid var(--line);
+    border-radius:2px;
+    padding:32px clamp(20px,4vw,40px) 36px;
+    margin-bottom:22px;
+    scroll-margin-top:20px;
+  }
+  .sheet-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    font-family:"IBM Plex Mono",monospace;
+    font-size:12px;
+    letter-spacing:.06em;
+    color:var(--ink-soft);
+    text-transform:uppercase;
+    padding-bottom:14px;
+    margin-bottom:18px;
+    border-bottom:1px solid var(--line);
+  }
+  .sheet-head .idx{ color:var(--accent); font-weight:600; }
+
+  .name{
+    font-family:"Cairo",sans-serif;
+    font-weight:800;
+    font-size:26px;
+    margin:0 0 22px;
+    display:flex;
+    flex-wrap:wrap;
+    align-items:baseline;
+    gap:10px;
+    text-wrap:balance;
+  }
+  .name .ar{
+    font-weight:500;
+    font-size:17px;
+    color:var(--ink-soft);
+  }
+
+  .grid{
+    display:grid;
+    grid-template-columns:1fr 1fr;
+    gap:24px 32px;
+  }
+  .block.what{ grid-column:1 / -1; }
+  @media (max-width:600px){
+    .grid{ grid-template-columns:1fr; }
+  }
+
+  .label{
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11px;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--accent);
+    margin:0 0 8px;
+  }
+  .block p{ margin:0; line-height:1.55; font-size:15px; }
+  .block ul{ margin:0; padding:0; list-style:none; }
+  .block.when li{
+    position:relative;
+    padding-inline-start:16px;
+    margin-bottom:7px;
+    line-height:1.5;
+    font-size:14.5px;
+  }
+  .block.when li::before{
+    content:"";
+    position:absolute;
+    inset-inline-start:0;
+    top:.6em;
+    width:5px; height:5px;
+    background:var(--accent);
+    border-radius:50%;
+  }
+
+  .chips{ display:flex; flex-wrap:wrap; gap:8px; }
+  .chip{
+    background:var(--chip-bg);
+    border:1px solid var(--line);
+    border-radius:100px;
+    padding:5px 12px;
+    font-size:13px;
+    line-height:1.3;
+    white-space:nowrap;
+  }
+  .chip.popular{
+    border-color:var(--accent);
+    color:var(--accent);
+    font-weight:600;
+  }
+  .chip .ar{ font-size:12.5px; color:inherit; opacity:.85; }
+
+  .note{
+    margin-top:20px;
+    padding:10px 14px;
+    background:var(--accent-soft);
+    border-inline-start:3px solid var(--accent);
+    font-size:13px;
+    color:var(--ink-soft);
+    line-height:1.5;
+  }
+  .note b{ color:var(--ink); }
+
+  footer{
+    text-align:center;
+    color:var(--ink-soft);
+    font-family:"IBM Plex Mono",monospace;
+    font-size:11.5px;
+    letter-spacing:.04em;
+    margin-top:32px;
+  }
+
+  @media print{
+    body{ background:#fff; }
+    .toc{ display:none; }
+    .sheet{ break-after:page; border:none; padding:20px 0; }
+  }
+</style>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@600;800&family=Tajawal:wght@400;500;700&family=IBM+Plex+Mono:wght@500;600&display=swap">
+
+<div class="wrap">
+
+  <div class="masthead">
+    <div>
+      <h1>Service Briefs</h1>
+      <p>One short page per service — what it is, when a client actually needs it, and the types on offer. For the design, content, and video team.</p>
+    </div>
+    <div class="meta">KATECHS<br>14 SERVICES</div>
+  </div>
+
+  <nav class="toc" aria-label="Jump to a service">
+    <a href="#s01"><span class="n">01</span> Hosting Services</a>
+    <a href="#s02"><span class="n">02</span> VPS Hosting</a>
+    <a href="#s03"><span class="n">03</span> WordPress Hosting</a>
+    <a href="#s04"><span class="n">04</span> Website Design</a>
+    <a href="#s05"><span class="n">05</span> Business Websites</a>
+    <a href="#s06"><span class="n">06</span> WordPress Sites</a>
+    <a href="#s07"><span class="n">07</span> App Development</a>
+    <a href="#s08"><span class="n">08</span> E-commerce Dev.</a>
+    <a href="#s09"><span class="n">09</span> Site Consulting</a>
+    <a href="#s10"><span class="n">10</span> Digital Marketing</a>
+    <a href="#s11"><span class="n">11</span> SEO</a>
+    <a href="#s12"><span class="n">12</span> Business Email</a>
+    <a href="#s13"><span class="n">13</span> Security</a>
+    <a href="#s14"><span class="n">14</span> SSL Certificates</a>
+  </nav>
+
+  <!-- 01 -->
+  <section class="sheet" id="s01">
+    <div class="sheet-head"><span><span class="idx">01</span> / Infrastructure &amp; Hosting</span><span>/services/hosting-services</span></div>
+    <h2 class="name">Hosting Services <span class="ar" dir="rtl" lang="ar">استضافة المواقع</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>Shared web hosting plus a free domain — the basic "place to live" every website needs to go online.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>A new site is launching and needs somewhere to live.</li>
+          <li>Their current host is slow, unreliable, or keeps going down.</li>
+          <li>They want SSL and email included, not billed separately.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Business <span class="ar" dir="rtl">أعمال</span></span>
+          <span class="chip popular">Reseller <span class="ar" dir="rtl">موزعين</span></span>
+          <span class="chip">Private VPS tier</span>
+          <span class="chip">Silver / Gold / Diamond <span class="ar" dir="rtl">(فضية / ذهبية / ماسية)</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 02 -->
+  <section class="sheet" id="s02">
+    <div class="sheet-head"><span><span class="idx">02</span> / Infrastructure &amp; Hosting</span><span>/services/vps-hosting</span></div>
+    <h2 class="name">VPS Hosting <span class="ar" dir="rtl" lang="ar">سيرفرات VPS</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>A dedicated virtual server — for clients who've outgrown shared hosting or need real control over their environment.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>Traffic or workload is heavier than shared hosting can handle.</li>
+          <li>They need root/SSH access to configure the server themselves.</li>
+          <li>A developer or agency needs a custom server setup.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">VPS 1 — 2 cores / 4GB</span>
+          <span class="chip popular">VPS 2 — 4 cores / 8GB</span>
+          <span class="chip">VPS 3 — 6 cores / 16GB</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 03 -->
+  <section class="sheet" id="s03">
+    <div class="sheet-head"><span><span class="idx">03</span> / Infrastructure &amp; Hosting</span><span>/services/wordprees-hosting</span></div>
+    <h2 class="name">WordPress Hosting <span class="ar" dir="rtl" lang="ar">استضافة ووردبريس</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>Hosting tuned specifically for WordPress sites, sized from a personal blog up to a WordPress-based store.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>Their site runs (or will run) on WordPress specifically.</li>
+          <li>Generic shared hosting feels slow or mismatched for WordPress.</li>
+          <li>They're scaling from a blog toward a WooCommerce store.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Personal <span class="ar" dir="rtl">شخصية</span></span>
+          <span class="chip popular">Business <span class="ar" dir="rtl">أعمال</span></span>
+          <span class="chip">Business Pro <span class="ar" dir="rtl">أعمال برو</span></span>
+          <span class="chip">E-commerce <span class="ar" dir="rtl">تجارة إلكترونية</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 04 -->
+  <section class="sheet" id="s04">
+    <div class="sheet-head"><span><span class="idx">04</span> / Build &amp; Sell Online</span><span>/services/website-design</span></div>
+    <h2 class="name">Website Design <span class="ar" dir="rtl" lang="ar">تصميم المواقع</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>A business website designed and coded from scratch to establish the client's brand online.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They don't have a website yet.</li>
+          <li>Their current one no longer represents the business.</li>
+          <li>They want something they can self-manage after launch (WordPress option).</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Business Web <span class="ar" dir="rtl">ويب أعمال</span></span>
+          <span class="chip">WordPress Web <span class="ar" dir="rtl">ويب ووردبريس</span></span>
+          <span class="chip">Custom <span class="ar" dir="rtl">مخصص</span> — quote</span>
+        </div>
+      </div>
+    </div>
+    <div class="note">Overlaps with areas 05 &amp; 06 below (the newer Web Services hub). Confirm with the Manager which page is current before building new assets.</div>
+  </section>
+
+  <!-- 05 -->
+  <section class="sheet" id="s05">
+    <div class="sheet-head"><span><span class="idx">05</span> / Build &amp; Sell Online</span><span>/services — area 2</span></div>
+    <h2 class="name">Business Websites <span class="ar" dir="rtl" lang="ar">مواقع الشركات</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>A company website built to look as credible and established as the business actually is — not a generic template.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>A company wants a professional online presence for the first time.</li>
+          <li>They want to showcase services, work, or a portfolio.</li>
+          <li>They may also want to sell a few products alongside their profile.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Intro site <span class="ar" dir="rtl">تعريفي</span></span>
+          <span class="chip popular">Full company site <span class="ar" dir="rtl">شركة كامل</span></span>
+          <span class="chip">Site + store <span class="ar" dir="rtl">موقع + متجر</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 06 -->
+  <section class="sheet" id="s06">
+    <div class="sheet-head"><span><span class="idx">06</span> / Build &amp; Sell Online</span><span>/services — area 3</span></div>
+    <h2 class="name">WordPress Sites <span class="ar" dir="rtl" lang="ar">ووردبريس</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>A WordPress site built so the client can manage their own content themselves after handover.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They want to edit their own pages without paying for every small change.</li>
+          <li>They're running an active blog or frequently-updated content.</li>
+          <li>They may need multi-language support.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Basic <span class="ar" dir="rtl">أساسي</span></span>
+          <span class="chip popular">Pro <span class="ar" dir="rtl">احترافي</span></span>
+          <span class="chip">Multi-language <span class="ar" dir="rtl">متعدد اللغات</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 07 -->
+  <section class="sheet" id="s07">
+    <div class="sheet-head"><span><span class="idx">07</span> / Build &amp; Sell Online</span><span>/services/app-development</span></div>
+    <h2 class="name">App Development <span class="ar" dir="rtl" lang="ar">تطوير التطبيقات</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>A custom mobile app — planning, UI/UX design, development, and launch on the app stores.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They need a mobile app, not just a website.</li>
+          <li>They need native performance, push notifications, or offline use.</li>
+          <li>They want presence on the App Store and/or Google Play.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">iOS only</span>
+          <span class="chip">Android only</span>
+          <span class="chip popular">Hybrid — both, one codebase</span>
+        </div>
+      </div>
+    </div>
+    <div class="note">Priced per project scope — no fixed prices, quote-based only.</div>
+  </section>
+
+  <!-- 08 -->
+  <section class="sheet" id="s08">
+    <div class="sheet-head"><span><span class="idx">08</span> / Build &amp; Sell Online</span><span>/services — area 4</span></div>
+    <h2 class="name">E-commerce Development <span class="ar" dir="rtl" lang="ar">التجارة الإلكترونية</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>A full online store — product pages, cart, and checkout — not just a catalogue page.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They're ready to sell products online.</li>
+          <li>They need payment and shipping actually wired up, not just a listing.</li>
+          <li>Scope varies too much for a fixed plan — quoted per store.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip popular">We build your store <span class="ar" dir="rtl">نبني متجرك</span></span>
+          <span class="chip">You run your store <span class="ar" dir="rtl">تدير متجرك</span></span>
+          <span class="chip">Landing page only <span class="ar" dir="rtl">صفحة هبوط</span></span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 09 -->
+  <section class="sheet" id="s09">
+    <div class="sheet-head"><span><span class="idx">09</span> / Grow, Protect &amp; Support</span><span>/services — area 5</span></div>
+    <h2 class="name">Website Consulting &amp; Performance <span class="ar" dir="rtl" lang="ar">استشارات وتحسين الأداء</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>A diagnostic audit for a site that already exists, but isn't performing the way it should.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They already have a website — this is not a "build me a site" pitch.</li>
+          <li>It's slow, ranks poorly, or isn't converting visitors into customers.</li>
+          <li>They want a prioritized list of what to fix, not just a report.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip popular">Free audit — one entry point, no tiers</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="sheet" id="s10">
+    <div class="sheet-head"><span><span class="idx">10</span> / Grow, Protect &amp; Support</span><span>/services/digital-marketing</span></div>
+    <h2 class="name">Digital Marketing <span class="ar" dir="rtl" lang="ar">التسويق الرقمي</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>End-to-end marketing management — we pick the right channels, run the campaigns, and report monthly.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They want marketing handled without hiring an in-house team.</li>
+          <li>They need more leads or sales, not just more followers.</li>
+          <li>They want one place managing ads, social, and content together.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">SEO</span><span class="chip">Paid ads</span><span class="chip">Social ads</span>
+          <span class="chip">Social media mgmt.</span><span class="chip">Content marketing</span><span class="chip">Email marketing</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="sheet" id="s11">
+    <div class="sheet-head"><span><span class="idx">11</span> / Grow, Protect &amp; Support</span><span>/services/seo</span></div>
+    <h2 class="name">SEO <span class="ar" dir="rtl" lang="ar">تحسين محركات البحث</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>Improving a site's technical structure, content, and backlinks so it ranks higher in unpaid search results.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They want free/organic traffic instead of relying only on ads.</li>
+          <li>They want to show up when people search for what they sell.</li>
+          <li>They want to be cited by AI search answers (ChatGPT, AI Overviews).</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Technical</span><span class="chip">Content</span><span class="chip">Keywords</span>
+          <span class="chip">Backlinks</span><span class="chip">Local</span><span class="chip">E-commerce</span><span class="chip popular">AI Search (GEO)</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 12 -->
+  <section class="sheet" id="s12">
+    <div class="sheet-head"><span><span class="idx">12</span> / Grow, Protect &amp; Support</span><span>/services/emails</span></div>
+    <h2 class="name">Business Email <span class="ar" dir="rtl" lang="ar">البريد الإلكتروني</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>Professional email at the client's own domain — <em>you@yourdomain.com</em> — instead of a free Gmail/Outlook address.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They're currently using a free personal email for the business.</li>
+          <li>They need shared calendars, docs, or cloud storage for a team.</li>
+          <li>They need it to work cleanly on mobile, browser, and desktop.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Katechs Webmail</span>
+          <span class="chip popular">Google Workspace</span>
+          <span class="chip">Microsoft 365</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 13 -->
+  <section class="sheet" id="s13">
+    <div class="sheet-head"><span><span class="idx">13</span> / Grow, Protect &amp; Support</span><span>/services/security</span></div>
+    <h2 class="name">Security <span class="ar" dir="rtl" lang="ar">حماية شبكات الشركات</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>Network protection for a business — firewall, endpoint defense, and data backup/recovery.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>They need to protect company devices and data from intrusion.</li>
+          <li>They need a real backup/recovery plan, not just hope.</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Firewall protection</span>
+          <span class="chip">Endpoint detection &amp; response</span>
+          <span class="chip">Backup &amp; recovery</span>
+        </div>
+      </div>
+    </div>
+    <div class="note"><b>Not final yet</b> — this page's offer still needs sign-off from the business before you build finished assets around it.</div>
+  </section>
+
+  <!-- 14 -->
+  <section class="sheet" id="s14">
+    <div class="sheet-head"><span><span class="idx">14</span> / Grow, Protect &amp; Support</span><span>/services/ssl-certificate</span></div>
+    <h2 class="name">SSL Certificates <span class="ar" dir="rtl" lang="ar">شهادات SSL</span></h2>
+    <div class="grid">
+      <div class="block what">
+        <p class="label">What it is</p>
+        <p>Issuing the certificate that puts the padlock and HTTPS on a client's site.</p>
+      </div>
+      <div class="block when">
+        <p class="label">When a client needs it</p>
+        <ul>
+          <li>The site handles logins, payments, or any form.</li>
+          <li>They want the ranking boost Google gives to secure sites.</li>
+          <li>They manage many subdomains under one domain (Wildcard).</li>
+        </ul>
+      </div>
+      <div class="block types">
+        <p class="label">Types</p>
+        <div class="chips">
+          <span class="chip">Domain Validation — fast, personal</span>
+          <span class="chip">Organization Validation — business</span>
+          <span class="chip popular">Extended Validation — max trust</span>
+          <span class="chip">Wildcard — domain + subdomains</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <footer>KATECHS — TEAM SERVICE BRIEFS — 2026</footer>
+</div>

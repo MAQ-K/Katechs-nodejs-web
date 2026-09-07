@@ -9,6 +9,16 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-09-07 · Content & Data Manager — team briefs written for every remaining service page**
+  (`data/<page>/brief.md` for app-development, digital-marketing, emails, seo, vps-hosting,
+  wordprees-hosting, security, ssl-certificate, website-design, and `data/services/brief.md` for the Web
+  Services hub's 4 built areas). Read the relevant one before touching any of these pages next. **Two
+  urgent flags for the Implementer:** (1) 🔴 every order button on `vps-hosting` and `wordprees-hosting`
+  links to `clients.knoztech.com` — a different company's domain, not Katechs' own client area — and the
+  shared `components/Services/hostingFeature.js` body copy says "كنوز تك" instead of Katechs; (2) the
+  `security` page (`pages/services/security/`) is third-party vendor marketing copy (Veritas Backup Exec,
+  Sophos XG/XDR) with zero pricing of any kind — needs a business decision before any design/content work,
+  not a content edit. Full detail in `brain/logs/2026-09-07.md`.
 - **2026-09-03 · Sub-pages (T-015) — two rules for anyone restyling a legacy page.**
   **1. `styles/rtl.css` is imported AFTER `styles/style.css` in `_app.js`**, and it carries FLAT rules for
   classes the legacy pages use (`.choose-card`, `.about-content ul li`, `.single-business`, `.single-news`…).
