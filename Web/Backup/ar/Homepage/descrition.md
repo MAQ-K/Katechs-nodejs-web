@@ -1,5 +1,8 @@
-#   #  #    # #
-#
+
+#   structure 
+#   structure edits 
+#   UI 
+#   UI edits 
 # - #
 ## hero section 
 video background
