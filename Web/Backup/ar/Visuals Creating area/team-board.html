@@ -223,6 +223,15 @@
     margin:0; font-size:12.5px; line-height:1.55; color:var(--ink-soft);
     background:var(--slate-soft); border-radius:7px; padding:8px 11px;
   }
+  .bnote{
+    background:var(--accent-soft); border-radius:8px; padding:10px 12px;
+    display:flex; flex-direction:column; gap:5px;
+  }
+  .bnote .bnl{
+    font-family:"IBM Plex Mono",monospace; font-size:9.5px; letter-spacing:.1em;
+    text-transform:uppercase; color:var(--accent); font-weight:600;
+  }
+  .bnote p{ margin:0; font-size:13.5px; line-height:1.65; color:var(--ink-mid); }
 
   /* ================= current site preview ================= */
   .sitecard{
@@ -384,13 +393,15 @@
       id:"hero", en:"hero section", ar:"قسم الهيرو",
       tasks:[
         { id:"hero-talk", owner:"hadeer", kind:"talk",
+          note:"Say who KATECHS helps and what outcome we create — we build digital tools that make a business look professional, run better and grow. Outcome first, technology second.",
+          noteAr:"وضّحي مَن تخدمه كاتِكس وما النتيجة التي نصنعها — نبني أدوات رقمية تجعل النشاط يبدو احترافيًا ويعمل أفضل وينمو. النتيجة أولًا، والتقنية بعدها.",
           en:["The sky is not even ur limit",
               "we are katechs (who we are)",
               "What you need for ur businesses to achieve success"],
           ar:["السماء ليست حدّك",
               "نحن كاتِكس (من نحن)",
               "كل ما يحتاجه عملك ليحقق النجاح"] },
-        { id:"hero-vis", owner:"nada", kind:"visual", img:"hero",
+        { id:"hero-vis", owner:"nada", kind:"visual", img:"hero", hidden:true,
           en:["Placeholder / background reference for the hero."],
           ar:["مرجع الخلفية أو الـ placeholder الخاص بالهيرو."],
           flag:"This one is a video frame, not a still — the reference clip is “an open arm stretches for a dance form” on Pexels.",
@@ -401,6 +412,8 @@
       id:"web", en:"web services section", ar:"قسم خدمات الويب",
       tasks:[
         { id:"web-talk", owner:"hadeer", kind:"talk",
+          note:"Three different promises. Business website = credibility: make the company look as established online as it really is, and turn a visit into an inquiry. WordPress = control: the client's own team updates content without a developer. Custom = full scope, structure to launch.",
+          noteAr:"ثلاثة وعود مختلفة. موقع الأعمال = المصداقية: أن تبدو الشركة على الإنترنت بحجمها الحقيقي، وأن تتحوّل الزيارة إلى طلب. ووردبريس = التحكّم: فريق العميل يحدّث المحتوى بنفسه دون مبرمج. المخصّص = نطاق كامل من البناء حتى الإطلاق.",
           en:["create more opportunities for your business",
               "We turn your business into a professional digital presence",
               "1) business website : make the word see ur business",
@@ -412,8 +425,9 @@
               "٢) ووردبريس: إدارة / لوحة تحكم",
               "٣) موقع مخصّص: كل ما تحتاجه من البداية للنهاية"] },
         { id:"web-vis-1", owner:"nada", kind:"visual", img:"webserv",
-          en:["image"], ar:["صورة"] },
-        { id:"web-vis-2", owner:"nada", kind:"visual",
+          en:["image", "website example / features"],
+          ar:["صورة", "مثال لموقع / المميزات"] },
+        { id:"web-vis-2", owner:"nada", kind:"visual", hidden:true,
           en:["website example / features"], ar:["مثال لموقع / المميزات"] }
       ]
     },
@@ -421,6 +435,8 @@
       id:"app", en:"app services", ar:"خدمات التطبيقات",
       tasks:[
         { id:"app-talk", owner:"hadeer", kind:"talk",
+          note:"Turn a business process or service into a mobile product people actually use. Write around the job the user needs to get done, not a list of screens — and say the app can connect to the systems the business already runs.",
+          noteAr:"تحويل عملية أو خدمة قائمة إلى منتج على الموبايل يُستخدم فعلًا. اكتبي حول المهمة التي يريد المستخدم إنجازها، لا قائمة شاشات — واذكري أن التطبيق يمكن ربطه بأنظمة الشركة الحالية.",
           en:["talking about the service only",
               "Turn the business/service into a mobile experience",
               "Android + iOS",
@@ -437,6 +453,8 @@
       id:"email", en:"Email services", ar:"خدمات البريد الإلكتروني",
       tasks:[
         { id:"email-talk", owner:"hadeer", kind:"talk",
+          note:"The angle is professional identity: sales@yourcompany.com instead of a free Gmail. Every message reinforces the business name, every department gets the right address — and it has to be reliable enough for daily work, not just look professional.",
+          noteAr:"الزاوية هي الهوية الاحترافية: sales@yourcompany.com بدلًا من بريد مجاني. كل رسالة تعزّز اسم الشركة، ولكل قسم عنوانه الصحيح — ولا بد أن يكون موثوقًا للعمل اليومي، لا مجرد شكل احترافي.",
           en:["Professional email builds trust",
               "Use your own company domain",
               "Every employee/team can have a professional address",
@@ -456,6 +474,8 @@
       id:"ecom", en:"ecommerce", ar:"المتاجر الإلكترونية",
       tasks:[
         { id:"ecom-talk", owner:"hadeer", kind:"talk",
+          note:"Frame each of the four types by the problem it solves. Do not just put products online — turn them into orders, and keep the store easy for the client's own team to run. Make clear which type fits which situation.",
+          noteAr:"قدّمي كل نوع من الأربعة بالمشكلة التي يحلّها. لا نضع المنتجات على الإنترنت فقط — بل نحوّلها إلى طلبات، مع متجر يسهل على فريق العميل إدارته. ووضّحي أي نوع يناسب أي حالة.",
           en:["we have 4 services types",
               "(1)build (2) manage (3)build + manage (4)landing page",
               "when u as a user need this type of serivce"],
@@ -482,13 +502,15 @@
       id:"mkt", en:"mariting [digital & SEO]", ar:"التسويق الرقمي و SEO",
       tasks:[
         { id:"mkt-talk", owner:"hadeer", kind:"talk",
+          note:"The point is relevant visibility, not traffic for its own sake — help the right customers find the business while they are already searching for what it offers. And SEO is ongoing work with clear reporting, not a one-time setup.",
+          noteAr:"المقصود ظهور أمام الجمهور الصحيح، لا زيارات لمجرد العدد — أن يجدك العميل وهو يبحث بالفعل عمّا تقدّمه. والـ SEO عمل مستمر مع تقارير واضحة، وليس ضبطًا لمرة واحدة.",
           en:["Our mission is to get you to the top of Google — with real results, not talk",
               "A good website is not useful if nobody finds it",
               "Improve search visibility"],
           ar:["مهمتنا نوصّلك لصدارة جوجل... بنتائج فعلية، مش كلام",
               "موقع كويس مش هيفيد لو محدش لاقيه",
               "تحسين الظهور في نتائج البحث"] },
-        { id:"mkt-vis-1", owner:"nada", kind:"visual",
+        { id:"mkt-vis-1", owner:"nada", kind:"visual", hidden:true,
           en:["an element to show reaching the top of search"],
           ar:["عنصر يوضّح الوصول إلى قمة نتائج البحث"] }
       ]
@@ -497,6 +519,8 @@
       id:"why", en:"why chose katechs", ar:"لماذا تختار كاتِكس",
       tasks:[
         { id:"why-talk", owner:"hadeer", kind:"talk",
+          note:"Answer one question: why trust KATECHS instead of another provider. Pick the four points from real proof — years in market, verified client and project numbers, presence in Saudi Arabia and Egypt, one team across web, hosting, email and SEO, and the support model after launch.",
+          noteAr:"أجيبي عن سؤال واحد: لماذا الثقة بكاتِكس دون غيرها. اختاري النقاط الأربع من إثبات حقيقي — سنوات في السوق، أرقام عملاء ومشاريع موثّقة، الوجود في السعودية ومصر، فريق واحد يغطي الويب والاستضافة والبريد والـ SEO، ونموذج الدعم بعد الإطلاق.",
           en:["open i just need 4 points"],
           ar:["مفتوح — أحتاج ٤ نقاط فقط"] }
       ]
@@ -598,7 +622,7 @@
       change:"Change", langBtn:"العربية",
       tabAll:"All tasks", tabBacklog:"Not assigned", tabBriefs:"Service briefs", tabMine:"My tasks",
       talk:"Copy", visual:"Visual", element:"Web element",
-      noRef:"no reference yet", zoom:"view",
+      noRef:"no reference yet", zoom:"view", briefNote:"what this means",
       siteTitle:"How the homepage looks right now",
       siteBody:"The live build of the new homepage, top to bottom. Open it full size to see where your task lands on the page.",
       siteMeta:"/hp-new · 1440px wide · captured 7 Sep 2026",
@@ -617,7 +641,7 @@
       change:"تغيير", langBtn:"English",
       tabAll:"كل المهام", tabBacklog:"غير مُسندة", tabBriefs:"بريفات الخدمات", tabMine:"مهامي",
       talk:"نصوص", visual:"مرئيات", element:"عنصر ويب",
-      noRef:"لا يوجد مرجع بعد", zoom:"تكبير",
+      noRef:"لا يوجد مرجع بعد", zoom:"تكبير", briefNote:"المقصود بالنقطة",
       siteTitle:"شكل الصفحة الرئيسية الآن",
       siteBody:"النسخة الحالية من الصفحة الرئيسية الجديدة، من أعلاها إلى أسفلها. افتحها بالحجم الكامل لترى أين تقع مهمتك في الصفحة.",
       siteMeta:"/hp-new · بعرض ١٤٤٠ بكسل · بتاريخ ٧ سبتمبر ٢٠٢٦",
@@ -655,7 +679,7 @@
     return n + " مهمة";
   }
 
-  function every(){ var a=[]; SECTIONS.forEach(function(s){ s.tasks.forEach(function(t){ a.push(t); }); }); return a; }
+  function every(){ var a=[]; SECTIONS.forEach(function(s){ s.tasks.forEach(function(t){ if(!t.hidden) a.push(t); }); }); return a; }
   function forWho(w){ return every().filter(function(t){ return t.owner === w; }); }
   function loose(){ return every().filter(function(t){ return !t.owner; }); }
 
@@ -709,6 +733,7 @@
     var body = lang === "ar" ? task.ar : task.en;
     var lead = lang === "ar" ? task.leadAr : task.leadEn;
     var flag = lang === "ar" ? (task.flagAr || task.flag) : task.flag;
+    var note = lang === "ar" ? (task.noteAr || task.note) : task.note;
 
     var visual = "";
     if(task.kind === "visual" || task.kind === "element"){
@@ -735,6 +760,8 @@
       '<div class="card-body">' +
         '<div class="badges">' + badges + '</div>' +
         '<ul class="lines">' + ul + '</ul>' +
+        (note ? '<div class="bnote"><span class="bnl">' + esc(t.briefNote) + '</span>' +
+                  '<p>' + esc(note) + '</p></div>' : "") +
         (flag ? '<p class="flag">' + esc(flag) + '</p>' : "") +
       '</div>' +
     '</article>';
@@ -757,7 +784,7 @@
   function taskList(t, filter, showOwner){
     var num = 0, h = "";
     SECTIONS.forEach(function(sec){
-      var list = sec.tasks.filter(filter);
+      var list = sec.tasks.filter(function(x){ return !x.hidden && filter(x); });
       if(!list.length) return;
       num += 1;
       h += section(sec, list, t, showOwner, num);
