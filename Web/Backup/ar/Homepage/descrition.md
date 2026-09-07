@@ -2,8 +2,9 @@
 #   structure 
 #   structure edits 
 #   UI 
-#   UI edits 
-# - #
+#   UI edits
+
+
 ## hero section 
 video background
 3 slides
@@ -90,3 +91,7 @@ talk on right and that other element on left
 i want when i scroll the box on the left change 
 example => when i arrive after scrolling to this part when i scroll again it switch with a smooth effect to the box after it and they are 4 boxes each box have a point 
 <!-- end last structures edits -->
+
+<!-- Start UI -->
+    
+<!-- End UI -->
