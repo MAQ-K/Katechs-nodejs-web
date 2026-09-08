@@ -2,8 +2,13 @@ import React from "react";
 import Navbar from "../components/Layouts/Navbar";
 import PageBanner from "../components/Common/PageBanner";
 import About from "../components/AboutOne/About";
-import MakeYourBusiness from "../components/Common/MakeYourBusiness";
-import WhyChooseUs from "../components/AboutOne/WhyChooseUs";
+// Swapped 2026-09-08 (user: "use 'why chose katecks' section from homepage").
+// components/AboutOne/WhyChooseUs.js is no longer imported anywhere — left in
+// place, not deleted, same as every other orphaned file this rebuild has
+// produced. The homepage version is fully self-contained (styled-jsx, no
+// styles/style.scss dependency, no homepage-only measurement it needs), so it
+// drops in here with nothing else to wire up.
+import WhyChooseUs from "../components/HpNew/WhyChooseUs";
 import Testimonials from "../components/Common/Testimonials";
 import Footer from "../components/Layouts/Footer";
 import Head from "next/head";
@@ -22,9 +27,8 @@ export default function AboutPage() {
       {/* `.about-page` is the scoping hook for this page's styles — see the
           "=== SUB-PAGE: /about-us ===" block at the end of styles/style.scss.
           It exists for two reasons, both load-bearing:
-          1. MakeYourBusiness and Testimonials are components/Common/** shared
-             with the (frozen) homepage. Scoping under this wrapper restyles
-             them HERE only.
+          1. Testimonials is components/Common/** shared with the (frozen)
+             homepage. Scoping under this wrapper restyles it HERE only.
           2. styles/rtl.css is imported AFTER style.css and sets flat
              `.choose-card` / `.about-content ul li` rules. A flat selector
              appended to style.scss would lose that tie; `.about-page .x` wins
@@ -40,7 +44,12 @@ export default function AboutPage() {
 
         <About />
 
-        <MakeYourBusiness />
+        {/* MakeYourBusiness removed 2026-09-08 (user: "remove the old why
+            chose us"). It renders its own "لماذا تختار كاتكس؟" — the same
+            heading and the same four reasons (الخبرة/الدعم/الحلول المتكاملة/
+            جودة التزام وضمان استرداد) WhyChooseUs below already covers, back
+            to back on the page. Not deleted — components/Common/
+            MakeYourBusiness.js is still imported by pages/index.js. */}
 
         <WhyChooseUs />
 

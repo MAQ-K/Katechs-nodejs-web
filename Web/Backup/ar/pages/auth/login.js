@@ -9,11 +9,15 @@ export default function LoginPage() {
     <>
       <Navbar />
 
+      {/* Translated to Arabic 2026-09-08 (user: "fix layout" on a page that
+          was, along with its form below, entirely in English on an Arabic RTL
+          site — flagged but deliberately left alone by an earlier pass, see
+          the NOTE above .user-area-all-style in styles/style.scss). */}
       <PageBanner
-        pageTitle="Login"
+        pageTitle="تسجيل الدخول"
         homePageUrl="/"
-        homePageText="Home"
-        activePageText="Login"
+        homePageText="الرئيسية"
+        activePageText="تسجيل الدخول"
       />
 
       <LoginForm />

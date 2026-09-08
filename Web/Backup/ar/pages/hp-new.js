@@ -56,15 +56,10 @@ const GAP = 16;
 // line, never by the jump itself.
 const LINE_SLACK = 24;
 
-// Section slots the navigator points at that are not built yet.
-//
-// marketing is a placeholder AGAIN as of 2026-09-06: the user had the digital
-// marketing page's channels grid here, then removed it. The pill stays in
-// sectionNav (the user fixed those five), so the id has to keep existing or the
-// scroll-spy never matches it and its jump silently does nothing.
-const PLACEHOLDERS = [
-  { id: "marketing", label: "التسويق" },
-];
+// Section slots the navigator points at that are not built yet. EMPTY as of
+// 2026-09-08 — marketing (the last placeholder) is a real section again, this
+// time the SEO showcase. Kept, with .hp-slot below, for whatever is next.
+const PLACEHOLDERS = [];
 
 // Measured per call, never cached: this bar changes height at the 1199px
 // breakpoint, and the shared .navbar-area it replaced also shrank when it gained
@@ -249,9 +244,15 @@ export default function HpNewPage() {
           <Stores />
         </section>
 
-        {/* --- SEO: تصدّر نتائج البحث --- */}
-        <section id="seo">
-          <SeoShowcase />
+        {/* --- Marketing: "this section [تصدّر نتائج البحث] IS the marketing
+            section" (user, 2026-09-08). Was two things at once before today —
+            an untargeted id="seo" section AND an empty id="marketing"
+            placeholder the fixed nav pill pointed at. Merged into the one the
+            pill actually needs. fullWidth + talkOnRight are both opt-in props;
+            pages/index.js still renders this component with neither and is
+            unaffected — see components/Common/SeoShowcase.js. --- */}
+        <section id="marketing">
+          <SeoShowcase fullWidth talkOnRight />
         </section>
 
         {/* --- Why choose us: the four reasons, with a vertical carousel of

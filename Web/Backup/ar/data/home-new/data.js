@@ -53,15 +53,29 @@ export const heroSlides = [
 // 2026-09-03): there is no domain API in this codebase and WHMCS already owns
 // the cart, the pricing and the TLD list.
 //
-// ⚠️ `action` IS A PLACEHOLDER — CONFIRM BEFORE THIS GOES LIVE.
-// The repo references two client hosts and neither is provably the cart:
-//   • https://clients.katechs.com/login
-//   • https://clients.knoztech.com/client/index.php?rp=/store/...
-// The standard WHMCS domain-search target is:
-//   <whmcs-root>/cart.php?a=add&domain=register&query=<value>
-// Everything else about this form is correct — fixing the host is this one line.
+// FIXED 2026-09-08 — "when i press on domains it dont get me to the part it
+// should be, i want it give me the part i type on the domain" (user). The
+// previous action, https://clients.katechs.com/cart.php, points at a host that
+// DOES NOT RESOLVE (`curl`: "Could not resolve host") — every search opened a
+// DNS-error tab, typed value or not. That is the bug, not the nav pill (tested
+// separately in a real browser: the نطاقات nav pill already lands correctly on
+// this section).
+//
+// Verified working instead: https://clients.knoztech.com/client/cart.php —
+// resolves, sets a genuine WHMCS session cookie, and a live request with
+// query=<a test string> echoed that string back on the resulting "Shopping
+// Cart - KonozTech" page, confirming a real domain-availability check runs.
+//
+// ⚠️ STILL NEEDS THE USER'S CONFIRMATION, for a different reason: this exact
+// host is independently flagged in brain/logs/2026-09-07.md as "a different
+// company's domain, not Katechs" (found while auditing vps-hosting and
+// wordprees-hosting's order buttons). Whether Katechs' domain sales genuinely
+// run through KonozTech's WHMCS, or this is the wrong brand entirely, is a
+// business question this session cannot answer. Shipped anyway because a
+// working-but-unconfirmed cart beats a guaranteed DNS failure — but do not
+// treat this as resolved.
 export const domainSearch = {
-  action: "https://clients.katechs.com/cart.php",
+  action: "https://clients.knoztech.com/client/cart.php",
   // WHMCS needs these two alongside the query, hence hidden inputs in the form.
   hidden: { a: "add", domain: "register" },
   queryParam: "query",
@@ -184,31 +198,39 @@ export const whyUs = {
   points: [
     {
       id: "experience",
+      icon: "bx bx-medal",
       title: "الخبرة",
       text:
         "فريق متخصص ذو خبرة عالية في الحلول الرقمية داخل مصر ودول الخليج العربي",
     },
     {
       id: "support",
+      icon: "bx bx-headphone",
       title: "الدعم",
       text:
         "دعم متواصل وتعاون شفاف مع العميل، مع فريق جاهز لمساعدتك في كل خطوة",
     },
     {
       id: "integrated",
+      icon: "bx bx-layer",
       title: "الحلول المتكاملة",
       text:
         "كل ما يحتاجه بيزنسك تحت سقف واحد: تصميم، استضافة، تسويق، وحماية",
     },
     {
       id: "guarantee",
+      icon: "bx bx-shield-quarter",
       title: "جودة التزام وضمان استرداد",
       text: "أعلى معايير الجودة و الالتزام بالمواعيد وضمان استرداد 14 يوم",
     },
   ],
   cta: { label: "تعرّف علينا أكثر", href: "/about-us" },
-  // The carousel content: the same six client screenshots the projects marquee
-  // uses, so the section shows real work rather than stock art.
+  // ⚠️ UNUSED as of 2026-09-08. Was the old "twist" — a vertical marquee of
+  // real client screenshots, replaced by the scroll-synced 4-box switcher
+  // (user: "the box on the left change... 4 boxes each box have a point" — a
+  // carousel of 6 unrelated screenshots and 4 boxes tied to the 4 points above
+  // cannot be the same visual). Left in place, not deleted, in case a later
+  // pass wants real client work shown somewhere in this section again.
   gallery: clientProjects,
 };
 
@@ -272,37 +294,74 @@ export const emailServices = {
 // comes from the `ecommerce` area of data/services/data.js, imported above. No
 // new copy, and nothing borrowed from the homepage's own EcommercePlatforms.
 //
-// Structure (the sketch shows a 3-tab pill row over two large boxes, and left
-// the rest to us): the area's content splits naturally into exactly three
-// views, and the FIRST is the two-box one — so the section's resting state is
-// what the sketch draws.
-//   1. نبني ونشغّل   -> storePlans, the wide cards WITH images      <- the sketch
-//      (the sketch drew two; the shared data now holds three — the grid is
-//       auto-fit so it follows whatever data/services/data.js has)
-//   2. رحلة الشراء   -> the four-step journey and its result card
-//   3. ما تديره بنفسك -> the six capabilities
+// ⚠️ RESTRUCTURED 2026-09-08 — "remove the nav" (user). The three views
+// (build/manage, buying journey, capabilities) used to be tabs the visitor
+// switched between; now they render one after another, always, with no tab
+// chrome. Kept as three named blocks below rather than one flat array, since
+// each renders a completely different shape (a card grid, a step diagram, a
+// capability grid) and Stores.js still needs to tell them apart.
 export const stores = {
   intro: ecommerce.intro,
   cta: ecommerce.cta,
-  tabs: [
-    {
-      id: "build",
-      label: "نبني ونشغّل",
-      kind: "cards",
-      cards: ecommerce.storePlans,
-    },
-    {
-      id: "journey",
-      label: "رحلة الشراء",
-      kind: "journey",
-      steps: ecommerce.journey,
-      result: ecommerce.journeyResult,
-    },
-    {
-      id: "capabilities",
-      label: ecommerce.capabilitiesTitle,
-      kind: "capabilities",
-      items: ecommerce.capabilities,
-    },
-  ],
+
+  // Block 1 — نبني ونشغّل, now FOUR cards: three side by side, one wide card
+  // underneath (user: "make them 4 cards 3 beside each other and a wide one
+  // under them — 1) build 2) manage 3) build + manage 4) landing page").
+  build: {
+    heading: "نبني ونشغّل",
+    // .filter(Boolean) at the very end guards the .find() below: this exact
+    // shared array already changed shape ONCE while this section was being
+    // built (a "landing" entry appeared mid-session on 2026-09-04) — if it
+    // ever loses that id again, a bare .find() returns undefined and .map()
+    // in Stores.js would crash the whole section instead of quietly showing
+    // three cards.
+    cards: [
+      // build, manage, landing are ecommerce.storePlans VERBATIM — the single
+      // source the real services page (components/Services/Ecommerce/
+      // StorePlans.js) also reads. Order matters: storePlans is [build,
+      // manage, landing] and the user's numbered list wants landing LAST (the
+      // wide card), so it is pulled out and appended after the new one below
+      // rather than trusted to already be last if the shared array is ever
+      // reordered.
+      ...ecommerce.storePlans.filter((c) => c.id !== "landing"),
+
+      // NEW, HOMEPAGE-ONLY. Not added to ecommerce.storePlans in
+      // data/services/data.js: that array is the real Web Services page's
+      // single source of truth, and this combo package does not exist there
+      // — inventing it on the shared page would be a content decision, not a
+      // structure one. Deliberately no `image`: build and manage each have a
+      // real photograph of that half of the job (a launch moment, a dashboard
+      // being read); there is no third photo of "both at once", and reusing
+      // one of the other two would misrepresent what it shows. Stores.js
+      // renders a card's image strip only when `image` is present.
+      {
+        id: "combo",
+        tag: "الباقة الكاملة",
+        title: "نبني ونشغّل الاثنين",
+        text: "بلا فجوة بين التسليم والمتابعة: نبني متجرك من الصفر ثم نستمر في تشغيله معك — نفس الفريق، من أول يوم إلى ما بعد الإطلاق.",
+        points: [
+          "تصميم وإطلاق متجر كامل من الصفر",
+          "متابعة مستمرة للطلبات والمخزون والمدفوعات",
+          "دعم وتدريب لا ينتهيان عند التسليم",
+        ],
+        link: { label: "اطلب الباقة الكاملة", href: "/contactWeb" },
+      },
+
+      ecommerce.storePlans.find((c) => c.id === "landing"),
+    ].filter(Boolean),
+  },
+
+  // Block 2 — رحلة الشراء: unchanged shape, still the four-step journey diagram
+  // and its result card.
+  journey: {
+    heading: "رحلة الشراء",
+    steps: ecommerce.journey,
+    result: ecommerce.journeyResult,
+  },
+
+  // Block 3 — ما الذي تديره بنفسك: unchanged shape, still the six capabilities.
+  capabilities: {
+    heading: ecommerce.capabilitiesTitle,
+    items: ecommerce.capabilities,
+  },
 };

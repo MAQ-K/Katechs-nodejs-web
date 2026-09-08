@@ -54,3 +54,10 @@ Links assume `npm run dev` is running (`http://localhost:3000`).
 - `pages/lab/**` — dev-only, 404s in production. Start here anyway:
   [Lab hub](http://localhost:3000/lab/)
 - `pages/api/**` — backend endpoints, not pages
+
+<!-- to-do list -->
+#breadcrumb
+use this breadcrumb theme [alt text](<breadcrumb bg.png>)
+make it movable with the cursor like this example 
+Ambient particle network components/Common/ParticleField.js
+so the image as a style and the component as an effect 

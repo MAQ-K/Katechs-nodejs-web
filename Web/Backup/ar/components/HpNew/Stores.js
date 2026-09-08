@@ -1,58 +1,32 @@
-import React, { useId, useState } from "react";
+import React from "react";
 import Link from "next/link";
 import { stores } from "../../data/home-new/data";
 
-// Stores (e-commerce) — a three-tab pill row over the tab's content
-// (Homepage/structure-drafts/Ecommerce .png).
+// Stores (e-commerce) — three blocks, stacked, no tab switching between them
+// (Homepage/structure-drafts/Ecommerce .png for the original layout; "remove
+// the nav" — user, 2026-09-08, removing the tab UI a version of this section
+// had grown).
 //
 // "this is the part of ecommerce from web services page": every string here
 // comes from the `ecommerce` area of data/services/data.js via
-// data/home-new/data.js. Nothing new was written and nothing was taken from the
-// homepage's own components/PricingWebsite/EcommercePlatforms.js, which sells a
-// different list (Salla / Shopify / EasyOrder / dropshipping).
+// data/home-new/data.js. Nothing new was written for two of the three blocks,
+// and nothing was taken from the homepage's own
+// components/PricingWebsite/EcommercePlatforms.js, which sells a different
+// list (Salla / Shopify / EasyOrder / dropshipping).
 //
-// The sketch shows a pill row over large boxes and left the rest to us. The
-// area content splits into exactly three views, and the boxes one is placed
-// FIRST so the section at rest is what the sketch draws:
-//   1. نبني ونشغّل   -> the wide cards, with their images       <- the sketch
-//   2. رحلة الشراء   -> the four-step journey and its result
-//   3. ما تديره بنفسك -> the six capabilities
+//   1. نبني ونشغّل   -> FOUR cards, three in a row + one wide beneath: build,
+//                        manage, build+manage (new, homepage-only — see
+//                        data/home-new/data.js), landing page.
+//   2. رحلة الشراء   -> the four-step journey and its result card
+//   3. ما الذي تديره بنفسك -> the six capabilities
 //
-// Each panel renders its own shape, keyed off `kind`, rather than three
-// components — they share the tab chrome and differ only inside.
+// Each block is a plain <section> with its own <h3> now — there is no ARIA
+// tablist to hang an accessible name off any more, so the heading has to do
+// that job directly, same as every other stacked section on this page.
 //
 // STRUCTURE PASS: greyscale.
 
 const Stores = ({ content = stores }) => {
-  const [active, setActive] = useState(0);
-  const base = useId();
-  const tabs = content.tabs;
-
-  if (!tabs || tabs.length === 0) return null;
-
-  const onKeyDown = (event) => {
-    // Horizontal tabs, so RTL flips which arrow means "next" — ArrowLeft moves
-    // forward because the next tab sits to the left. Read from document.dir
-    // rather than assumed, same as WebServicesPlans.js.
-    const rtl = typeof document !== "undefined" && document.dir === "rtl";
-    const forward = rtl ? "ArrowLeft" : "ArrowRight";
-    const back = rtl ? "ArrowRight" : "ArrowLeft";
-
-    let next = null;
-    if (event.key === forward) next = (active + 1) % tabs.length;
-    else if (event.key === back) next = (active - 1 + tabs.length) % tabs.length;
-    else if (event.key === "Home") next = 0;
-    else if (event.key === "End") next = tabs.length - 1;
-    if (next === null) return;
-
-    event.preventDefault();
-    setActive(next);
-    const el = document.getElementById(base + "-tab-" + next);
-    if (el) el.focus();
-  };
-
-  const tab = tabs[active];
-
   return (
     <div className="hp-store">
       <div className="hp-store-inner">
@@ -62,101 +36,101 @@ const Stores = ({ content = stores }) => {
           <p>{content.intro.body}</p>
         </div>
 
-        <div
-          className="hp-store-tabs"
-          role="tablist"
-          aria-label="التجارة الإلكترونية"
-        >
-          {tabs.map((t, i) => (
-            <button
-              key={t.id}
-              id={base + "-tab-" + i}
-              type="button"
-              role="tab"
-              aria-selected={i === active}
-              aria-controls={base + "-panel-" + i}
-              tabIndex={i === active ? 0 : -1}
-              className={"hp-store-tab" + (i === active ? " is-active" : "")}
-              onClick={() => setActive(i)}
-              onKeyDown={onKeyDown}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
-
-        <div
-          id={base + "-panel-" + active}
-          role="tabpanel"
-          aria-labelledby={base + "-tab-" + active}
-          tabIndex={0}
-        >
-          {tab.kind === "cards" && (
-            <div className="hp-store-cards">
-              {tab.cards.map((card) => (
-                <article className="hp-store-card" key={card.id}>
-                  <span className="hp-store-tag">{card.tag}</span>
-                  <h3>{card.title}</h3>
-                  <p>{card.text}</p>
-                  <ul>
-                    {card.points.map((p) => (
-                      <li key={p}>{p}</li>
-                    ))}
-                  </ul>
-                  <Link href={card.link.href} className="hp-store-link">
-                    {card.link.label}
-                  </Link>
-                  <div className="hp-store-shot">
-                    <img
-                      src={card.image}
-                      alt={card.alt}
-                      width={card.imageW}
-                      height={card.imageH}
-                    />
+        <section className="hp-store-block">
+          <h3 className="hp-store-block-title">{content.build.heading}</h3>
+          <div className="hp-store-cards">
+            {content.build.cards.map((card, i) => {
+              // The landing card is last in the array by construction (see the
+              // data file) and is the WIDE one the user asked for — "3 beside
+              // each other and a wide one under them".
+              const isWide = i === content.build.cards.length - 1;
+              return (
+                <article
+                  className={
+                    "hp-store-card" + (isWide ? " is-wide" : "")
+                  }
+                  key={card.id}
+                >
+                  {/* One wrapper around the text, not five loose children —
+                      the wide card is a 2-column GRID (talk/image), and grid
+                      auto-placement treats every direct child as its own cell.
+                      Without this wrapper the tag/title/body/list/link would
+                      scatter across the grid instead of sharing one column.
+                      display:contents on the non-wide card (see CSS) makes the
+                      wrapper invisible there, so nothing changes for the other
+                      three cards. */}
+                  <div className="hp-store-card-text">
+                    <span className="hp-store-tag">{card.tag}</span>
+                    <h4>{card.title}</h4>
+                    <p>{card.text}</p>
+                    <ul>
+                      {card.points.map((p) => (
+                        <li key={p}>{p}</li>
+                      ))}
+                    </ul>
+                    <Link href={card.link.href} className="hp-store-link">
+                      {card.link.label}
+                    </Link>
                   </div>
+                  {/* Optional: the combo card has no real photo to show — see
+                      the data file for why one was not invented. */}
+                  {card.image && (
+                    <div className="hp-store-shot">
+                      <img
+                        src={card.image}
+                        alt={card.alt}
+                        width={card.imageW}
+                        height={card.imageH}
+                      />
+                    </div>
+                  )}
                 </article>
-              ))}
-            </div>
-          )}
+              );
+            })}
+          </div>
+        </section>
 
-          {tab.kind === "journey" && (
-            /* An ordered list because it IS a sequence — product, page, cart,
-               checkout. In RTL it reads right to left with no mirroring needed;
-               the arrows are drawn by CSS on the list, not typed into the copy. */
-            <div className="hp-store-journey">
-              <ol>
-                {tab.steps.map((s) => (
-                  <li key={s.id}>
-                    <span className="hp-store-step-icon">
-                      <i className={s.icon} aria-hidden="true" />
-                    </span>
-                    <span>{s.label}</span>
-                  </li>
-                ))}
-              </ol>
-              <div className="hp-store-result">
-                <i className={tab.result.icon} aria-hidden="true" />
-                <strong>{tab.result.title}</strong>
-                <span>{tab.result.line}</span>
-                <span className="hp-store-ref">{tab.result.ref}</span>
-              </div>
-            </div>
-          )}
-
-          {tab.kind === "capabilities" && (
-            <div className="hp-store-caps">
-              {tab.items.map((c) => (
-                <div className="hp-store-cap" key={c.id}>
-                  <span className="hp-store-cap-icon">
-                    <i className={c.icon} aria-hidden="true" />
+        <section className="hp-store-block">
+          <h3 className="hp-store-block-title">{content.journey.heading}</h3>
+          {/* An ordered list because it IS a sequence — product, page, cart,
+              checkout. In RTL it reads right to left with no mirroring needed;
+              the arrows are drawn by CSS on the list, not typed into the copy. */}
+          <div className="hp-store-journey">
+            <ol>
+              {content.journey.steps.map((s) => (
+                <li key={s.id}>
+                  <span className="hp-store-step-icon">
+                    <i className={s.icon} aria-hidden="true" />
                   </span>
-                  <h3>{c.title}</h3>
-                  <p>{c.text}</p>
-                </div>
+                  <span>{s.label}</span>
+                </li>
               ))}
+            </ol>
+            <div className="hp-store-result">
+              <i className={content.journey.result.icon} aria-hidden="true" />
+              <strong>{content.journey.result.title}</strong>
+              <span>{content.journey.result.line}</span>
+              <span className="hp-store-ref">{content.journey.result.ref}</span>
             </div>
-          )}
-        </div>
+          </div>
+        </section>
+
+        <section className="hp-store-block">
+          <h3 className="hp-store-block-title">
+            {content.capabilities.heading}
+          </h3>
+          <div className="hp-store-caps">
+            {content.capabilities.items.map((c) => (
+              <div className="hp-store-cap" key={c.id}>
+                <span className="hp-store-cap-icon">
+                  <i className={c.icon} aria-hidden="true" />
+                </span>
+                <h4>{c.title}</h4>
+                <p>{c.text}</p>
+              </div>
+            ))}
+          </div>
+        </section>
 
         <div className="hp-store-cta">
           <h3>{content.cta.heading}</h3>
@@ -203,48 +177,27 @@ const Stores = ({ content = stores }) => {
           color: #666;
           margin: 0;
         }
-        .hp-store-tabs {
-          display: flex;
-          justify-content: center;
-          flex-wrap: wrap;
-          gap: 6px;
-          margin-bottom: 32px;
-          padding: 6px;
-          border: 1px solid #dcdcdc;
-          border-radius: 999px;
-          background: #fff;
-          width: fit-content;
-          margin-inline: auto;
+        /* One of these per block; the closing CTA has its own spacing and sits
+           outside this rhythm. */
+        .hp-store-block {
+          margin-top: 56px;
         }
-        .hp-store-tab {
-          border: 0;
-          background: transparent;
-          border-radius: 999px;
-          padding: 11px 24px;
+        .hp-store-block-title {
           font-family: "Cairo", system-ui, sans-serif;
-          font-size: 15px;
-          font-weight: 600;
-          color: #555;
-          cursor: pointer;
-          white-space: nowrap;
-          transition: background 0.25s ease, color 0.25s ease;
-        }
-        .hp-store-tab:hover {
+          font-size: clamp(19px, 2.2vw, 26px);
+          font-weight: 700;
           color: #111;
-        }
-        .hp-store-tab.is-active {
-          background: #111;
-          color: #fff;
+          text-align: center;
+          margin: 0 0 28px;
         }
 
-        /* --- tab 1: the wide cards --- */
+        /* --- block 1: build/manage/combo + the wide landing card --- */
         .hp-store-cards {
           display: grid;
-          /* auto-fit, not a fixed 1fr 1fr: storePlans is shared data on the
-             services page and its length changes — it went from two cards to
-             three on 2026-09-04 while this section was being built. A hard two
-             columns wraps the third onto a lonely row. */
-          grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+          /* A fixed 3 columns, not auto-fit: "3 beside each other" is the
+             explicit ask, and the 4th card opts OUT of the grid via
+             grid-column: 1 / -1 rather than the track count adapting to it. */
+          grid-template-columns: repeat(3, 1fr);
           gap: 24px;
           align-items: stretch;
         }
@@ -257,6 +210,46 @@ const Stores = ({ content = stores }) => {
           background: #fff;
           overflow: hidden;
         }
+        /* display:contents on the default card: the text wrapper disappears
+           from the box model and its children (tag/h4/p/ul/link) become flex
+           items of .hp-store-card directly, exactly as if the wrapper were
+           never there — needed ONLY because the wide card below needs that
+           wrapper as one real grid cell. */
+        .hp-store-card-text {
+          display: contents;
+        }
+        /* The wide card — landing, always last in the array. Full width and
+           laid out as its own two-column split rather than a narrow card
+           simply stretched wide, which would strand its text beside a huge
+           empty gap.
+           Talk RIGHT, image LEFT — the same order every other split section on
+           this page uses (AppServices.js, EmailServices.js, WhyChooseUs.js):
+           in RTL, order:1 is the RIGHTMOST column, order:2 the left. */
+        .hp-store-card.is-wide {
+          grid-column: 1 / -1;
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          align-items: center;
+          padding: 32px;
+          gap: 28px;
+        }
+        .hp-store-card.is-wide .hp-store-card-text {
+          display: flex;
+          flex-direction: column;
+          order: 1;
+        }
+        .hp-store-card.is-wide .hp-store-shot {
+          order: 2;
+          margin: 0;
+          border-top: 0;
+          border-radius: 12px;
+          align-self: stretch;
+        }
+        .hp-store-card.is-wide .hp-store-shot img {
+          height: 100%;
+          object-fit: cover;
+          border-radius: 12px;
+        }
         .hp-store-tag {
           align-self: flex-start;
           border: 1px solid #dcdcdc;
@@ -267,7 +260,7 @@ const Stores = ({ content = stores }) => {
           color: #555;
           margin-bottom: 14px;
         }
-        .hp-store-card h3 {
+        .hp-store-card h4 {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: clamp(19px, 2.2vw, 24px);
           font-weight: 700;
@@ -394,7 +387,7 @@ const Stores = ({ content = stores }) => {
           color: #111;
           margin-bottom: 12px;
         }
-        .hp-store-cap h3 {
+        .hp-store-cap h4 {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 17px;
           font-weight: 700;
@@ -454,17 +447,18 @@ const Stores = ({ content = stores }) => {
           .hp-store-cards {
             grid-template-columns: 1fr;
           }
+          /* The wide card's OWN internal split (talk/image) also needs to
+             stack — at this width "1fr 1fr" inside an already-narrow column
+             leaves neither half readable. */
+          .hp-store-card.is-wide {
+            grid-template-columns: 1fr;
+            padding: 26px;
+          }
+          .hp-store-card.is-wide .hp-store-shot {
+            order: -1;
+          }
           .hp-store-caps {
             grid-template-columns: 1fr 1fr;
-          }
-          .hp-store-tabs {
-            width: 100%;
-            border-radius: 14px;
-          }
-          .hp-store-tab {
-            flex: 1 1 auto;
-            padding: 10px 14px;
-            font-size: 14px;
           }
         }
         @media (max-width: 575px) {
@@ -473,7 +467,6 @@ const Stores = ({ content = stores }) => {
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hp-store-tab,
           .hp-store-cta :global(.hp-store-btn) {
             transition: none;
           }

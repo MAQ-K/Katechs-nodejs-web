@@ -34,16 +34,17 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 | # | Section | Status | File | Notes |
 |---|---------|--------|------|-------|
 | 1 | Hero slider | SKETCH → REVIEW | `components/HpNew/HeroSlider.js` | Video bg, 3 cross-fading text slides, dots bottom-right, autoplay + pause on hover |
-| 2 | Domain search | SKETCH → REVIEW | `components/HpNew/DomainSearch.js` | GET form, hands off to WHMCS. ⚠️ target host is a placeholder — needs confirming |
+| 2 | Domain search | SKETCH → REVIEW | `components/HpNew/DomainSearch.js` | GET form, hands off to WHMCS. Host fixed 2026-09-08 (old one didn't resolve) — ⚠️ new host works but is independently flagged as possibly the wrong company, needs your confirmation |
 | 3 | Floating section nav | SKETCH → REVIEW | `components/HpNew/SectionNav.js` | 5 pills, scroll-spy highlight, floats past the domain bar |
 | 4 | Web services — brief | SKETCH → REVIEW | `components/HpNew/WebServicesBrief.js` | Talk LEFT / image RIGHT per sketch. Reuses `businessWebsites.overview` + the Tabqat screenshot |
 | 5 | Web services — projects marquee | SKETCH → REVIEW | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover |
 | 6 | Web services — plans | SKETCH → REVIEW | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO |
 | 7 | Hero top nav (page-scoped) | SKETCH → REVIEW | `components/HpNew/HeroNav.js` | Tabs ON the hero. Transparent over it, glassy past it. ⚠️ hp-new only — the shared `Layouts/Navbar.js` is untouched |
-| 8 | App services | SKETCH → REVIEW | `components/HpNew/AppServices.js` | 100% width, talk left. Stage renders `components/AppDev/AppOrbit.js` ITSELF — the same orbit as the app dev page, not a copy |
+| 8 | App services | SKETCH → REVIEW | `components/HpNew/AppServices.js` | 100% width, talk left. Stage renders `components/AppDev/AppOrbit.js` ITSELF — the same orbit as the app dev page, not a copy. Each of the 6 screens now shows the real KATECHS screenshot (optional `screenImage` prop, app-dev page unaffected) |
 | 9 | Email services | SKETCH → REVIEW | `components/HpNew/EmailServices.js` | 3 vertical side tabs, panel = talk over image. Tabs imported from `data/emails/data.js`. ⚠️ panel images are placeholders |
-| 10 | Stores (e-commerce) | SKETCH → REVIEW | `components/HpNew/Stores.js` | 3 pill tabs over the web services `ecommerce` area. ⚠️ no nav pill - the user fixed 5 |
-| — | Section slot (marketing) | TODO | `pages/hp-new.js` | Empty labelled placeholder |
+| 10 | Stores (e-commerce) | SKETCH → REVIEW | `components/HpNew/Stores.js` | No tabs (removed 2026-09-08) — 3 blocks stacked. Build/manage now 4 cards, 3 + 1 wide (landing); new homepage-only "build+manage" combo card. ⚠️ no nav pill - the user fixed 5 |
+| 11 | Marketing | SKETCH → REVIEW | `components/Common/SeoShowcase.js` via `pages/hp-new.js` | Merged with the old untargeted "seo" slot 2026-09-08 — this IS the marketing section now. Full width + talk-right via two new optional props; `pages/index.js` unaffected |
+| 12 | Why choose us | SKETCH → REVIEW | `components/HpNew/WhyChooseUs.js` | Redesigned 2026-09-08: was a 6-image marquee, now a scroll-synced sticky box that switches through the 4 reasons as you scroll. Mobile: box hidden, list back to compact (no sticky sibling to switch beside) |
 
 ## For reference — what the current homepage is made of
 

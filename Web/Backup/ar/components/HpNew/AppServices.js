@@ -14,9 +14,12 @@ import { appServices } from "../../data/home-new/data";
 // of it.
 //
 // An earlier revision built a bespoke stage here: the real photographic render
-// as the front face of a CSS 3D slab, with a drawn ring behind it. That is gone.
-// `app-mockup-phone.png` (cropped for it) is now unused — kept, not deleted, in
-// case the render is wanted again.
+// as the front face of a CSS 3D slab, with a drawn ring behind it. That is gone,
+// but `app-mockup-phone.png` (cropped for it) found a second use: AppOrbit now
+// takes an optional `screenImage` prop (user, 2026-09-08 — "each mobile screen
+// have an image on it as a design"), and this is the only real KATECHS app
+// screenshot in the repo. /services/app-development passes no prop and is
+// unaffected — see the header comment in AppOrbit.js.
 //
 // ---- two deliberate exceptions to the components/HpNew/ contract ----
 // 1. It imports from components/AppDev/. Reusing the real component is the whole
@@ -74,7 +77,7 @@ const AppServices = ({ content = appServices }) => {
         {/* app-platforms is required — see the note above. */}
         <div className="hp-app-stage">
           <div className="app-platforms hp-app-orbit-host">
-            <AppOrbit />
+            <AppOrbit screenImage="/images/mobile-app/app-mockup-phone.png" />
           </div>
         </div>
       </div>

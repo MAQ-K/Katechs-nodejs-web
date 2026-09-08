@@ -1,35 +1,95 @@
-import React from "react";
+import React, { useEffect, useRef, useState } from "react";
 import Link from "next/link";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { whyUs } from "../../data/home-new/data";
 
-// Why choose us — the four reasons on the right, a vertical carousel of real
-// client work on the left. "look this section have a twist / the left image is
-// a scrollable vertical carousel" (user, 2026-09-05).
+// Why choose us — the four reasons on the right, a sticky box on the left that
+// switches to match whichever reason the reader has scrolled to.
 //
-// ---- the carousel is a VERTICAL marquee, same technique as ProjectsMarquee ----
-// The list is rendered N times and the keyframe translates exactly one copy, so
-// copy 2 is in the window the moment copy 1 finishes and the seam never shows.
-// Pure CSS: no rAF, no scroll listener, nothing to clean up.
+// ⚠️ REPLACED 2026-09-08. This used to be a vertical marquee of real client
+// screenshots ("the left image is a scrollable vertical carousel", 2026-09-05).
+// The new ask — "when i scroll the box on the left change... 4 boxes each box
+// have a point" — ties the left visual to the 4 reasons directly, which a loop
+// of 6 unrelated screenshots cannot do. The old gallery data
+// (data/home-new/data.js: whyUs.gallery) is left in place, unused.
 //
-// ---- what vertical does NOT inherit from the horizontal one ----
-// ProjectsMarquee has a long note about being forced to `direction: ltr`,
-// because in RTL a max-content flex track hangs off the container's RIGHT edge
-// and translateX(-50%) drags it away leaving the strip half empty. That bug is
-// specific to the INLINE axis. `direction` does not affect block-axis layout, so
-// a column track stacks top-to-bottom in RTL exactly as it does in LTR and
-// translateY needs no override. Deliberately not copied over.
+// ---- how "switch on scroll" is built, and what it deliberately is NOT ----
+// Consulted ui-ux-pro-max (`--domain ux "sticky scroll crossfade"`) before
+// building this: its Accessibility guideline is explicit — "Parallax/
+// Scroll-jacking causes nausea... Don't: Force scroll effects
+// (ScrollTrigger.create())". So this does NOT hijack the wheel or pin scroll
+// the way a ScrollTrigger-style effect would (which would also fight the
+// useSmoothScroll hook already mounted on this page — two wheel interceptors
+// on one page is exactly the class of bug the domain-search nav pill exposed
+// today). Instead:
+//   - the RIGHT column's four points are plain content, each given real
+//     scroll height via CSS min-height, so scrolling past all four takes a
+//     natural, un-intercepted scroll distance;
+//   - a passive, rAF-gated `scroll` listener (same pattern pages/hp-new.js and
+//     pages/services/index.js already use for their own scroll-spies) reads
+//     which point's top has crossed a line at viewport-middle, and that index
+//     drives which box the LEFT panel shows;
+//   - the panel itself is `position: sticky`, a pure CSS/layout property that
+//     reacts correctly to scrollY however it got set — native wheel, this
+//     hook's scrollTo, or a nav-pill jump — so there is nothing here for
+//     useSmoothScroll to conflict with.
+// The crossfade is framer-motion `AnimatePresence mode="wait"`, the same
+// technique HeroSlider.js already uses for its own text crossfade — 300ms
+// (ui-ux-pro-max: "150-300ms for micro-interactions... not >500ms"; HeroSlider
+// itself uses 500ms for a full slide change, a bigger content swap than this).
 //
-// ---- why COPIES = 2 here but 3 there ----
-// The rule is the same: one copy must be at least as tall as the visible window,
-// or the end of a cycle shows blank. Horizontal had to survive a viewport WIDER
-// than one copy (2520px), which is a real screen size, so it needed 3. Here one
-// copy is 6 items of roughly 350px = ~2100px against a window capped at 560px,
-// so 2 is safe with room to spare — the window is a height we set, not a screen
-// size the user brings.
-const COPIES = [0, 1];
+// ---- accessibility: real content lives on the right, ONCE ----
+// The left box repeats the active point's title/text for sighted scroll
+// feedback, so it is `aria-hidden` in full — exactly the same call the old
+// carousel made ("a screen reader gaining ... is a regression, not an
+// enhancement"). A screen reader, or a reader with JS off, gets the four
+// points as an ordinary list on the right and never hears anything twice.
+const EASE = [0.22, 1, 0.36, 1];
 
 const WhyChooseUs = ({ content = whyUs }) => {
-  const gallery = content.gallery || [];
+  const points = content.points;
+  const [active, setActive] = useState(0);
+  const reduced = useReducedMotion();
+  const stepRefs = useRef([]);
+
+  useEffect(() => {
+    let frame = null;
+
+    const measure = () => {
+      frame = null;
+      const line = window.innerHeight / 2;
+      let current = 0;
+      points.forEach((_, i) => {
+        const el = stepRefs.current[i];
+        if (el && el.getBoundingClientRect().top <= line) current = i;
+      });
+      setActive(current);
+    };
+
+    const onScroll = () => {
+      if (frame === null) frame = window.requestAnimationFrame(measure);
+    };
+
+    measure();
+    window.addEventListener("scroll", onScroll, { passive: true });
+    window.addEventListener("resize", onScroll, { passive: true });
+    return () => {
+      if (frame !== null) window.cancelAnimationFrame(frame);
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
+  }, [points]);
+
+  const activePoint = points[active];
+
+  const anim = reduced
+    ? {}
+    : {
+        initial: { opacity: 0, y: 14 },
+        animate: { opacity: 1, y: 0 },
+        exit: { opacity: 0, y: -14 },
+        transition: { duration: 0.3, ease: EASE },
+      };
 
   return (
     <div className="hp-why">
@@ -39,9 +99,12 @@ const WhyChooseUs = ({ content = whyUs }) => {
           <h2>{content.heading}</h2>
           <p className="hp-why-body">{content.body}</p>
 
+          {/* The real content, and the ONLY thing a screen reader or a no-JS
+              reader ever sees. Each item's min-height (CSS) is what gives the
+              scroll-sync its distance — this is a plain list otherwise. */}
           <ul className="hp-why-list">
-            {content.points.map((point) => (
-              <li key={point.id}>
+            {points.map((point, i) => (
+              <li key={point.id} ref={(el) => (stepRefs.current[i] = el)}>
                 <span className="hp-why-num" aria-hidden="true" />
                 <div>
                   <h3>{point.title}</h3>
@@ -56,21 +119,34 @@ const WhyChooseUs = ({ content = whyUs }) => {
           </Link>
         </div>
 
-        {/* The twist. aria-hidden + no focusable content: this is decoration
-            that repeats work already named in the projects marquee above, and a
-            screen reader gaining an endless loop of project names is a
-            regression, not an enhancement. */}
-        <div className="hp-why-stage">
-          <div className="hp-why-rail" aria-hidden="true">
-            <div className="hp-why-track">
-              {COPIES.map((copy) => (
-                <React.Fragment key={copy}>
-                  {gallery.map((item) => (
-                    <figure className="hp-why-card" key={`${copy}-${item.id}`}>
-                      <img src={item.image} alt="" />
-                    </figure>
-                  ))}
-                </React.Fragment>
+        {/* The sticky box. Fully decorative — see the accessibility note
+            above — so aria-hidden and nothing inside is focusable. */}
+        <div className="hp-why-stage" aria-hidden="true">
+          <div className="hp-why-box-wrap">
+            <AnimatePresence mode="wait">
+              <motion.div
+                key={activePoint.id}
+                className="hp-why-box"
+                {...anim}
+              >
+                <span className="hp-why-box-icon">
+                  <i className={activePoint.icon}></i>
+                </span>
+                <h3>{activePoint.title}</h3>
+                <p>{activePoint.text}</p>
+              </motion.div>
+            </AnimatePresence>
+
+            {/* Anchored to the box wrapper, not inside the crossfading
+                content — same reasoning as HeroSlider's dots: mode="wait"
+                empties the content mid-swap, so anything living inside it
+                would jump on every switch. */}
+            <div className="hp-why-box-dots">
+              {points.map((p, i) => (
+                <span
+                  key={p.id}
+                  className={"hp-why-box-dot" + (i === active ? " is-active" : "")}
+                />
               ))}
             </div>
           </div>
@@ -88,16 +164,21 @@ const WhyChooseUs = ({ content = whyUs }) => {
           margin-inline: auto;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          align-items: center;
+          /* start, not center: .hp-why-stage below is position:sticky, and
+             sticky only works while its own box is SHORT relative to its
+             grid area — align-items:center would let the grid centre-stretch
+             it to match the (now very tall) text column instead of leaving it
+             free to stick near the top while that column scrolls past. */
+          align-items: start;
           gap: clamp(32px, 5vw, 72px);
         }
-        /* Carousel LEFT, talk RIGHT.
+        /* Box LEFT, talk RIGHT.
            ---- get the direction right: in RTL, order:1 is the RIGHTMOST column ----
            The flow starts at the right edge, so the LOWER order value sits on the
            right and the higher one on the left — the opposite of the LTR
-           intuition. So the talk takes order 1 (right) and the carousel order 2
+           intuition. So the talk takes order 1 (right) and the box order 2
            (left). Measured, not assumed: the first attempt used the LTR reading
-           and put the carousel on the right, which is the wrong side.
+           and put the box on the right, which is the wrong side.
            AppServices.js reads the other way round because it wants the opposite
            arrangement (talk left, stage right), not because the rule differs. */
         .hp-why-text {
@@ -105,6 +186,14 @@ const WhyChooseUs = ({ content = whyUs }) => {
         }
         .hp-why-stage {
           order: 2;
+          /* Clears the fixed HeroNav, whose min-height is 78px desktop / 68px
+             below 1199px (components/HpNew/HeroNav.js). A static value, not a
+             measured one like pages/hp-new.js passes into SectionNav: unlike
+             a jump target, a sticky offset a few px off just leaves slightly
+             more or less gap under the box — comfortable margin over both
+             states matters here, not pixel precision. */
+          position: sticky;
+          top: 110px;
         }
 
         .hp-why-eyebrow {
@@ -141,9 +230,17 @@ const WhyChooseUs = ({ content = whyUs }) => {
         }
         .hp-why-list li {
           display: flex;
-          align-items: flex-start;
+          /* align-items, not justify-content: this is a row flex, so the
+             CROSS axis (vertical) is what needs centering. Real scroll
+             distance for the sticky box's crossfade to sync against — see the
+             header note. Centering the number+text pair within that tall slot
+             (rather than pinning it to the top) is what makes each point read
+             as "the thing you're currently passing", not a short line lost in
+             a tall empty box. */
+          align-items: center;
           gap: 14px;
           counter-increment: hp-why;
+          min-height: 46vh;
         }
         .hp-why-num {
           flex: 0 0 auto;
@@ -195,71 +292,69 @@ const WhyChooseUs = ({ content = whyUs }) => {
           color: #fff;
         }
 
-        /* ---- the vertical carousel ---- */
-        .hp-why-rail {
+        /* ---- the sticky box ---- */
+        .hp-why-box-wrap {
           position: relative;
-          height: clamp(420px, 52vw, 560px);
-          overflow: hidden;
+          min-height: 360px;
           border-radius: 18px;
-          /* Fade top and bottom rather than cutting hard. A mask, not an
-             overlay gradient: an overlay would have to be painted the section's
-             background colour and would break the moment that colour changes. */
-          -webkit-mask-image: linear-gradient(
-            to bottom,
-            transparent 0,
-            #000 14%,
-            #000 86%,
-            transparent 100%
-          );
-          mask-image: linear-gradient(
-            to bottom,
-            transparent 0,
-            #000 14%,
-            #000 86%,
-            transparent 100%
-          );
+          overflow: hidden;
+          background: #101828;
+          box-shadow: 0 20px 50px -24px rgba(16, 24, 40, 0.45);
         }
-        .hp-why-track {
+        .hp-why-box {
+          position: absolute;
+          inset: 0;
           display: flex;
           flex-direction: column;
-          /* height, not width: the block axis is the one that scrolls here. */
-          height: max-content;
-          animation: hp-why-scroll 38s linear infinite;
+          align-items: flex-start;
+          justify-content: center;
+          gap: 16px;
+          padding: clamp(28px, 4vw, 48px);
         }
-        .hp-why-rail:hover .hp-why-track {
-          animation-play-state: paused;
-        }
-        .hp-why-card {
-          flex: 0 0 auto;
-          /* Spacing on the ITEM, never as a flex gap on the track: two copies of
-             N items have 2N items but only 2N-1 gaps, so the track would not be
-             exactly twice one copy and the seam would drift a little every
-             cycle. A trailing margin keeps each copy self-contained. */
-          margin: 0 0 18px;
+        .hp-why-box-icon {
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          width: 56px;
+          height: 56px;
           border-radius: 14px;
-          overflow: hidden;
+          background: rgba(255, 255, 255, 0.1);
+          font-size: 26px;
+          color: #fff;
+        }
+        .hp-why-box h3 {
+          font-family: "Cairo", system-ui, sans-serif;
+          font-size: clamp(20px, 2.4vw, 28px);
+          font-weight: 700;
+          color: #fff;
+          margin: 0;
+        }
+        .hp-why-box p {
+          font-size: clamp(14px, 1.5vw, 16px);
+          line-height: 1.9;
+          color: rgba(255, 255, 255, 0.75);
+          margin: 0;
+          max-width: 46ch;
+        }
+        .hp-why-box-dots {
+          position: absolute;
+          inset-inline: 0;
+          inset-block-end: 22px;
+          z-index: 1;
+          display: flex;
+          justify-content: center;
+          gap: 8px;
+        }
+        .hp-why-box-dot {
+          width: 8px;
+          height: 8px;
+          border-radius: 50%;
+          background: rgba(255, 255, 255, 0.28);
+          transition: background 0.25s ease, transform 0.25s ease;
+        }
+        .hp-why-box-dot.is-active {
           background: #fff;
-          border: 1px solid #e5e7eb;
-          box-shadow: 0 10px 30px -18px rgba(16, 24, 40, 0.35);
-        }
-        .hp-why-card img {
-          display: block;
-          width: 100%;
-          /* Every screenshot in public/images/projects is 1448x1086 (4:3).
-             Pinning the ratio stops the track height changing as images load,
-             which would make the loop distance wrong and the seam visible. */
-          aspect-ratio: 4 / 3;
-          object-fit: cover;
-        }
-        @keyframes hp-why-scroll {
-          from {
-            transform: translateY(0);
-          }
-          to {
-            /* Exactly one copy. calc keeps it exact — a rounded -50% would be
-               fine at N=2 but silently wrong the moment COPIES changes. */
-            transform: translateY(calc(-100% / 2));
-          }
+          transform: scale(1.25);
         }
 
         @media (max-width: 991px) {
@@ -275,20 +370,27 @@ const WhyChooseUs = ({ content = whyUs }) => {
           .hp-why-stage {
             order: 2;
           }
-          .hp-why-rail {
-            height: clamp(340px, 70vw, 460px);
+          /* The sticky crossfade only means something beside a tall sibling
+             column — stacked to one column there is no such sibling, so a
+             "stuck" box would just sit inert below the list, and its content
+             already repeats what the list above it says. Simplify: drop it,
+             per ui-ux-pro-max's own note on this exact pattern ("Mobile:
+             simplify animations"). */
+          .hp-why-stage {
+            display: none;
+          }
+          /* The generous per-item height existed ONLY to give the (now
+             hidden) sticky box scroll distance to sync against — keeping it
+             here would just make the page much longer for no visible reason. */
+          .hp-why-list li {
+            min-height: 0;
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hp-why-track {
-            animation: none;
-          }
-          /* Nothing moves now, so the second copy is dead weight and the rail
-             should be explorable by hand instead of showing a frozen slice. */
-          .hp-why-rail {
-            overflow-y: auto;
-          }
           .hp-why-text :global(.hp-why-btn) {
+            transition: none;
+          }
+          .hp-why-box-dot {
             transition: none;
           }
         }

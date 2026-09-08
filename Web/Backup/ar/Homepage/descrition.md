@@ -95,3 +95,18 @@ example => when i arrive after scrolling to this part when i scroll again it swi
 <!-- Start UI -->
     
 <!-- End UI -->
+
+
+
+remove رحلة الشراء totally
+
+remove جاهز تبدأ البيع أونلاين؟
+
+this section تصدّر نتائج البحث، يوميًا وباستمرار make the white box have مهمتنا نوصّلك لصدارة جوجل... بنتائج فعلية، مش كلام
+on the left and make a full height div on the right that 43% of the whole width that have a title smalll paragraph and a btn
+make the same section a full width section with 100% width
+this section is the markiting section make when press on subnavbar get me to it
+
+in why chose katechs make the element move with scroll to be the right box and make each box have a point, and on the right add a title small paragraph and btn
+
+1st dont do anything just tell me what u understand in short 

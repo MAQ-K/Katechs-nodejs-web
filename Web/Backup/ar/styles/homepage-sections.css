@@ -190,6 +190,19 @@
 .seo-showcase-card::after { content: ""; position: absolute; inset: 0; z-index: -1; background: linear-gradient(90deg, rgba(3, 18, 42, 0.28), rgba(3, 18, 42, 0.72)); }
 .seo-showcase-panel { display: flex; min-height: 590px; align-items: center; justify-content: flex-end; padding: 54px; }
 .seo-showcase-content-box { width: min(100%, 650px); padding: 38px; border: 1px solid rgba(255,255,255,.3); border-radius: 20px; background: rgba(255,255,255,.92); box-shadow: 0 18px 50px rgba(0,0,0,.16); }
+/* --- homepage-only additions, both purely ADDITIVE (new selectors, nothing
+     above touched) so pages/index.js's SeoShowcase keeps its original layout
+     unless it explicitly opts in via a prop. See components/Common/
+     SeoShowcase.js for when each applies. */
+/* fullWidth: the card breaks out of Bootstrap's ~1140-1320px .container cap.
+   Same width formula this rebuild's other full-width sections already use
+   (components/HpNew/*.js), so the card reads consistently with the rest of
+   the page rather than introducing a third width convention. */
+.seo-showcase-bleed { width: min(1320px, 100% - 48px); margin-inline: auto; }
+/* talkOnRight: .seo-showcase-panel above has always used flex-end, which in
+   this RTL page puts the talk panel on the LEFT. flex-start flips it to the
+   RIGHT, matching what the user asked for. */
+.seo-showcase-talk-right .seo-showcase-panel { justify-content: flex-start; }
 .seo-showcase-quote { margin-bottom: 26px; color: #071d3b; font-size: 25px; font-weight: 700; line-height: 1.65; }
 .seo-showcase-row { display: grid; grid-template-columns: 1fr 1fr; gap: 26px; align-items: center; }
 .seo-showcase-feature { display: flex; align-items: center; gap: 11px; color: #26384a; font-weight: 600; }

@@ -38,7 +38,18 @@ const STEP = 360 / screens.length;
 const RADIUS = 250;
 const DRAG_SPEED = 0.35; // degrees of rotation per pixel dragged
 
-const AppOrbit = () => {
+// `screenImage` — optional, undefined by default so /services/app-development
+// (which renders this component with no props) is untouched. When given a
+// path, every orbiting phone shows that image filling its screen instead of
+// the drawn appbar/icon/lines/tiles skeleton (user, 2026-09-08 homepage
+// request: "each mobile screen have an image on it as a design").
+//
+// Singular, not one-per-screen: there is exactly ONE real KATECHS app
+// screenshot in this repo (public/images/mobile-app/app-mockup-phone.png).
+// Six different images would mean fabricating five fake app screens; repeating
+// the one real shot around the ring reads as a product turning in place, not
+// as an invented set of screens.
+const AppOrbit = ({ screenImage } = {}) => {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const [dragging, setDragging] = useState(false);
@@ -142,18 +153,28 @@ const AppOrbit = () => {
               <span className="app-orbit-notch" aria-hidden="true"></span>
 
               <span className="app-orbit-screen" aria-hidden="true">
-                <span className="app-orbit-appbar"></span>
-                <span className="app-orbit-icon">
-                  <i className={s.icon}></i>
-                </span>
-                <span className="app-orbit-line w-80"></span>
-                <span className="app-orbit-line w-55"></span>
-                <span className="app-orbit-tiles">
-                  <span></span>
-                  <span></span>
-                  <span></span>
-                </span>
-                <span className="app-orbit-cta"></span>
+                {screenImage ? (
+                  <img
+                    className="app-orbit-screen-img"
+                    src={screenImage}
+                    alt=""
+                  />
+                ) : (
+                  <>
+                    <span className="app-orbit-appbar"></span>
+                    <span className="app-orbit-icon">
+                      <i className={s.icon}></i>
+                    </span>
+                    <span className="app-orbit-line w-80"></span>
+                    <span className="app-orbit-line w-55"></span>
+                    <span className="app-orbit-tiles">
+                      <span></span>
+                      <span></span>
+                      <span></span>
+                    </span>
+                    <span className="app-orbit-cta"></span>
+                  </>
+                )}
               </span>
 
               <span className="app-orbit-label">{s.label}</span>

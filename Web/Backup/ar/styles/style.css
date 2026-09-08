@@ -8423,6 +8423,13 @@ Three ground rules held throughout:
   background-color: rgba(255, 255, 255, 0.035);
   border: 1px solid rgba(255, 255, 255, 0.06);
 }
+.app-platforms .app-orbit-screen-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  border-radius: 12px;
+  display: block;
+}
 .app-platforms .app-orbit-appbar {
   width: 42%;
   height: 6px;
@@ -14729,15 +14736,23 @@ the /services hub, and BOTH were explicitly excluded from this migration.
 }
 
 /* ---------- auth pages ---------- */
-/* NOTE (content, not styling): these three pages are still entirely in English
-   ("Login to your account!", "Remember me") on an Arabic RTL site, and carry
-   Google/Facebook/Twitter buttons that point at those sites' homepages rather
-   than at any OAuth flow. That is a content/functionality problem, deliberately
-   left alone here — this pass only makes them look like the rest of the site. */
+/* ⚠️ /auth/login translated to Arabic 2026-09-08 (user: "fix layout") — see
+   components/Auth/LoginForm.js for the full account. /auth/sign-up and
+   /auth/recover-password were NOT touched and still have the original
+   problem this note used to describe for all three: entirely in English on
+   an Arabic RTL site, with Google/Facebook/Twitter buttons pointing at those
+   sites' plain homepages rather than any real OAuth flow. Flagged, not
+   silently expanded to — the user asked about /auth/login specifically. */
 .user-area-all-style {
   padding-top: var(--ds-gap-section);
   padding-bottom: var(--ds-gap-section);
   background-color: var(--ds-band);
+  /* Replaces 3 Bootstrap col-lg-4 columns, each holding a shrink-to-fit
+     button. Equal-width GRID columns is not the same thing as evenly SPACED
+     buttons — with no explicit button width, each one sat at its own
+     column's start edge, and because "Google" is wider than "Twitter" the
+     visible gaps between buttons came out uneven (screenshotted before this
+     fix). Three equal flex items removes the discrepancy outright. */
 }
 .user-area-all-style .contact-form-action {
   max-width: 620px;
@@ -14754,6 +14769,19 @@ the /services hub, and BOTH were explicitly excluded from this migration.
   color: var(--ds-heading);
   margin-bottom: 24px;
 }
+.user-area-all-style .social-login-row {
+  display: flex;
+  gap: 14px;
+  margin-bottom: 30px;
+}
+.user-area-all-style .social-login-row .default-btn {
+  flex: 1 1 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  text-align: center;
+}
 .user-area-all-style .forget,
 .user-area-all-style .account-desc,
 .user-area-all-style .account-desc a {
@@ -14768,6 +14796,15 @@ the /services hub, and BOTH were explicitly excluded from this migration.
   margin-inline-start: 6px;
   font-weight: 700;
   color: var(--ds-navy);
+}
+@media (max-width: 575px) {
+  .user-area-all-style {
+    /* Three equal-width buttons under ~576px get too narrow to hold an icon
+       + a brand name without wrapping awkwardly — stack them instead. */
+  }
+  .user-area-all-style .social-login-row {
+    flex-direction: column;
+  }
 }
 
 /* ---------- long-form content pages ---------- */
@@ -15290,9 +15327,21 @@ Testimonials being components/Common/** shared with the frozen homepage.
 =================================================*/
 .about-page {
   /* ---------- 1. the split intro (components/AboutOne/About.js) ---------- */
-  /* Framed media with an angled panel behind it — kept from the third pass
-     (brain/ui-library/inspiration/general-split-feature-mockup-hostinger.md),
-     recoloured to a single navy tint instead of the navy/cyan gradient. */
+  /* ⚠️ RESTYLED 2026-09-08 (user: "restyle its frame"). The old treatment was
+     an angled tint rectangle BEHIND the image (kept from the third pass), the
+     idea being the image's own rounded corners would read against it. That
+     never actually worked: about-img.png is a transparent-background
+     illustration with no rectangular edge of its own, so `border-radius` on
+     the <img> had nothing to round off, and the tint behind it was only 8%
+     opacity navy on a white page — invisible in practice. Screenshotted
+     before touching this to confirm, rather than assuming the CSS comment
+     still matched what actually renders.
+     Now a real bordered card AROUND the illustration, not a rounded corner
+     ON it — same recipe .ds-new-stat-card already uses elsewhere on this
+     page (border-radius 14-ish, 1px solid var(--ds-line), white fill, NO
+     box-shadow — this page's own header comment is explicit that the
+     monochrome system uses a thin real border, never the older layer's
+     emboss shadow). */
   /* ---------- 2. MakeYourBusiness (components/Common/MakeYourBusiness.js) ---------- */
   /* SHARED with the frozen homepage — scoped restyle only, no JSX touched.
      Nothing here used cyan in either pass; unchanged. */
@@ -15301,10 +15350,31 @@ Testimonials being components/Common/** shared with the frozen homepage.
      box-shadow at all — the defining visual difference from the third
      pass's `--ds-shadow-card` emboss treatment. */
   /* ---------- 4. testimonials (components/Common/Testimonials.js) ---------- */
-  /* SHARED with the frozen homepage — scoped restyle only. Card surface on
-     the same border-not-shadow recipe; the quote mark's cyan tint dropped
-     to a navy tint; star rating stays gold — that colour is what the rating
-     itself means, not a brand accent, so monochrome doesn't touch it. */
+  /* ⚠️ REBUILT 2026-09-08 (user: "change TOTALLY the testimonial section" —
+     reference: Web/Backup/ar/"about us-testimonial .png"). Was a Swiper
+     carousel with manual nav arrows and a comic-style speech-bubble tail on
+     each card; now an infinite horizontal rail of plain bordered cards,
+     matching the reference's shape. SHARED with the frozen homepage — still
+     scoped-restyle-only, but there is no unscoped default left to fall back
+     to any more: the component itself no longer renders `.single-client` or
+     Swiper markup at all, so this is the ONLY styling that markup gets. Card
+     surface is the same border-not-shadow recipe used throughout this page;
+     star rating stays gold — that colour is what the rating itself means, not
+     a brand accent, so monochrome doesn't touch it.
+
+     ⚠️ background-color FIXED 2026-09-08 (user screenshot: "change the
+     testimonial bg"). The rebuild above only ever set spacing on `.client-area`
+     — it never overrode `background-color`, so the UNSCOPED global
+     `.client-area { background-color: #192064; }` (style.scss:2513, the
+     original theme default — a dark navy "client testimonials" band) kept
+     winning underneath it. Meanwhile `.section-title h2` right below WAS
+     correctly overridden to `var(--ds-heading)` (dark ink, scoped rule beats
+     the global one on specificity) — so the actual bug was dark text on a
+     dark navy background, close to unreadable, not just an off-brand colour.
+     Explicit `var(--ds-white)` here removes the global rule from the cascade
+     entirely rather than trying to out-contrast it, and alternates cleanly
+     against WhyChooseUs's light-grey band directly above (components/HpNew/
+     WhyChooseUs.js: `background: #f7f8fa`). */
   /* ---------- 5. phones ---------- */
 }
 .about-page .about-area {
@@ -15312,28 +15382,18 @@ Testimonials being components/Common/** shared with the frozen homepage.
   padding-bottom: var(--ds-gap-section);
 }
 .about-page .about-img {
-  position: relative;
-  display: inline-block;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   max-width: 100%;
-}
-.about-page .about-img::before {
-  content: "";
-  position: absolute;
-  z-index: 0;
-  top: 16px;
-  bottom: -16px;
-  inset-inline-start: -16px;
-  inset-inline-end: 16px;
+  padding: 32px;
   border-radius: var(--ds-r-card);
-  background-color: rgba(10, 31, 68, 0.08);
-  transform: rotate(-3deg);
+  border: 1px solid var(--ds-line);
+  background-color: var(--ds-white);
 }
 .about-page .about-img img {
-  position: relative;
-  z-index: 1;
   max-width: 100%;
   height: auto;
-  border-radius: var(--ds-r-card);
 }
 .about-page .about-content {
   margin-top: 0;
@@ -15540,6 +15600,8 @@ Testimonials being components/Common/** shared with the frozen homepage.
 .about-page .client-area {
   padding-top: var(--ds-gap-section);
   padding-bottom: var(--ds-gap-section);
+  overflow: hidden;
+  background-color: var(--ds-white);
 }
 .about-page .client-area .section-title {
   margin-bottom: 38px;
@@ -15551,28 +15613,120 @@ Testimonials being components/Common/** shared with the frozen homepage.
   line-height: 1.45;
   color: var(--ds-heading);
 }
-.about-page .client-area .single-client {
-  height: auto;
-  padding: 30px 26px;
+.about-page .testimonial-rail {
+  width: 100%;
+  overflow: hidden;
+  /* Fade at both ends instead of a hard cut — same mask-not-overlay
+     reasoning components/HpNew/ProjectsMarquee.js documents: an overlay
+     would have to be painted this section's exact background colour and
+     would silently stop matching the moment that colour changes.
+     direction: ltr belongs HERE, on the wrapper, not the track — see the
+     long note on .testimonial-track below for why the wrapper is what
+     actually matters. */
+  direction: ltr;
+  -webkit-mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+  mask-image: linear-gradient(to right, transparent 0, #000 8%, #000 92%, transparent 100%);
+}
+.about-page .testimonial-track {
+  display: flex;
+  width: max-content;
+  /* ---- why direction: ltr lives on .testimonial-rail, not here ----
+     html is dir="rtl", so a max-content flex track laid out inside an RTL
+     containing block hangs off the block's RIGHT edge and overflows LEFT.
+     Its right edge starts flush with the container's, so there is nothing
+     further right to slide in — translateX(-N%) drags it further left and
+     leaves the right side of the strip empty. This exact bug was found and
+     fixed twice already in this codebase (components/HpNew/ProjectsMarquee.js
+     has the full account) and BOTH times the first attempt put `direction:
+     ltr` on the wrong element — the TRACK, not its containing block — which
+     only reorders the track's own children and does nothing for where the
+     track itself sits. Putting it on .testimonial-rail instead makes that
+     the LTR containing block, so the track starts at the left edge and
+     overflows right, which is what the -20% keyframe below assumes.
+     Direction has no per-track override to undo here (unlike
+     .app-marquee-item, which sets direction: rtl back on itself for Arabic
+     labels) because .testimonial-card sets its own direction: rtl below —
+     every card's Arabic content is unaffected by the track's ltr. */
+  animation: testimonialScroll 46s linear infinite;
+}
+.about-page .testimonial-rail:hover .testimonial-track {
+  animation-play-state: paused;
+}
+.about-page .testimonial-card {
+  flex: 0 0 auto;
+  /* Arabic content inside an ltr track — reset per card, same fix
+     .app-marquee-item uses for its labels. */
+  direction: rtl;
+  text-align: start;
+  width: clamp(260px, 24vw, 360px);
+  /* Spacing on the ITEM, never a flex `gap` on the track: with a gap, N
+     copies of 3 cards are 3N cards but only 3N-1 gaps, so the track is not
+     exactly N copies wide and the -20% keyframe drifts a little every
+     cycle. A trailing margin keeps each copy self-contained.
+     PHYSICAL margin-left, not margin-inline-end: the track is forced ltr
+     above, so left is the flow end there, not the card's own (rtl) end. */
+  margin: 0 20px 0 0;
+  padding: 28px 26px;
   border: 1px solid var(--ds-line);
   border-radius: var(--ds-r-card);
   background-color: var(--ds-white);
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
 }
-.about-page .client-area .single-client p {
+.about-page .testimonial-tag {
+  align-self: flex-start;
+  padding: 4px 14px;
+  border: 1px solid var(--ds-line);
+  border-radius: 999px;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--ds-body);
+}
+.about-page .testimonial-card .quotes {
+  font-size: 26px;
+  color: rgba(10, 31, 68, 0.18);
+}
+.about-page .testimonial-card p {
   font-size: 15px;
   line-height: 1.9;
   color: var(--ds-body);
+  margin: 0;
 }
-.about-page .client-area .single-client .quotes {
-  color: rgba(10, 31, 68, 0.18);
+.about-page .testimonial-stars {
+  display: flex;
+  gap: 4px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
 }
-.about-page .client-area .single-client .rating i {
+.about-page .testimonial-stars i {
   color: #f5a623;
 }
-@media only screen and (max-width: 767px) {
-  .about-page .about-img::before {
-    display: none;
+@keyframes testimonialScroll {
+  from {
+    transform: translateX(0);
   }
+  to {
+    /* Exactly one copy: the track is COPIES.length (5) copies wide, so one
+       copy is 100%/5 of it. calc keeps it exact — a rounded -20% would
+       drift a fraction of a pixel every cycle. */
+    transform: translateX(-20%);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .about-page {
+    /* Nothing moves now, so the 4 extra copies are dead weight and the rail
+       should be explorable by hand instead of showing a frozen slice. */
+  }
+  .about-page .testimonial-track {
+    animation: none;
+  }
+  .about-page .testimonial-rail {
+    overflow-x: auto;
+  }
+}
+@media only screen and (max-width: 767px) {
   .about-page .choose-card {
     padding: 26px 22px;
   }
@@ -16119,3 +16273,5 @@ too. Out of scope for a styling pass — see T-020.
     transition: none;
   }
 }
+
+/*# sourceMappingURL=style.css.map */
