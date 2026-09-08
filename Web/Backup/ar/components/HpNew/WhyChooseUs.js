@@ -3,67 +3,99 @@ import Link from "next/link";
 import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
 import { whyUs } from "../../data/home-new/data";
 
-// Why choose us — the four reasons on the right, a sticky box on the left that
-// switches to match whichever reason the reader has scrolled to.
+// Why choose us — a pinned scrollytelling section. Four reasons, a sticky box
+// on the left that switches to match whichever reason is current, and a
+// stepper on the right that moves with it.
 //
-// ⚠️ REPLACED 2026-09-08. This used to be a vertical marquee of real client
-// screenshots ("the left image is a scrollable vertical carousel", 2026-09-05).
-// The new ask — "when i scroll the box on the left change... 4 boxes each box
-// have a point" — ties the left visual to the 4 reasons directly, which a loop
-// of 6 unrelated screenshots cannot do. The old gallery data
-// (data/home-new/data.js: whyUs.gallery) is left in place, unused.
+// ⚠️ REBUILT 2026-09-08 (same day as the first version). The first pass made
+// the LEFT box scroll-reactive but left the right column as a plain static
+// list — "the right side dont move with scroll, the left boxes only". The
+// user also asked for the section to hold the reader until they have been
+// through all four points ("i cant scroll to next section unless i finish
+// all boxes") and for the step changes themselves to be animated, not just
+// the box.
 //
-// ---- how "switch on scroll" is built, and what it deliberately is NOT ----
-// Consulted ui-ux-pro-max (`--domain ux "sticky scroll crossfade"`) before
-// building this: its Accessibility guideline is explicit — "Parallax/
-// Scroll-jacking causes nausea... Don't: Force scroll effects
-// (ScrollTrigger.create())". So this does NOT hijack the wheel or pin scroll
-// the way a ScrollTrigger-style effect would (which would also fight the
-// useSmoothScroll hook already mounted on this page — two wheel interceptors
-// on one page is exactly the class of bug the domain-search nav pill exposed
-// today). Instead:
-//   - the RIGHT column's four points are plain content, each given real
-//     scroll height via CSS min-height, so scrolling past all four takes a
-//     natural, un-intercepted scroll distance;
-//   - a passive, rAF-gated `scroll` listener (same pattern pages/hp-new.js and
-//     pages/services/index.js already use for their own scroll-spies) reads
-//     which point's top has crossed a line at viewport-middle, and that index
-//     drives which box the LEFT panel shows;
-//   - the panel itself is `position: sticky`, a pure CSS/layout property that
-//     reacts correctly to scrollY however it got set — native wheel, this
-//     hook's scrollTo, or a nav-pill jump — so there is nothing here for
-//     useSmoothScroll to conflict with.
-// The crossfade is framer-motion `AnimatePresence mode="wait"`, the same
-// technique HeroSlider.js already uses for its own text crossfade — 300ms
-// (ui-ux-pro-max: "150-300ms for micro-interactions... not >500ms"; HeroSlider
-// itself uses 500ms for a full slide change, a bigger content swap than this).
+// ---- how the pin works, and why it does NOT hijack the wheel ----
+// The section renders at 4x viewport height (`points.length * 100vh`) with an
+// inner `position: sticky; top` panel that stays put while that height is
+// consumed. A passive, rAF-gated scroll listener reads how far the outer
+// block's top has travelled past 0 (i.e. how much of that 4x height has been
+// scrolled through) and turns that fraction into a step index 0..3. No wheel
+// listener, no preventDefault, no window.scrollTo — the browser's own native
+// scroll (and the page's separate useSmoothScroll glide) is what drives it,
+// so there is nothing here to fight the two-interceptor bug the domain-search
+// nav pill hit earlier. The "can't skip ahead" behaviour falls out of the
+// geometry: reaching the section after it requires having scrolled the full
+// 4-viewport distance, which only finishes once every step has been current.
+//
+// Pinning is desktop + motion-safe only (matchMedia, re-checked live): a
+// forced 4-viewport scroll distance on a phone, or for a reduced-motion
+// reader, is exactly the kind of scroll-jacking ui-ux-pro-max's accessibility
+// guideline warns against, so under either condition this renders as an
+// ordinary stacked, un-pinned list instead — same escape hatch the first
+// version used for mobile.
 //
 // ---- accessibility: real content lives on the right, ONCE ----
 // The left box repeats the active point's title/text for sighted scroll
-// feedback, so it is `aria-hidden` in full — exactly the same call the old
-// carousel made ("a screen reader gaining ... is a regression, not an
-// enhancement"). A screen reader, or a reader with JS off, gets the four
-// points as an ordinary list on the right and never hears anything twice.
+// feedback, so it stays `aria-hidden`. The right-hand steps are the only
+// place a screen reader or a no-JS/no-pin reader encounters this content, and
+// it encounters all four, in order, once.
 const EASE = [0.22, 1, 0.36, 1];
+const DESKTOP = "(min-width: 992px)";
+const REDUCED = "(prefers-reduced-motion: reduce)";
 
 const WhyChooseUs = ({ content = whyUs }) => {
   const points = content.points;
   const [active, setActive] = useState(0);
+  const [pinEnabled, setPinEnabled] = useState(false);
   const reduced = useReducedMotion();
-  const stepRefs = useRef([]);
+  const pinRef = useRef(null);
 
   useEffect(() => {
-    let frame = null;
+    const desktopMQ = window.matchMedia(DESKTOP);
+    const reducedMQ = window.matchMedia(REDUCED);
+    const apply = () => setPinEnabled(desktopMQ.matches && !reducedMQ.matches);
+    apply();
 
+    const add = (mq, fn) =>
+      mq.addEventListener ? mq.addEventListener("change", fn) : mq.addListener(fn);
+    const remove = (mq, fn) =>
+      mq.removeEventListener ? mq.removeEventListener("change", fn) : mq.removeListener(fn);
+    add(desktopMQ, apply);
+    add(reducedMQ, apply);
+    return () => {
+      remove(desktopMQ, apply);
+      remove(reducedMQ, apply);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (!pinEnabled) {
+      setActive(0);
+      return undefined;
+    }
+
+    let frame = null;
     const measure = () => {
       frame = null;
-      const line = window.innerHeight / 2;
-      let current = 0;
-      points.forEach((_, i) => {
-        const el = stepRefs.current[i];
-        if (el && el.getBoundingClientRect().top <= line) current = i;
-      });
-      setActive(current);
+      const el = pinRef.current;
+      if (!el) return;
+      // Distance the reader can scroll while still inside the pin: the
+      // block's own height minus one viewport (the sticky panel's slot).
+      const total = el.offsetHeight - window.innerHeight;
+      if (total <= 0) {
+        setActive(0);
+        return;
+      }
+      const scrolled = Math.min(
+        Math.max(-el.getBoundingClientRect().top, 0),
+        total
+      );
+      const idx = Math.min(
+        points.length - 1,
+        Math.floor((scrolled / total) * points.length)
+      );
+      setActive(idx);
     };
 
     const onScroll = () => {
@@ -78,7 +110,7 @@ const WhyChooseUs = ({ content = whyUs }) => {
       window.removeEventListener("scroll", onScroll);
       window.removeEventListener("resize", onScroll);
     };
-  }, [points]);
+  }, [pinEnabled, points.length]);
 
   const activePoint = points[active];
 
@@ -92,62 +124,88 @@ const WhyChooseUs = ({ content = whyUs }) => {
       };
 
   return (
-    <div className="hp-why">
-      <div className="hp-why-inner">
-        <div className="hp-why-text">
-          <span className="hp-why-eyebrow">{content.eyebrow}</span>
-          <h2>{content.heading}</h2>
-          <p className="hp-why-body">{content.body}</p>
+    <div
+      className={"hp-why" + (pinEnabled ? " is-pinned" : "")}
+      ref={pinRef}
+      style={pinEnabled ? { height: `${points.length * 100}vh` } : undefined}
+    >
+      <div className="hp-why-sticky">
+        <div className="hp-why-inner">
+          <div className="hp-why-text">
+            <span className="hp-why-eyebrow">{content.eyebrow}</span>
+            <h2>{content.heading}</h2>
+            <p className="hp-why-body">{content.body}</p>
 
-          {/* The real content, and the ONLY thing a screen reader or a no-JS
-              reader ever sees. Each item's min-height (CSS) is what gives the
-              scroll-sync its distance — this is a plain list otherwise. */}
-          <ul className="hp-why-list">
-            {points.map((point, i) => (
-              <li key={point.id} ref={(el) => (stepRefs.current[i] = el)}>
-                <span className="hp-why-num" aria-hidden="true" />
-                <div>
-                  <h3>{point.title}</h3>
-                  <p>{point.text}</p>
-                </div>
-              </li>
-            ))}
-          </ul>
+            {/* The real content, and the ONLY thing a screen reader or a
+                no-JS/no-pin reader ever sees — every point, always, in order.
+                The moving highlight below is a purely visual overlay on top
+                of this, not a replacement for it. */}
+            <ul className="hp-why-steps">
+              {points.map((point, i) => {
+                const isActive = pinEnabled && i === active;
+                return (
+                  <li
+                    key={point.id}
+                    className={"hp-why-step" + (isActive ? " is-active" : "")}
+                  >
+                    {isActive && (
+                      <motion.span
+                        layoutId="hp-why-highlight"
+                        className="hp-why-step-highlight"
+                        transition={
+                          reduced ? { duration: 0 } : { duration: 0.35, ease: EASE }
+                        }
+                      />
+                    )}
+                    <span className="hp-why-num" aria-hidden="true">
+                      {i + 1}
+                    </span>
+                    <div className="hp-why-step-text">
+                      <h3>{point.title}</h3>
+                      <p>{point.text}</p>
+                    </div>
+                  </li>
+                );
+              })}
+            </ul>
 
-          <Link href={content.cta.href} className="hp-why-btn">
-            {content.cta.label}
-          </Link>
-        </div>
+            <Link href={content.cta.href} className="hp-why-btn">
+              {content.cta.label}
+            </Link>
+          </div>
 
-        {/* The sticky box. Fully decorative — see the accessibility note
-            above — so aria-hidden and nothing inside is focusable. */}
-        <div className="hp-why-stage" aria-hidden="true">
-          <div className="hp-why-box-wrap">
-            <AnimatePresence mode="wait">
-              <motion.div
-                key={activePoint.id}
-                className="hp-why-box"
-                {...anim}
-              >
-                <span className="hp-why-box-icon">
-                  <i className={activePoint.icon}></i>
-                </span>
-                <h3>{activePoint.title}</h3>
-                <p>{activePoint.text}</p>
-              </motion.div>
-            </AnimatePresence>
+          {/* The sticky box. Fully decorative — see the accessibility note
+              above — so aria-hidden and nothing inside is focusable. */}
+          <div className="hp-why-stage" aria-hidden="true">
+            <div className="hp-why-box-wrap">
+              <AnimatePresence mode="wait">
+                <motion.div
+                  key={activePoint.id}
+                  className="hp-why-box"
+                  {...anim}
+                >
+                  <span className="hp-why-box-icon">
+                    <i className={activePoint.icon}></i>
+                  </span>
+                  <h3>{activePoint.title}</h3>
+                  <p>{activePoint.text}</p>
+                </motion.div>
+              </AnimatePresence>
 
-            {/* Anchored to the box wrapper, not inside the crossfading
-                content — same reasoning as HeroSlider's dots: mode="wait"
-                empties the content mid-swap, so anything living inside it
-                would jump on every switch. */}
-            <div className="hp-why-box-dots">
-              {points.map((p, i) => (
-                <span
-                  key={p.id}
-                  className={"hp-why-box-dot" + (i === active ? " is-active" : "")}
-                />
-              ))}
+              {/* Anchored to the box wrapper, not inside the crossfading
+                  content — same reasoning as HeroSlider's dots: mode="wait"
+                  empties the content mid-swap, so anything living inside it
+                  would jump on every switch. */}
+              <div className="hp-why-box-dots">
+                {points.map((p, i) => (
+                  <span
+                    key={p.id}
+                    className={
+                      "hp-why-box-dot" + (i === active ? " is-active" : "")
+                    }
+                  />
+                ))}
+              </div>
             </div>
           </div>
         </div>
@@ -156,20 +214,35 @@ const WhyChooseUs = ({ content = whyUs }) => {
       <style jsx>{`
         .hp-why {
           width: 100%;
-          padding-block: clamp(56px, 8vw, 104px);
           background: #f7f8fa;
+        }
+        .hp-why:not(.is-pinned) {
+          padding-block: clamp(56px, 8vw, 104px);
+        }
+        .hp-why.is-pinned {
+          position: relative;
+        }
+        .hp-why-sticky {
+          width: 100%;
+        }
+        .hp-why.is-pinned .hp-why-sticky {
+          position: sticky;
+          /* Clears the fixed HeroNav, whose min-height is 78px desktop / 68px
+             below 1199px (components/HpNew/HeroNav.js). A static value, not a
+             measured one: unlike a jump target, a sticky offset a few px off
+             just leaves slightly more or less gap under the section. */
+          top: 90px;
+          min-height: calc(100vh - 90px);
+          display: flex;
+          align-items: center;
+          padding-block: clamp(24px, 4vw, 40px);
         }
         .hp-why-inner {
           width: min(1320px, 100% - 48px);
           margin-inline: auto;
           display: grid;
           grid-template-columns: 1fr 1fr;
-          /* start, not center: .hp-why-stage below is position:sticky, and
-             sticky only works while its own box is SHORT relative to its
-             grid area — align-items:center would let the grid centre-stretch
-             it to match the (now very tall) text column instead of leaving it
-             free to stick near the top while that column scrolls past. */
-          align-items: start;
+          align-items: center;
           gap: clamp(32px, 5vw, 72px);
         }
         /* Box LEFT, talk RIGHT.
@@ -186,14 +259,6 @@ const WhyChooseUs = ({ content = whyUs }) => {
         }
         .hp-why-stage {
           order: 2;
-          /* Clears the fixed HeroNav, whose min-height is 78px desktop / 68px
-             below 1199px (components/HpNew/HeroNav.js). A static value, not a
-             measured one like pages/hp-new.js passes into SectionNav: unlike
-             a jump target, a sticky offset a few px off just leaves slightly
-             more or less gap under the box — comfortable margin over both
-             states matters here, not pixel precision. */
-          position: sticky;
-          top: 110px;
         }
 
         .hp-why-eyebrow {
@@ -206,46 +271,61 @@ const WhyChooseUs = ({ content = whyUs }) => {
         }
         .hp-why-text h2 {
           font-family: "Cairo", system-ui, sans-serif;
-          font-size: clamp(24px, 3.2vw, 40px);
+          font-size: clamp(22px, 2.8vw, 34px);
           font-weight: 700;
           line-height: 1.35;
           color: #101828;
-          margin: 0 0 14px;
+          margin: 0 0 12px;
         }
         .hp-why-body {
-          font-size: clamp(15px, 1.5vw, 17px);
-          line-height: 2;
+          font-size: clamp(14px, 1.3vw, 16px);
+          line-height: 1.8;
           color: #4b5563;
-          margin: 0 0 28px;
+          margin: 0 0 22px;
         }
-        .hp-why-list {
+
+        /* ---- the stepper: all four, always, one visually current ---- */
+        .hp-why-steps {
           list-style: none;
-          margin: 0 0 32px;
+          margin: 0 0 26px;
           padding: 0;
           display: grid;
-          gap: 22px;
-          /* Counter drives the numbering so the markup carries no hard-coded
-             1/2/3/4 to fall out of step when a point is added or reordered. */
-          counter-reset: hp-why;
+          gap: 8px;
         }
-        .hp-why-list li {
+        .hp-why-step {
+          position: relative;
           display: flex;
-          /* align-items, not justify-content: this is a row flex, so the
-             CROSS axis (vertical) is what needs centering. Real scroll
-             distance for the sticky box's crossfade to sync against — see the
-             header note. Centering the number+text pair within that tall slot
-             (rather than pinning it to the top) is what makes each point read
-             as "the thing you're currently passing", not a short line lost in
-             a tall empty box. */
           align-items: center;
           gap: 14px;
-          counter-increment: hp-why;
-          min-height: 46vh;
+          padding: 12px 16px;
+          border-radius: 14px;
+          transition: opacity 0.3s ease;
+        }
+        /* Dim the steps not currently "read" while pinned, so the moving
+           highlight has something to move against — the effect the first
+           version was missing entirely. Un-pinned (mobile / reduced motion)
+           every step stays at full opacity: there is no scroll-driven
+           "current" step to contrast against there. */
+        .hp-why.is-pinned .hp-why-step {
+          opacity: 0.5;
+        }
+        .hp-why.is-pinned .hp-why-step.is-active {
+          opacity: 1;
+        }
+        .hp-why-step-highlight {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          border-radius: 14px;
+          background: #fff;
+          box-shadow: 0 10px 26px -14px rgba(16, 24, 40, 0.35);
         }
         .hp-why-num {
+          position: relative;
+          z-index: 1;
           flex: 0 0 auto;
-          width: 34px;
-          height: 34px;
+          width: 32px;
+          height: 32px;
           border-radius: 50%;
           background: #101828;
           color: #fff;
@@ -253,23 +333,23 @@ const WhyChooseUs = ({ content = whyUs }) => {
           align-items: center;
           justify-content: center;
           font-family: "Cairo", system-ui, sans-serif;
-          font-size: 14px;
+          font-size: 13px;
           font-weight: 700;
-          margin-top: 2px;
         }
-        .hp-why-num::before {
-          content: counter(hp-why);
+        .hp-why-step-text {
+          position: relative;
+          z-index: 1;
         }
-        .hp-why-list h3 {
+        .hp-why-steps h3 {
           font-family: "Cairo", system-ui, sans-serif;
-          font-size: clamp(16px, 1.7vw, 19px);
+          font-size: clamp(15px, 1.5vw, 17px);
           font-weight: 700;
           color: #101828;
-          margin: 0 0 6px;
+          margin: 0 0 4px;
         }
-        .hp-why-list p {
-          font-size: clamp(14px, 1.4vw, 16px);
-          line-height: 1.9;
+        .hp-why-steps p {
+          font-size: clamp(13px, 1.2vw, 14px);
+          line-height: 1.7;
           color: #4b5563;
           margin: 0;
         }
@@ -295,7 +375,7 @@ const WhyChooseUs = ({ content = whyUs }) => {
         /* ---- the sticky box ---- */
         .hp-why-box-wrap {
           position: relative;
-          min-height: 360px;
+          min-height: 340px;
           border-radius: 18px;
           overflow: hidden;
           background: #101828;
@@ -362,28 +442,18 @@ const WhyChooseUs = ({ content = whyUs }) => {
             width: calc(100% - 32px);
             grid-template-columns: 1fr;
           }
-          /* Stacked, the heading leads — the column swap means nothing with a
-             single column. */
           .hp-why-text {
             order: 1;
           }
           .hp-why-stage {
             order: 2;
           }
-          /* The sticky crossfade only means something beside a tall sibling
-             column — stacked to one column there is no such sibling, so a
-             "stuck" box would just sit inert below the list, and its content
-             already repeats what the list above it says. Simplify: drop it,
-             per ui-ux-pro-max's own note on this exact pattern ("Mobile:
-             simplify animations"). */
+          /* Pinning only ever applies at >=992px (see the JS matchMedia
+             check), but the box also has nothing to react to once there is no
+             scroll-driven "active" step — same call the first version made:
+             drop it per ui-ux-pro-max's "Mobile: simplify animations". */
           .hp-why-stage {
             display: none;
-          }
-          /* The generous per-item height existed ONLY to give the (now
-             hidden) sticky box scroll distance to sync against — keeping it
-             here would just make the page much longer for no visible reason. */
-          .hp-why-list li {
-            min-height: 0;
           }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -391,6 +461,9 @@ const WhyChooseUs = ({ content = whyUs }) => {
             transition: none;
           }
           .hp-why-box-dot {
+            transition: none;
+          }
+          .hp-why-step {
             transition: none;
           }
         }

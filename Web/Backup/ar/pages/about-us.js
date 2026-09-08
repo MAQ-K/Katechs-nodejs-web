@@ -1,6 +1,6 @@
 import React from "react";
 import Navbar from "../components/Layouts/Navbar";
-import PageBanner from "../components/Common/PageBanner";
+import Breadcrumb from "../components/Common/Breadcrumb";
 import About from "../components/AboutOne/About";
 // Swapped 2026-09-08 (user: "use 'why chose katecks' section from homepage").
 // components/AboutOne/WhyChooseUs.js is no longer imported anywhere — left in
@@ -35,11 +35,20 @@ export default function AboutPage() {
              on specificity regardless of load order.
           Removing this div silently reverts the page's styling. */}
       <div className="about-page">
-        <PageBanner
-          pageTitle="من نحن"
-          homePageUrl="/"
-          homePageText=""
-          activePageText=""
+        {/* Swapped 2026-09-08 (user: "replace old Breadcrumb with new on
+            about us page") — PageBanner (page-title-area, styles/style.scss)
+            for the new Common/Breadcrumb.js theme: breadcrumb-bg.png +
+            BreadcrumbGrid's cursor-reactive glow. PageBanner is left in
+            place, still used elsewhere (grep it before deleting). The old
+            call passed homePageText="" and activePageText="" — both rendered
+            blank per page-title-area's markup, so this fills in real labels
+            rather than carrying the gap forward. */}
+        <Breadcrumb
+          title="من نحن"
+          items={[
+            { label: "الرئيسية", href: "/", icon: "bx bx-home-alt" },
+            { label: "من نحن" },
+          ]}
         />
 
         <About />

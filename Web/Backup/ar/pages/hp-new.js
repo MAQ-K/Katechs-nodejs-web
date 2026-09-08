@@ -248,11 +248,11 @@ export default function HpNewPage() {
             section" (user, 2026-09-08). Was two things at once before today —
             an untargeted id="seo" section AND an empty id="marketing"
             placeholder the fixed nav pill pointed at. Merged into the one the
-            pill actually needs. fullWidth + talkOnRight are both opt-in props;
-            pages/index.js still renders this component with neither and is
-            unaffected — see components/Common/SeoShowcase.js. --- */}
+            pill actually needs. `banner` is an opt-in prop; pages/index.js
+            still renders this component with none and is unaffected — see
+            components/Common/SeoShowcase.js. --- */}
         <section id="marketing">
-          <SeoShowcase fullWidth talkOnRight />
+          <SeoShowcase banner />
         </section>
 
         {/* --- Why choose us: the four reasons, with a vertical carousel of
