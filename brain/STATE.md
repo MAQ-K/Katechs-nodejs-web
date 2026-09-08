@@ -124,3 +124,15 @@
 | 2026-08-24 | Manager | Design/motion database wired into the agents + `SOURCES.md` (T-005) |
 | 2026-08-24 | Manager | Live Lab at `/lab/` — 63 components, 10 motion specimens (T-006) |
 | 2026-08-24 | Manager | `brain/PARALLEL.md` — 3-slot parallel workflow (T-007) |
+
+- 2026-09-08: Codex completed requested hp-new hero typography/button edits; REVIEW. HeroSlider.js now uses Almarai/--ds-font, 820px copy column, shared DS outline CTA, no badge. Route verified HTTP 200. See today's log.
+
+- 2026-09-08: User corrected hp-new hero styling: Cairo font and cyan default-btn per screenshot supersede the earlier Almarai/DS-outline edit. Implemented in HeroSlider.js; HTTP 200 verified.
+
+- 2026-09-08: hp-new opening viewport now groups navbar space, hero, and domain search into 100vh/100dvh; short screens may grow for content. Changes in hp-new.js and HeroSlider.js; HTTP 200 checked.
+
+- 2026-09-08: DomainSearch.js on hp-new restyled to simple navy strip, light input text, Cairo and shared cyan button. Responsive layout and form behavior retained; HTTP 200 verified. REVIEW.
+
+- 2026-09-08: DomainSearch.js updated per reference to full-width near-black navy pill field with traveling blue border light; search input left/button right at all breakpoints. Replaces prior cyan domain button styling. HTTP 200 verified; REVIEW.
+
+- 2026-09-08: Domain search refined to solid navy input, softer cyan border glow, restored shared cyan default-btn. Opening group +1vh allocated to hero in hp-new.js. REVIEW.

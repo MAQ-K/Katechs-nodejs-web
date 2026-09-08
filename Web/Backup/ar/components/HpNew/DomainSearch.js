@@ -14,9 +14,9 @@ import { domainSearch } from "../../data/home-new/data";
 // Button placement: on the RIGHT, as drawn in the sketch (user's decision,
 // 2026-09-03). Worth knowing when the design pass lands — in RTL the caret
 // starts at the right edge, so the button sits where typing begins. It is
-// given a hard min-width and a divider so the two do not read as one field.
+// given a clear gap and a contrasting button so the controls read separately.
 //
-// STRUCTURE PASS: greyscale.
+// Near-black navy search strip, pill field and a subtle traveling border light.
 
 const DomainSearch = ({ config = domainSearch }) => {
   const { action, hidden = {}, queryParam, label, placeholder, buttonLabel } =
@@ -43,6 +43,11 @@ const DomainSearch = ({ config = domainSearch }) => {
           {/* dir="ltr" on the input only: domain names are Latin, and typing
               them into an RTL field puts the caret and the dots in the wrong
               order. The strip around it stays RTL. */}
+          <div className="hp-domain-field">
+            <svg className="hp-domain-light" width="100%" height="100%" aria-hidden="true">
+              <rect className="hp-domain-light-glow" width="100%" height="100%" rx="28" pathLength="100" />
+              <rect className="hp-domain-light-edge" width="100%" height="100%" rx="28" pathLength="100" />
+            </svg>
           <input
             id="hp-domain-input"
             className="hp-domain-input"
@@ -54,8 +59,9 @@ const DomainSearch = ({ config = domainSearch }) => {
             spellCheck="false"
             placeholder={placeholder}
           />
+          </div>
 
-          <button type="submit" className="hp-domain-btn">
+          <button type="submit" className="default-btn hp-domain-btn">
             <svg
               className="hp-domain-icon"
               viewBox="0 0 24 24"
@@ -77,17 +83,21 @@ const DomainSearch = ({ config = domainSearch }) => {
 
       <style jsx>{`
         .hp-domain {
-          background: #fff;
-          border-block: 1px solid #d9d9d9;
+          background: #030916;
+          border-block-start: 1px solid rgba(149, 185, 231, 0.08);
+          color: #fff;
         }
         .hp-domain-inner {
-          width: min(1320px, 100% - 48px);
-          margin-inline: auto;
+          width: calc(100% - 88px);
+          margin-inline-start: 24px;
+          margin-inline-end: 64px;
         }
         .hp-domain-form {
           display: flex;
+          direction: ltr;
           align-items: stretch;
-          min-height: 84px;
+          gap: 12px;
+          padding-block: 16px;
         }
         /* Visually hidden, still read aloud. The placeholder is not a label. */
         .hp-domain-label {
@@ -101,51 +111,93 @@ const DomainSearch = ({ config = domainSearch }) => {
           white-space: nowrap;
           border: 0;
         }
-        .hp-domain-input {
+        .hp-domain-field {
+          position: relative;
+          isolation: isolate;
           flex: 1 1 auto;
           min-width: 0;
+          display: flex;
+          border-radius: 28px;
+          background: #071224;
+          box-shadow: inset 0 0 0 1px #1a2940;
+        }
+        .hp-domain-light {
+          position: absolute;
+          inset: 0;
+          overflow: visible;
+          z-index: 1;
+          pointer-events: none;
+          border-radius: inherit;
+        }
+        .hp-domain-light rect {
+          fill: none;
+          stroke: #1dd3f8;
+          stroke-dasharray: 7 93;
+          stroke-linecap: round;
+          animation: hp-domain-orbit 9s linear infinite;
+        }
+        .hp-domain-light-glow {
+          stroke-width: 8px;
+          filter: blur(6px);
+          opacity: 0.8;
+        }
+        .hp-domain-light-edge {
+          stroke-width: 3px;
+          filter: blur(1.5px);
+          opacity: 0.7;
+        }
+        @keyframes hp-domain-orbit {
+          from { stroke-dashoffset: 0; }
+          to { stroke-dashoffset: -100; }
+        }
+        .hp-domain-input {
+          position: relative;
+          width: 100%;
+          min-width: 0;
+          min-height: 54px;
           border: 0;
-          background: transparent;
-          padding-inline: 20px;
-          font-family: "Cairo", system-ui, sans-serif;
-          font-size: clamp(15px, 1.7vw, 20px);
-          color: #111;
+          border-radius: inherit;
+          background: #071224;
+          padding: 12px 24px;
+          font-family: "Cairo", sans-serif;
+          font-size: 16px;
+          color: #edf4ff;
+          caret-color: #b8daff;
+          transition: background-color 0.2s ease;
         }
         .hp-domain-input::placeholder {
-          color: #8a8a8a;
+          color: #a4b3ca;
+          opacity: 1;
+          direction: rtl;
+          text-align: right;
+        }
+        .hp-domain-input:hover {
+          background: #071224;
         }
         .hp-domain-input:focus {
-          outline: 2px solid #111;
-          outline-offset: -2px;
+          background: #071224;
+          outline: 2px solid #fff;
+          outline-offset: 2px;
         }
         .hp-domain-btn {
           flex: 0 0 auto;
-          /* Wide enough that the button reads as its own cell rather than as
-             part of the field it sits beside. */
-          min-width: 168px;
+          min-width: 148px;
+          min-height: 52px;
           display: inline-flex;
           align-items: center;
           justify-content: center;
           gap: 10px;
-          /* Button sits at the START edge — the RIGHT, in RTL — as drawn in the
-             sketch. The order property rather than DOM order, so the tab
-             sequence stays the sensible one: type in the field, then reach the
-             submit. With two controls and a real label, that is the right trade. */
-          order: -1;
-          /* The divider from the sketch. Its own edge, not a gap. */
+          order: 0;
+          direction: rtl;
           border: 0;
-          border-inline-end: 1px solid #d9d9d9;
-          background: #f2f2f2;
-          color: #111;
-          font-family: "Cairo", system-ui, sans-serif;
+          font-family: "Cairo", sans-serif;
           font-size: 16px;
           font-weight: 700;
-          cursor: pointer;
-          padding-inline: 24px;
-          transition: background 0.25s ease;
+          padding: 14px 28px;
         }
-        .hp-domain-btn:hover {
-          background: #e6e6e6;
+        .hp-domain-btn:focus-visible {
+          outline: 2px solid #fff;
+          outline-offset: 3px;
         }
         .hp-domain-icon {
           flex: 0 0 auto;
@@ -153,30 +205,29 @@ const DomainSearch = ({ config = domainSearch }) => {
         @media (max-width: 767px) {
           .hp-domain-inner {
             width: calc(100% - 32px);
+            margin-inline: 16px;
           }
           .hp-domain-form {
-            /* Side by side stops working long before the button gets small
-               enough to be worth keeping inline. */
-            flex-direction: column;
-            min-height: 0;
-            padding-block: 16px;
-            gap: 12px;
+            gap: 8px;
           }
           .hp-domain-input {
-            padding-inline: 0;
-            padding-block: 14px;
-            border-bottom: 1px solid #d9d9d9;
+            padding-inline: 16px;
           }
           .hp-domain-btn {
-            /* Stacked, the button belongs under the field it submits. */
-            order: 0;
-            border-inline-end: 0;
-            min-height: 52px;
-            border-radius: 8px;
+            min-width: 80px;
+            padding-inline: 16px;
+            gap: 6px;
+            font-size: 14px;
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hp-domain-btn {
+          .hp-domain-light rect {
+            animation: none;
+          }
+          .hp-domain-input,
+          .hp-domain-btn,
+          .hp-domain-btn::before,
+          .hp-domain-btn::after {
             transition: none;
           }
         }

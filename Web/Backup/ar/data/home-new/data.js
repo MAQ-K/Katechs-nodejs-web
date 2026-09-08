@@ -27,21 +27,27 @@ export const heroMedia = {
   src: "/videos/default.mp4",
 };
 
+// `eyebrow` (design pass, 2026-09-08) — the small pill above the headline, the
+// reference image's "TRUSTED DESIGN PARTNER" chip translated to each slide's own
+// promise. Optional: HeroSlider falls back to no pill if a slide omits it.
 export const heroSlides = [
   {
     id: "slide-1",
+    eyebrow: "شريك تقني موثوق",
     title: "نجاحك على الإنترنت يبدأ من هنا",
     text: "كل ما تحتاجه لحضور رقمي قوي في مكان واحد: تصميم، استضافة، بريد، تسويق.",
     cta: { label: "ابدأ مشروعك الآن", href: "/website-order" },
   },
   {
     id: "slide-2",
+    eyebrow: "تصميم وتطوير احترافي",
     title: "موقع يليق باسم عملك",
     text: "تصميم وتطوير مواقع بمعايير احترافية، مع أداء سريع وتجربة استخدام مدروسة.",
     cta: { label: "تصفّح خدمات الويب", href: "/services" },
   },
   {
     id: "slide-3",
+    eyebrow: "استضافة ودعم مستمر",
     title: "استضافة سريعة ودعم لا يتأخر",
     text: "بنية تحتية موثوقة، نسخ احتياطي تلقائي، وفريق دعم يرد عليك فعلاً.",
     cta: { label: "اطّلع على خطط الاستضافة", href: "/services/hosting-services" },

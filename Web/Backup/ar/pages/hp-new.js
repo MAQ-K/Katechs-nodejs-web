@@ -200,9 +200,10 @@ export default function HpNewPage() {
       <HeroNav />
 
       <main>
-        <HeroSlider />
-
-        <DomainSearch />
+        <div className="hp-first-screen">
+          <HeroSlider />
+          <DomainSearch />
+        </div>
 
         <div
           ref={slotRef}
@@ -287,6 +288,16 @@ export default function HpNewPage() {
       <Footer />
 
       <style jsx>{`
+        .hp-first-screen {
+          /* The fixed navbar overlays the hero; its space is reserved there.
+             The domain strip keeps its natural height and the hero fills the rest.
+             The extra 1vh belongs to the hero (user adjustment).
+             Short screens can grow to keep the copy and controls accessible. */
+          min-height: 101vh;
+          min-height: 101dvh;
+          display: grid;
+          grid-template-rows: 1fr auto;
+        }
         .hp-slot {
           min-height: 70vh;
           display: flex;

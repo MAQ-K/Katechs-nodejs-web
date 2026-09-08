@@ -24,6 +24,24 @@ import logo from "../../public/images/logo-konoz-ar.png";
 // said "invisible navbar or glassy"; this is both, in the order they make sense.
 // The glassy state is DARK so the white links need no second colour scheme.
 //
+// ---- DESIGN PASS (2026-09-08) ----
+// "I want an invisible navbar ... make sure tabs appear and logo appear, they
+// are white" (user). Invisible now means literally nothing of its own on the
+// hero: no bar, no border, no shadow. What keeps the white links legible over a
+// bright video frame is a scrim, not a surface -- HeroSlider paints one from the
+// top of the hero and this file adds a second, shorter one of its own so the
+// bar still works if it is ever put over different footage. Both fade out the
+// moment the bar turns solid, so they never double up.
+//
+// Type went down, not up: 14px at 500 weight with a little tracking reads as
+// premium chrome; 15px/600 read as a template menu. Active state is a short
+// cyan underline (the brand accent, used once) instead of a white one, so
+// active and hover can never be confused.
+//
+// The navy here is the SAME #050C1A the hero wash is built from -- if one
+// changes, change both, or the bar will read as a different blue the instant
+// it goes solid.
+//
 // ---- brand and support button are the SITE'S, not this file's ----
 // The instruction was "just the way it above the hero, not the whole style", so:
 //   * the logo is logo-konoz-ar.png, the same asset Layouts/Navbar.js uses,
@@ -188,17 +206,49 @@ const HeroNav = () => {
           /* Transparent while it sits on the hero. No border, no shadow — the
              slide runs underneath it. */
           background: transparent;
-          transition: background 0.3s ease, backdrop-filter 0.3s ease;
+          transition: background 0.35s ease, backdrop-filter 0.35s ease,
+            border-color 0.35s ease;
+          border-bottom: 1px solid transparent;
+        }
+        /* The scrim — a gradient the bar CASTS on whatever is under it, so the
+           white links keep their contrast without the bar becoming a surface.
+           pointer-events:none, or it would swallow every click that lands in
+           the gaps between the links. */
+        .hp-topnav::before {
+          content: "";
+          position: absolute;
+          inset-block-start: 0;
+          inset-inline: 0;
+          height: 160px;
+          pointer-events: none;
+          background: linear-gradient(
+            to bottom,
+            rgba(5, 12, 26, 0.55) 0%,
+            rgba(5, 12, 26, 0.22) 55%,
+            transparent 100%
+          );
+          opacity: 1;
+          transition: opacity 0.35s ease;
+        }
+        .hp-topnav.is-solid::before,
+        .hp-topnav.is-open::before {
+          /* The bar has a real surface now; a scrim on top of it would only
+             muddy the top edge. */
+          opacity: 0;
         }
         .hp-topnav.is-solid,
         .hp-topnav.is-open {
           /* Dark rather than light, so the white logo and white links need no
-             second colour scheme once the bar has a surface of its own. */
-          background: rgba(10, 22, 40, 0.82);
-          -webkit-backdrop-filter: saturate(140%) blur(14px);
-          backdrop-filter: saturate(140%) blur(14px);
+             second colour scheme once the bar has a surface of its own. Same
+             navy as the hero wash — see the header note. */
+          background: rgba(5, 12, 26, 0.78);
+          -webkit-backdrop-filter: saturate(160%) blur(18px);
+          backdrop-filter: saturate(160%) blur(18px);
+          border-bottom-color: rgba(255, 255, 255, 0.08);
         }
         .hp-topnav-inner {
+          position: relative;
+          z-index: 1;
           width: min(1600px, 100% - 48px);
           margin-inline: auto;
           min-height: 78px;
@@ -210,6 +260,10 @@ const HeroNav = () => {
           flex: 0 0 auto;
           display: inline-flex;
           align-items: center;
+          /* The wordmark is white artwork sitting on a video — the scrim
+             carries most of the contrast, this catches the bright frames it
+             does not. */
+          filter: drop-shadow(0 2px 10px rgba(5, 12, 26, 0.55));
         }
         .hp-topnav-links {
           flex: 1 1 auto;
@@ -224,17 +278,25 @@ const HeroNav = () => {
           position: relative;
           color: #fff;
           font-family: "Cairo", system-ui, sans-serif;
-          font-size: clamp(13px, 1vw, 15px);
-          font-weight: 600;
+          font-size: clamp(13px, 0.95vw, 14px);
+          font-weight: 500;
+          letter-spacing: 0.2px;
           text-decoration: none;
           white-space: nowrap;
-          padding-block: 6px;
-          opacity: 0.9;
+          padding-block: 8px;
+          opacity: 0.82;
+          text-shadow: 0 1px 12px rgba(5, 12, 26, 0.45);
           transition: opacity 0.2s ease;
         }
         .hp-topnav-links :global(a:hover) {
           opacity: 1;
           color: #fff;
+        }
+        .hp-topnav-links :global(a:focus-visible) {
+          outline: 2px solid #1dd3f8;
+          outline-offset: 4px;
+          border-radius: 4px;
+          opacity: 1;
         }
         /* Underline drawn only on the active link, so hover and active never
            read the same — the exact fix Layouts/Navbar.js needed. */
@@ -242,13 +304,19 @@ const HeroNav = () => {
           opacity: 1;
           font-weight: 700;
         }
+        /* Cyan, and only 16px of it, centred under the label: hover changes
+           opacity, active draws the accent — two different signals, never the
+           same one twice. */
         .hp-topnav-links :global(a.is-active)::after {
           content: "";
           position: absolute;
           inset-block-end: 0;
-          inset-inline: 0;
+          inset-inline-start: 50%;
+          transform: translateX(50%);
+          width: 16px;
           height: 2px;
-          background: #fff;
+          border-radius: 2px;
+          background: #1dd3f8;
         }
         /* Placement only. Appearance belongs to the global .default-btn so this
            button stays identical to the one on every other page. */
@@ -264,8 +332,11 @@ const HeroNav = () => {
           height: 42px;
           padding: 10px;
           border: 0;
-          border-radius: 10px;
-          background: rgba(255, 255, 255, 0.12);
+          border-radius: 12px;
+          border: 1px solid rgba(255, 255, 255, 0.18);
+          background: rgba(255, 255, 255, 0.08);
+          -webkit-backdrop-filter: blur(8px);
+          backdrop-filter: blur(8px);
           cursor: pointer;
         }
         .hp-topnav-toggle span {
