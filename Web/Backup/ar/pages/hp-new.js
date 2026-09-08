@@ -50,6 +50,12 @@ import { sectionNav } from "../data/home-new/data";
 // Breathing room between a fixed bar and the thing it must not cover.
 const GAP = 16;
 
+// Absorbs the gap between where scrollTo's offset formula PREDICTS a section
+// lands and where it actually settles (measured ~8px in a real browser — see
+// the scroll-spy comment below for why). Used only by the scroll-spy's read
+// line, never by the jump itself.
+const LINE_SLACK = 24;
+
 // Section slots the navigator points at that are not built yet.
 //
 // marketing is a placeholder AGAIN as of 2026-09-06: the user had the digital
@@ -105,20 +111,53 @@ export default function HpNewPage() {
         setFloating(rect.top <= nav + 8);
       }
 
-      // Scroll-spy. Read line at the middle of the readable band (viewport
-      // minus the fixed navbar); the last section starting above it wins. Same
-      // line pages/services/index.js uses.
+      // Scroll-spy: the last section whose top has crossed a line just below
+      // the fixed chrome wins — the classic near-top scrollspy read, not a
+      // mid-viewport one.
       //
-      // getBoundingClientRect().top + scrollY, never offsetTop: offsetTop is
-      // measured from the nearest POSITIONED ancestor, so wrapping these
-      // sections in anything with position:relative would silently shift every
-      // reading here.
-      const band = window.innerHeight - nav;
-      const line = window.scrollY + nav + band / 2;
+      // Two things were tried and measured wrong before landing on this:
+      //
+      // 1. Mid-band line (pages/services/index.js's approach): works when every
+      //    section is roughly viewport-height or taller, which is true on
+      //    /services but not here. `domain` is a ~180px search strip between
+      //    the hero and web-services; landing on it put the mid-band line past
+      //    domain's OWN bottom on arrival, so web-services — whose top had also
+      //    already crossed that same line — won the read the instant you got
+      //    there.
+      //
+      // 2. Majority-of-band overlap (whichever section covers the most of the
+      //    readable band): measured in a real browser and it ALSO picked
+      //    web-services over domain. A short section fully on screen can still
+      //    lose an area contest to a tall neighbour occupying the rest of the
+      //    band — domain covers ~190px, web-services (which starts right below
+      //    it and runs for thousands of px) covers the remaining ~500px+ of the
+      //    same band. Area majority is the wrong question.
+      //
+      // The line here is deliberately close to the SAME offset scrollTo lands
+      // sections at (nav + slotHeight + GAP), so a freshly-clicked section's
+      // top sits almost exactly ON the line and wins on arrival, by
+      // construction — rather than needing to out-cover whatever tall section
+      // follows it.
+      //
+      // "almost exactly" is doing real work in that sentence: measured in a
+      // real browser, a section lands ~8px BELOW where the plain formula
+      // predicts (slotHeight.current is frozen the moment the nav starts
+      // floating, and that freeze can catch a transitional frame a few px off
+      // from the settled value read here later). Rather than chase that skew
+      // to zero, LINE_SLACK absorbs it — generous enough to cover the drift,
+      // still small enough that this stays a near-top read, not a mid-band one
+      // that would swallow `domain` again.
+      //
+      // getBoundingClientRect() is viewport-relative already, so this compares
+      // directly against that line — no scrollY term needed, and no offsetTop
+      // (which is relative to the nearest POSITIONED ancestor and would
+      // silently shift every reading if a wrapper ever gained
+      // position:relative).
+      const line = nav + slotHeight.current + GAP + LINE_SLACK;
       let current = sectionNav[0].id;
       sectionNav.forEach((item) => {
         const el = document.getElementById(item.id);
-        if (el && el.getBoundingClientRect().top + window.scrollY <= line) {
+        if (el && el.getBoundingClientRect().top <= line) {
           current = item.id;
         }
       });

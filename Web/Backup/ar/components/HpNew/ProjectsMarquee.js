@@ -16,6 +16,12 @@ import { webServices } from "../../data/home-new/data";
 // The duplicate copy is aria-hidden and its images have empty alt — a screen
 // reader should hear each project once, not twice.
 //
+// A visible heading sits above the strip (user, 2026-09-08 — "type above it
+// projects"). It reuses the wrapper's own aria-label text ("من أعمالنا") rather
+// than inventing separate wording, and matches the label
+// components/Services/Projects.js already uses ("أعمالنا") for the same
+// content elsewhere on the site.
+//
 // STRUCTURE PASS: greyscale.
 
 // How many times the list is repeated in the track.
@@ -33,24 +39,47 @@ const ProjectsMarquee = ({ projects = webServices.projects }) => {
   if (!projects || projects.length === 0) return null;
 
   return (
-    <div className="hp-marquee" aria-label="من أعمالنا">
-      <div className="hp-marquee-track">
-        {COPIES.map((copy) => (
-          <React.Fragment key={copy}>
-            {projects.map((p) => (
-              <figure
-                className="hp-marquee-item"
-                key={`${copy}-${p.id}`}
-                aria-hidden={copy > 0 ? "true" : undefined}
-              >
-                <img src={p.image} alt={copy > 0 ? "" : p.name} />
-              </figure>
-            ))}
-          </React.Fragment>
-        ))}
+    <div className="hp-marquee-wrap">
+      {/* Deliberately OUTSIDE .hp-marquee, not inside it: that div is forced to
+          direction:ltr for the track math (see the note below), and Arabic text
+          set inside an ltr block resolves its start/end edges backwards — a
+          heading there would left-align instead of right. Kept in the page's
+          natural RTL flow here, so only the pure image strip below needs the
+          override. */}
+      <h2 className="hp-marquee-title">من أعمالنا</h2>
+
+      <div className="hp-marquee" aria-label="من أعمالنا">
+        <div className="hp-marquee-track">
+          {COPIES.map((copy) => (
+            <React.Fragment key={copy}>
+              {projects.map((p) => (
+                <figure
+                  className="hp-marquee-item"
+                  key={`${copy}-${p.id}`}
+                  aria-hidden={copy > 0 ? "true" : undefined}
+                >
+                  <img src={p.image} alt={copy > 0 ? "" : p.name} />
+                </figure>
+              ))}
+            </React.Fragment>
+          ))}
+        </div>
       </div>
 
       <style jsx>{`
+        .hp-marquee-wrap {
+          background: #f2f2f2;
+        }
+        .hp-marquee-title {
+          margin: 0;
+          padding-block-start: clamp(28px, 4vw, 56px);
+          padding-block-end: clamp(12px, 2vw, 20px);
+          text-align: center;
+          font-family: "Cairo", system-ui, sans-serif;
+          font-size: clamp(22px, 2.8vw, 32px);
+          font-weight: 700;
+          color: #111;
+        }
         .hp-marquee {
           /* Full-bleed: this sits inside the page's normal flow but has to span
              the whole viewport, edge to edge. */
@@ -72,8 +101,7 @@ const ProjectsMarquee = ({ projects = webServices.projects }) => {
              Safe because this strip contains only images — no Arabic text whose
              direction could be disturbed. */
           direction: ltr;
-          padding-block: clamp(28px, 4vw, 56px);
-          background: #f2f2f2;
+          padding-block-end: clamp(28px, 4vw, 56px);
           /* Fade at both ends instead of a hard cut. */
           -webkit-mask-image: linear-gradient(
             to right,
