@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import { domainSearch } from "../../data/home-new/data";
 
 // Domain search strip — sits directly under the hero.
@@ -19,6 +19,47 @@ import { domainSearch } from "../../data/home-new/data";
 // Near-black navy search strip, pill field and a subtle traveling border light.
 
 const DomainSearch = ({ config = domainSearch }) => {
+  const fieldRef = useRef(null);
+
+  useEffect(() => {
+    const fab = document.querySelector(".floatwhats");
+    if (!fab) return undefined;
+    const original = { left: fab.style.left, right: fab.style.right,
+      top: fab.style.top, bottom: fab.style.bottom };
+    let frame;
+    const restore = () => Object.assign(fab.style, original);
+    const position = () => {
+      const field = fieldRef.current?.getBoundingClientRect();
+      if (window.innerWidth < 768 || !field || field.top < 0 || field.bottom > window.innerHeight) {
+        restore();
+        return;
+      }
+      // Center the existing floating button in the actual left gutter.
+      Object.assign(fab.style, {
+        left: `${(field.left - fab.offsetWidth) / 2}px`,
+        right: "auto",
+        top: `${field.top + (field.height - fab.offsetHeight) / 2}px`,
+        bottom: "auto",
+      });
+    };
+    const schedule = () => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(position);
+    };
+    const observer = new ResizeObserver(schedule);
+    if (fieldRef.current) observer.observe(fieldRef.current);
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule);
+    return () => {
+      cancelAnimationFrame(frame);
+      observer.disconnect();
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+      restore();
+    };
+  }, []);
+
   const { action, hidden = {}, queryParam, label, placeholder, buttonLabel } =
     config;
 
@@ -43,7 +84,7 @@ const DomainSearch = ({ config = domainSearch }) => {
           {/* dir="ltr" on the input only: domain names are Latin, and typing
               them into an RTL field puts the caret and the dots in the wrong
               order. The strip around it stays RTL. */}
-          <div className="hp-domain-field">
+          <div className="hp-domain-field" ref={fieldRef}>
             <svg className="hp-domain-light" width="100%" height="100%" aria-hidden="true">
               <rect className="hp-domain-light-glow" width="100%" height="100%" rx="28" pathLength="100" />
               <rect className="hp-domain-light-edge" width="100%" height="100%" rx="28" pathLength="100" />
@@ -88,9 +129,9 @@ const DomainSearch = ({ config = domainSearch }) => {
           color: #fff;
         }
         .hp-domain-inner {
-          width: calc(100% - 88px);
+          width: calc(100% - 93px);
           margin-inline-start: 24px;
-          margin-inline-end: 64px;
+          margin-inline-end: 69px;
         }
         .hp-domain-form {
           display: flex;
