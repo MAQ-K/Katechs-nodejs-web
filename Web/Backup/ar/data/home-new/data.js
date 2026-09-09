@@ -376,3 +376,27 @@ export const stores = {
     items: ecommerce.capabilities,
   },
 };
+
+// Custom-development enquiry: opens a draft; the visitor sends it in WhatsApp.
+export const customProjectForm = {
+  whatsapp: "https://wa.me/+201555085828",
+  messageTitle: "طلب تطوير مخصّص",
+  heading: "لنبدأ بفكرة مشروعك",
+  description: "أخبرنا عن نشاطك وما تحتاجه. شارك التفاصيل الأساسية لنناقش معك تطوير موقع يناسب عملك وطريقة استخدامه.",
+  contactLabel: "تواصل معنا عبر واتساب",
+  contactPhone: "+20 1555 085 828",
+  detailsLabel: "ما الذي نحتاج معرفته؟",
+  detailsText: "مجال نشاطك، جمهورك، والمزايا التي تريدها في موقعك. يمكنك إضافة الميزانية والموعد المناسب إن كانا محددين.",
+  submitLabel: "ناقش مشروعك عبر واتساب",
+  hint: "ستفتح التفاصيل في واتساب لمراجعتها وإرسالها بنفسك.",
+  optional: "اختياري",
+  fields: [
+    { name: "business", label: "اسم النشاط أو الشركة", required: true, autoComplete: "organization", maxLength: 120 },
+    { name: "activity", label: "مجال النشاط", required: true, placeholder: "مثال: عيادة، متجر، شركة خدمات", maxLength: 160 },
+    { name: "contactName", label: "اسم المسؤول", required: true, autoComplete: "name", maxLength: 100 },
+    { name: "phone", label: "رقم التواصل", type: "tel", required: true, autoComplete: "tel", maxLength: 30 },
+    { name: "budget", label: "الميزانية التقريبية والعملة", placeholder: "إن كانت محددة", maxLength: 80 },
+    { name: "timeline", label: "موعد الإطلاق المستهدف", placeholder: "مثال: خلال 3 أشهر", maxLength: 80 },
+    { name: "requirements", label: "فكرة المشروع والمتطلبات الأساسية", type: "textarea", required: true, placeholder: "ما الذي تريد بناءه؟ من سيستخدمه؟ وما أهم المزايا المطلوبة؟", maxLength: 1500 },
+  ],
+};

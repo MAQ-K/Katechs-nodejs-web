@@ -1,5 +1,6 @@
 import React, { useId, useState } from "react";
 import Link from "next/link";
+import CustomProjectForm from "./CustomProjectForm";
 import { webServices } from "../../data/home-new/data";
 
 // Web services, block 3 of 3 — three tabs, each with its own heading, blurb and
@@ -12,25 +13,31 @@ import { webServices } from "../../data/home-new/data";
 // PRICES READ "—". That is correct and deliberate: data/services/data.js
 // carries them as TODO(prices) with an explicit note that published prices are
 // a commitment to customers and must come from the business, never inferred.
-// The "custom" tab has no plans at all yet and renders an empty state.
+// The "custom" tab collects project requirements for a WhatsApp enquiry.
 //
 // Real ARIA tab semantics (role=tablist/tab/tabpanel, roving tabindex, arrow
 // keys). A row of buttons that merely swaps a div is not a tab set to a screen
 // reader, and this is a genuine tab pattern.
 //
-// VISUAL PASS (2026-09-09): moved off the light/monochrome palette onto the
-// hp-new navy/cyan theme this closes out — bridges from the brief/marquee
-// blocks above (#050c1a) into AppServices' navy (#0a1628) below, so the whole
-// "web services" run reads as one continuous dark section instead of a light
-// pricing table dropped into it. Tab bar follows the filed
-// `general-tabbed-product-cards-hostinger.md` idea (pill row, one filled
-// active pill) with the active fill swapped for the brand cyan the rest of
-// hp-new already uses instead of that reference's black. The "popular" plan
-// gets the one solid-cyan CTA on the row — the rest stay outline — so the
-// recommended card is the one visual sell, same convention as any SaaS
-// pricing table (WhyChooseUs/ HeroSlider use the identical restraint: cyan
-// used to mark ONE thing, never as a wash).
-const NAVY = "5, 12, 26";
+// ---- restored 2026-09-09 ----
+// A revision earlier the same day compressed this block into a column beside
+// the brief and hid its heading, to force the section into one 100vh screen.
+// The user rejected that. Full-width band under the projects, centred tab row
+// and heading, three cards across — as it was.
+//
+// ---- LIGHT PASS (2026-09-09, user) ----
+// Was navy. Now white cards on the screen's #f7f7f7, #d9d9d9 hairlines, 14–16px
+// radii, #212121 headings — the same light system EmailServices and Stores
+// already use on this page. The band belongs to WebServicesScreen.
+//
+// Cyan on white needs care: #1dd3f8 on #fff is ~1.7:1, nowhere near AA, so the
+// accent is used as a FILL behind dark text (active pill, popular CTA, badge)
+// and as an icon/border colour, never as small text on white. Text that has to
+// read as cyan-flavoured uses the darkened #0f8fae (~4.6:1). The tab row
+// follows the filed `general-tabbed-product-cards-hostinger.md` idea (pill row,
+// one filled active pill) with that reference's black swapped for the brand
+// cyan; the "popular" plan gets the row's one solid CTA, the same restraint the
+// rest of hp-new uses — cyan marks ONE thing, never a wash.
 const CYAN = "29, 211, 248";
 
 const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
@@ -95,12 +102,14 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           aria-labelledby={base + "-tab-" + active}
           tabIndex={0}
         >
-          <div className="hp-plans-head">
+          {tab.id !== "custom" && <div className="hp-plans-head">
             <h3>{tab.heading}</h3>
             <p>{tab.note}</p>
-          </div>
+          </div>}
 
-          {tab.plans.length === 0 ? (
+          {tab.id === "custom" ? (
+            <CustomProjectForm />
+          ) : tab.plans.length === 0 ? (
             <p className="hp-plans-empty">الباقات لهذه الخدمة قيد الإعداد.</p>
           ) : (
             <div className="hp-plans-grid">
@@ -142,8 +151,8 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
 
       <style jsx>{`
         .hp-plans {
-          padding-block: clamp(56px, 8vw, 104px);
-          background: linear-gradient(180deg, #050c1a 0%, #0a1628 100%);
+          padding-block: 0 clamp(56px, 8vw, 104px);
+          font-family: "Cairo", system-ui, sans-serif;
         }
         .hp-plans-inner {
           width: min(1180px, 100% - 48px);
@@ -157,30 +166,32 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           flex-wrap: wrap;
         }
         .hp-plans-tab {
-          border: 1px solid rgba(255, 255, 255, 0.18);
-          background: transparent;
+          border: 1px solid #d9d9d9;
+          background: #fff;
           border-radius: 999px;
           padding: 12px 28px;
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 15px;
           font-weight: 700;
-          color: rgba(255, 255, 255, 0.72);
+          color: #555;
           cursor: pointer;
           transition: background 0.25s ease, color 0.25s ease,
             border-color 0.25s ease;
         }
         .hp-plans-tab:hover {
-          border-color: rgba(255, 255, 255, 0.36);
-          color: #fff;
+          border-color: #b9b9b9;
+          color: #212121;
         }
         .hp-plans-tab:focus-visible {
           outline: 2px solid rgb(${CYAN});
           outline-offset: 3px;
         }
+        /* Cyan as a FILL behind near-black text — 1 accent, and it clears AA
+           the way cyan-on-white text never could. */
         .hp-plans-tab.is-active {
           background: rgb(${CYAN});
           border-color: rgb(${CYAN});
-          color: rgb(${NAVY});
+          color: #06222b;
         }
         .hp-plans-head {
           text-align: center;
@@ -192,50 +203,51 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: clamp(22px, 2.8vw, 34px);
           font-weight: 800;
-          color: #fff;
+          color: #212121;
           margin: 0 0 12px;
         }
         .hp-plans-head p {
           font-size: clamp(14px, 1.4vw, 16px);
           line-height: 1.9;
-          color: rgba(255, 255, 255, 0.68);
+          color: #5f5f5f;
           margin: 0;
         }
         .hp-plans-empty {
           text-align: center;
-          color: rgba(255, 255, 255, 0.55);
+          color: #777;
           font-size: 15px;
           padding-block: 48px;
-          border: 1px dashed rgba(255, 255, 255, 0.22);
+          border: 1px dashed #cfcfcf;
           border-radius: 14px;
+          background: #fff;
         }
         .hp-plans-grid {
           display: grid;
-          grid-template-columns: repeat(3, 1fr);
+          grid-template-columns: repeat(3, minmax(0, 1fr));
           gap: 24px;
           align-items: stretch;
         }
         .hp-plan {
           position: relative;
-          border: 1px solid rgba(255, 255, 255, 0.12);
+          border: 1px solid #e2e2e2;
           border-radius: 16px;
           padding: 32px 26px;
-          background: #0d1a30;
-          box-shadow: 0 20px 50px -28px rgba(0, 0, 0, 0.7);
+          background: #fff;
+          box-shadow: 0 18px 40px -28px rgba(10, 31, 68, 0.35);
           display: flex;
           flex-direction: column;
         }
         .hp-plan.is-popular {
           border-color: rgb(${CYAN});
           border-width: 2px;
-          box-shadow: 0 24px 56px -24px rgba(${CYAN}, 0.3);
+          box-shadow: 0 22px 48px -26px rgba(${CYAN}, 0.55);
         }
         .hp-plan-badge {
           position: absolute;
           inset-block-start: -12px;
           inset-inline-start: 26px;
           background: rgb(${CYAN});
-          color: rgb(${NAVY});
+          color: #06222b;
           border-radius: 999px;
           padding: 4px 14px;
           font-size: 12px;
@@ -245,23 +257,23 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 20px;
           font-weight: 700;
-          color: #fff;
+          color: #212121;
           margin: 0 0 8px;
         }
         .hp-plan-summary {
           font-size: 14px;
           line-height: 1.8;
-          color: rgba(255, 255, 255, 0.62);
+          color: #6b6b6b;
           margin: 0 0 20px;
         }
         .hp-plan-price {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 32px;
           font-weight: 700;
-          color: #fff;
+          color: #212121;
           margin: 0 0 20px;
           padding-bottom: 20px;
-          border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+          border-bottom: 1px solid #ededed;
         }
         .hp-plan-features {
           list-style: none;
@@ -280,13 +292,13 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           gap: 8px;
           font-size: 14px;
           line-height: 1.7;
-          color: rgba(255, 255, 255, 0.78);
+          color: #4f4f4f;
         }
         .hp-plan-features li i {
           flex: 0 0 auto;
           margin-top: 1px;
           font-size: 17px;
-          color: rgb(${CYAN});
+          color: #0f8fae;
         }
         /* :global() because next/link renders this <a> — styled-jsx scopes only
            DOM elements it renders itself, so a bare .hp-plan-cta rule never
@@ -297,9 +309,9 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           text-align: center;
           padding: 13px 20px;
           border-radius: 10px;
-          border: 1px solid rgba(255, 255, 255, 0.28);
-          background: transparent;
-          color: #fff;
+          border: 1px solid #d9d9d9;
+          background: #fff;
+          color: #212121;
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 15px;
           font-weight: 700;
@@ -307,17 +319,18 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           transition: background 0.25s ease, border-color 0.25s ease;
         }
         .hp-plan :global(.hp-plan-cta:hover) {
-          background: rgba(255, 255, 255, 0.08);
-          color: #fff;
+          border-color: #212121;
+          color: #212121;
         }
         .hp-plan :global(.hp-plan-cta.is-solid) {
           border-color: rgb(${CYAN});
           background: rgb(${CYAN});
-          color: rgb(${NAVY});
+          color: #06222b;
         }
         .hp-plan :global(.hp-plan-cta.is-solid:hover) {
-          background: rgba(${CYAN}, 0.86);
-          color: rgb(${NAVY});
+          background: #14bde0;
+          border-color: #14bde0;
+          color: #06222b;
         }
         .hp-plan :global(.hp-plan-cta:focus-visible) {
           outline: 2px solid rgb(${CYAN});
@@ -332,9 +345,7 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           }
         }
         @media (prefers-reduced-motion: reduce) {
-          .hp-plans-tab {
-            transition: none;
-          }
+          .hp-plans-tab,
           .hp-plan :global(.hp-plan-cta) {
             transition: none;
           }

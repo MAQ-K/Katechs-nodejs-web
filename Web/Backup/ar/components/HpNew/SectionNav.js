@@ -12,7 +12,13 @@ import React from "react";
 // the page, it does not capture a form value, and radio semantics would
 // mislead a screen reader.
 //
-// STRUCTURE PASS: greyscale.
+// ---- 2026-09-09: the side-rail experiment is REVERTED ----
+// This file briefly took a `mode` prop ("inline"/"bar"/"rail") and morphed into
+// a compact vertical sidebar while web services was on screen. The user
+// rejected it outright ("cancel sidesubnavbar make it like it was") — back to
+// the plain horizontal floating bar, `floating={bool}`, nothing else. Do not
+// reintroduce the rail shape or the mode prop without the user asking for it
+// again by name.
 
 const SectionNav = ({ items, activeId, onSelect, floating = false }) => {
   if (!items || items.length === 0) return null;

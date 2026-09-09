@@ -9,6 +9,20 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-09-09 · Manager — the web services side-rail experiment is fully REVERTED; a headless
+  browser exists here after all.**
+  **(1)** `components/HpNew/SectionNav.js` briefly took a `mode="inline"|"bar"|"rail"` prop and
+  morphed into a vertical sidebar over `#web-services`. **The user rejected it outright** ("cancel
+  sidesubnavbar make it like it was") and it is fully gone — back to `floating={bool}`, one shape,
+  byte-for-byte the original component. `pages/hp-new.js` and `WebServicesScreen.js` are reverted
+  to match (no `navMode`, no rail gutter). Do not reintroduce a rail without being asked by name.
+  **(2)** `#web-services` is a light `#f7f7f7` band with the three blocks stacked in their natural
+  order (talk-left/image-right brief, projects, plans) — two other layouts (one-screen grid, then
+  the rail gutter) were tried and rejected the same day. Full history in `brain/logs/2026-09-09.md`.
+  **(3) There IS a headless browser on this machine** — Chrome + Node 22's global `WebSocket` drive
+  CDP with a zero-dependency script (`--headless=new --remote-debugging-port=9222`, then
+  `fetch('/json/list')` and `Runtime.evaluate` / `Page.captureScreenshot`). Several older logs say
+  visual verification was impossible; it isn't.
 - **2026-09-07 · Content & Data Manager — team briefs written for every remaining service page**
   (`data/<page>/brief.md` for app-development, digital-marketing, emails, seo, vps-hosting,
   wordprees-hosting, security, ssl-certificate, website-design, and `data/services/brief.md` for the Web

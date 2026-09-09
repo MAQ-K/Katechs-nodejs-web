@@ -35,7 +35,7 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 |---|---------|--------|------|-------|
 | 1 | Hero slider | **DESIGN → REVIEW** | `components/HpNew/HeroSlider.js` | Design pass 2026-09-08 from `inspirations/navbar example .png`: layered navy wash, drifting video, eyebrow pill, 68px/800 headline, white pill CTA, indicator bars that carry the autoplay timer. Accent = brand cyan, used 3 times, by the user's call — not the reference's gold |
 | 2 | Domain search | SKETCH → REVIEW | `components/HpNew/DomainSearch.js` | GET form, hands off to WHMCS. Host fixed 2026-09-08 (old one didn't resolve) — ⚠️ new host works but is independently flagged as possibly the wrong company, needs your confirmation |
-| 3 | Floating section nav | SKETCH → REVIEW | `components/HpNew/SectionNav.js` | 5 pills, scroll-spy highlight, floats past the domain bar |
+| 3 | Floating section nav | SKETCH → REVIEW | `components/HpNew/SectionNav.js` | 5 pills, scroll-spy highlight, floats past the domain bar. ⚠️ 2026-09-09: a vertical side-rail mode was built for this component, then rejected by the user ("cancel sidesubnavbar make it like it was") and fully reverted the same day. Back to the original `floating` boolean, one shape. Do not reintroduce a rail/mode prop without being asked again by name. See `brain/logs/2026-09-09.md`, the entry titled "side rail REMOVED entirely" |
 | 4 | Web services — brief | **DESIGN → REVIEW** | `components/HpNew/WebServicesBrief.js` | Talk LEFT / image RIGHT per sketch. Reuses `businessWebsites.overview` + the Tabqat screenshot. 2026-09-09: restyled onto the hp-new navy/cyan theme, see note below |
 | 5 | Web services — projects marquee | **DESIGN → REVIEW** | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover. 2026-09-09: restyled onto the hp-new navy/cyan theme |
 | 6 | Web services — plans | **DESIGN → REVIEW** | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO. 2026-09-09: restyled onto the hp-new navy/cyan theme |
@@ -45,6 +45,14 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 | 10 | Stores (e-commerce) | SKETCH → REVIEW | `components/HpNew/Stores.js` | No tabs (removed 2026-09-08) — 3 blocks stacked. Build/manage now 4 cards, 3 + 1 wide (landing); new homepage-only "build+manage" combo card. ⚠️ no nav pill - the user fixed 5 |
 | 11 | Marketing | SKETCH → REVIEW | `components/Common/SeoShowcase.js` via `pages/hp-new.js` | Merged with the old untargeted "seo" slot 2026-09-08 — this IS the marketing section now. Full width + talk-right via two new optional props; `pages/index.js` unaffected |
 | 12 | Why choose us | SKETCH → REVIEW | `components/HpNew/WhyChooseUs.js` | Redesigned 2026-09-08: was a 6-image marquee, now a scroll-synced sticky box that switches through the 4 reasons as you scroll. Mobile: box hidden, list back to compact (no sticky sibling to switch beside) |
+
+> **2026-09-09 — sections 4/5/6: light band only. Two other designs were tried and REJECTED
+> the same day.** The three blocks stack in their natural order on a shared light (`#f7f7f7`)
+> band: brief (talk-LEFT / image-RIGHT), projects under it, plans under those.
+> `components/HpNew/WebServicesScreen.js` owns only that band.
+> ⚠️ Rejected in order: (1) forcing all three into a single 100vh screen, and (2) a side rail
+> the floating nav morphed into while this section was on screen. Both fully reverted — do not
+> rebuild either. See `brain/logs/2026-09-09.md`.
 
 ## For reference — what the current homepage is made of
 

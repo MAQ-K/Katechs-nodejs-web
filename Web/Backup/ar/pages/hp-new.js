@@ -5,9 +5,10 @@ import Footer from "../components/Layouts/Footer";
 import HeroSlider from "../components/HpNew/HeroSlider";
 import DomainSearch from "../components/HpNew/DomainSearch";
 import SectionNav from "../components/HpNew/SectionNav";
-import WebServicesBrief from "../components/HpNew/WebServicesBrief";
-import ProjectsMarquee from "../components/HpNew/ProjectsMarquee";
-import WebServicesPlans from "../components/HpNew/WebServicesPlans";
+// Web services' shared light band. Renders the brief / projects / plans blocks
+// itself, stacked at their natural height — see that file's header for the two
+// designs that were tried here and rejected before this one.
+import WebServicesScreen from "../components/HpNew/WebServicesScreen";
 import AppServices from "../components/HpNew/AppServices";
 import EmailServices from "../components/HpNew/EmailServices";
 import Stores from "../components/HpNew/Stores";
@@ -220,11 +221,10 @@ export default function HpNewPage() {
           />
         </div>
 
-        {/* --- Web services: brief → projects marquee → plans --- */}
+        {/* --- Web services: brief → projects marquee → plans, stacked, at
+            their natural height, on one shared light band. --- */}
         <section id="web-services">
-          <WebServicesBrief />
-          <ProjectsMarquee />
-          <WebServicesPlans />
+          <WebServicesScreen />
         </section>
 
         {/* --- App services: talk + the 3D phone stage --- */}
