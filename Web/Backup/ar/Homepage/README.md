@@ -36,9 +36,9 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 | 1 | Hero slider | **DESIGN → REVIEW** | `components/HpNew/HeroSlider.js` | Design pass 2026-09-08 from `inspirations/navbar example .png`: layered navy wash, drifting video, eyebrow pill, 68px/800 headline, white pill CTA, indicator bars that carry the autoplay timer. Accent = brand cyan, used 3 times, by the user's call — not the reference's gold |
 | 2 | Domain search | SKETCH → REVIEW | `components/HpNew/DomainSearch.js` | GET form, hands off to WHMCS. Host fixed 2026-09-08 (old one didn't resolve) — ⚠️ new host works but is independently flagged as possibly the wrong company, needs your confirmation |
 | 3 | Floating section nav | SKETCH → REVIEW | `components/HpNew/SectionNav.js` | 5 pills, scroll-spy highlight, floats past the domain bar |
-| 4 | Web services — brief | SKETCH → REVIEW | `components/HpNew/WebServicesBrief.js` | Talk LEFT / image RIGHT per sketch. Reuses `businessWebsites.overview` + the Tabqat screenshot |
-| 5 | Web services — projects marquee | SKETCH → REVIEW | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover |
-| 6 | Web services — plans | SKETCH → REVIEW | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO |
+| 4 | Web services — brief | **DESIGN → REVIEW** | `components/HpNew/WebServicesBrief.js` | Talk LEFT / image RIGHT per sketch. Reuses `businessWebsites.overview` + the Tabqat screenshot. 2026-09-09: restyled onto the hp-new navy/cyan theme, see note below |
+| 5 | Web services — projects marquee | **DESIGN → REVIEW** | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover. 2026-09-09: restyled onto the hp-new navy/cyan theme |
+| 6 | Web services — plans | **DESIGN → REVIEW** | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO. 2026-09-09: restyled onto the hp-new navy/cyan theme |
 | 7 | Hero top nav (page-scoped) | **DESIGN → REVIEW** | `components/HpNew/HeroNav.js` | Tabs ON the hero. Truly invisible now: no surface, legibility from a scrim it casts. Solid state matches the hero navy; links 14px/500; active = short cyan underline. ⚠️ hp-new only — the shared `Layouts/Navbar.js` is untouched, and the support button is still the global `.default-btn` |
 | 8 | App services | SKETCH → REVIEW | `components/HpNew/AppServices.js` | 100% width, talk left. Stage renders `components/AppDev/AppOrbit.js` ITSELF — the same orbit as the app dev page, not a copy. Each of the 6 screens now shows the real KATECHS screenshot (optional `screenImage` prop, app-dev page unaffected) |
 | 9 | Email services | SKETCH → REVIEW | `components/HpNew/EmailServices.js` | 3 vertical side tabs, panel = talk over image. Tabs imported from `data/emails/data.js`. ⚠️ panel images are placeholders |
@@ -72,3 +72,34 @@ pages — which is exactly why the rebuild is isolated in `components/HpNew/`.
 
 Current homepage copy is hardcoded in JSX — there is no `data/home/` directory, against the
 project's data-driven convention. The rebuild fixes that.
+
+### Web services design review - 2026-09-08
+Brief and projects now use the approved reference layout: centered section intro, left copy/right visual, pale bordered panels, and three project cards with directional controls/swipe and 10% edge fades. Implemented in WebServicesBrief.js and ProjectsMarquee.js; intro copy in data/home-new/data.js. Status: DESIGN -> REVIEW. HTTP/markup/assets verified; browser visual review pending.
+
+### Web services reference correction - 2026-09-09
+Supersedes the centered-heading layout: joined 62/38 hero/project composition, three-line headline upper left, large laptop visual right, pastel pill plus round contact CTA, three adjacent automatic image-only project panels. Full width and viewport height budget retained. DESIGN -> REVIEW; live visual check pending (browser unavailable).
+
+### Web services restored first attempt - 2026-09-09
+User requested the first design attempt. Centered intro, left copy/right decorated visual, 1180px container and manual named project carousel restored. This supersedes all subsequent web services design correction notes. HTTP/markup checked.
+
+### Web services visual design pass — hp-new theme — 2026-09-09
+Restyled WebServicesBrief.js, ProjectsMarquee.js and WebServicesPlans.js off the light/monochrome
+palette they were restored on, onto the theme HeroSlider/HeroNav/DomainSearch/WhyChooseUs already
+established for this page — layered navy (#030916 → #050c1a → #0a1628, bridging into AppServices'
+own navy below), brand cyan `#1dd3f8` used sparingly (eyebrow tag, check-icons, active tab pill,
+popular plan's border/CTA), Cairo throughout, `.default-btn` reused for the brief's primary CTA
+(same global cyan button as the hero/domain/nav). Structure untouched (still talk-left/image-right,
+still the 3-card manual carousel, still 3 ARIA tabs with real roving-tabindex semantics) — visual
+pass only, per Manager's instruction. Two small continuity fixes: brief's container widened from
+1060px to 1180px and plans' from 1320px to 1180px, so all three blocks share one column width and
+stop visually stepping in/out against their neighbours. Two data fields that already existed on
+`businessWebsites.overview` but were never rendered are now on screen — `eyebrow` and `points` —
+nothing invented, just wired up (same as the plan cards' `features`, now bulleted with cyan
+check-icons instead of a bare list). Custom tab's empty state kept as-is, no prices added.
+`brain/ui-library/inspiration/general-tabbed-product-cards-hostinger.md` is the tab-bar precedent
+(pill row, one filled active pill) — its black fill swapped for cyan. `ui-ux-pro-max`'s `search.py`
+was unreachable in this session (no working Python interpreter on the machine — `py`/`python3`
+both fail) so palette/typography calls were pulled directly from the four already-built hp-new
+reference components instead; flagging this so a future session with working Python re-checks
+against the skill directly. Verified: `npm run dev`, `.next/cache` cleared first, `/hp-new/` → 200,
+no console/compile errors in the dev log. Status: DESIGN → REVIEW, live browser look still pending.

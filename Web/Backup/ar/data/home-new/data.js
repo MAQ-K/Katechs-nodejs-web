@@ -109,6 +109,11 @@ export const sectionNav = [
 // see the import at the top of this file.
 
 export const webServices = {
+  intro: {
+    title: "تصميم وتطوير المواقع",
+    subtitle: "فكرتك تستحق موقعاً يعبّر عنها، ويترك أثراً.",
+    mediaCaption: "من الفكرة إلى موقع يعمل من أجلك",
+  },
   // Reuses businessWebsites.overview verbatim: eyebrow, heading, body, three
   // points, and TWO buttons — which is what the sketch draws.
   //

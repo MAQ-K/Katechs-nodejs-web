@@ -2,194 +2,225 @@ import React from "react";
 import Link from "next/link";
 import { webServices } from "../../data/home-new/data";
 
-// Web services, block 1 of 3 — the brief. Talk on one side, a real client
-// screenshot on the other.
+// Web services, block 1 of 3 — talk LEFT / image RIGHT (VISION.md, 2026-09-03).
+// Structure is unchanged from the 2026-09-09 "first attempt" restore (see
+// Homepage/README.md section tracker note of the same date); this is the
+// VISUAL pass only, moving the block off the light/monochrome palette onto
+// the hp-new theme already established by HeroSlider/HeroNav/DomainSearch/
+// WhyChooseUs — layered navy (#050C1A family), brand cyan (#1dd3f8) used
+// sparingly, Cairo. See those four files for the tokens this reuses.
 //
-// Content is businessWebsites.overview from data/services/data.js, reused
-// wholesale rather than copied: same eyebrow, heading, body, three points and
-// two buttons the services page already uses.
-//
-// ⚠️ ORDER IS DELIBERATE AND IS THE MIRROR OF THE SERVICES PAGE.
-// The sketch puts the talk on the LEFT and the image on the RIGHT, and the user
-// confirmed that over the alternative (2026-09-03). components/Services/
-// ServiceArea/Overview.js does the opposite on purpose — text on the right, so
-// an Arabic reader meets the headline before the image. Both are intentional;
-// do not "fix" this one to match that one without asking.
-//
-// The text column is FIRST in the DOM, which in the RTL flow would put it on
-// the right — so the visual swap is done with `order`, leaving reading order
-// and tab order headline-first either way.
-//
-// STRUCTURE PASS: greyscale.
+// Two fields that already existed in data/services/data.js but were never
+// rendered are now on screen: `eyebrow` (small tag above the heading — the
+// same slot HeroSlider/WhyChooseUs both give their sections) and `points`
+// (the three-line trust list that made this section thin without them).
+// Nothing invented — both were already wired in through the `brief` object,
+// just unused.
+const NAVY = "5, 12, 26";
+const CYAN = "29, 211, 248";
 
-const WebServicesBrief = ({ brief = webServices.brief }) => {
+export default function WebServicesBrief({ brief = webServices.brief }) {
   const { eyebrow, heading, body, points, cta, secondary, media } = brief;
-
   return (
     <div className="hp-brief">
       <div className="hp-brief-inner">
-        <div className="hp-brief-text">
-          <span className="hp-brief-eyebrow">{eyebrow}</span>
-          <h2>{heading}</h2>
+        <div className="hp-brief-text" dir="rtl">
+          {eyebrow && <span className="hp-brief-eyebrow">{eyebrow}</span>}
+          <h3>{heading}</h3>
           <p>{body}</p>
 
-          <ul className="hp-brief-list">
-            {points.map((point) => (
-              <li key={point}>
-                <svg
-                  viewBox="0 0 24 24"
-                  width="18"
-                  height="18"
-                  fill="none"
-                  stroke="currentColor"
-                  strokeWidth="2.5"
-                  strokeLinecap="round"
-                  strokeLinejoin="round"
-                  aria-hidden="true"
-                >
-                  <polyline points="20 6 9 17 4 12" />
-                </svg>
-                <span>{point}</span>
-              </li>
-            ))}
-          </ul>
+          {points?.length > 0 && (
+            <ul className="hp-brief-points">
+              {points.map((point) => (
+                <li key={point}>
+                  <i className="bx bx-check" aria-hidden="true" />
+                  <span>{point}</span>
+                </li>
+              ))}
+            </ul>
+          )}
 
           <div className="hp-brief-cta">
-            <Link href={cta.href} className="hp-brief-btn">
+            <Link href={cta.href} className="default-btn">
               {cta.label}
             </Link>
             <Link href={secondary.href} className="hp-brief-btn is-ghost">
               {secondary.label}
             </Link>
           </div>
+
+          <h3 className="hp-brief-projects-title" id="hp-projects-title">
+            من أعمالنا
+          </h3>
         </div>
 
-        <div className="hp-brief-media">
-          <img src={media.src} alt={media.alt} />
-        </div>
+        <figure className="hp-brief-media">
+          <span className="hp-brief-glow" aria-hidden="true" />
+          <img src={media.src} alt={media.alt} width="624" height="387" />
+        </figure>
       </div>
 
       <style jsx>{`
         .hp-brief {
-          padding-block: clamp(56px, 8vw, 104px);
-          background: #fff;
+          background: linear-gradient(180deg, #030916 0%, #050c1a 100%);
+          padding: clamp(56px, 7vw, 96px) 0 0;
+          color: #fff;
+          font-family: "Cairo", sans-serif;
         }
         .hp-brief-inner {
-          width: min(1320px, 100% - 48px);
-          margin-inline: auto;
+          width: min(1180px, calc(100% - 48px));
+          margin: auto;
           display: grid;
           grid-template-columns: 1fr 1fr;
+          direction: ltr;
           align-items: center;
-          gap: clamp(32px, 5vw, 72px);
+          gap: clamp(28px, 4vw, 64px);
         }
         .hp-brief-text {
-          /* Talk on the LEFT, image on the RIGHT — see the header note. The DOM
-             keeps the headline first; only the visual columns swap. */
-          order: 2;
-        }
-        .hp-brief-media {
-          order: 1;
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+          align-items: flex-start;
+          padding-block: 20px;
+          text-align: right;
+          min-width: 0;
         }
         .hp-brief-eyebrow {
           display: inline-block;
-          font-family: "Cairo", system-ui, sans-serif;
+          font-family: "Cairo", sans-serif;
           font-size: 14px;
           font-weight: 700;
-          color: #666;
-          margin-bottom: 12px;
+          color: rgb(${CYAN});
+          margin-bottom: 14px;
+          letter-spacing: 0.2px;
         }
-        .hp-brief-text h2 {
-          font-family: "Cairo", system-ui, sans-serif;
-          font-size: clamp(24px, 3.2vw, 40px);
-          font-weight: 700;
-          line-height: 1.35;
-          color: #111;
-          margin: 0 0 16px;
+        .hp-brief-text h3 {
+          font: 800 clamp(28px, 3.4vw, 46px)/1.4 "Cairo", sans-serif;
+          letter-spacing: -0.6px;
+          color: #fff;
+          margin: 0 0 18px;
+          max-width: 540px;
+          text-wrap: balance;
+        }
+        .hp-brief-text .hp-brief-projects-title {
+          font: 800 20px/1.5 "Cairo", sans-serif;
+          letter-spacing: normal;
+          margin: 30px 0 0;
+          color: #fff;
         }
         .hp-brief-text p {
-          font-size: clamp(15px, 1.5vw, 17px);
-          line-height: 2;
-          color: #555;
-          margin: 0 0 24px;
+          font-size: clamp(15px, 1.35vw, 17px);
+          line-height: 1.95;
+          color: rgba(255, 255, 255, 0.72);
+          margin: 0 0 22px;
+          max-width: 490px;
         }
-        .hp-brief-list {
+        .hp-brief-points {
           list-style: none;
-          margin: 0 0 32px;
+          margin: 0 0 28px;
           padding: 0;
           display: grid;
           gap: 12px;
+          max-width: 490px;
         }
-        .hp-brief-list li {
+        .hp-brief-points li {
           display: flex;
           align-items: flex-start;
           gap: 10px;
-          font-size: clamp(14px, 1.4vw, 16px);
-          line-height: 1.8;
-          color: #333;
+          font-size: 14.5px;
+          line-height: 1.7;
+          color: rgba(255, 255, 255, 0.86);
         }
-        .hp-brief-list svg {
+        .hp-brief-points li i {
           flex: 0 0 auto;
-          margin-top: 5px;
-          color: #111;
+          margin-top: 1px;
+          font-size: 19px;
+          color: rgb(${CYAN});
         }
         .hp-brief-cta {
           display: flex;
           flex-wrap: wrap;
-          gap: 12px;
+          align-items: center;
+          gap: 14px;
         }
-        /* :global() because next/link renders these <a>s — styled-jsx scopes
-           only DOM elements it renders itself, so a bare .hp-brief-btn rule
-           never matches and the buttons fall back to Bootstrap's blue link.
-           Anchored on .hp-brief-cta, which IS scoped, so nothing leaks. */
+        .hp-brief-cta :global(.default-btn) {
+          font-family: "Cairo", sans-serif;
+        }
         .hp-brief-cta :global(.hp-brief-btn) {
-          display: inline-block;
-          padding: 13px 30px;
+          display: inline-flex;
+          align-items: center;
+          justify-content: center;
+          min-height: 44px;
+          padding: 12px 26px;
           border-radius: 10px;
-          border: 1px solid #111;
-          background: #111;
-          color: #fff;
-          font-family: "Cairo", system-ui, sans-serif;
-          font-size: 15px;
-          font-weight: 700;
-          text-decoration: none;
-          transition: opacity 0.25s ease;
-        }
-        .hp-brief-cta :global(.hp-brief-btn:hover) {
-          opacity: 0.85;
-          color: #fff;
-        }
-        .hp-brief-cta :global(.hp-brief-btn.is-ghost) {
+          border: 1px solid rgba(255, 255, 255, 0.24);
           background: transparent;
-          color: #111;
+          color: #fff;
+          font: 700 14px/1.6 "Cairo", sans-serif;
+          text-decoration: none;
+          transition: background 0.2s, border-color 0.2s;
         }
         .hp-brief-cta :global(.hp-brief-btn.is-ghost:hover) {
-          background: #f2f2f2;
-          color: #111;
-          opacity: 1;
+          background: rgba(255, 255, 255, 0.08);
+          border-color: rgba(255, 255, 255, 0.4);
+        }
+        .hp-brief-cta :global(.hp-brief-btn:focus-visible),
+        .hp-brief-cta :global(.default-btn:focus-visible) {
+          outline: 2px solid rgb(${CYAN});
+          outline-offset: 3px;
         }
         .hp-brief-media {
-          border: 1px solid #d9d9d9;
-          border-radius: 16px;
+          position: relative;
+          margin: 0;
+          min-width: 0;
+          aspect-ratio: 1.12;
+          border-radius: 18px;
           overflow: hidden;
-          background: #fafafa;
+          background: #0d1a30;
+          border: 1px solid rgba(255, 255, 255, 0.12);
+          box-shadow: 0 20px 50px -24px rgba(${NAVY}, 0.75);
+          display: flex;
+          flex-direction: column;
+          justify-content: center;
+        }
+        .hp-brief-glow {
+          position: absolute;
+          inset: 0;
+          z-index: 0;
+          pointer-events: none;
+          background: radial-gradient(
+            60% 55% at 88% 12%,
+            rgba(${CYAN}, 0.22),
+            transparent 62%
+          );
         }
         .hp-brief-media img {
+          position: relative;
+          z-index: 1;
           display: block;
           width: 100%;
           height: auto;
+          object-fit: contain;
+          border-block: 1px solid rgba(255, 255, 255, 0.1);
         }
-        @media (max-width: 991px) {
+        @media (max-width: 767px) {
           .hp-brief-inner {
-            width: calc(100% - 32px);
             grid-template-columns: 1fr;
+            gap: 24px;
+            width: calc(100% - 32px);
           }
-          /* Stacked, the headline leads — the side-by-side swap stops
-             meaning anything once there is only one column. */
           .hp-brief-text {
-            order: 1;
+            padding: 0;
+          }
+          .hp-brief-text h3 {
+            max-width: 460px;
+            letter-spacing: -0.2px;
           }
           .hp-brief-media {
-            order: 2;
+            aspect-ratio: 1.15;
+          }
+          .hp-brief-cta :global(.hp-brief-btn) {
+            padding-inline: 20px;
           }
         }
         @media (prefers-reduced-motion: reduce) {
@@ -200,6 +231,4 @@ const WebServicesBrief = ({ brief = webServices.brief }) => {
       `}</style>
     </div>
   );
-};
-
-export default WebServicesBrief;
+}

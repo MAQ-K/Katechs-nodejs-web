@@ -30,15 +30,17 @@ const DomainSearch = ({ config = domainSearch }) => {
     const restore = () => Object.assign(fab.style, original);
     const position = () => {
       const field = fieldRef.current?.getBoundingClientRect();
-      if (window.innerWidth < 768 || !field || field.top < 0 || field.bottom > window.innerHeight) {
+      if (window.innerWidth < 768 || !field) {
         restore();
         return;
       }
-      // Center the existing floating button in the actual left gutter.
+      // Keep the initial search-field alignment fixed in the viewport while
+      // scrolling. Document coordinates also handle reloads partway down.
+      const initialTop = field.top + window.scrollY + (field.height - fab.offsetHeight) / 2;
       Object.assign(fab.style, {
         left: `${(field.left - fab.offsetWidth) / 2}px`,
         right: "auto",
-        top: `${field.top + (field.height - fab.offsetHeight) / 2}px`,
+        top: `${Math.max(16, Math.min(initialTop, window.innerHeight - fab.offsetHeight - 16))}px`,
         bottom: "auto",
       });
     };
@@ -49,12 +51,10 @@ const DomainSearch = ({ config = domainSearch }) => {
     const observer = new ResizeObserver(schedule);
     if (fieldRef.current) observer.observe(fieldRef.current);
     schedule();
-    window.addEventListener("scroll", schedule, { passive: true });
     window.addEventListener("resize", schedule);
     return () => {
       cancelAnimationFrame(frame);
       observer.disconnect();
-      window.removeEventListener("scroll", schedule);
       window.removeEventListener("resize", schedule);
       restore();
     };
