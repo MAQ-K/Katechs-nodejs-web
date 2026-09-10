@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { A11y, Autoplay } from "swiper/modules";
+import { A11y, Autoplay, FreeMode } from "swiper/modules";
 import { webServices } from "../../data/home-new/data";
 
 // Web services, block 2 of 3 — image-only project cards under the brief.
@@ -17,6 +17,16 @@ import { webServices } from "../../data/home-new/data";
 // Was navy. Now white tiles with #e2e2e2 hairlines on the screen's #f7f7f7,
 // the same light system the other two blocks moved onto in the same pass. The
 // band itself belongs to WebServicesScreen — this block only spaces itself.
+//
+// ---- MARQUEE PASS (2026-09-10, user) ----
+// "the card is the same size as the project image, make them close together,
+// make it scroll with a simple animation". Three changes, all in service of
+// that: slidesPerView is "auto" so each tile is exactly its picture's width
+// (no fixed 3-up grid stretching a card wider than the shot it holds and
+// leaving white gutters); spaceBetween is 10px; and autoplay is a continuous
+// belt — delay 0 + a long speed + linear timing — instead of a 3s step, which
+// needs `loop` (rewind cannot do it) and freeMode so a drag hands back to the
+// belt smoothly. prefers-reduced-motion still stops it dead.
 export default function ProjectsMarquee({ projects = webServices.projects }) {
   const slider = useRef(null);
   const [reduced, setReduced] = useState(true);
@@ -63,16 +73,17 @@ export default function ProjectsMarquee({ projects = webServices.projects }) {
           }}
         >
           <Swiper
-            modules={[A11y, Autoplay]}
-            autoplay={reduced ? false : { delay: 3000, disableOnInteraction: false, pauseOnMouseEnter: true }}
-            speed={reduced ? 0 : 700}
+            modules={[A11y, Autoplay, FreeMode]}
+            autoplay={reduced ? false : { delay: 0, disableOnInteraction: false, pauseOnMouseEnter: true }}
+            speed={reduced ? 0 : 9000}
+            freeMode={{ enabled: true, momentum: false }}
             onSwiper={(instance) => {
               slider.current = instance;
             }}
-            slidesPerView={1.15}
-            spaceBetween={16}
-            rewind
-            breakpoints={{ 576: { slidesPerView: 2 }, 992: { slidesPerView: 3 } }}
+            slidesPerView="auto"
+            spaceBetween={10}
+            loop
+            loopAdditionalSlides={projects.length}
             a11y={{
               containerRoleDescriptionMessage: "معرض المشاريع",
               itemRoleDescriptionMessage: "مشروع",
@@ -136,8 +147,24 @@ export default function ProjectsMarquee({ projects = webServices.projects }) {
         .hp-marquee :global(.swiper:active) {
           cursor: grabbing;
         }
+        /* The belt slides at a constant rate instead of easing in and out of
+           every step — that ease is what made the old delay:3000 autoplay read
+           as a slideshow rather than a moving strip. */
+        .hp-marquee :global(.swiper-wrapper) {
+          transition-timing-function: linear !important;
+        }
+        /* Each slide is exactly as wide as the picture inside it (user,
+           2026-09-10: "the card is the same size as the project image"). The
+           image sets the height, width follows its own ratio, and the tile has
+           no padding — so no white gutters left or right of a shot. */
+        .hp-marquee :global(.swiper-slide) {
+          width: auto;
+          flex-shrink: 0;
+          height: auto;
+        }
         .hp-marquee-item {
           position: relative;
+          width: max-content;
           border: 1px solid #e2e2e2;
           border-radius: 14px;
           overflow: hidden;
@@ -154,10 +181,9 @@ export default function ProjectsMarquee({ projects = webServices.projects }) {
         }
         .hp-marquee-item img {
           display: block;
-          width: 100%;
-          height: auto;
-          aspect-ratio: 4/3;
-          object-fit: cover;
+          height: clamp(140px, 30vw, 200px);
+          width: auto;
+          max-width: none;
         }
         @media (max-width: 767px) {
           .hp-marquee-inner {

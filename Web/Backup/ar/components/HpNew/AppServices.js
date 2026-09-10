@@ -1,7 +1,17 @@
 import React from "react";
 import Link from "next/link";
+import dynamic from "next/dynamic";
 import AppOrbit from "../AppDev/AppOrbit";
 import { appServices } from "../../data/home-new/data";
+
+// The animated aurora behind this band (user, 2026-09-10). ssr:false and a
+// dynamic import on purpose: it pulls three (~600KB) and touches WebGL, so it
+// must not run on the server or land in this page's first-load JS. The band
+// keeps its own #0a1628 background underneath, so a browser without WebGL —
+// or the moment before this chunk arrives — looks exactly like it did before.
+const ShaderBackground = dynamic(() => import("./ShaderBackground"), {
+  ssr: false,
+});
 
 // App services — talk on the left, the 3D phone orbit on the right.
 //
@@ -37,6 +47,13 @@ import { appServices } from "../../data/home-new/data";
 const AppServices = ({ content = appServices }) => {
   return (
     <div className="hp-app">
+      <ShaderBackground />
+      {/* Readability, and the band's seams. The aurora peaks bright cyan and
+          white in places, which white Arabic copy cannot survive; the veil
+          holds contrast. The vertical stops also fade it back to solid navy at
+          the top and bottom edges, so this band still meets its neighbours on
+          a flat colour instead of a cut-off animation. */}
+      <div className="hp-app-scrim" aria-hidden="true" />
       <div className="hp-app-inner">
         <div className="hp-app-text">
           <span className="hp-app-eyebrow">{content.eyebrow}</span>
@@ -84,12 +101,40 @@ const AppServices = ({ content = appServices }) => {
 
       <style jsx>{`
         .hp-app {
+          position: relative;
           width: 100%;
           padding-block: clamp(56px, 8vw, 104px);
-          background: #0a1628;
+          /* Was #0a1628. Deeper, bluer ground (user, 2026-09-10: "make the
+             whole bg darker blue") — the aurora is cyan-and-white now, and it
+             only reads as light if what it sits on is genuinely dark. */
+          background: #040d20;
           overflow: hidden;
+          /* isolate, not just z-index: keeps the shader layer and the scrim in
+             this band's own stacking context, so they can never paint over the
+             floating section nav or the orbit's own layers. */
+          isolation: isolate;
+        }
+        .hp-app-scrim {
+          position: absolute;
+          inset: 0;
+          pointer-events: none;
+          /* Lighter through the middle than it was: with the ribbons pushed
+             out to the left and right thirds there is nothing behind the copy
+             to veil any more, and the edge ribbons need to survive this layer
+             to be seen at all. Top and bottom still land on solid colour so
+             the band meets its neighbours on a flat edge. */
+          background: linear-gradient(
+            to bottom,
+            #040d20 0%,
+            rgba(4, 13, 32, 0.6) 16%,
+            rgba(4, 13, 32, 0.42) 50%,
+            rgba(4, 13, 32, 0.6) 84%,
+            #040d20 100%
+          );
         }
         .hp-app-inner {
+          position: relative;
+          z-index: 1;
           width: min(1320px, 100% - 48px);
           margin-inline: auto;
           display: grid;

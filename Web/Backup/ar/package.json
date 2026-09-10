@@ -29,7 +29,8 @@
         "sharp": "^0.33.2",
         "sweetalert2": "^11.10.4",
         "sweetalert2-react-content": "^5.0.7",
-        "swiper": "^11.0.5"
+        "swiper": "^11.0.5",
+        "three": "^0.186.0"
     },
     "devDependencies": {
         "eslint": "^8.57.0",

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef } from "react";
+import { webServices } from "../../data/home-new/data";
 import WebServicesBrief from "./WebServicesBrief";
 import WebServicesPlans from "./WebServicesPlans";
 import ProjectsMarquee from "./ProjectsMarquee";
@@ -33,6 +34,12 @@ export default function WebServicesScreen() {
   return (
     <div className="hp-ws">
       <div className="hp-ws-viewport" ref={screenRef}>
+        {/* One line, and only one — the section had no title at all, and the
+            band it opens is already tight (user, 2026-09-10: "add a 1 line
+            title on top, don't take too much space"). Text comes from
+            webServices.intro.title, which was sitting unused in the data. The
+            subtitle stays unused on purpose: a second line is a second line. */}
+        <h2 className="hp-ws-title">{webServices.intro.title}</h2>
         <WebServicesBrief />
         <ProjectsMarquee />
       </div>
@@ -59,7 +66,27 @@ export default function WebServicesScreen() {
           .hp-ws-viewport :global(.hp-brief-media img) { height: 100%; object-fit: contain; }
           .hp-ws-viewport :global(.hp-marquee-wrap) { padding: 0; }
           .hp-ws-viewport :global(.hp-marquee-inner) { width: min(1400px, calc(100% - 48px)); }
-          .hp-ws-viewport :global(.hp-marquee-item img) { height: clamp(120px, calc((100dvh - var(--hp-ws-chrome)) * 0.3), 230px); aspect-ratio: auto; object-fit: contain; }
+          .hp-ws-viewport :global(.hp-marquee-item img) { height: clamp(120px, calc((100dvh - var(--hp-ws-chrome)) * 0.3), 230px); width: auto; }
+        }
+        .hp-ws-title {
+          width: min(1180px, calc(100% - 48px));
+          margin: 0 auto;
+          padding-top: clamp(18px, 2.2vw, 28px);
+          font: 800 clamp(19px, 2vw, 24px) / 1.5 "Cairo", system-ui, sans-serif;
+          color: #212121;
+          text-align: center;
+          /* One line is the whole brief for this heading. If the copy ever
+             grows past the container it clips rather than pushing the band
+             open. */
+          white-space: nowrap;
+          overflow: hidden;
+          text-overflow: ellipsis;
+        }
+        @media (min-width: 992px) {
+          .hp-ws-title {
+            width: min(1400px, calc(100% - 48px));
+            padding-top: 0;
+          }
         }
         .hp-ws {
           /* Light band between two navy ones (domain above, app services
