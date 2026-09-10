@@ -110,3 +110,7 @@ this section is the markiting section make when press on subnavbar get me to it
 in why chose katechs make the element move with scroll to be the right box and make each box have a point, and on the right add a title small paragraph and btn
 
 1st dont do anything just tell me what u understand in short 
+
+
+
+
