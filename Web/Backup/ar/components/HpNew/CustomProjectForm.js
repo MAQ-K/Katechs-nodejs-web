@@ -1,79 +1,208 @@
 import React, { useId } from "react";
 import { customProjectForm } from "../../data/home-new/data";
 
+// The "تطوير مخصّص" tab's panel — a requirements form that hands off to
+// WhatsApp rather than posting anywhere. There is no endpoint for it: the
+// submit handler builds a message out of the filled fields and opens wa.me, so
+// the user reviews and sends it themselves (that is what config.hint says).
+//
+// ---- DESIGN SYSTEM PASS (2026-09-23, user) ----
+// Matches Homepage.dc.html: one bordered 16px card, two equal columns — pitch
+// and contact details on one side, the fields stacked on the other. The design
+// mocks six fields; this renders all seven from customProjectForm.fields,
+// textarea included, because the form actually works and the seventh field is
+// the one that carries the brief.
+//
+// ⚠️ The submit button is #fff on #1dd3f8 (~1.7:1) because that is what the
+// design specifies, and it is the same CTA treatment the design uses in the
+// hero and the nav. Raised with the user on 2026-09-23. If it should meet AA,
+// the fix is the design's OTHER cyan pairing — #06222b on #1dd3f8 (~9:1),
+// already used by the plan tabs and the popular-plan CTA.
 export default function CustomProjectForm({ config = customProjectForm }) {
   const base = useId();
   const submit = (event) => {
     event.preventDefault();
     const values = new FormData(event.currentTarget);
-    const lines = config.fields.map((field) => {
-      const value = String(values.get(field.name) || "").trim();
-      return value ? `${field.label}: ${value}` : null;
-    }).filter(Boolean);
-    window.open(`${config.whatsapp}?text=${encodeURIComponent([config.messageTitle, ...lines].join("\n"))}`, "_blank", "noopener,noreferrer");
+    const lines = config.fields
+      .map((field) => {
+        const value = String(values.get(field.name) || "").trim();
+        return value ? `${field.label}: ${value}` : null;
+      })
+      .filter(Boolean);
+    window.open(
+      `${config.whatsapp}?text=${encodeURIComponent(
+        [config.messageTitle, ...lines].join("\n")
+      )}`,
+      "_blank",
+      "noopener,noreferrer"
+    );
   };
+
   return (
-    <div className="hp-custom-layout">
-      <div className="hp-custom-intro" dir="rtl">
+    <div className="hp-custom" dir="rtl">
+      <div className="hp-custom-intro">
         <h3>{config.heading}</h3>
-        <p>{config.description}</p>
-        <a className="hp-custom-contact" href={config.whatsapp} target="_blank" rel="noopener noreferrer">
-          <span className="hp-custom-icon" aria-hidden="true">
-            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="1.6"><path d="M22 16.9v3a2 2 0 0 1-2.2 2 19.8 19.8 0 0 1-8.6-3.1 19.5 19.5 0 0 1-6-6 19.8 19.8 0 0 1-3.1-8.7A2 2 0 0 1 4.1 2h3a2 2 0 0 1 2 1.7c.1 1 .4 2 .7 2.9a2 2 0 0 1-.5 2.1L8 10a16 16 0 0 0 6 6l1.3-1.3a2 2 0 0 1 2.1-.5c.9.3 1.9.6 2.9.7a2 2 0 0 1 1.7 2Z" /></svg>
-          </span>
-          <span><strong>{config.contactLabel}</strong><span dir="ltr">{config.contactPhone}</span></span>
-        </a>
-        <div className="hp-custom-details"><h4>{config.detailsLabel}</h4><p>{config.detailsText}</p></div>
+        <p className="hp-custom-lead">{config.description}</p>
+        <p className="hp-custom-label">{config.contactLabel}</p>
+        <p className="hp-custom-phone" dir="ltr">
+          {config.contactPhone}
+        </p>
+        <p className="hp-custom-label">{config.detailsLabel}</p>
+        <p className="hp-custom-note">{config.detailsText}</p>
       </div>
-    <form className="hp-custom-form" onSubmit={submit} dir="rtl">
-      <div className="hp-custom-fields">
+
+      <form className="hp-custom-fields" onSubmit={submit}>
         {config.fields.map((field) => (
-          <div key={field.name} className={field.type === "textarea" ? "hp-custom-field is-wide" : "hp-custom-field"}>
-            <label htmlFor={`${base}-${field.name}`}>
-              {field.label} {field.required ? <span aria-hidden="true">*</span> : <small>({config.optional})</small>}
-            </label>
+          <label key={field.name} htmlFor={`${base}-${field.name}`}>
+            <span>
+              {field.label}
+              {field.required ? null : <small> ({config.optional})</small>}
+            </span>
             {field.type === "textarea" ? (
-              <textarea id={`${base}-${field.name}`} name={field.name} required={field.required} maxLength={field.maxLength} placeholder={field.placeholder} rows={2} />
+              <textarea
+                id={`${base}-${field.name}`}
+                name={field.name}
+                required={field.required}
+                maxLength={field.maxLength}
+                placeholder={field.placeholder}
+                rows={3}
+              />
             ) : (
-              <input id={`${base}-${field.name}`} name={field.name} type={field.type || "text"} required={field.required} maxLength={field.maxLength} autoComplete={field.autoComplete} placeholder={field.placeholder} dir={field.type === "tel" ? "ltr" : "rtl"} />
+              <input
+                id={`${base}-${field.name}`}
+                name={field.name}
+                type={field.type || "text"}
+                required={field.required}
+                maxLength={field.maxLength}
+                autoComplete={field.autoComplete}
+                placeholder={field.placeholder}
+                dir={field.type === "tel" ? "ltr" : "rtl"}
+              />
             )}
-          </div>
+          </label>
         ))}
-      </div>
-      <div className="hp-custom-actions">
-        <button type="submit" className="default-btn">{config.submitLabel}</button>
-        <p>{config.hint}</p>
-      </div>
-    </form>
+        <button type="submit">{config.submitLabel}</button>
+        <p className="hp-custom-hint">{config.hint}</p>
+      </form>
+
       <style jsx>{`
-        .hp-custom-layout { display: grid; grid-template-columns: 1fr 1.15fr; direction: ltr; background: #fff; font-family: "Cairo", sans-serif; text-align: right; }
-        .hp-custom-intro { padding: 24px; }
-        .hp-custom-intro h3 { margin: 0 0 16px; font-family: inherit; font-size: clamp(28px, 3vw, 42px); font-weight: 800; color: #111; line-height: 1.4; }
-        .hp-custom-intro p { color: #666; font-size: 15px; line-height: 1.95; margin: 0; }
-        .hp-custom-contact { display: flex; align-items: center; gap: 14px; margin-top: 20px; color: #161616; width: fit-content; }
-        .hp-custom-contact strong { display: block; font-size: 14px; margin-bottom: 4px; }
-        .hp-custom-contact span[dir] { display: block; font-size: 13px; color: #666; }
-        .hp-custom-icon { display: grid; place-items: center; width: 42px; height: 42px; border-radius: 10px; background: #fafafa; }
-        .hp-custom-contact:focus-visible { outline: 2px solid #0a1f44; outline-offset: 4px; }
-        .hp-custom-details { margin-top: 20px; max-width: 400px; }
-        .hp-custom-details h4 { font-family: inherit; font-weight: 700; font-size: 15px; margin: 0 0 8px; color: #161616; }
-        .hp-custom-form { min-width: 0; padding: 18px; border-left: 1px solid #eee; background: #fafafa; }
-        .hp-custom-fields { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px 12px; }
-        .hp-custom-field { min-width: 0; }
-        .is-wide { grid-column: 1 / -1; }
-        label { display: block; margin-bottom: 6px; color: #212121; font-size: 13px; font-weight: 600; }
-        small { color: #606060; font-weight: 400; }
-        input, textarea { width: 100%; min-height: 44px; padding: 8px 10px; border: 1px solid #e1e1e1; border-radius: 8px; background: #fff; color: #212121; font: inherit; font-size: 16px; }
-        textarea { resize: vertical; }
-        input::placeholder, textarea::placeholder { color: #6b7280; }
-        input:focus, textarea:focus { outline: 2px solid #0a1f44; outline-offset: 2px; }
-        .hp-custom-actions { display: flex; flex-wrap: wrap; align-items: center; gap: 8px; margin-top: 12px; }
-        .hp-custom-actions button { width: 100%; border: 0; border-radius: 8px; background: #171717; color: #fff; font-family: inherit; }
-        .hp-custom-actions button:hover { background: #303030; }
-        .hp-custom-actions button:focus-visible { outline: 2px solid #0a1f44; outline-offset: 3px; }
-        .hp-custom-actions p { margin: 0; color: #606060; font-size: 13px; }
-        @media (max-width: 767px) { .hp-custom-layout { grid-template-columns: 1fr; } .hp-custom-form { border-left: 0; border-top: 1px solid #eee; } }
-        @media (max-width: 575px) { .hp-custom-form { padding: 16px; } .hp-custom-fields { grid-template-columns: 1fr; } .hp-custom-actions button { width: 100%; } }
+        .hp-custom {
+          border: 1px solid #e2e2e2;
+          border-radius: 16px;
+          background: #fff;
+          padding: clamp(24px, 3vw, 40px);
+          display: grid;
+          grid-template-columns: 1fr 1fr;
+          gap: 32px;
+          box-shadow: 0 18px 40px -28px rgba(10, 31, 68, 0.35);
+          font-family: "Cairo", system-ui, sans-serif;
+        }
+        .hp-custom-intro h3 {
+          font: 800 clamp(22px, 2.6vw, 30px) / 1.4 "Cairo", system-ui, sans-serif;
+          color: #212121;
+          margin: 0 0 12px;
+        }
+        .hp-custom-lead {
+          font-size: 15px;
+          line-height: 1.95;
+          color: #555;
+          margin: 0 0 20px;
+        }
+        .hp-custom-label {
+          font-size: 14px;
+          font-weight: 700;
+          color: #212121;
+          margin: 0 0 6px;
+        }
+        .hp-custom-phone {
+          font-size: 15px;
+          color: #0f8fae;
+          margin: 0 0 20px;
+          text-align: right;
+        }
+        .hp-custom-note {
+          font-size: 14px;
+          line-height: 1.9;
+          color: #555;
+          margin: 0;
+        }
+        .hp-custom-fields {
+          display: grid;
+          gap: 12px;
+          align-content: start;
+          min-width: 0;
+        }
+        .hp-custom-fields label {
+          display: grid;
+          gap: 6px;
+          font-family: "Cairo", system-ui, sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          color: #444;
+        }
+        .hp-custom-fields small {
+          font-weight: 400;
+          color: #777;
+        }
+        .hp-custom-fields input,
+        .hp-custom-fields textarea {
+          min-height: 44px;
+          width: 100%;
+          border: 1px solid #d9d9d9;
+          border-radius: 12px;
+          background: #fff;
+          padding: 10px 14px;
+          font-family: "Almarai", system-ui, sans-serif;
+          /* 16px, not the design's 14px: anything under 16px makes iOS Safari
+             zoom the whole page on focus. The label above it carries the
+             design's 13px, so the field still reads as secondary. */
+          font-size: 16px;
+          color: #212121;
+        }
+        .hp-custom-fields textarea {
+          resize: vertical;
+        }
+        .hp-custom-fields input::placeholder,
+        .hp-custom-fields textarea::placeholder {
+          color: #8a8a8a;
+        }
+        .hp-custom-fields input:focus-visible,
+        .hp-custom-fields textarea:focus-visible {
+          outline: 2px solid #0a1f44;
+          outline-offset: 2px;
+        }
+        .hp-custom-fields button {
+          display: block;
+          width: 100%;
+          text-align: center;
+          margin-top: 4px;
+          padding: 14px 20px;
+          border: 0;
+          border-radius: 10px;
+          background: #1dd3f8;
+          color: #fff;
+          font: 700 15px / 1 "Cairo", system-ui, sans-serif;
+          cursor: pointer;
+          transition: opacity 0.25s ease;
+        }
+        .hp-custom-fields button:hover {
+          opacity: 0.88;
+        }
+        .hp-custom-fields button:focus-visible {
+          outline: 2px solid #0a1f44;
+          outline-offset: 3px;
+        }
+        .hp-custom-hint {
+          font-size: 12.5px;
+          color: #777;
+          margin: 0;
+          text-align: center;
+        }
+        @media (max-width: 767px) {
+          .hp-custom {
+            grid-template-columns: 1fr;
+          }
+        }
       `}</style>
     </div>
   );

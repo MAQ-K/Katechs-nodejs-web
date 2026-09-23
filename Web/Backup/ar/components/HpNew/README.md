@@ -26,7 +26,11 @@ Same isolation contract as `components/Sections/`, so nothing we build can break
    project convention.
 6. **RTL first.** The site is Arabic RTL. Use `inset-inline`, `margin-inline`,
    `padding-inline` — never `left`/`right`.
-7. **Cairo** for headings (already loaded in `_document.js`). Do not touch the sitewide
+7. **Cairo** for headings. ⚠️ It is **NOT** in `_document.js` — the site is Almarai-only sitewide
+   and Cairo was removed, so every section here was silently falling back to `system-ui`. The
+   stylesheet link now lives in **`pages/hp-new.js`'s `<Head>`** (weights 400;500;600;700;800), which
+   keeps the request on this route and off the frozen `pages/index.js`. If a section from this folder
+   is ever mounted on another route, that route needs the link too. Do not touch the sitewide
    `$heading-font-family`.
 8. **Respect `prefers-reduced-motion`** on anything that moves.
 9. **Styling a `<Link>` (or any component) needs `:global()`.** styled-jsx adds its scope class

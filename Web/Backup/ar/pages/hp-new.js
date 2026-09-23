@@ -17,7 +17,10 @@ import Stores from "../components/HpNew/Stores";
 // drift. Their CSS is global already: homepage-sections.css (imported in
 // _app.js) covers the SEO, trust and FAQ areas, and .logo-section lives in
 // style.scss — so unlike AppOrbit these need no wrapper class to style up.
-import SeoShowcase from "../components/Common/SeoShowcase";
+// Marketing is a FORK of components/Common/SeoShowcase.js, not that component.
+// pages/index.js renders the shared one and is frozen (T-018), so the design
+// pass could not restyle it in place — see the header of Marketing.js.
+import Marketing from "../components/HpNew/Marketing";
 import Partner from "../components/Common/Partner";
 import TrustedCustomers from "../components/Common/TrustedCustomers";
 import FaqHorizontal from "../components/Common/FaqHorizontal";
@@ -196,6 +199,17 @@ export default function HpNewPage() {
       <Head>
         <title>الصفحة الرئيسية — نسخة جديدة</title>
         <meta name="robots" content="noindex, nofollow" />
+        {/* Cairo is NOT in pages/_document.js — the site moved to Almarai-only
+            and dropped it, but every components/HpNew/** section asks for it
+            by name and the design (Homepage.dc.html) specifies it for every
+            heading. Loading it HERE rather than in _document keeps the extra
+            request on this route alone, so the frozen pages/index.js is
+            unaffected. 500 is included for HeroNav's links; Cairo, unlike
+            Almarai, really does ship every weight. */}
+        <link
+          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
+          rel="stylesheet"
+        />
       </Head>
 
       <HeroNav />
@@ -253,7 +267,7 @@ export default function HpNewPage() {
             still renders this component with none and is unaffected — see
             components/Common/SeoShowcase.js. --- */}
         <section id="marketing">
-          <SeoShowcase banner />
+          <Marketing />
         </section>
 
         {/* --- Why choose us: the four reasons, with a vertical carousel of

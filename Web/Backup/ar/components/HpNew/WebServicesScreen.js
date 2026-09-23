@@ -1,77 +1,64 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import { webServices } from "../../data/home-new/data";
 import WebServicesBrief from "./WebServicesBrief";
 import WebServicesPlans from "./WebServicesPlans";
 import ProjectsMarquee from "./ProjectsMarquee";
 
-// Web services — the one light band the three blocks share. Nothing else.
+// Web services — the one light band the three blocks share.
 //
-// ---- history, so nobody rebuilds either dead end ----
+// ---- history, so nobody rebuilds a dead end ----
 // 2026-09-09, pass 1: forced all three blocks into a single 100vh screen
 // (pitch and plans side by side, brief image dropped). REJECTED.
 // 2026-09-09, pass 2: kept the stacked layout but reserved a physical-left
 // gutter for a side rail the floating nav morphed into. REJECTED too
-// ("cancel sidesubnavbar make it like it was") — the nav is back to a plain
-// horizontal floating bar (components/HpNew/SectionNav.js), so there is no
-// rail to reserve room for any more.
+// ("cancel sidesubnavbar make it like it was").
 //
-// Current: intro + image + projects share the available desktop viewport,
-// accounting for both navigation bars. Plans stay below this opening screen.
-// Narrow screens retain their readable stacked layout.
+// ---- DESIGN SYSTEM PASS (2026-09-23, user) ----
+// Rebuilt to match Homepage.dc.html exactly (the Claude Design handoff in
+// Homepage/Homepage Services Design-handoff/). Two structural changes from the
+// revision before it:
+//
+//   1. The band is now a BENTO, not a stack: the brief is a white rounded card
+//      sitting beside a 500x420 floating image, and the projects marquee is a
+//      second white card below them. Both are children of one 10px-gap grid.
+//   2. The viewport-fitting ResizeObserver is GONE. The old revision measured
+//      both nav bars and squeezed brief + marquee into the leftover dvh via
+//      --hp-ws-chrome. The design lays the band out at its natural height, so
+//      there is nothing left to measure. If a 100vh variant is ever wanted
+//      again, read the history above first — one was already rejected.
 export default function WebServicesScreen() {
-  const screenRef = useRef(null);
-  useEffect(() => {
-    const bars = [document.querySelector(".hp-topnav"), document.querySelector(".hp-nav")].filter(Boolean);
-    const measure = () => {
-      const height = bars.reduce((sum, bar) => sum + bar.getBoundingClientRect().height, 0);
-      screenRef.current?.style.setProperty("--hp-ws-chrome", `${height + 24}px`);
-    };
-    const observer = new ResizeObserver(measure);
-    bars.forEach((bar) => observer.observe(bar));
-    measure();
-    return () => observer.disconnect();
-  }, []);
   return (
     <div className="hp-ws">
-      <div className="hp-ws-viewport" ref={screenRef}>
-        {/* One line, and only one — the section had no title at all, and the
-            band it opens is already tight (user, 2026-09-10: "add a 1 line
-            title on top, don't take too much space"). Text comes from
-            webServices.intro.title, which was sitting unused in the data. The
-            subtitle stays unused on purpose: a second line is a second line. */}
-        <h2 className="hp-ws-title">{webServices.intro.title}</h2>
+      {/* One line, and only one — the band it opens is already tight (user,
+          2026-09-10: "add a 1 line title on top, don't take too much space").
+          webServices.intro.subtitle stays unused on purpose. */}
+      <h2 className="hp-ws-title">{webServices.intro.title}</h2>
+
+      <div className="hp-ws-bento">
         <WebServicesBrief />
         <ProjectsMarquee />
       </div>
-      <WebServicesPlans />
+
+      <div className="hp-ws-plans">
+        <WebServicesPlans />
+      </div>
 
       <style jsx>{`
-        .hp-ws-viewport { --hp-ws-chrome: 160px; }
-        @media (min-width: 992px) {
-          .hp-ws-viewport {
-            display: flex;
-            flex-direction: column;
-            justify-content: flex-start;
-            gap: 12px;
-            padding-block: 12px 16px;
-          }
-          .hp-ws-viewport :global(.hp-brief) { padding: 0; }
-          .hp-ws-viewport :global(.hp-brief-inner) { width: min(1400px, calc(100% - 48px)); gap: 32px; grid-template-columns: 1.15fr 1fr; }
-          .hp-ws-viewport :global(.hp-brief-eyebrow) { margin-bottom: 6px; font-size: 13px; }
-          .hp-ws-viewport :global(.hp-brief-text h3) { font-size: clamp(26px, 3.6vh, 36px); margin-bottom: 10px; max-width: none; }
-          .hp-ws-viewport :global(.hp-brief-text p) { font-size: 15px; line-height: 1.75; margin-bottom: 12px; max-width: none; }
-          .hp-ws-viewport :global(.hp-brief-points) { gap: 4px; margin-bottom: 12px; max-width: none; }
-          .hp-ws-viewport :global(.hp-brief-text .hp-brief-projects-title) { font-size: 18px; margin: 12px 0 0; }
-          .hp-ws-viewport :global(.hp-brief-media) { aspect-ratio: auto; height: clamp(200px, 32vh, 340px); }
-          .hp-ws-viewport :global(.hp-brief-media img) { height: 100%; object-fit: contain; }
-          .hp-ws-viewport :global(.hp-marquee-wrap) { padding: 0; }
-          .hp-ws-viewport :global(.hp-marquee-inner) { width: min(1400px, calc(100% - 48px)); }
-          .hp-ws-viewport :global(.hp-marquee-item img) { height: clamp(120px, calc((100dvh - var(--hp-ws-chrome)) * 0.3), 230px); width: auto; }
+        .hp-ws {
+          /* Light band between two navy ones (domain above, app services
+             below). Off-white rather than pure white so the white cards inside
+             still read as raised surfaces on it. */
+          background: #f7f7f7;
+          color: #212121;
+          font-family: "Cairo", system-ui, sans-serif;
+          display: flex;
+          flex-direction: column;
+          gap: 12px;
+          padding-block: 12px 16px;
         }
         .hp-ws-title {
-          width: min(1180px, calc(100% - 48px));
+          width: min(1400px, calc(100% - 48px));
           margin: 0 auto;
-          padding-top: clamp(18px, 2.2vw, 28px);
           font: 800 clamp(19px, 2vw, 24px) / 1.5 "Cairo", system-ui, sans-serif;
           color: #212121;
           text-align: center;
@@ -82,20 +69,15 @@ export default function WebServicesScreen() {
           overflow: hidden;
           text-overflow: ellipsis;
         }
-        @media (min-width: 992px) {
-          .hp-ws-title {
-            width: min(1400px, calc(100% - 48px));
-            padding-top: 0;
-          }
+        .hp-ws-bento {
+          width: min(1400px, calc(100% - 48px));
+          margin: 0 auto;
+          padding: clamp(16px, 2vw, 28px) 0 clamp(56px, 7vw, 88px);
+          display: grid;
+          gap: 10px;
         }
-        .hp-ws {
-          /* Light band between two navy ones (domain above, app services
-             below). Off-white rather than pure white so the white plan cards
-             and project tiles still read as raised surfaces on it — the same
-             relationship Stores (#f7f7f7) already uses on this page. */
-          background: #f7f7f7;
-          color: #212121;
-          font-family: "Cairo", system-ui, sans-serif;
+        .hp-ws-plans {
+          padding-block: 0 clamp(56px, 8vw, 104px);
         }
       `}</style>
     </div>

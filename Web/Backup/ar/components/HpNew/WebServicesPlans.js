@@ -17,29 +17,19 @@ import { webServices } from "../../data/home-new/data";
 //
 // Real ARIA tab semantics (role=tablist/tab/tabpanel, roving tabindex, arrow
 // keys). A row of buttons that merely swaps a div is not a tab set to a screen
-// reader, and this is a genuine tab pattern.
+// reader, and this is a genuine tab pattern. The design ships a plain button
+// row; the keyboard behaviour is kept on top of it, which the design does not
+// contradict — it has no opinion about arrow keys.
 //
-// ---- restored 2026-09-09 ----
-// A revision earlier the same day compressed this block into a column beside
-// the brief and hid its heading, to force the section into one 100vh screen.
-// The user rejected that. Full-width band under the projects, centred tab row
-// and heading, three cards across — as it was.
+// ---- DESIGN SYSTEM PASS (2026-09-23, user) ----
+// Matches Homepage.dc.html: 999px tab pills (active = solid cyan under #06222b
+// text), a centred 62ch heading block, and three 16px-radius cards in a fixed
+// 3-up grid. The popular card is marked by a 2px cyan border, a cyan-tinted
+// shadow, a floating badge and the row's one solid CTA.
 //
-// ---- LIGHT PASS (2026-09-09, user) ----
-// Was navy. Now white cards on the screen's #f7f7f7, #d9d9d9 hairlines, 14–16px
-// radii, #212121 headings — the same light system EmailServices and Stores
-// already use on this page. The band belongs to WebServicesScreen.
-//
-// Cyan on white needs care: #1dd3f8 on #fff is ~1.7:1, nowhere near AA, so the
-// accent is used as a FILL behind dark text (active pill, popular CTA, badge)
-// and as an icon/border colour, never as small text on white. Text that has to
-// read as cyan-flavoured uses the darkened #0f8fae (~4.6:1). The tab row
-// follows the filed `general-tabbed-product-cards-hostinger.md` idea (pill row,
-// one filled active pill) with that reference's black swapped for the brand
-// cyan; the "popular" plan gets the row's one solid CTA, the same restraint the
-// rest of hp-new uses — cyan marks ONE thing, never a wash.
-const CYAN = "29, 211, 248";
-
+// Cyan on white needs care: #1dd3f8 on #fff is ~1.7:1, nowhere near AA, so it
+// is only ever a FILL behind dark text (active pill, popular CTA, badge) or an
+// icon colour. The feature ticks use the darkened #0f8fae (~4.6:1).
 const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
   const [active, setActive] = useState(0);
   const base = useId();
@@ -68,95 +58,85 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
   };
 
   const tab = tabs[active];
+  const isCustom = tab.id === "custom";
+  const hasPlans = !isCustom && tab.plans?.length > 0;
 
   return (
-    <div className="hp-plans">
-      <div className="hp-plans-inner">
-        <div
-          className="hp-plans-tabs"
-          role="tablist"
-          aria-label="أنواع خدمات الويب"
-        >
-          {tabs.map((t, i) => (
-            <button
-              key={t.id}
-              id={base + "-tab-" + i}
-              type="button"
-              role="tab"
-              aria-selected={i === active}
-              aria-controls={base + "-panel-" + i}
-              // Roving tabindex: one tab stop for the whole set, then arrows.
-              tabIndex={i === active ? 0 : -1}
-              className={"hp-plans-tab" + (i === active ? " is-active" : "")}
-              onClick={() => setActive(i)}
-              onKeyDown={onKeyDown}
-            >
-              {t.label}
-            </button>
-          ))}
-        </div>
+    <div className="hp-plans" dir="rtl">
+      <div
+        role="tablist"
+        aria-label="أنواع خدمات الويب"
+        className="hp-plans-tabs"
+        onKeyDown={onKeyDown}
+      >
+        {tabs.map((item, i) => (
+          <button
+            key={item.id}
+            type="button"
+            role="tab"
+            id={base + "-tab-" + i}
+            aria-selected={i === active}
+            aria-controls={base + "-panel"}
+            tabIndex={i === active ? 0 : -1}
+            className={i === active ? "is-active" : undefined}
+            onClick={() => setActive(i)}
+          >
+            {item.label}
+          </button>
+        ))}
+      </div>
 
-        <div
-          id={base + "-panel-" + active}
-          role="tabpanel"
-          aria-labelledby={base + "-tab-" + active}
-          tabIndex={0}
-        >
-          {tab.id !== "custom" && <div className="hp-plans-head">
+      <div
+        role="tabpanel"
+        id={base + "-panel"}
+        aria-labelledby={base + "-tab-" + active}
+        tabIndex={-1}
+      >
+        {!isCustom && (
+          <div className="hp-plans-head">
             <h3>{tab.heading}</h3>
-            <p>{tab.note}</p>
-          </div>}
+            {tab.note && <p>{tab.note}</p>}
+          </div>
+        )}
 
-          {tab.id === "custom" ? (
-            <CustomProjectForm />
-          ) : tab.plans.length === 0 ? (
-            <p className="hp-plans-empty">الباقات لهذه الخدمة قيد الإعداد.</p>
-          ) : (
-            <div className="hp-plans-grid">
-              {tab.plans.map((plan) => (
-                <article
-                  key={plan.id}
-                  className={"hp-plan" + (plan.isPopular ? " is-popular" : "")}
-                >
-                  {plan.badge && (
-                    <span className="hp-plan-badge">{plan.badge}</span>
-                  )}
-                  <h4>{plan.name}</h4>
-                  <p className="hp-plan-summary">{plan.summary}</p>
-                  <p className="hp-plan-price">{plan.price}</p>
+        {hasPlans && (
+          <div className="hp-plans-grid">
+            {tab.plans.map((plan) => (
+              <article
+                key={plan.id}
+                className={plan.isPopular ? "hp-plan is-popular" : "hp-plan"}
+              >
+                {plan.badge && <span className="hp-plan-badge">{plan.badge}</span>}
+                <h4>{plan.name}</h4>
+                <p className="hp-plan-summary">{plan.summary}</p>
+                <p className="hp-plan-price">{plan.price}</p>
+                <ul>
+                  {plan.features?.map((feature) => (
+                    <li key={feature}>
+                      <i className="bx bx-check" aria-hidden="true" />
+                      <span>{feature}</span>
+                    </li>
+                  ))}
+                </ul>
+                {/* data/services/data.js carries this as cta:{text,href} —
+                    NOT ctaText/ctaHref. The design mock renamed it; the real
+                    data did not. */}
+                <Link href={plan.cta.href} className="hp-plan-cta">
+                  {plan.cta.text}
+                </Link>
+              </article>
+            ))}
+          </div>
+        )}
 
-                  <ul className="hp-plan-features">
-                    {plan.features.map((f) => (
-                      <li key={f}>
-                        <i className="bx bx-check" aria-hidden="true" />
-                        <span>{f}</span>
-                      </li>
-                    ))}
-                  </ul>
-
-                  <Link
-                    href={plan.cta.href}
-                    className={
-                      "hp-plan-cta" + (plan.isPopular ? " is-solid" : "")
-                    }
-                  >
-                    {plan.cta.text}
-                  </Link>
-                </article>
-              ))}
-            </div>
-          )}
-        </div>
+        {isCustom && <CustomProjectForm />}
       </div>
 
       <style jsx>{`
         .hp-plans {
-          padding-block: 0 clamp(56px, 8vw, 104px);
-          font-family: "Cairo", system-ui, sans-serif;
-        }
-        .hp-plans-inner {
-          width: min(1180px, 100% - 48px);
+          width: min(1180px, calc(100% - 48px));
           margin-inline: auto;
+          font-family: "Cairo", system-ui, sans-serif;
         }
         .hp-plans-tabs {
           display: flex;
@@ -165,7 +145,7 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           margin-bottom: 44px;
           flex-wrap: wrap;
         }
-        .hp-plans-tab {
+        .hp-plans-tabs button {
           border: 1px solid #d9d9d9;
           background: #fff;
           border-radius: 999px;
@@ -178,20 +158,14 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           transition: background 0.25s ease, color 0.25s ease,
             border-color 0.25s ease;
         }
-        .hp-plans-tab:hover {
-          border-color: #b9b9b9;
-          color: #212121;
-        }
-        .hp-plans-tab:focus-visible {
-          outline: 2px solid rgb(${CYAN});
-          outline-offset: 3px;
-        }
-        /* Cyan as a FILL behind near-black text — 1 accent, and it clears AA
-           the way cyan-on-white text never could. */
-        .hp-plans-tab.is-active {
-          background: rgb(${CYAN});
-          border-color: rgb(${CYAN});
+        .hp-plans-tabs button.is-active {
+          background: #1dd3f8;
+          border-color: #1dd3f8;
           color: #06222b;
+        }
+        .hp-plans-tabs button:focus-visible {
+          outline: 2px solid #0a1f44;
+          outline-offset: 3px;
         }
         .hp-plans-head {
           text-align: center;
@@ -212,15 +186,6 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           color: #5f5f5f;
           margin: 0;
         }
-        .hp-plans-empty {
-          text-align: center;
-          color: #777;
-          font-size: 15px;
-          padding-block: 48px;
-          border: 1px dashed #cfcfcf;
-          border-radius: 14px;
-          background: #fff;
-        }
         .hp-plans-grid {
           display: grid;
           grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -238,15 +203,14 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           flex-direction: column;
         }
         .hp-plan.is-popular {
-          border-color: rgb(${CYAN});
-          border-width: 2px;
-          box-shadow: 0 22px 48px -26px rgba(${CYAN}, 0.55);
+          border: 2px solid #1dd3f8;
+          box-shadow: 0 22px 48px -26px rgba(29, 211, 248, 0.55);
         }
         .hp-plan-badge {
           position: absolute;
           inset-block-start: -12px;
           inset-inline-start: 26px;
-          background: rgb(${CYAN});
+          background: #1dd3f8;
           color: #06222b;
           border-radius: 999px;
           padding: 4px 14px;
@@ -275,18 +239,16 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           padding-bottom: 20px;
           border-bottom: 1px solid #ededed;
         }
-        .hp-plan-features {
+        .hp-plan ul {
           list-style: none;
           margin: 0 0 24px;
           padding: 0;
           display: grid;
           gap: 10px;
           align-content: start;
-          /* Grows so the CTA lands on the card's bottom edge — three cards with
-             different feature counts still line their buttons up. */
           flex: 1 1 auto;
         }
-        .hp-plan-features li {
+        .hp-plan li {
           display: flex;
           align-items: flex-start;
           gap: 8px;
@@ -294,16 +256,14 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           line-height: 1.7;
           color: #4f4f4f;
         }
-        .hp-plan-features li i {
+        .hp-plan li i {
           flex: 0 0 auto;
           margin-top: 1px;
           font-size: 17px;
           color: #0f8fae;
         }
-        /* :global() because next/link renders this <a> — styled-jsx scopes only
-           DOM elements it renders itself, so a bare .hp-plan-cta rule never
-           matches and the CTA falls back to Bootstrap's blue link. Anchored on
-           .hp-plan, which IS scoped, so nothing leaks. */
+        /* next/link renders a bare <a> that never carries the styled-jsx scope
+           class — without :global() this silently falls back to Bootstrap blue. */
         .hp-plan :global(.hp-plan-cta) {
           display: block;
           text-align: center;
@@ -315,39 +275,16 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 15px;
           font-weight: 700;
-          text-decoration: none;
           transition: background 0.25s ease, border-color 0.25s ease;
         }
-        .hp-plan :global(.hp-plan-cta:hover) {
-          border-color: #212121;
-          color: #212121;
-        }
-        .hp-plan :global(.hp-plan-cta.is-solid) {
-          border-color: rgb(${CYAN});
-          background: rgb(${CYAN});
+        .hp-plan.is-popular :global(.hp-plan-cta) {
+          border-color: #1dd3f8;
+          background: #1dd3f8;
           color: #06222b;
-        }
-        .hp-plan :global(.hp-plan-cta.is-solid:hover) {
-          background: #14bde0;
-          border-color: #14bde0;
-          color: #06222b;
-        }
-        .hp-plan :global(.hp-plan-cta:focus-visible) {
-          outline: 2px solid rgb(${CYAN});
-          outline-offset: 3px;
         }
         @media (max-width: 991px) {
-          .hp-plans-inner {
-            width: calc(100% - 32px);
-          }
           .hp-plans-grid {
-            grid-template-columns: 1fr;
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hp-plans-tab,
-          .hp-plan :global(.hp-plan-cta) {
-            transition: none;
+            grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
           }
         }
       `}</style>

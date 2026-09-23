@@ -124,6 +124,17 @@ export const webServices = {
   // "fixes" it back later thinking it was an oversight.
   brief: businessWebsites.overview,
 
+  // Short chip labels for the brief card. The design (Homepage.dc.html,
+  // 2026-09-23) replaced the three long `overview.points` sentences with three
+  // pills — a sentence does not fit a 8px/16px pill. Same three promises,
+  // compressed; the long form still lives in businessWebsites.overview.points
+  // and is what the services page renders.
+  briefChips: [
+    "بنية ومحتوى نجهّزهما معك",
+    "سريع على الجوال",
+    "مهيّأ لمحركات البحث",
+  ],
+
   // Full-bleed infinite marquee of real client work. Same six projects the
   // services page shows.
   projects: clientProjects,
