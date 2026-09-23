@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<script src="./support.js"></script>
+</head>
+<body>
+<x-dc>
+<helmet>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&family=Almarai:wght@300;400;700;800&display=swap" />
+<script src="./image-slot.js"></script>
+<style>
+  body { margin: 0; background: #030916; font-family: "Almarai", system-ui, sans-serif; }
+  * { box-sizing: border-box; }
+  a { color: #1dd3f8; text-decoration: none; }
+  a:hover { color: #14bde0; }
+</style>
+</helmet>
+
+<section dir="rtl" style="background:#030916;height:99vh;display:flex;flex-direction:column;padding:clamp(16px,2.2vh,30px) 0;font-family:'Almarai',system-ui,sans-serif;overflow:hidden">
+  <div style="width:min(1440px,100% - 48px);margin-inline:auto;display:flex;flex-direction:column;flex:1 1 auto;min-height:0">
+
+    <!-- title only, above everything -->
+    <div style="display:flex;align-items:baseline;gap:16px;flex-wrap:wrap;margin-bottom:clamp(12px,1.6vh,22px);flex:0 0 auto">
+      <span style="font-family:'Cairo',system-ui,sans-serif;font-size:13px;font-weight:700;color:#1dd3f8;letter-spacing:.2px">التجارة الإلكترونية</span>
+      <h2 style="font-family:'Cairo',system-ui,sans-serif;font-size:clamp(22px,3.2vh,38px);font-weight:800;line-height:1.3;color:#fff;margin:0">حوّل منتجاتك إلى طلبات</h2>
+    </div>
+
+    <!-- four boxes: tall left, two upper right, one wide bottom -->
+    <div style="direction:ltr;flex:1 1 auto;min-height:0;display:grid;grid-template-columns:1.06fr 1fr 1fr;grid-template-rows:minmax(0,1fr) minmax(0,.72fr);gap:14px">
+
+      <!-- 1 · combo — the hero box, tall, physical left -->
+      <article dir="rtl" style="grid-column:1;grid-row:1 / span 2;position:relative;display:flex;flex-direction:column;background:#05101f;border:1px solid rgba(149,185,231,.12);border-radius:22px;padding:clamp(18px,2.4vh,32px);overflow:hidden;min-height:0">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:14px;margin-bottom:clamp(10px,1.6vh,20px);flex:0 0 auto">
+          <span style="font-family:'Cairo',system-ui,sans-serif;font-size:12px;font-weight:700;color:#1dd3f8;letter-spacing:.3px">الباقة الكاملة</span>
+          <span aria-hidden="true" style="flex:0 0 auto;width:38px;height:38px;border-radius:50%;border:1px solid rgba(255,255,255,.22);display:flex;align-items:center;justify-content:center;color:#fff">
+            <svg viewBox="0 0 24 24" width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 15 17 7 9 7"></polyline></svg>
+          </span>
+        </div>
+        <h3 style="font-family:'Cairo',system-ui,sans-serif;font-size:clamp(23px,3.8vh,42px);font-weight:800;line-height:1.28;color:#fff;margin:0 0 10px;max-width:16ch;flex:0 0 auto">نبني ونشغّل الاثنين.</h3>
+        <p style="font-size:clamp(12.5px,1.55vh,15px);line-height:1.85;color:rgba(255,255,255,.66);margin:0 0 clamp(10px,1.6vh,18px);max-width:40ch;flex:0 0 auto">بلا فجوة بين التسليم والمتابعة: نبني متجرك من الصفر ثم نستمر في تشغيله معك — نفس الفريق، من أول يوم إلى ما بعد الإطلاق.</p>
+        <ul style="list-style:none;margin:0 0 clamp(12px,1.8vh,20px);padding:clamp(12px,1.8vh,20px) 0 0;display:grid;gap:8px;border-top:1px solid rgba(149,185,231,.12);flex:0 0 auto">
+          <li style="display:flex;gap:10px;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.82)"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#1dd3f8;margin-top:7px;flex:0 0 auto"></span><span>تصميم وإطلاق متجر كامل من الصفر</span></li>
+          <li style="display:flex;gap:10px;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.82)"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#1dd3f8;margin-top:7px;flex:0 0 auto"></span><span>متابعة مستمرة للطلبات والمخزون والمدفوعات</span></li>
+          <li style="display:flex;gap:10px;font-size:12.5px;line-height:1.6;color:rgba(255,255,255,.82)"><span aria-hidden="true" style="width:5px;height:5px;border-radius:50%;background:#1dd3f8;margin-top:7px;flex:0 0 auto"></span><span>دعم وتدريب لا ينتهيان عند التسليم</span></li>
+        </ul>
+        <!-- bottom row: illustration slot on the LEFT, CTA beside it -->
+        <div style="margin-top:auto;display:flex;flex-direction:column;align-items:flex-end;justify-content:flex-end;gap:12px;min-height:0;flex:0 0 auto">
+          <a href="#" style="flex:0 0 auto;display:inline-flex;align-items:center;gap:10px;padding:12px 24px;border-radius:999px;background:#fff;color:#05101f;font:700 13.5px/1 'Cairo',system-ui,sans-serif;transition:opacity .25s ease" style-hover="opacity:.88;color:#05101f">اطلب الباقة الكاملة
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+          </a>
+          <image-slot id="ec-combo-illus" shape="rounded" radius="12" fit="contain" placeholder="" style="flex:0 0 auto;width:clamp(72px,14vh,140px);height:clamp(72px,14vh,140px);background:rgba(255,255,255,.04)"></image-slot>
+        </div>
+      </article>
+
+      <!-- 2 · build — upper right -->
+      <article dir="rtl" style="grid-column:2;grid-row:1;position:relative;display:flex;flex-direction:column;background:#f4f6f8;border-radius:22px;padding:clamp(16px,2.2vh,24px) clamp(16px,1.8vw,22px);overflow:hidden;min-height:0;transition:transform .25s ease" style-hover="transform:translateY(-4px)">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:0 0 auto">
+          <div>
+            <span style="display:block;font-family:'Cairo',system-ui,sans-serif;font-size:11.5px;font-weight:700;color:#5a6675;margin-bottom:5px;letter-spacing:.3px">الإطلاق</span>
+            <h3 style="font-family:'Cairo',system-ui,sans-serif;font-size:clamp(17px,2.3vh,23px);font-weight:800;line-height:1.4;color:#111;margin:0">نبني متجرك</h3>
+          </div>
+          <span aria-hidden="true" style="flex:0 0 auto;color:#111"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 15 17 7 9 7"></polyline></svg></span>
+        </div>
+        <p style="font-size:12.5px;line-height:1.75;color:#555;margin:9px 0 0;max-width:32ch;flex:0 0 auto">من الصفر إلى متجر جاهز للبيع: التصميم، رفع المنتجات، بوابات الدفع والشحن، والدومين.</p>
+        <div style="margin-top:auto;display:flex;justify-content:flex-end;min-height:0;flex:1 1 auto;align-items:flex-end">
+          <image-slot id="ec-build-illus" src="assets/illus/build-a-store.png" shape="rounded" radius="12" fit="contain" placeholder="رسمة خطية: بناء المتجر" style="width:clamp(100px,17vh,168px);height:clamp(100px,17vh,168px)"></image-slot>
+        </div>
+      </article>
+
+      <!-- 3 · manage — upper right -->
+      <article dir="rtl" style="grid-column:3;grid-row:1;position:relative;display:flex;flex-direction:column;background:#f4f6f8;border-radius:22px;padding:clamp(16px,2.2vh,24px) clamp(16px,1.8vw,22px);overflow:hidden;min-height:0;transition:transform .25s ease" style-hover="transform:translateY(-4px)">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:0 0 auto">
+          <div>
+            <span style="display:block;font-family:'Cairo',system-ui,sans-serif;font-size:11.5px;font-weight:700;color:#5a6675;margin-bottom:5px;letter-spacing:.3px">التشغيل</span>
+            <h3 style="font-family:'Cairo',system-ui,sans-serif;font-size:clamp(17px,2.3vh,23px);font-weight:800;line-height:1.4;color:#111;margin:0">تدير متجرك</h3>
+          </div>
+          <span aria-hidden="true" style="flex:0 0 auto;color:#111"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 15 17 7 9 7"></polyline></svg></span>
+        </div>
+        <p style="font-size:12.5px;line-height:1.75;color:#555;margin:9px 0 0;max-width:32ch;flex:0 0 auto">لوحة تحكم عربية تتابع منها الطلبات والمخزون والمدفوعات، مع تدريب عملي ودعم بعد الإطلاق.</p>
+        <div style="margin-top:auto;display:flex;justify-content:flex-end;min-height:0;flex:1 1 auto;align-items:flex-end">
+          <image-slot id="ec-manage-illus" src="assets/illus/managment.png" shape="rounded" radius="12" fit="contain" placeholder="رسمة خطية: إدارة المتجر" style="width:clamp(100px,17vh,168px);height:clamp(100px,17vh,168px)"></image-slot>
+        </div>
+      </article>
+
+      <!-- 4 · landing page — wide, bottom -->
+      <article dir="rtl" style="grid-column:2 / span 2;grid-row:2;position:relative;display:flex;flex-direction:column;background:#dfe4ea;border-radius:22px;padding:clamp(16px,2.2vh,26px) clamp(18px,2vw,28px);overflow:hidden;min-height:0">
+        <div style="display:flex;align-items:flex-start;justify-content:space-between;gap:12px;flex:0 0 auto">
+          <div>
+            <span style="display:block;font-family:'Cairo',system-ui,sans-serif;font-size:11.5px;font-weight:700;color:#4a5a6a;margin-bottom:5px;letter-spacing:.3px">الإطلاق السريع</span>
+            <h3 style="font-family:'Cairo',system-ui,sans-serif;font-size:clamp(17px,2.3vh,25px);font-weight:800;line-height:1.35;color:#111;margin:0;max-width:26ch">نبني لك صفحة هبوط لهدف واحد</h3>
+          </div>
+          <span aria-hidden="true" style="flex:0 0 auto;color:#111"><svg viewBox="0 0 24 24" width="19" height="19" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round"><line x1="17" y1="7" x2="7" y2="17"></line><polyline points="17 15 17 7 9 7"></polyline></svg></span>
+        </div>
+        <div style="margin-top:auto;display:flex;flex-direction:row-reverse;align-items:flex-end;justify-content:space-between;gap:clamp(16px,2.4vw,36px);min-height:0;flex:1 1 auto;padding-top:10px">
+          <image-slot id="ec-landing-illus" shape="rounded" radius="12" fit="contain" placeholder="" style="flex:0 0 auto;width:clamp(92px,14vh,140px);height:clamp(92px,14vh,140px);background:rgba(255,255,255,.55)"></image-slot>
+          <div style="flex:1 1 auto;min-width:0;text-align:right">
+            <p style="font-size:12.5px;line-height:1.75;color:#4f5b68;margin:0 0 12px;max-width:52ch;margin-inline-start:auto">لعرض واحد أو منتج واحد أو حملة إعلانية — بلا تشتيت وبلا الحاجة لمتجر كامل. جاهزة للإطلاق خلال أيام.</p>
+            <a href="#" style="display:inline-flex;align-items:center;gap:9px;font:700 13px/1 'Cairo',system-ui,sans-serif;color:#111;border-bottom:1px solid #111;padding-bottom:4px" style-hover="color:#111;opacity:.75">اطلب صفحة هبوط
+        <svg viewBox="0 0 24 24" width="15" height="15" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><line x1="19" y1="12" x2="5" y2="12"></line><polyline points="12 19 5 12 12 5"></polyline></svg>
+            </a>
+          </div>
+        </div>
+      </article>
+    </div>
+  </div>
+</section>
+</x-dc>
+<script type="text/x-dc" data-dc-script data-props="{&quot;$preview&quot;:{&quot;width&quot;:1440,&quot;height&quot;:900}}"></script>
+</body>
+</html>
