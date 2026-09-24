@@ -122,7 +122,14 @@ export const webServices = {
   // deliberately puts the text on the RIGHT so an Arabic reader meets the
   // headline before the image. The user chose the sketch. Noted so nobody
   // "fixes" it back later thinking it was an oversight.
-  brief: businessWebsites.overview,
+  // Image overridden for the homepage only; the services page keeps its own.
+  brief: {
+    ...businessWebsites.overview,
+    media: {
+      ...businessWebsites.overview.media,
+      src: "/images/homepage/web-services-section.jpg",
+    },
+  },
 
   // Short chip labels for the brief card. The design (Homepage.dc.html,
   // 2026-09-23) replaced the three long `overview.points` sentences with three

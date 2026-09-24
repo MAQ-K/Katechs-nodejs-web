@@ -40,7 +40,7 @@ export default function WebServicesBrief({
         <p>{body}</p>
 
         <div className="hp-brief-cta">
-          <Link href={cta.href} className="hp-brief-btn">
+          <Link href={cta.href} className="default-btn">
             {cta.label}
           </Link>
           <a
@@ -77,7 +77,7 @@ export default function WebServicesBrief({
       </div>
 
       <figure className="hp-brief-media">
-        <img src={media.src} alt={media.alt} width="500" height="420" />
+        <img src={media.src} alt={media.alt} width="500" height="340" />
       </figure>
 
       <style jsx>{`
@@ -92,33 +92,33 @@ export default function WebServicesBrief({
         .hp-brief-card {
           background: #fff;
           border-radius: 10px;
-          padding: clamp(28px, 3.4vw, 48px);
+          padding: clamp(20px, 2.4vw, 32px);
           display: flex;
           flex-direction: column;
           justify-content: center;
           align-items: flex-start;
           text-align: right;
           min-width: 0;
-          min-height: 420px;
+          min-height: clamp(300px, 40vh, 360px);
         }
         .hp-brief-eyebrow {
           display: inline-block;
           font: 700 12px / 1 "Cairo", system-ui, sans-serif;
           letter-spacing: 0.14em;
           color: #8a8a8a;
-          margin-bottom: 22px;
+          margin-bottom: 14px;
         }
         .hp-brief-card h3 {
-          font: 800 clamp(32px, 3.6vw, 52px) / 1.28 "Cairo", system-ui, sans-serif;
+          font: 800 clamp(26px, 2.8vw, 40px) / 1.28 "Cairo", system-ui, sans-serif;
           color: #111;
-          margin: 0 0 18px;
+          margin: 0 0 12px;
           text-wrap: balance;
         }
         .hp-brief-card p {
           font-size: 16px;
           line-height: 1.85;
           color: #5b5b5b;
-          margin: 0 0 26px;
+          margin: 0 0 20px;
           max-width: 46ch;
         }
         .hp-brief-cta {
@@ -127,25 +127,7 @@ export default function WebServicesBrief({
           align-items: center;
           gap: 12px;
         }
-        /* next/link renders a bare <a>; styled-jsx only scopes elements it
-           renders itself, so these two need :global() or they fall back to
-           Bootstrap blue. */
-        .hp-brief-cta :global(.hp-brief-btn) {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 52px;
-          padding: 16px 34px;
-          border-radius: 999px;
-          background: linear-gradient(90deg, #1dd3f8, #8b9bff);
-          color: #0a1c2b;
-          font: 700 15px / 1 "Cairo", system-ui, sans-serif;
-          transition: filter 0.3s ease;
-        }
-        .hp-brief-cta :global(.hp-brief-btn:hover) {
-          filter: brightness(1.06);
-          color: #0a1c2b;
-        }
+        /* The CTA is the global .default-btn — no local styling. */
         .hp-brief-cta :global(.hp-brief-icon-btn) {
           display: inline-flex;
           align-items: center;
@@ -166,7 +148,7 @@ export default function WebServicesBrief({
           display: flex;
           flex-wrap: wrap;
           gap: 8px;
-          margin-top: 26px;
+          margin-top: 20px;
         }
         .hp-brief-chips span {
           border: 1px solid #ececec;
@@ -179,9 +161,10 @@ export default function WebServicesBrief({
           position: relative;
           margin: 0;
           width: 100%;
-          max-width: 500px;
+          max-width: 680px;
           justify-self: end;
-          aspect-ratio: 500 / 420;
+          aspect-ratio: 500 / 340;
+          max-height: clamp(340px, 48vh, 440px);
           animation: hpFloatSlow 11s ease-in-out infinite;
           border-radius: 10px;
           overflow: hidden;

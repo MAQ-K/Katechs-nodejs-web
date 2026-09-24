@@ -37,9 +37,9 @@ import { stores } from "../../data/home-new/data";
 // that drops frames.
 const ILLUS = {
   combo: { src: null, size: "clamp(72px,14vh,140px)", bg: "rgba(255,255,255,.04)" },
-  build: { src: "/images/illus/build-a-store.png", size: "clamp(100px,17vh,168px)", bg: "transparent" },
-  manage: { src: "/images/illus/managment.png", size: "clamp(100px,17vh,168px)", bg: "transparent" },
-  landing: { src: null, size: "clamp(92px,14vh,140px)", bg: "rgba(255,255,255,.55)" },
+  build: { src: "/images/homepage/store-building.png", cover: true },
+  manage: { src: "/images/homepage/store-management.jpeg", cover: true },
+  landing: { src: "/images/ecommerce/landing-page-store-card.webp", cover: true },
 };
 
 const Arrow = ({ size = 19 }) => (
@@ -80,8 +80,8 @@ const Slot = ({ card }) => {
   const illus = ILLUS[card] || {};
   return (
     <span
-      className="hp-store-slot"
-      style={{ width: illus.size, height: illus.size, background: illus.bg }}
+      className={"hp-store-slot" + (illus.cover ? " is-bg" : "")}
+      style={illus.cover ? undefined : { width: illus.size, height: illus.size, background: illus.bg }}
     >
       {illus.src && <img src={illus.src} alt="" loading="lazy" />}
     </span>
@@ -487,17 +487,39 @@ const Stores = ({ content = stores }) => {
           color: #111;
           opacity: 0.75;
         }
-        .hp-store-slot {
+        /* Slot is its own component, so styled-jsx never puts this file's
+           scope class on it — every slot rule MUST go through :global() or it
+           silently does nothing (that is why the images rendered full size). */
+        .hp-store-grid :global(.hp-store-slot) {
           flex: 0 0 auto;
           display: block;
           border-radius: 12px;
           overflow: hidden;
         }
-        .hp-store-slot img {
+        .hp-store-grid :global(.hp-store-slot img) {
           width: 100%;
           height: 100%;
           object-fit: contain;
           display: block;
+        }
+        /* Store image: a small picture pinned to the card's bottom-left. */
+        .hp-store-grid :global(.hp-store-slot.is-bg) {
+          position: absolute;
+          bottom: 16px;
+          left: 16px;
+          width: 63%;
+          height: 45%;
+          border-radius: 0;
+          pointer-events: none;
+        }
+        .hp-store-grid :global(.hp-store-slot.is-bg img) {
+          object-position: left bottom;
+        }
+        .hp-store-box-head,
+        .hp-store-box p,
+        .hp-store-wide-copy {
+          position: relative;
+          z-index: 1;
         }
         /* The bento's fixed 3x2 grid is a desktop shape. Below it the boxes
            stack, and the vh-based type stops being useful once the section is

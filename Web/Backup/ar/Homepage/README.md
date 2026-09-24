@@ -36,15 +36,22 @@ Status: `TODO` · `SKETCH` · `DESIGN` · `FINISH` · `REVIEW` · `DONE`
 | 1 | Hero slider | **DESIGN → REVIEW** | `components/HpNew/HeroSlider.js` | Design pass 2026-09-08 from `inspirations/navbar example .png`: layered navy wash, drifting video, eyebrow pill, 68px/800 headline, white pill CTA, indicator bars that carry the autoplay timer. Accent = brand cyan, used 3 times, by the user's call — not the reference's gold |
 | 2 | Domain search | SKETCH → REVIEW | `components/HpNew/DomainSearch.js` | GET form, hands off to WHMCS. Host fixed 2026-09-08 (old one didn't resolve) — ⚠️ new host works but is independently flagged as possibly the wrong company, needs your confirmation |
 | 3 | Floating section nav | SKETCH → REVIEW | `components/HpNew/SectionNav.js` | 5 pills, scroll-spy highlight, floats past the domain bar. ⚠️ 2026-09-09: a vertical side-rail mode was built for this component, then rejected by the user ("cancel sidesubnavbar make it like it was") and fully reverted the same day. Back to the original `floating` boolean, one shape. Do not reintroduce a rail/mode prop without being asked again by name. See `brain/logs/2026-09-09.md`, the entry titled "side rail REMOVED entirely" |
-| 4 | Web services — brief | **DESIGN → REVIEW** | `components/HpNew/WebServicesBrief.js` | Talk LEFT / image RIGHT per sketch. Reuses `businessWebsites.overview` + the Tabqat screenshot. 2026-09-09: restyled onto the hp-new navy/cyan theme, see note below |
-| 5 | Web services — projects marquee | **DESIGN → REVIEW** | `components/HpNew/ProjectsMarquee.js` | Full-bleed infinite loop, 6 real projects, masked fade at both ends, pauses on hover. 2026-09-09: restyled onto the hp-new navy/cyan theme |
-| 6 | Web services — plans | **DESIGN → REVIEW** | `components/HpNew/WebServicesPlans.js` | 3 ARIA tabs. business + wordpress use real data; ⚠️ custom is an empty stub, prices are TODO. 2026-09-09: restyled onto the hp-new navy/cyan theme |
+| 4 | Web services — brief | **DESIGN → REVIEW** | `components/HpNew/WebServicesBrief.js` | 2026-09-23: rebuilt to the Claude Design handoff — white brief CARD beside a floating 500x420 shot (bento top row). Gradient pill CTA + circular WhatsApp button; the three long `overview.points` became three chips from `webServices.briefChips` |
+| 5 | Web services — projects marquee | **DESIGN → REVIEW** | `components/HpNew/ProjectsMarquee.js` | 2026-09-23: now a white card inside the bento, and **Swiper is gone** — plain CSS belt (list rendered twice, 0 → -50%). The "من أعمالنا" heading moved in here from the brief |
+| 6 | Web services — plans | **DESIGN → REVIEW** | `components/HpNew/WebServicesPlans.js` | 2026-09-23: rebuilt to the handoff — 999px tab pills, centred 62ch heading, 3-up 16px cards, popular = 2px cyan border + badge + solid CTA. ⚠️ custom is still an empty stub, prices still TODO |
 | 7 | Hero top nav (page-scoped) | **DESIGN → REVIEW** | `components/HpNew/HeroNav.js` | Tabs ON the hero. Truly invisible now: no surface, legibility from a scrim it casts. Solid state matches the hero navy; links 14px/500; active = short cyan underline. ⚠️ hp-new only — the shared `Layouts/Navbar.js` is untouched, and the support button is still the global `.default-btn` |
-| 8 | App services | SKETCH → REVIEW | `components/HpNew/AppServices.js` | 100% width, talk left. Stage renders `components/AppDev/AppOrbit.js` ITSELF — the same orbit as the app dev page, not a copy. Each of the 6 screens now shows the real KATECHS screenshot (optional `screenImage` prop, app-dev page unaffected) |
-| 9 | Email services | SKETCH → REVIEW | `components/HpNew/EmailServices.js` | 3 vertical side tabs, panel = talk over image. Tabs imported from `data/emails/data.js`. ⚠️ panel images are placeholders |
-| 10 | Stores (e-commerce) | SKETCH → REVIEW | `components/HpNew/Stores.js` | No tabs (removed 2026-09-08) — 3 blocks stacked. Build/manage now 4 cards, 3 + 1 wide (landing); new homepage-only "build+manage" combo card. ⚠️ no nav pill - the user fixed 5 |
-| 11 | Marketing | SKETCH → REVIEW | `components/Common/SeoShowcase.js` via `pages/hp-new.js` | Merged with the old untargeted "seo" slot 2026-09-08 — this IS the marketing section now. Full width + talk-right via two new optional props; `pages/index.js` unaffected |
+| 8 | App services | **DESIGN → REVIEW** | `components/HpNew/AppServices.js` | 2026-09-23: rebuilt to the handoff. **The three.js aurora is gone** — backdrop is the design's 21-streak pure-CSS light field, which drops a ~600KB chunk. Stage still renders `components/AppDev/AppOrbit.js` ITSELF, not a copy |
+| 9 | Email services | **DESIGN → REVIEW** | `components/HpNew/EmailServices.js` | 2026-09-23: rebuilt to the handoff — side rail became a row of three 16px card-tabs (active goes near-black with a gradient underline), aura shapes behind the copy, four colour-cycled tick badges. ⚠️ panel images are still placeholders |
+| 10 | Stores (e-commerce) | **DESIGN → REVIEW** | `components/HpNew/Stores.js` | 2026-09-23: rebuilt to the handoff's **option C bento** — tall combo box left, two squares upper-right, one wide box under. 🔴 `stores.journey` and `stores.capabilities` NO LONGER RENDER here (data untouched, still on Web Services). ⚠️ combo + landing illustration slots are empty by design |
+| 11 | Marketing | **DESIGN → REVIEW** | `components/HpNew/Marketing.js` | 2026-09-23: **FORKED** out of `components/Common/SeoShowcase.js` so the frozen `pages/index.js` stays untouched. 43/57 split, navy talk right, SEO photo left. The fork also fixes SeoShowcase's forever-running 40ms setInterval — ⚠️ the shared component still has that bug |
 | 12 | Why choose us | SKETCH → REVIEW | `components/HpNew/WhyChooseUs.js` | Redesigned 2026-09-08: was a 6-image marquee, now a scroll-synced sticky box that switches through the 4 reasons as you scroll. Mobile: box hidden, list back to compact (no sticky sibling to switch beside) |
+
+> **2026-09-23 — sections 4, 5, 6, 8, 9, 10 and 11 were rebuilt to the Claude Design handoff**
+> (`Homepage/Homepage Services Design-handoff/homepage-services-design/project/Homepage.dc.html`),
+> on the user's instruction "make it apply it exactly". The hero, domain strip and section nav were
+> NOT touched. Everything that changed beyond styling — dropped blocks, dropped libraries, the
+> marketing fork, and the per-route Cairo link — is itemised in `brain/logs/2026-09-23.md`. Read that
+> before reverting anything here.
 
 > **2026-09-09 — sections 4/5/6: light band only. Two other designs were tried and REJECTED
 > the same day.** The three blocks stack in their natural order on a shared light (`#f7f7f7`)
@@ -64,14 +71,14 @@ pages — which is exactly why the rebuild is isolated in `components/HpNew/`.
 | 1 | MainBanner | `components/HomeTwo/` |
 | 2 | ReviewsCounter | `components/HomeTwo/` |
 | 3 | OurServices | `components/Services/Services.js` |
-| 4 | MakeYourBusiness | `components/Common/` |
-| 5 | PricingWebsite | `components/PricingWebsite/PricingStyleOne` |
-| 6 | MobileAppPromo | `components/Common/` |
+| 4 | Web services — brief | **DESIGN → REVIEW** | `components/HpNew/WebServicesBrief.js` | 2026-09-23: rebuilt to the Claude Design handoff — white brief CARD beside a floating 500x420 shot (bento top row). Gradient pill CTA + circular WhatsApp button; the three long `overview.points` became three chips from `webServices.briefChips` |
+| 5 | Web services — projects marquee | **DESIGN → REVIEW** | `components/HpNew/ProjectsMarquee.js` | 2026-09-23: now a white card inside the bento, and **Swiper is gone** — plain CSS belt (list rendered twice, 0 → -50%). The "من أعمالنا" heading moved in here from the brief |
+| 6 | Web services — plans | **DESIGN → REVIEW** | `components/HpNew/WebServicesPlans.js` | 2026-09-23: rebuilt to the handoff — 999px tab pills, centred 62ch heading, 3-up 16px cards, popular = 2px cyan border + badge + solid CTA. ⚠️ custom is still an empty stub, prices still TODO |
 | 7 | EcommercePlatforms | `components/PricingWebsite/` |
-| 8 | SeoShowcase | `components/Common/` |
-| 9 | OurClientsGallery | `components/Common/` |
-| 10 | Partner | `components/Common/` |
-| 11 | TrustedCustomers | `components/Common/` |
+| 8 | App services | **DESIGN → REVIEW** | `components/HpNew/AppServices.js` | 2026-09-23: rebuilt to the handoff. **The three.js aurora is gone** — backdrop is the design's 21-streak pure-CSS light field, which drops a ~600KB chunk. Stage still renders `components/AppDev/AppOrbit.js` ITSELF, not a copy |
+| 9 | Email services | **DESIGN → REVIEW** | `components/HpNew/EmailServices.js` | 2026-09-23: rebuilt to the handoff — side rail became a row of three 16px card-tabs (active goes near-black with a gradient underline), aura shapes behind the copy, four colour-cycled tick badges. ⚠️ panel images are still placeholders |
+| 10 | Stores (e-commerce) | **DESIGN → REVIEW** | `components/HpNew/Stores.js` | 2026-09-23: rebuilt to the handoff's **option C bento** — tall combo box left, two squares upper-right, one wide box under. 🔴 `stores.journey` and `stores.capabilities` NO LONGER RENDER here (data untouched, still on Web Services). ⚠️ combo + landing illustration slots are empty by design |
+| 11 | Marketing | **DESIGN → REVIEW** | `components/HpNew/Marketing.js` | 2026-09-23: **FORKED** out of `components/Common/SeoShowcase.js` so the frozen `pages/index.js` stays untouched. 43/57 split, navy talk right, SEO photo left. The fork also fixes SeoShowcase's forever-running 40ms setInterval — ⚠️ the shared component still has that bug |
 | 12 | FaqHorizontal | `components/Common/` |
 | — | OurProjects, Testimonials | commented out in `pages/index.js` |
 

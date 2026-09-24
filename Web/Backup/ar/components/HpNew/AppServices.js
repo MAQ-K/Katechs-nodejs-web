@@ -143,7 +143,20 @@ const AppServices = ({ content = appServices }) => {
         <div className="hp-app-stage">
           <span className="hp-app-ring" aria-hidden="true" />
           <div className="app-platforms hp-app-orbit-host">
-            <AppOrbit screenImage="/images/mobile-app/app-mockup-phone.png" />
+            <AppOrbit
+              screenImage={{
+                // Labels are hidden on the homepage; keys only pick the slot.
+                "متجر إلكتروني": "/images/homepage/app-reports.jpeg",
+                "حجز مواعيد": "/images/homepage/app-booking.jpeg",
+                "لوحة تحكم": "/images/homepage/app-dashboard.jpeg",
+                "تواصل ودعم": "/images/homepage/app-chat.jpeg",
+                "محفظة ودفع": "/images/homepage/app-wallet.jpeg",
+                // Only five real screens for six phones — this one repeats
+                // the wallet (never adjacent to it on the ring).
+                "توصيل وتتبّع": "/images/homepage/app-wallet.jpeg",
+              }}
+              radius={235}
+            />
           </div>
         </div>
       </div>
@@ -152,7 +165,7 @@ const AppServices = ({ content = appServices }) => {
         .hp-app {
           position: relative;
           width: 100%;
-          padding-block: clamp(56px, 8vw, 104px);
+          padding-block: clamp(24px, 3vw, 48px);
           background: #040d20;
           overflow: hidden;
           isolation: isolate;
@@ -223,7 +236,11 @@ const AppServices = ({ content = appServices }) => {
         .hp-app-stage {
           order: 1;
           position: relative;
-          height: 520px;
+          /* Tall enough for the near phone after perspective magnifies it —
+             at 520 it ran past the section and .hp-app's overflow cut it.
+             perspective-origin sits at 50% so the magnification spreads up
+             AND down instead of shoving the near phone off the bottom. */
+          height: min(600px, 78vh);
         }
         .hp-app-text {
           order: 2;
@@ -253,12 +270,110 @@ const AppServices = ({ content = appServices }) => {
           display: flex;
           align-items: center;
           justify-content: center;
-          transform: scale(0.92);
           /* .app-platforms is a SECTION rule in styles/style.scss — navy
              background and 100px of vertical padding. Cancel both; we only
              want the class for the orbit rules nested under it. */
           background: transparent;
           padding: 0;
+        }
+        /* iPhone-style frame (user reference, 2026-09-24): titanium rim,
+           thin black bezel, dynamic-island pill, side buttons, glass sheen,
+           label over the bottom of the screen. Scoped under the host so the
+           app-development page keeps its original phones. */
+        .hp-app-orbit-host :global(.app-orbit-phone) {
+          padding: 3px;
+          border: 0;
+          border-radius: 32px;
+          background: linear-gradient(
+            145deg,
+            #e4e7ec 0%,
+            #6b7079 22%,
+            #2b2e34 50%,
+            #8d939c 78%,
+            #3c4047 100%
+          );
+          box-shadow: 0 40px 60px -30px rgba(0, 0, 0, 0.95),
+            0 0 0 1px rgba(0, 0, 0, 0.6);
+        }
+        .hp-app-orbit-host :global(.app-orbit-phone::before),
+        .hp-app-orbit-host :global(.app-orbit-phone::after) {
+          content: "";
+          position: absolute;
+          width: 3px;
+          border-radius: 2px;
+          background: linear-gradient(90deg, #4a4e55, #a7acb4);
+        }
+        .hp-app-orbit-host :global(.app-orbit-phone::before) {
+          left: -3px;
+          top: 64px;
+          height: 38px;
+          box-shadow: 0 48px 0 0 #7d828a;
+        }
+        .hp-app-orbit-host :global(.app-orbit-phone::after) {
+          right: -3px;
+          top: 86px;
+          height: 52px;
+        }
+        .hp-app-orbit-host :global(.app-orbit-notch) {
+          position: absolute;
+          top: 13px;
+          left: 50%;
+          transform: translateX(-50%);
+          width: 46px;
+          height: 13px;
+          margin: 0;
+          border-radius: 99px;
+          background: #000;
+          z-index: 2;
+        }
+        .hp-app-orbit-host :global(.app-orbit-screen) {
+          position: relative;
+          padding: 5px;
+          border: 0;
+          border-radius: 29px;
+          background: #000;
+          overflow: hidden;
+        }
+        .hp-app-orbit-host :global(.app-orbit-screen::after) {
+          content: "";
+          position: absolute;
+          inset: 5px;
+          border-radius: 24px;
+          background: linear-gradient(
+            125deg,
+            rgba(255, 255, 255, 0.22) 0%,
+            rgba(255, 255, 255, 0.05) 32%,
+            transparent 45%
+          );
+          pointer-events: none;
+        }
+        .hp-app-orbit-host :global(.app-orbit-screen-img) {
+          border-radius: 24px;
+        }
+        /* Bigger, closer, more 3D, no idle bob. Size is set natively (no
+           scale()) — a scaled 3D layer is rasterised at its small size and
+           stretched, which is what made the screenshots look blurry. */
+        .hp-app-orbit-host :global(.app-orbit) {
+          height: 100%;
+          transform: translateX(20%);
+        }
+        .hp-app-orbit-host :global(.app-orbit-stage) {
+          transform: none;
+          perspective: 1000px;
+          perspective-origin: 50% 45%;
+        }
+        .hp-app-orbit-host :global(.app-orbit-ring) {
+          width: 212px;
+          height: 430px;
+          animation: none;
+        }
+        .hp-app-orbit-host :global(.app-orbit-phone) {
+          box-shadow: 0 50px 70px -28px rgba(0, 0, 0, 0.95),
+            0 0 0 1px rgba(0, 0, 0, 0.6),
+            inset 0 0 0 1px rgba(255, 255, 255, 0.25);
+        }
+        .hp-app-orbit-host :global(.app-orbit-label) {
+          display: none;
         }
         .hp-app-eyebrow {
           display: inline-block;

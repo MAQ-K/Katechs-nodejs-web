@@ -99,12 +99,6 @@ const HeroSlider = ({ media = heroMedia, slides = heroSlides }) => {
       onMouseEnter={() => setPaused(true)}
       onMouseLeave={() => setPaused(false)}
     >
-      <Head>
-        <link
-          rel="stylesheet"
-          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap"
-        />
-      </Head>
       <div className="hp-hero-bg">
         {media.type === "video" ? (
           <video

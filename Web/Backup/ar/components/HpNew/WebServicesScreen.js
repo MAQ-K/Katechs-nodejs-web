@@ -72,7 +72,7 @@ export default function WebServicesScreen() {
         .hp-ws-bento {
           width: min(1400px, calc(100% - 48px));
           margin: 0 auto;
-          padding: clamp(16px, 2vw, 28px) 0 clamp(56px, 7vw, 88px);
+          padding: 8px 0 clamp(56px, 7vw, 88px);
           display: grid;
           gap: 10px;
         }

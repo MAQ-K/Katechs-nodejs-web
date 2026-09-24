@@ -206,10 +206,9 @@ export default function HpNewPage() {
             request on this route alone, so the frozen pages/index.js is
             unaffected. 500 is included for HeroNav's links; Cairo, unlike
             Almarai, really does ship every weight. */}
-        <link
-          href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;500;600;700;800&display=swap"
-          rel="stylesheet"
-        />
+        {/* FONT TRIAL: shadows Cairo with Helvetica Arabic on this route only,
+            so no section needs editing. Delete this <style> to revert. */}
+        <style dangerouslySetInnerHTML={{ __html: '@font-face{font-family:"Cairo";src:url("/fonts/janna-lt-regular.ttf") format("truetype");font-weight:100 500;font-display:swap}@font-face{font-family:"Cairo";src:url("/fonts/janna-lt-bold.ttf") format("truetype");font-weight:600 900;font-display:swap}' }} />
       </Head>
 
       <HeroNav />

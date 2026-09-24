@@ -49,7 +49,7 @@ const DRAG_SPEED = 0.35; // degrees of rotation per pixel dragged
 // Six different images would mean fabricating five fake app screens; repeating
 // the one real shot around the ring reads as a product turning in place, not
 // as an invented set of screens.
-const AppOrbit = ({ screenImage } = {}) => {
+const AppOrbit = ({ screenImage, radius = RADIUS } = {}) => {
   const ref = useRef(null);
   const reduced = useReducedMotion();
   const [dragging, setDragging] = useState(false);
@@ -142,21 +142,28 @@ const AppOrbit = ({ screenImage } = {}) => {
         onPointerCancel={endDrag}
       >
         <motion.div className="app-orbit-ring" style={{ rotateY }}>
-          {screens.map((s, i) => (
+          {screens.map((s, i) => {
+            // screenImage: a path for every phone, or a map keyed by label
+            // (with an optional `default`) for a different shot per phone.
+            const img =
+              screenImage && typeof screenImage === "object"
+                ? screenImage[s.label] || screenImage.default
+                : screenImage;
+            return (
             <div
               className={`app-orbit-phone tone-${s.tone}`}
               key={s.label}
               style={{
-                transform: `rotateY(${i * STEP}deg) translateZ(${RADIUS}px)`,
+                transform: `rotateY(${i * STEP}deg) translateZ(${radius}px)`,
               }}
             >
               <span className="app-orbit-notch" aria-hidden="true"></span>
 
               <span className="app-orbit-screen" aria-hidden="true">
-                {screenImage ? (
+                {img ? (
                   <img
                     className="app-orbit-screen-img"
-                    src={screenImage}
+                    src={img}
                     alt=""
                   />
                 ) : (
@@ -179,7 +186,8 @@ const AppOrbit = ({ screenImage } = {}) => {
 
               <span className="app-orbit-label">{s.label}</span>
             </div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
     </div>

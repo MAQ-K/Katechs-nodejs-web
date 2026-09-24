@@ -56,14 +56,14 @@ export default function ProjectsMarquee({
         .hp-marquee-card {
           background: #fff;
           border-radius: 10px;
-          padding: 22px 0 26px;
+          padding: 16px 0 18px;
           overflow: hidden;
         }
         .hp-marquee-title {
           font: 800 14px / 1 "Cairo", system-ui, sans-serif;
           letter-spacing: 0.12em;
           color: #8a8a8a;
-          margin: 0 0 20px;
+          margin: 0 0 12px;
           padding-inline: clamp(24px, 3vw, 40px);
         }
         .hp-marquee-mask {
@@ -106,7 +106,7 @@ export default function ProjectsMarquee({
         }
         .hp-marquee-item img {
           display: block;
-          height: 240px;
+          height: clamp(130px, 20vh, 180px);
           width: auto;
           max-width: none;
         }

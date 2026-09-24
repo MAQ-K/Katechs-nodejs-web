@@ -9,6 +9,32 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-09-23 · UI Implementer — the five SERVICES sections on `/hp-new` are rebuilt to the Claude
+  Design handoff** (`Homepage/Homepage Services Design-handoff/`). `web-services` (bento), `app-dev`,
+  `mail`, `stores` (option-C bento) and `marketing`. Full detail in `brain/logs/2026-09-23.md` — read
+  it before touching any of them. The six things most likely to be reverted by accident:
+  **(1)** `marketing` is now **`components/HpNew/Marketing.js`, a FORK** of
+  `components/Common/SeoShowcase.js`. The shared component is untouched and `pages/index.js` is
+  unaffected. Do not "de-duplicate" them.
+  **(2)** **Cairo is loaded in `pages/hp-new.js`'s `<Head>`, not `_document.js`.** The site is
+  Almarai-only sitewide and `_document.js`'s comment claiming nothing references Cairo is STALE —
+  every `components/HpNew/**` section asks for it and was silently falling back to `system-ui`.
+  Keeping the link on this route means the frozen `pages/index.js` gains no extra font request.
+  **(3)** `stores.journey` and `stores.capabilities` **no longer render on the homepage** — the
+  design's `#stores` is only the four-box bento. Data untouched; both still render on Web Services.
+  **(4)** **`ShaderBackground.js` (three.js) is no longer imported by anything** — `#app-dev`'s
+  backdrop is the design's pure-CSS streak field now. That drops a ~600 KB chunk from the route.
+  **(5)** **Swiper is gone from `ProjectsMarquee.js`** — plain CSS belt, list rendered twice,
+  0 → -50%. Swiper is still used elsewhere.
+  **(6)** `WebServicesScreen.js` **lost its viewport-fitting ResizeObserver** (`--hp-ws-chrome`).
+  The design is natural-height. A 100vh version of this band was already built and rejected on
+  2026-09-09 — read that log before trying again.
+  ⚠️ Two illustration slots (combo + landing store cards) are EMPTY by design and still owed, and the
+  custom-project submit button is #fff-on-cyan (~1.7:1) because the design specifies it.
+  ⚠️ `components/Common/SeoShowcase.js` **still** has the 40ms forever-setInterval bug that the fork
+  fixed, and it still runs on `pages/index.js`.
+  ⚠️ Verifying `/hp-new` headlessly: `useSmoothScroll` takes content out of flow, so `body` measures
+  0 tall and screenshots come back blank unless you scroll first. Assert on computed styles instead.
 - **2026-09-09 · Manager — the web services side-rail experiment is fully REVERTED; a headless
   browser exists here after all.**
   **(1)** `components/HpNew/SectionNav.js` briefly took a `mode="inline"|"bar"|"rail"` prop and
