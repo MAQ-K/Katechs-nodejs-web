@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Reveal from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 
 const CtaBand = () => {
   return (
@@ -17,12 +16,12 @@ const CtaBand = () => {
             </p>
 
             <div className="seo-actions seo-center" style={{ marginTop: 26 }}>
-              <Magnetic>
+              <div className="d-inline-block">
                 <Link href="#audit" className="seo-btn seo-btn-invert">
                   احصل على التحليل المجاني
                   <i className="bx bx-left-arrow-alt"></i>
                 </Link>
-              </Magnetic>
+              </div>
               <Link href="/contactWeb" className="seo-btn seo-btn-ghost">
                 تواصل معنا
               </Link>

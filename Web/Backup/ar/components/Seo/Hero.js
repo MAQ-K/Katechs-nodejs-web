@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Reveal from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 
 // Visual pass — from brain/ui-library/inspiration/seo page/1stsec.png: two
 // overlapping, gently tilted cards instead of one flat panel. The SERP
@@ -101,12 +100,12 @@ const Hero = () => {
 
             <Reveal delay={0.25}>
               <div className="seo-actions">
-                <Magnetic>
+                <div className="d-inline-block">
                   <Link href="#audit" className="seo-btn">
                     احصل على تحليل مجاني
                     <i className="bx bx-left-arrow-alt"></i>
                   </Link>
-                </Magnetic>
+                </div>
                 {/* Was "شاهد الباقات" -> #pricing. The pricing section was
                     removed from this page (user request, 2026-09-04: "remove
                     plans its open no plans") — repointed to the real contact

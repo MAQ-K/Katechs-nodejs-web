@@ -5,8 +5,6 @@ import { motion } from "framer-motion";
 
 import { heroBanner } from "../../data/hosting-services/data";
 import { staggerParent, staggerItem } from "../Common/Reveal";
-import Tilt3D from "../Emails/Tilt3D";
-import Magnetic from "../Common/Magnetic";
 
 const Hero = () => {
   return (
@@ -16,7 +14,7 @@ const Hero = () => {
       <div className="container">
         <div className="row align-items-center">
           <div className="col-lg-6">
-            <Tilt3D className="hosting-hero-img" max={8} preserve3d>
+            <div className="hosting-hero-img svc-img-hover">
               <Image
                 src={heroBanner.image}
                 alt={heroBanner.heading}
@@ -37,7 +35,7 @@ const Hero = () => {
                   <i className="bx bx-pointer hosting-hero-domain-pointer"></i>
                 </span>
               </div>
-            </Tilt3D>
+            </div>
           </div>
 
           <div className="col-lg-6">
@@ -65,12 +63,12 @@ const Hero = () => {
               </motion.div>
 
               <motion.div className="hosting-hero-btn" variants={staggerItem(16)}>
-                <Magnetic strength={0.25}>
+                <div className="d-inline-block">
                   <Link href={heroBanner.cta.href} className="default-btn app-btn-shine">
                     {heroBanner.cta.text}
                     <i className="bx bx-right-arrow-alt"></i>
                   </Link>
-                </Magnetic>
+                </div>
               </motion.div>
 
               <motion.div className="hosting-hero-trust" variants={staggerItem(14)}>

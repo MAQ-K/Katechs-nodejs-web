@@ -393,7 +393,6 @@ export default function HeroBuildSmarter({
           background: var(--hbs-accent);
           border-color: var(--hbs-accent);
           color: var(--hbs-ink);
-          transform: translateY(-2px);
           box-shadow: 0 12px 28px rgba(29, 211, 248, 0.35);
         }
 

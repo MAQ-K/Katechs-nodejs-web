@@ -28,7 +28,9 @@ export default function Services2Page() {
 
       <FaqContent />
 
-      <PricingSSL />
+      <div className="svc-plans">
+        <PricingSSL />
+      </div>
       
 
 

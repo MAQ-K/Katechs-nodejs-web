@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Reveal from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 
 const CtaBand = () => {
   return (
@@ -17,12 +16,12 @@ const CtaBand = () => {
             </p>
 
             <div className="dm-actions dm-center" style={{ marginTop: 26 }}>
-              <Magnetic>
+              <div className="d-inline-block">
                 <Link href="/digital-market-order" className="dm-btn dm-btn-invert">
                   اطلب عرض سعر
                   <i className="bx bx-left-arrow-alt"></i>
                 </Link>
-              </Magnetic>
+              </div>
               <Link href="/contactWeb" className="dm-btn dm-btn-ghost">
                 تواصل معنا
               </Link>

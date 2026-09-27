@@ -1,6 +1,5 @@
 import React, { useState } from "react";
 import Reveal from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 
 // Visual pass — from brain/ui-library/inspiration/seo page/2ndsec.png: one
 // bordered bar holding the field(s) and the submit button, not separate
@@ -89,12 +88,12 @@ const AuditForm = () => {
                   />
                 </div>
 
-                <Magnetic>
+                <div className="d-inline-block">
                   <button type="submit" className="seo-audit-bar-submit">
                     أرسل التقرير
                     <i className="bx bx-left-arrow-alt"></i>
                   </button>
-                </Magnetic>
+                </div>
               </form>
             )}
 

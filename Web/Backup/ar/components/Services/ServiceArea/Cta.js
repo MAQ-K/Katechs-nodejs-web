@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import Reveal from "../../Common/Reveal";
 import TextReveal from "../../Common/motion/TextReveal";
-import Magnetic from "../../Common/Magnetic";
 
 // The single wide CTA that closes an area.
 //
@@ -24,13 +23,11 @@ const Cta = ({ cta, id }) => {
                 only offers a word mode for exactly that reason. */}
             <TextReveal text={cta.heading} as="h2" />
             {cta.note ? <p>{cta.note}</p> : null}
-            {/* Magnetic wraps rather than replaces the Link, so the real
-                anchor keeps its semantics, focus ring and keyboard behaviour. */}
-            <Magnetic strength={0.22} radius={70}>
+            <div className="d-inline-block">
               <Link href={cta.action.href} className="wsv-cta-btn">
                 {cta.action.label}
               </Link>
-            </Magnetic>
+            </div>
           </div>
         </Reveal>
       </div>

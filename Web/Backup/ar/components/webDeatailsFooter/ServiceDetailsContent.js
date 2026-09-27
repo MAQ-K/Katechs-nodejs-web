@@ -38,7 +38,7 @@ const ServiceDetailsContent = () => {
                       
 
 
-                      <div className="service-list-img">
+                      <div className="service-list-img svc-img-hover">
 
                         <Image src={faqImg} alt="Image" width={500} height={465} />
                       </div>

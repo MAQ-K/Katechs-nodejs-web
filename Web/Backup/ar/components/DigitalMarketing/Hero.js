@@ -1,7 +1,6 @@
 import React from "react";
 import Link from "next/link";
 import Reveal from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 
 // Visual pass — from "seo page inspiration/1st section.png" (split hero with
 // a stat/badge card), following the same treatment already shipped on
@@ -59,12 +58,12 @@ const Hero = () => {
 
             <Reveal delay={0.25}>
               <div className="dm-actions">
-                <Magnetic>
+                <div className="d-inline-block">
                   <Link href="/digital-market-order" className="dm-btn">
                     اطلب عرض سعر
                     <i className="bx bx-left-arrow-alt"></i>
                   </Link>
-                </Magnetic>
+                </div>
                 <Link href="#channels" className="dm-btn dm-btn-ghost">
                   شاهد الخدمات
                 </Link>

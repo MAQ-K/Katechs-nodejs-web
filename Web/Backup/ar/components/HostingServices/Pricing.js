@@ -3,7 +3,6 @@ import { useReducedMotion } from "framer-motion";
 
 import { pricing } from "../../data/hosting-services/data";
 import Reveal from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 import ComingSoonModal from "../Common/ComingSoonModal";
 
 const Pricing = () => {
@@ -75,7 +74,7 @@ const Pricing = () => {
                   )}
                 </div>
 
-                <Magnetic strength={0.2} className="hosting-pricing-cta-magnet">
+                <div className="hosting-pricing-cta-magnet">
                   <button
                     type="button"
                     className="hosting-pricing-cta"
@@ -83,7 +82,7 @@ const Pricing = () => {
                   >
                     {plan.cta.text}
                   </button>
-                </Magnetic>
+                </div>
 
                 <ul className="hosting-pricing-features">
                   {plan.features.map((feature) => (

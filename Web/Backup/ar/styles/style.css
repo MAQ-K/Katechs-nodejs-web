@@ -8985,7 +8985,6 @@ marquee, the beam and the ambient hero glow.
 .seo-btn:hover {
   color: #ffffff;
   filter: brightness(1.15);
-  transform: translateY(-1px);
   box-shadow: 0 10px 18px -10px rgba(10, 31, 68, 0.5);
 }
 .seo-btn:hover i {
@@ -9011,7 +9010,6 @@ marquee, the beam and the ambient hero glow.
   border-color: #1dd3f8;
   color: #1dd3f8;
   box-shadow: none;
-  transform: translateY(-1px);
 }
 
 .seo-dark .seo-btn-ghost {
@@ -10007,7 +10005,6 @@ marquee, the beam and the ambient hero glow.
 .dm-btn:hover {
   color: #ffffff;
   filter: brightness(1.08);
-  transform: translateY(-1px);
   box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.5);
 }
 .dm-btn:hover i {
@@ -10033,7 +10030,6 @@ marquee, the beam and the ambient hero glow.
   border-color: #1dd3f8;
   color: #1dd3f8;
   box-shadow: none;
-  transform: translateY(-1px);
 }
 
 .dm-dark .dm-btn-ghost {
@@ -11960,7 +11956,6 @@ to change a value.
   background-color: #1dd3f8;
   border-color: #1dd3f8;
   color: #0a1f44;
-  transform: translateY(-2px);
 }
 
 /* Secondary reads as a plain link, not a second button, so the solid one
@@ -16271,6 +16266,290 @@ too. Out of scope for a styling pass — see T-020.
 @media (prefers-reduced-motion: reduce) {
   .csm-panel {
     transition: none;
+  }
+}
+/*================================================
+===  SERVICE PAGES — IMAGE HOVER (corner brackets)  ===
+
+User, 2026-09-28 (newest-tasks-subpages.md): on hover, a dark-blue corner
+bracket draws in at the top-right and bottom-left, and the image zooms a touch.
+Opt in with `.svc-img-hover` on the image's wrapper.
+
+Replaces the cursor-driven 3D tilt on the service-page images. That effect is
+KEPT, not deleted: components/Emails/Tilt3D.js. Wrap the image in
+<Tilt3D max={8}> again to bring it back (still used as-is on the Emails hero
+icon and the AppDev platform cards, which are not images).
+=================================================*/
+.svc-img-hover {
+  position: relative;
+  /* Physical top/right and bottom/left on purpose: the brief names the
+     corners, and they must not swap under RTL. */
+}
+.svc-img-hover img {
+  transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.svc-img-hover::before, .svc-img-hover::after {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  width: 0;
+  height: 0;
+  border: 0 solid #0a1f44;
+  opacity: 0;
+  pointer-events: none;
+  transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), height 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+}
+.svc-img-hover::before {
+  top: -10px;
+  right: -10px;
+  border-top-width: 3px;
+  border-right-width: 3px;
+}
+.svc-img-hover::after {
+  bottom: -10px;
+  left: -10px;
+  border-bottom-width: 3px;
+  border-left-width: 3px;
+}
+.svc-img-hover:hover::before, .svc-img-hover:hover::after {
+  width: 56px;
+  height: 56px;
+  opacity: 1;
+}
+.svc-img-hover:hover img {
+  transform: scale(1.04);
+}
+
+/* The legacy wrappers are full column width while the image inside is not, so
+   the brackets would float off the image's corners. Shrink them to the image. */
+.service-list-img.svc-img-hover,
+.industries-img.svc-img-hover {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  line-height: 0;
+}
+
+/* cPanel banner: the image is deliberately 110% of its column (it bleeds out of
+   the navy band). Move that 110% onto the bracket wrapper so the corners sit on
+   the image, not on the column. */
+.hosting-cpanel-banner .hosting-cpanel-banner-img .svc-img-hover {
+  width: 110%;
+  line-height: 0;
+}
+.hosting-cpanel-banner .hosting-cpanel-banner-img .svc-img-hover img {
+  width: 100%;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-img-hover:hover img {
+    transform: none;
+  }
+}
+/*================================================
+===  SERVICE PAGES — LEGACY PLAN CARDS → HOSTING CARD  ===
+
+User, 2026-09-28: every plan card follows the Hosting Services card, style only.
+The icon-well / stat families already do (PLAN CARD — ONE STYLE, above). What
+was left is the theme's `.single-pricing` on website-design, vps-hosting,
+wordprees-hosting and ssl-certificate: centred, a 50px/0 leaf radius, the price
+in a white circle, a red rotated "Popular" ribbon.
+
+Scoped under `.svc-plans` (a wrapper div in those four page files), NOT on
+`.single-pricing` itself: components/PricingWebsite is also rendered by the
+frozen homepage (pages/index.js), which must not change.
+=================================================*/
+.svc-plans .single-pricing {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+  overflow: visible;
+  padding: 32px 26px;
+  border-radius: 16px;
+  text-align: start;
+  background-color: #ffffff;
+  box-shadow: 0px 7.77px 16px 0px rgba(15, 23, 42, 0.06), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+  /* website-design's two-part title: a small label over the plan name. Both
+     were picking up the price colour through the theme's bare `span` rule. */
+  /* The price: out of its white circle, onto the hosting price rule. */
+  /* The red rotated corner ribbon becomes the hosting badge: cyan pill, in flow
+     at the start edge. It is the LAST child in the JSX, so `order` lifts it. */
+  /* The recommended card goes navy, as .hosting-pricing-card-popular. */
+}
+.svc-plans .single-pricing:hover, .svc-plans .single-pricing.pricing-highlight-blue:hover {
+  border: 0;
+  box-shadow: 0px 20px 34px -18px rgba(15, 23, 42, 0.18), 0px 3px 3px 0px rgba(15, 23, 42, 0.08), 0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset, 0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+}
+.svc-plans .single-pricing .pricing-top-heading {
+  margin-bottom: 0;
+}
+.svc-plans .single-pricing .pricing-top-heading h3 {
+  font-family: "Almarai", sans-serif;
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 1.5;
+  margin-bottom: 6px;
+  color: #212121;
+}
+.svc-plans .single-pricing .pricing-top-heading p {
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 1.75;
+  color: #4d4d4d;
+  margin-bottom: 20px;
+}
+.svc-plans .single-pricing .pricing-top-heading p sub {
+  color: inherit;
+}
+.svc-plans .single-pricing .pricing-top-heading h3 span {
+  display: block;
+  width: auto;
+  height: auto;
+  margin: 0;
+  background: none;
+  box-shadow: none;
+  border-radius: 0;
+  line-height: 1.5;
+  font-family: "Almarai", sans-serif;
+}
+.svc-plans .single-pricing .pricing-top-heading h3 .pricing-title-highlight,
+.svc-plans .single-pricing .pricing-top-heading h3 .pricing-title-highlight-word {
+  font-size: 13px;
+  font-weight: 600;
+  color: #4d4d4d;
+}
+.svc-plans .single-pricing .pricing-top-heading h3 .pricing-title-highlight-divider {
+  display: none;
+}
+.svc-plans .single-pricing .pricing-top-heading h3 .pricing-title-main {
+  font-size: 20px;
+  font-weight: 700;
+  color: #212121;
+}
+.svc-plans .single-pricing > span, .svc-plans .single-pricing.pricing-highlight-blue > span {
+  width: auto;
+  height: auto;
+  margin: 0 0 20px;
+  padding: 0 0 20px;
+  border-radius: 0;
+  border-bottom: 1px solid rgba(15, 23, 42, 0.08);
+  background: none;
+  box-shadow: none;
+  font-family: "Almarai", sans-serif;
+  font-size: 30px;
+  font-weight: 800;
+  line-height: 1.2;
+  color: #000000;
+}
+.svc-plans .single-pricing > span sub, .svc-plans .single-pricing.pricing-highlight-blue > span sub {
+  font-size: 13px;
+  font-weight: 400;
+  color: #4d4d4d;
+}
+.svc-plans .single-pricing ul {
+  flex: 1 1 auto;
+  max-width: none;
+  margin: 0 0 24px;
+  text-align: start;
+}
+.svc-plans .single-pricing ul li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 0;
+  margin-bottom: 14px;
+  text-align: start;
+  font-size: 14px;
+  font-weight: 600;
+  color: #4d4d4d;
+}
+.svc-plans .single-pricing ul li i {
+  position: static;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 20px;
+  height: 20px;
+  margin-top: 2px;
+  border-radius: 50%;
+  background-color: rgba(10, 31, 68, 0.08);
+  color: #0a1f44;
+  font-size: 14px;
+  line-height: 1;
+}
+.svc-plans .single-pricing .default-btn {
+  display: block;
+  width: 100%;
+  margin-top: auto;
+  padding: 15px 20px;
+  border: 0;
+  border-radius: 10px;
+  background-color: #0a1f44;
+  background-image: none;
+  color: #ffffff;
+  font-family: "Almarai", sans-serif;
+  font-size: 15px;
+  font-weight: 700;
+  text-align: center;
+  transition: background-color 0.3s ease, color 0.3s ease;
+}
+.svc-plans .single-pricing .default-btn::before, .svc-plans .single-pricing .default-btn::after {
+  display: none;
+}
+.svc-plans .single-pricing .default-btn:hover {
+  background-color: #0f2f68;
+  color: #ffffff;
+}
+.svc-plans .single-pricing .popular {
+  order: -1;
+  position: static;
+  align-self: flex-start;
+  transform: none;
+  margin-bottom: 14px;
+  padding: 6px 13px;
+  border-radius: 100px;
+  background-color: #1dd3f8;
+  color: #0a1f44;
+  font-family: "Almarai", sans-serif;
+  font-size: 11.5px;
+  font-weight: 700;
+  white-space: nowrap;
+}
+.svc-plans .single-pricing:has(.popular) {
+  background-color: #0a1f44;
+}
+.svc-plans .single-pricing:has(.popular) .pricing-top-heading h3,
+.svc-plans .single-pricing:has(.popular) > span {
+  color: #ffffff;
+}
+.svc-plans .single-pricing:has(.popular) .pricing-top-heading p,
+.svc-plans .single-pricing:has(.popular) > span sub {
+  color: #9aa5b1;
+}
+.svc-plans .single-pricing:has(.popular) > span {
+  border-bottom-color: rgba(255, 255, 255, 0.14);
+}
+.svc-plans .single-pricing:has(.popular) ul li {
+  color: #d5dae0;
+}
+.svc-plans .single-pricing:has(.popular) ul li i {
+  background-color: rgba(255, 255, 255, 0.16);
+  color: #ffffff;
+}
+.svc-plans .single-pricing:has(.popular) .default-btn {
+  background-color: #ffffff;
+  color: #0a1f44;
+}
+.svc-plans .single-pricing:has(.popular) .default-btn:hover {
+  background-color: #e5e5e5;
+  color: #0a1f44;
+}
+
+@media only screen and (max-width: 767px) {
+  .svc-plans .single-pricing {
+    padding: 26px 22px;
   }
 }
 

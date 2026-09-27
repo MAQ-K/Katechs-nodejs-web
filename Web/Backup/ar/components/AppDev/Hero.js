@@ -9,9 +9,7 @@ import {
   useReducedMotion,
 } from "framer-motion";
 import { staggerParent, staggerItem, EASE } from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 import ParticleField from "../Common/ParticleField";
-import Tilt3D from "../Emails/Tilt3D";
 
 import heroMockup from "../../public/images/mobile-app/app-mockup.png";
 
@@ -90,18 +88,18 @@ const Hero = () => {
                 </motion.p>
 
                 <motion.div className="app-hero-actions" variants={staggerItem(16)}>
-                  <Magnetic>
+                  <div className="d-inline-block">
                     <Link href="/contactWeb" className="default-btn app-btn-shine">
                       ابدأ مشروعك
                       <i className="bx bx-right-arrow-alt"></i>
                     </Link>
-                  </Magnetic>
+                  </div>
 
-                  <Magnetic strength={0.25}>
+                  <div className="d-inline-block">
                     <Link href="#process" className="app-hero-ghost-btn">
                       خطوات العمل
                     </Link>
-                  </Magnetic>
+                  </div>
                 </motion.div>
               </motion.div>
             </motion.div>
@@ -114,7 +112,7 @@ const Hero = () => {
               animate={{ opacity: 1, scale: 1 }}
               transition={{ duration: 0.7, ease: EASE, delay: 0.15 }}
             >
-              <Tilt3D className="app-hero-frame" max={8} preserve3d>
+              <div className="app-hero-frame svc-img-hover">
                 <div className="app-hero-media">
                   <Image
                     src={heroMockup}
@@ -149,7 +147,7 @@ const Hero = () => {
                     {f.label}
                   </span>
                 ))}
-              </Tilt3D>
+              </div>
             </motion.div>
           </div>
         </div>

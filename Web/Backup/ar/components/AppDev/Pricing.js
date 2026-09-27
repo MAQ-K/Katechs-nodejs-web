@@ -2,7 +2,6 @@ import React from "react";
 import Link from "next/link";
 import { motion, useReducedMotion } from "framer-motion";
 import Reveal, { EASE } from "../Common/Reveal";
-import Magnetic from "../Common/Magnetic";
 
 import { pricingSection, plans } from "../../data/app-development/data";
 
@@ -82,11 +81,11 @@ const Pricing = () => {
                 </motion.ul>
 
                 <div className="app-plan-cta">
-                  <Magnetic strength={0.18} className="app-plan-magnet">
+                  <div className="app-plan-magnet">
                     <Link href="/contactWeb" className="default-btn app-btn-shine">
                       اطلب عرض سعر
                     </Link>
-                  </Magnetic>
+                  </div>
                 </div>
               </Reveal>
             );

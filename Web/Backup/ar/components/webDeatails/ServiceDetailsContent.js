@@ -17,7 +17,7 @@ const ServiceDetailsContent = () => {
                 <div className="car-service-list-wrap">
                   <div className="row align-items-center">
                     <div className="col-lg-5 col-md-6">
-                      <div className="service-list-img">
+                      <div className="service-list-img svc-img-hover">
 
                         <Image src={faqImg} alt="تصميم مواقع الكترونيه" width={500} height={465} />
                       </div>

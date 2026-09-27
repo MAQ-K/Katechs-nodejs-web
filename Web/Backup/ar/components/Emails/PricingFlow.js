@@ -29,7 +29,6 @@ const PricingFlow = () => {
                       ? "email-type-card active"
                       : "email-type-card"
                   }
-                  whileHover={{ y: -6 }}
                   whileTap={{ scale: 0.98 }}
                   transition={{ duration: 0.25, ease: EASE }}
                 >

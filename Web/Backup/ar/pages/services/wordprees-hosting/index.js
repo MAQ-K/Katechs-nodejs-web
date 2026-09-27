@@ -21,7 +21,9 @@ export default function Services2Page() {
 
       <ServicesStyleTwo />
 
-      <PricingWordpressHosting />
+      <div className="svc-plans">
+        <PricingWordpressHosting />
+      </div>
 
       <FaqContent />
 

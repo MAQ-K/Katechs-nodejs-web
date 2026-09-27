@@ -10152,7 +10152,6 @@ $seopal-line-dark: rgba(255, 255, 255, 0.12); // matches $dm-line-dark / AppDev'
   &:hover {
     color: $seo-white;
     filter: brightness(1.15);
-    transform: translateY(-1px);
     box-shadow: 0 10px 18px -10px rgba(10, 31, 68, 0.5);
 
     i {
@@ -10186,7 +10185,6 @@ $seopal-line-dark: rgba(255, 255, 255, 0.12); // matches $dm-line-dark / AppDev'
     border-color: $main-color;
     color: $main-color;
     box-shadow: none;
-    transform: translateY(-1px);
   }
 }
 
@@ -11423,7 +11421,6 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
   &:hover {
     color: $white-color;
     filter: brightness(1.08);
-    transform: translateY(-1px);
     box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.5);
 
     i {
@@ -11454,7 +11451,6 @@ $dm-radius-sm: 10px; // AppDev button/icon radius
     border-color: $main-color;
     color: $main-color;
     box-shadow: none;
-    transform: translateY(-1px);
   }
 }
 
@@ -13760,7 +13756,6 @@ to change a value.
     background-color: $main-color;
     border-color: $main-color;
     color: $wsv-navy;
-    transform: translateY(-2px);
   }
 }
 
@@ -18478,5 +18473,340 @@ too. Out of scope for a styling pass — see T-020.
 @media (prefers-reduced-motion: reduce) {
   .csm-panel {
     transition: none;
+  }
+}
+
+/*================================================
+===  SERVICE PAGES — IMAGE HOVER (corner brackets)  ===
+
+User, 2026-09-28 (newest-tasks-subpages.md): on hover, a dark-blue corner
+bracket draws in at the top-right and bottom-left, and the image zooms a touch.
+Opt in with `.svc-img-hover` on the image's wrapper.
+
+Replaces the cursor-driven 3D tilt on the service-page images. That effect is
+KEPT, not deleted: components/Emails/Tilt3D.js. Wrap the image in
+<Tilt3D max={8}> again to bring it back (still used as-is on the Emails hero
+icon and the AppDev platform cards, which are not images).
+=================================================*/
+.svc-img-hover {
+  position: relative;
+
+  img {
+    transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+  }
+
+  &::before,
+  &::after {
+    content: "";
+    position: absolute;
+    z-index: 3;
+    width: 0;
+    height: 0;
+    border: 0 solid $wsv-navy;
+    opacity: 0;
+    pointer-events: none;
+    transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1),
+      height 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
+  }
+
+  /* Physical top/right and bottom/left on purpose: the brief names the
+     corners, and they must not swap under RTL. */
+  &::before {
+    top: -10px;
+    right: -10px;
+    border-top-width: 3px;
+    border-right-width: 3px;
+  }
+
+  &::after {
+    bottom: -10px;
+    left: -10px;
+    border-bottom-width: 3px;
+    border-left-width: 3px;
+  }
+
+  &:hover {
+    &::before,
+    &::after {
+      width: 56px;
+      height: 56px;
+      opacity: 1;
+    }
+
+    img {
+      transform: scale(1.04);
+    }
+  }
+}
+
+/* The legacy wrappers are full column width while the image inside is not, so
+   the brackets would float off the image's corners. Shrink them to the image. */
+.service-list-img.svc-img-hover,
+.industries-img.svc-img-hover {
+  width: fit-content;
+  max-width: 100%;
+  margin-inline: auto;
+  line-height: 0;
+}
+
+/* cPanel banner: the image is deliberately 110% of its column (it bleeds out of
+   the navy band). Move that 110% onto the bracket wrapper so the corners sit on
+   the image, not on the column. */
+.hosting-cpanel-banner .hosting-cpanel-banner-img .svc-img-hover {
+  width: 110%;
+  line-height: 0;
+
+  img {
+    width: 100%;
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .svc-img-hover:hover img {
+    transform: none;
+  }
+}
+
+/*================================================
+===  SERVICE PAGES — LEGACY PLAN CARDS → HOSTING CARD  ===
+
+User, 2026-09-28: every plan card follows the Hosting Services card, style only.
+The icon-well / stat families already do (PLAN CARD — ONE STYLE, above). What
+was left is the theme's `.single-pricing` on website-design, vps-hosting,
+wordprees-hosting and ssl-certificate: centred, a 50px/0 leaf radius, the price
+in a white circle, a red rotated "Popular" ribbon.
+
+Scoped under `.svc-plans` (a wrapper div in those four page files), NOT on
+`.single-pricing` itself: components/PricingWebsite is also rendered by the
+frozen homepage (pages/index.js), which must not change.
+=================================================*/
+.svc-plans .single-pricing {
+  display: flex;
+  flex-direction: column;
+  height: calc(100% - 30px);
+  overflow: visible;
+  padding: 32px 26px;
+  border-radius: 16px;
+  text-align: start;
+  background-color: $white-color;
+  box-shadow:
+    0px 7.77px 16px 0px rgba(15, 23, 42, 0.06),
+    0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+    0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+    0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  transition: box-shadow 0.35s ease, transform 0.35s ease;
+
+  &:hover,
+  &.pricing-highlight-blue:hover {
+    border: 0;
+    box-shadow:
+      0px 20px 34px -18px rgba(15, 23, 42, 0.18),
+      0px 3px 3px 0px rgba(15, 23, 42, 0.08),
+      0px -8px 0px 0px rgba(0, 0, 0, 0.03) inset,
+      0px 4px 0px 0px rgba(255, 255, 255, 0.6) inset;
+  }
+
+  .pricing-top-heading {
+    margin-bottom: 0;
+
+    h3 {
+      font-family: $font-family;
+      font-size: 20px;
+      font-weight: 700;
+      line-height: 1.5;
+      margin-bottom: 6px;
+      color: $heading-color;
+    }
+
+    p {
+      font-size: 14px;
+      font-weight: 400;
+      line-height: 1.75;
+      color: $body-color;
+      margin-bottom: 20px;
+
+      sub {
+        color: inherit;
+      }
+    }
+  }
+
+  /* website-design's two-part title: a small label over the plan name. Both
+     were picking up the price colour through the theme's bare `span` rule. */
+  .pricing-top-heading h3 span {
+    display: block;
+    width: auto;
+    height: auto;
+    margin: 0;
+    background: none;
+    box-shadow: none;
+    border-radius: 0;
+    line-height: 1.5;
+    font-family: $font-family;
+  }
+
+  .pricing-top-heading h3 .pricing-title-highlight,
+  .pricing-top-heading h3 .pricing-title-highlight-word {
+    font-size: 13px;
+    font-weight: 600;
+    color: $body-color;
+  }
+
+  .pricing-top-heading h3 .pricing-title-highlight-divider {
+    display: none;
+  }
+
+  .pricing-top-heading h3 .pricing-title-main {
+    font-size: 20px;
+    font-weight: 700;
+    color: $heading-color;
+  }
+
+  /* The price: out of its white circle, onto the hosting price rule. */
+  > span,
+  &.pricing-highlight-blue > span {
+    width: auto;
+    height: auto;
+    margin: 0 0 20px;
+    padding: 0 0 20px;
+    border-radius: 0;
+    border-bottom: 1px solid $wsv-line;
+    background: none;
+    box-shadow: none;
+    font-family: $font-family;
+    font-size: 30px;
+    font-weight: 800;
+    line-height: 1.2;
+    color: $black-color;
+
+    sub {
+      font-size: 13px;
+      font-weight: 400;
+      color: $body-color;
+    }
+  }
+
+  ul {
+    flex: 1 1 auto;
+    max-width: none;
+    margin: 0 0 24px;
+    text-align: start;
+
+    li {
+      display: flex;
+      align-items: flex-start;
+      gap: 10px;
+      padding: 0;
+      margin-bottom: 14px;
+      text-align: start;
+      font-size: 14px;
+      font-weight: 600;
+      color: $body-color;
+
+      i {
+        position: static;
+        flex-shrink: 0;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        border-radius: 50%;
+        background-color: rgba(10, 31, 68, 0.08);
+        color: $wsv-navy;
+        font-size: 14px;
+        line-height: 1;
+      }
+    }
+  }
+
+  .default-btn {
+    display: block;
+    width: 100%;
+    margin-top: auto;
+    padding: 15px 20px;
+    border: 0;
+    border-radius: 10px;
+    background-color: $wsv-navy;
+    background-image: none;
+    color: $white-color;
+    font-family: $font-family;
+    font-size: 15px;
+    font-weight: 700;
+    text-align: center;
+    transition: background-color 0.3s ease, color 0.3s ease;
+
+    &::before,
+    &::after {
+      display: none;
+    }
+
+    &:hover {
+      background-color: lighten($wsv-navy, 8%);
+      color: $white-color;
+    }
+  }
+
+  /* The red rotated corner ribbon becomes the hosting badge: cyan pill, in flow
+     at the start edge. It is the LAST child in the JSX, so `order` lifts it. */
+  .popular {
+    order: -1;
+    position: static;
+    align-self: flex-start;
+    transform: none;
+    margin-bottom: 14px;
+    padding: 6px 13px;
+    border-radius: 100px;
+    background-color: $main-color;
+    color: $wsv-navy;
+    font-family: $font-family;
+    font-size: 11.5px;
+    font-weight: 700;
+    white-space: nowrap;
+  }
+
+  /* The recommended card goes navy, as .hosting-pricing-card-popular. */
+  &:has(.popular) {
+    background-color: $wsv-navy;
+
+    .pricing-top-heading h3,
+    > span {
+      color: $white-color;
+    }
+
+    .pricing-top-heading p,
+    > span sub {
+      color: #9aa5b1;
+    }
+
+    > span {
+      border-bottom-color: rgba(255, 255, 255, 0.14);
+    }
+
+    ul li {
+      color: #d5dae0;
+
+      i {
+        background-color: rgba(255, 255, 255, 0.16);
+        color: $white-color;
+      }
+    }
+
+    .default-btn {
+      background-color: $white-color;
+      color: $wsv-navy;
+
+      &:hover {
+        background-color: #e5e5e5;
+        color: $wsv-navy;
+      }
+    }
+  }
+}
+
+@media only screen and (max-width: 767px) {
+  .svc-plans .single-pricing {
+    padding: 26px 22px;
   }
 }

@@ -66,7 +66,7 @@ const WhatWeOffer = () => {
 
             <div className="col-lg-4">
               <div
-                className="industries-img"
+                className="industries-img svc-img-hover"
                 data-aos="zoom-in"
                 data-aos-duration="1200"
                 data-aos-delay="400"

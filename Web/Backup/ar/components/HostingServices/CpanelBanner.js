@@ -4,8 +4,6 @@ import Image from "next/image";
 
 import { cpanelBanner } from "../../data/hosting-services/data";
 import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
-import Tilt3D from "../Emails/Tilt3D";
-import Magnetic from "../Common/Magnetic";
 import { motion } from "framer-motion";
 
 const CpanelBanner = () => {
@@ -29,26 +27,26 @@ const CpanelBanner = () => {
                   {cpanelBanner.description}
                 </motion.p>
                 <motion.div variants={staggerItem(14)}>
-                  <Magnetic strength={0.25}>
+                  <div className="d-inline-block">
                     <Link href={cpanelBanner.cta.href} className="default-btn">
                       {cpanelBanner.cta.text}
                       <i className="bx bx-right-arrow-alt"></i>
                     </Link>
-                  </Magnetic>
+                  </div>
                 </motion.div>
               </motion.div>
             </div>
 
             <div className="col-lg-6">
               <Reveal className="hosting-cpanel-banner-img" delay={0.1} y={40}>
-                <Tilt3D max={7} glare={false}>
+                <div className="svc-img-hover">
                   <Image
                     src={cpanelBanner.image}
                     alt={cpanelBanner.heading}
                     width={780}
                     height={520}
                   />
-                </Tilt3D>
+                </div>
               </Reveal>
             </div>
           </div>

@@ -55,7 +55,6 @@ const Hero = () => {
 
               <motion.div variants={staggerItem(16)}>
                 <motion.div
-                  whileHover={{ y: -4 }}
                   whileTap={{ scale: 0.96 }}
                   transition={{ duration: 0.2, ease: EASE }}
                   style={{ display: "inline-block" }}

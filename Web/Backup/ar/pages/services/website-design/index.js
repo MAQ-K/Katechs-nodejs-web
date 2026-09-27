@@ -36,7 +36,9 @@ export default function Services2Page() {
       <WhatWeOffer />
 
 
-      <PricingWebsite />
+      <div className="svc-plans">
+        <PricingWebsite />
+      </div>
 
 
       <ContactInfo />

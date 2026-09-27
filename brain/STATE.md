@@ -9,6 +9,11 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-09-28 · service pages — image hover, button hover, plan cards** (`brain/logs/2026-09-28.md`).
+  Images use `.svc-img-hover` (navy corner brackets + tiny zoom); the old 3D tilt is KEPT in
+  `Emails/Tilt3D.js` on purpose. `Magnetic` + hover lifts are gone from every service-page button —
+  don't re-add. Legacy `.single-pricing` cards are restyled only under `.svc-plans` (homepage untouched).
+  🔴 `pages/offers.js:52` has a JSX syntax error (raw `<script>` pasted in) — 500s in dev.
 - **2026-09-23 · UI Implementer — the five SERVICES sections on `/hp-new` are rebuilt to the Claude
   Design handoff** (`Homepage/Homepage Services Design-handoff/`). `web-services` (bento), `app-dev`,
   `mail`, `stores` (option-C bento) and `marketing`. Full detail in `brain/logs/2026-09-23.md` — read
