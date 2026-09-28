@@ -19065,6 +19065,29 @@ icon and the AppDev platform cards, which are not images).
   }
 }
 
+/* The brackets sit 18px OUTSIDE the image; on a phone the container gutter is
+   only 12px, so even the invisible (width 0) brackets widened the page and let
+   it scroll sideways (responsive audit, 2026-09-28). Touch screens cannot
+   hover anyway, so they get no brackets; narrow mouse windows pull them in. */
+@media (hover: none) {
+  .svc-img-hover::before,
+  .svc-img-hover::after {
+    display: none;
+  }
+}
+
+@media (max-width: 991px) {
+  .svc-img-hover::before {
+    top: -10px;
+    right: -10px;
+  }
+
+  .svc-img-hover::after {
+    bottom: -10px;
+    left: -10px;
+  }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .svc-img-hover:hover img {
     transform: none;

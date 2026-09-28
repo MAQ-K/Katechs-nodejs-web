@@ -198,6 +198,13 @@ export const appServices = {
     "لوحة تحكم تدير منها المحتوى والطلبات والإشعارات",
     "نشر على App Store و Google Play، ومتابعة بعد الإطلاق",
   ],
+  // The three points as feature cards for the 3-column homepage layout
+  // (user, 2026-09-28: "features on the left"). Same copy as `points`.
+  features: [
+    { icon: "bx bx-devices", title: "تطبيق واحد يعمل على iOS وأندرويد بنفس الجودة" },
+    { icon: "bx bx-slider-alt", title: "لوحة تحكم تدير منها المحتوى والطلبات والإشعارات" },
+    { icon: "bx bx-rocket", title: "نشر على App Store و Google Play، ومتابعة بعد الإطلاق" },
+  ],
   cta: { label: "اطلب تطبيقك الآن", href: "/services/app-development/" },
   secondary: { label: "تحدث معنا أولاً", href: "/contact" },
 
@@ -370,7 +377,6 @@ export const customProjectForm = {
   detailsLabel: "ما الذي نحتاج معرفته؟",
   detailsText: "مجال نشاطك، جمهورك، والمزايا التي تريدها في موقعك. يمكنك إضافة الميزانية والموعد المناسب إن كانا محددين.",
   submitLabel: "ناقش مشروعك عبر واتساب",
-  hint: "ستفتح التفاصيل في واتساب لمراجعتها وإرسالها بنفسك.",
   optional: "اختياري",
   fields: [
     { name: "business", label: "اسم النشاط أو الشركة", required: true, autoComplete: "organization", maxLength: 120 },

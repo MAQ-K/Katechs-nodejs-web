@@ -66,27 +66,15 @@ export default function ProjectsMarquee({
           margin: 0 0 12px;
           padding-inline: clamp(24px, 3vw, 40px);
         }
+        /* 2026-09-28 (user): no edge fade, 3px gap, 3px radius, a touch
+           taller, and a hover on each shot. */
         .hp-marquee-mask {
           overflow: hidden;
           min-width: 0;
-          -webkit-mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            #000 10%,
-            #000 90%,
-            transparent 100%
-          );
-          mask-image: linear-gradient(
-            to right,
-            transparent 0%,
-            #000 10%,
-            #000 90%,
-            transparent 100%
-          );
         }
         .hp-marquee-track {
           display: flex;
-          gap: 10px;
+          gap: 3px;
           width: max-content;
           animation-name: hpMarquee;
           animation-timing-function: linear;
@@ -95,20 +83,35 @@ export default function ProjectsMarquee({
         .hp-marquee-item {
           position: relative;
           width: max-content;
-          border-radius: 8px;
+          border-radius: 3px;
           overflow: hidden;
           background: #f2f2f2;
           margin: 0;
-          transition: transform 0.25s ease;
         }
-        .hp-marquee-item:hover {
-          transform: translateY(-4px);
+        /* Navy wash + cyan inner edge, drawn over the image. */
+        .hp-marquee-item::after {
+          content: "";
+          position: absolute;
+          inset: 0;
+          border-radius: inherit;
+          box-shadow: inset 0 0 0 2px transparent;
+          background: rgba(6, 12, 74, 0);
+          transition: background 0.3s ease, box-shadow 0.3s ease;
+          pointer-events: none;
+        }
+        .hp-marquee-item:hover::after {
+          background: rgba(6, 12, 74, 0.12);
+          box-shadow: inset 0 0 0 2px #1dd3f8;
         }
         .hp-marquee-item img {
           display: block;
-          height: clamp(130px, 20vh, 180px);
+          height: clamp(145px, 22vh, 200px);
           width: auto;
           max-width: none;
+          transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .hp-marquee-item:hover img {
+          transform: scale(1.06);
         }
         @keyframes hpMarquee {
           from {
@@ -122,7 +125,7 @@ export default function ProjectsMarquee({
           .hp-marquee-track {
             animation: none;
           }
-          .hp-marquee-item:hover {
+          .hp-marquee-item:hover img {
             transform: none;
           }
         }

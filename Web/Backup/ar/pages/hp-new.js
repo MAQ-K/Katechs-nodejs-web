@@ -26,7 +26,7 @@ import TrustedCustomers from "../components/Common/TrustedCustomers";
 import FaqHorizontal from "../components/Common/FaqHorizontal";
 import WhyChooseUs from "../components/HpNew/WhyChooseUs";
 import useSmoothScroll from "../components/Services/useSmoothScroll";
-import { sectionNav } from "../data/home-new/data";
+import { sectionNav, appServices } from "../data/home-new/data";
 
 // === New homepage — independent rebuild ===
 // STRUCTURE PASS (2026-09-03): hero, domain search, floating section nav.
@@ -60,6 +60,10 @@ const GAP = 16;
 // line, never by the jump itself.
 const LINE_SLACK = 24;
 
+// Longest a pill click may hold the highlight before the scroll-spy takes over
+// again — covers a glide the user interrupts with the wheel.
+const LOCK_MS = 2000;
+
 // Section slots the navigator points at that are not built yet. EMPTY as of
 // 2026-09-08 — marketing (the last placeholder) is a real section again, this
 // time the SEO showcase. Kept, with .hp-slot below, for whatever is next.
@@ -92,6 +96,13 @@ export default function HpNewPage() {
   // height at the moment it goes fixed.
   const slotRef = useRef(null);
   const slotHeight = useRef(0);
+
+  // Set on a pill click (user, 2026-09-28: "when i press the bg change
+  // imediatly then it goes to the section"). While set, the scroll-spy leaves
+  // the highlight on the clicked pill instead of walking it through every
+  // section the glide passes. Released when the spy agrees the target has
+  // arrived, or after LOCK_MS if the glide was interrupted.
+  const lockRef = useRef(null);
 
   useEffect(() => {
     let frame = null;
@@ -160,6 +171,14 @@ export default function HpNewPage() {
           current = item.id;
         }
       });
+      const lock = lockRef.current;
+      if (lock) {
+        if (current === lock.id || Date.now() - lock.at > LOCK_MS) {
+          lockRef.current = null;
+        } else {
+          return;
+        }
+      }
       setActiveId(current);
     };
 
@@ -185,6 +204,9 @@ export default function HpNewPage() {
     (id) => {
       const el = document.getElementById(id);
       if (!el) return;
+      // Highlight first, travel second.
+      lockRef.current = { id, at: Date.now() };
+      setActiveId(id);
       const offset = navbarHeight() + slotHeight.current + GAP;
       const top = el.getBoundingClientRect().top + window.scrollY - offset;
       // scrollToY, never window.scrollTo({behavior:"smooth"}) — see the note at
@@ -242,7 +264,12 @@ export default function HpNewPage() {
 
         {/* --- App services: talk + the 3D phone stage --- */}
         <section id="app-dev">
-          <AppServices />
+          <AppServices
+            content={appServices}
+            features={appServices.features}
+            phonesFirst
+            fade={{ top: "#f7f7f7", bottom: "#ffffff" }}
+          />
         </section>
 
         {/* --- Email services: side tabs, talk over image --- */}

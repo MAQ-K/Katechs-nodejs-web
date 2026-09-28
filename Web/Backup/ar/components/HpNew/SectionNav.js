@@ -86,7 +86,7 @@ const SectionNav = ({ items, activeId, onSelect, floating = false }) => {
           grid-auto-columns: 1fr;
           gap: 4px;
           padding: 6px;
-          border: 1px solid #d9d9d9;
+          border: 1px solid rgba(6, 12, 74, 0.12);
           border-radius: 999px;
           background: #fff;
           max-width: calc(100% - 32px);
@@ -102,12 +102,12 @@ const SectionNav = ({ items, activeId, onSelect, floating = false }) => {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 15px;
           font-weight: 600;
-          color: #555;
+          color: #4a5578;
           cursor: pointer;
           transition: color 0.25s ease;
         }
         .hp-nav-item:hover {
-          color: #111;
+          color: #060c4a;
         }
         .hp-nav-item.is-active {
           color: #fff;
@@ -119,7 +119,9 @@ const SectionNav = ({ items, activeId, onSelect, floating = false }) => {
           inset-inline-start: 6px;
           width: calc((100% - 12px - (var(--hp-nav-n) - 1) * 4px) / var(--hp-nav-n));
           border-radius: 999px;
-          background: #111;
+          /* Site colours (user, 2026-09-28): navy pill, cyan edge. */
+          background: #060c4a;
+          box-shadow: inset 0 -2px 0 #1dd3f8;
           /* translate, not inset-inline-start, so this animates on the
              compositor. The sign flips for RTL — the site is RTL, so slot 1 is
              to the LEFT of slot 0. */
@@ -151,7 +153,7 @@ const SectionNav = ({ items, activeId, onSelect, floating = false }) => {
             font-size: 14px;
           }
           .hp-nav-item.is-active {
-            background: #111;
+            background: #060c4a;
           }
           /* The indicator cannot track a scrolling flex row, so the active
              item carries its own background above instead. */

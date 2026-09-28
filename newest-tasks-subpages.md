@@ -122,3 +122,40 @@ keep our style i
 >   `.default-btn`. The combo package moved into data/services/data.js so the homepage and /services share it;
 >   its image is the build + manage photos side by side.
 
+
+> ### Report (2026-09-28): tested 11 pages at 360 / 390 / 768 / 1024px (automated browser + phone screenshots)
+>
+> **Fixed during the check:** the corner-bracket image hover made hosting + security scroll sideways on
+> phones (brackets sit 18px outside the image, the phone gutter is 12px). Now hidden on touch screens and
+> pulled in to 10px under 992px. Re-measured: 0px sideways scroll on those pages.
+>
+> **Bugs (fix first)**
+> 1. website-design + ssl-certificate scroll sideways 12px at every width, so text is cut on the right edge
+>    on phones. Cause: a Bootstrap `.row` with no `.container` around it:
+>    `components/Contact/popupformPage.js:8` (website-design) and the tab rows in
+>    `components/PricingSSL/PricingStyleOne.js` (ssl).
+> 2. hosting-services scrolls 42px sideways at ~1024px (tablet landscape / small laptop): the hero image
+>    is wider than its column.
+> 3. Every page requests `/_next/static/chunks/style.js`, which 404s: `pages/_document.js:54`. Delete the tag.
+> 4. React warning `class` instead of `className` in sslDetails / webDeatails / webDeatailsFooter
+>    `ServiceDetailsContent.js` (line 13 each).
+>
+> **UX on phones**
+> 5. Hosting + SEO heroes show the picture/mockup first; the headline and CTA land below the first screen.
+>    Emails, app-dev and digital-marketing lead with the text; make these two do the same.
+> 6. WhatsApp + back-to-top cover the ends of text lines on every page, and the footer copyright line.
+>    Add ~80px bottom padding to the footer on phones.
+> 7. Long one-column stacks that could be 2 columns on phones: /services service picker (4 cards),
+>    e-commerce feature tiles (6 tall tiles, one word each), the 4 store cards; ssl "ميزات الشهادة"
+>    (8 mostly empty ~270px cards) and similar card lists on security.
+> 8. App-dev platforms section: the phone ring takes ~2 screens and the phones get cropped. Smaller ring on phones.
+> 9. Emails: a large, nearly empty light-blue box right after the hero.
+> 10. Small tap targets: /services hero slider dots are 8x8px; text links ~25px tall (تحدث معنا أولاً,
+>     SEO تواصل معنا, DM صفحة السيو, website-design اضغط هنا). Aim for 44px.
+> 11. Tiny text: plan badges, store tags, priority tags and `sub` prices at 10.5–11.5px. Raise to 12px min.
+> 12. Footer is ~4 screens long on a phone. Collapse its link groups into accordions.
+> 13. The 5 older pages (website-design, wordpress, vps, ssl, security) still open with the old theme's
+>     title banner, so they look like a different site next to the redesigned ones.
+>
+> **OK:** navbar collapses to a hamburger; the /services side rail hides under 992px; the WhatsApp and
+> back-to-top buttons never overlap each other; no JS errors on any page.

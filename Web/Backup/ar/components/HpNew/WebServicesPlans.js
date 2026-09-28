@@ -30,9 +30,17 @@ import { webServices } from "../../data/home-new/data";
 // Cyan on white needs care: #1dd3f8 on #fff is ~1.7:1, nowhere near AA, so it
 // is only ever a FILL behind dark text (active pill, popular CTA, badge) or an
 // icon colour. The feature ticks use the darkened #0f8fae (~4.6:1).
+// How many features a card shows before its vertical "المزيد" tab
+// (user, 2026-09-28: "a vertical btn on the side of the card that tells more,
+// after pressed it gives more details"). The rest are the card's own feature
+// list, so no copy was invented for it.
+const PREVIEW = 3;
+
 const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
   const [active, setActive] = useState(0);
+  const [open, setOpen] = useState({});
   const base = useId();
+  const toggle = (key) => setOpen((o) => ({ ...o, [key]: !o[key] }));
 
   if (!tabs || tabs.length === 0) return null;
 
@@ -101,17 +109,36 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
 
         {hasPlans && (
           <div className="hp-plans-grid">
-            {tab.plans.map((plan) => (
+            {tab.plans.map((plan) => {
+              const key = tab.id + "-" + plan.id;
+              const expanded = Boolean(open[key]);
+              const features = plan.features || [];
+              const hasMore = features.length > PREVIEW;
+              const shown = expanded ? features : features.slice(0, PREVIEW);
+              const listId = base + "-" + key + "-list";
+              return (
               <article
                 key={plan.id}
                 className={plan.isPopular ? "hp-plan is-popular" : "hp-plan"}
               >
+                {hasMore && (
+                  <button
+                    type="button"
+                    className={expanded ? "hp-plan-more is-open" : "hp-plan-more"}
+                    aria-expanded={expanded}
+                    aria-controls={listId}
+                    onClick={() => toggle(key)}
+                  >
+                    <span>{expanded ? "أقل" : "المزيد"}</span>
+                    <i className="bx bx-chevron-down" aria-hidden="true" />
+                  </button>
+                )}
                 {plan.badge && <span className="hp-plan-badge">{plan.badge}</span>}
                 <h4>{plan.name}</h4>
                 <p className="hp-plan-summary">{plan.summary}</p>
                 <p className="hp-plan-price">{plan.price}</p>
-                <ul>
-                  {plan.features?.map((feature) => (
+                <ul id={listId}>
+                  {shown.map((feature) => (
                     <li key={feature}>
                       <i className="bx bx-check" aria-hidden="true" />
                       <span>{feature}</span>
@@ -125,7 +152,8 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
                   {plan.cta.text}
                 </Link>
               </article>
-            ))}
+              );
+            })}
           </div>
         )}
 
@@ -201,6 +229,48 @@ const WebServicesPlans = ({ tabs = webServices.plansTabs }) => {
           box-shadow: 0 18px 40px -28px rgba(10, 31, 68, 0.35);
           display: flex;
           flex-direction: column;
+        }
+        /* Vertical tab hanging off the card's outer edge (physical left in
+           RTL). Navy by default, cyan once open. */
+        .hp-plan-more {
+          position: absolute;
+          inset-block-start: 50%;
+          inset-inline-end: -17px;
+          transform: translateY(-50%);
+          display: flex;
+          flex-direction: column;
+          align-items: center;
+          gap: 6px;
+          padding: 16px 7px;
+          border: 0;
+          border-radius: 10px;
+          background: #060c4a;
+          color: #fff;
+          font-family: "Cairo", system-ui, sans-serif;
+          font-size: 13px;
+          font-weight: 700;
+          cursor: pointer;
+          box-shadow: 0 10px 22px -10px rgba(6, 12, 74, 0.6);
+          transition: background 0.25s ease, color 0.25s ease;
+        }
+        .hp-plan-more span {
+          writing-mode: vertical-rl;
+        }
+        .hp-plan-more i {
+          font-size: 18px;
+          transition: transform 0.3s ease;
+        }
+        .hp-plan-more:hover,
+        .hp-plan-more.is-open {
+          background: #1dd3f8;
+          color: #060c4a;
+        }
+        .hp-plan-more.is-open i {
+          transform: rotate(180deg);
+        }
+        .hp-plan-more:focus-visible {
+          outline: 2px solid #0a1f44;
+          outline-offset: 3px;
         }
         .hp-plan.is-popular {
           border: 2px solid #1dd3f8;

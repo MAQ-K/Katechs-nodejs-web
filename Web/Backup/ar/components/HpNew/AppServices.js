@@ -73,9 +73,29 @@ const STREAKS = [
 // user 2026-09-28: "mobile object on the middle, talk on the right, features
 // on the left"), the section becomes three columns. The homepage passes
 // nothing and keeps its two-column layout.
-const AppServices = ({ content = appServices, features }) => {
+//
+// `phonesFirst` (homepage, user 2026-09-28): phones on the RIGHT and closer
+// together, talk in the middle, features on the left.
+// `fade` = { top, bottom } — the neighbouring sections' colours; the band fades
+// in from / out to them instead of cutting hard to navy ("break the contrast").
+// When `features` are given the bullet list moves into them, so the text
+// column no longer repeats it.
+const AppServices = ({ content = appServices, features, phonesFirst = false, fade }) => {
+  const points = features ? [] : content.points || [];
+  const cls = ["hp-app", features && "is-three", phonesFirst && "is-phones-first"]
+    .filter(Boolean)
+    .join(" ");
   return (
-    <div className={features ? "hp-app is-three" : "hp-app"}>
+    <div
+      className={cls}
+      style={
+        fade
+          ? { "--hp-app-fade-top": fade.top, "--hp-app-fade-bottom": fade.bottom }
+          : undefined
+      }
+    >
+      {fade && <span className="hp-app-fade is-top" aria-hidden="true" />}
+      {fade && <span className="hp-app-fade is-bottom" aria-hidden="true" />}
       <div className="hp-app-bg" aria-hidden="true">
         {STREAKS.map(([start, w, h, op, colour, glow, dur, delay], i) => (
           <div
@@ -112,9 +132,9 @@ const AppServices = ({ content = appServices, features }) => {
           <h2>{content.heading}</h2>
           <p>{content.body}</p>
 
-          {content.points?.length > 0 && (
+          {points.length > 0 && (
           <ul className="hp-app-list">
-            {content.points.map((point) => (
+            {points.map((point) => (
               <li key={point}>
                 <svg
                   viewBox="0 0 24 24"
@@ -163,7 +183,7 @@ const AppServices = ({ content = appServices, features }) => {
                 // the wallet (never adjacent to it on the ring).
                 "توصيل وتتبّع": "/images/homepage/app-wallet.jpeg",
               }}
-              radius={features ? 190 : 235}
+              radius={phonesFirst ? 150 : features ? 190 : 235}
             />
           </div>
         </div>
@@ -175,7 +195,7 @@ const AppServices = ({ content = appServices, features }) => {
                 <i className={item.icon} aria-hidden="true"></i>
                 <div>
                   <h3>{item.title}</h3>
-                  <span>{item.meta}</span>
+                  {item.meta && <span>{item.meta}</span>}
                 </div>
               </li>
             ))}
@@ -487,6 +507,39 @@ const AppServices = ({ content = appServices, features }) => {
         }
         .hp-app.is-three .hp-app-orbit-host :global(.app-orbit) {
           transform: none;
+        }
+        /* Homepage order: phones right (order 1 in RTL), talk middle,
+           features left. */
+        .hp-app.is-phones-first .hp-app-stage {
+          order: 1;
+        }
+        .hp-app.is-phones-first .hp-app-text {
+          order: 2;
+        }
+        @media (min-width: 992px) {
+          .hp-app.is-phones-first .hp-app-inner {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.1fr) minmax(0, 0.9fr);
+          }
+        }
+        .hp-app-fade {
+          position: absolute;
+          inset-inline: 0;
+          height: clamp(80px, 12vw, 160px);
+          /* Above .hp-app-bg (auto), below .hp-app-inner (1, later in DOM). */
+          z-index: 1;
+          pointer-events: none;
+        }
+        .hp-app-fade.is-top {
+          top: 0;
+          background: linear-gradient(to bottom, var(--hp-app-fade-top), transparent);
+        }
+        .hp-app-fade.is-bottom {
+          bottom: 0;
+          background: linear-gradient(to top, var(--hp-app-fade-bottom), transparent);
+        }
+        /* Keep the content clear of the faded edges. */
+        .hp-app:has(.hp-app-fade) {
+          padding-block: clamp(80px, 10vw, 140px);
         }
         .hp-app-features {
           order: 3;

@@ -26,16 +26,18 @@ import ProjectsMarquee from "./ProjectsMarquee";
 //      --hp-ws-chrome. The design lays the band out at its natural height, so
 //      there is nothing left to measure. If a 100vh variant is ever wanted
 //      again, read the history above first — one was already rejected.
+//
+// ---- LAYOUT PASS (2026-09-28, user sketch image.png) ----
+// No separate title band above the bento any more: the section title is the
+// first line INSIDE the brief card (section title, h2, talk, btn, badges).
+// The bento sits in a narrower centred container instead of running edge to
+// edge, with the brief card and the image as two equal boxes and the projects
+// card across the full width under them.
 export default function WebServicesScreen() {
   return (
     <div className="hp-ws">
-      {/* One line, and only one — the band it opens is already tight (user,
-          2026-09-10: "add a 1 line title on top, don't take too much space").
-          webServices.intro.subtitle stays unused on purpose. */}
-      <h2 className="hp-ws-title">{webServices.intro.title}</h2>
-
       <div className="hp-ws-bento">
-        <WebServicesBrief />
+        <WebServicesBrief title={webServices.intro.title} />
         <ProjectsMarquee />
       </div>
 
@@ -56,25 +58,12 @@ export default function WebServicesScreen() {
           gap: 12px;
           padding-block: 12px 16px;
         }
-        .hp-ws-title {
-          width: min(1400px, calc(100% - 48px));
-          margin: 0 auto;
-          font: 800 clamp(19px, 2vw, 24px) / 1.5 "Cairo", system-ui, sans-serif;
-          color: #212121;
-          text-align: center;
-          /* One line is the whole brief for this heading. If the copy ever
-             grows past the container it clips rather than pushing the band
-             open. */
-          white-space: nowrap;
-          overflow: hidden;
-          text-overflow: ellipsis;
-        }
         .hp-ws-bento {
-          width: min(1400px, calc(100% - 48px));
+          width: min(1200px, calc(100% - 48px));
           margin: 0 auto;
-          padding: 8px 0 clamp(56px, 7vw, 88px);
+          padding: clamp(24px, 3vw, 40px) 0 clamp(56px, 7vw, 88px);
           display: grid;
-          gap: 10px;
+          gap: 16px;
         }
         .hp-ws-plans {
           padding-block: 0 clamp(56px, 8vw, 104px);

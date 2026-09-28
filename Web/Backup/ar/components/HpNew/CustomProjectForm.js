@@ -4,7 +4,8 @@ import { customProjectForm } from "../../data/home-new/data";
 // The "تطوير مخصّص" tab's panel — a requirements form that hands off to
 // WhatsApp rather than posting anywhere. There is no endpoint for it: the
 // submit handler builds a message out of the filled fields and opens wa.me, so
-// the user reviews and sends it themselves (that is what config.hint says).
+// the user reviews and sends it themselves. (The line saying so under the
+// button was removed on user request, 2026-09-28.)
 //
 // ---- DESIGN SYSTEM PASS (2026-09-23, user) ----
 // Matches Homepage.dc.html: one bordered 16px card, two equal columns — pitch
@@ -82,7 +83,6 @@ export default function CustomProjectForm({ config = customProjectForm }) {
           </label>
         ))}
         <button type="submit">{config.submitLabel}</button>
-        <p className="hp-custom-hint">{config.hint}</p>
       </form>
 
       <style jsx>{`
@@ -191,12 +191,6 @@ export default function CustomProjectForm({ config = customProjectForm }) {
         .hp-custom-fields button:focus-visible {
           outline: 2px solid #0a1f44;
           outline-offset: 3px;
-        }
-        .hp-custom-hint {
-          font-size: 12.5px;
-          color: #777;
-          margin: 0;
-          text-align: center;
         }
         @media (max-width: 767px) {
           .hp-custom {

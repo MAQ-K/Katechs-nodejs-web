@@ -13,7 +13,8 @@ import { emailServices } from "../../data/home-new/data";
 // Matches Homepage.dc.html. What changed from the revision before it:
 //   • the tabs were a vertical side rail; they are now a responsive row of
 //     three 16px cards, each with a 42px icon tile, and the active one goes
-//     near-black (#0e0e10) with a cyan→violet underline that wipes in;
+//     navy (#060c4a) with a cyan underline that wipes in (was near-black +
+//     cyan→violet; site colours per user, 2026-09-28);
 //   • the panel gained two blurred aura shapes behind the copy and a glow
 //     behind the image;
 //   • the four points became 34px circular tick badges on a four-colour cycle,
@@ -23,7 +24,9 @@ import { emailServices } from "../../data/home-new/data";
 // animation on tab change without a key remount: even tabs use mailFadeA /
 // mailRiseA, odd ones B. Swapping the name is what re-triggers it; re-applying
 // the same name would not.
-const BADGE_COLOURS = ["#16a34a", "#7c3aed", "#2563eb", "#0f8fae"];
+// Site colours only (user, 2026-09-28): navy and the darkened cyan that
+// keeps a white tick readable.
+const BADGE_COLOURS = ["#0a1f44", "#0f8fae", "#0a1f44", "#0f8fae"];
 
 const EmailServices = ({ content = emailServices }) => {
   const [active, setActive] = useState(0);
@@ -138,7 +141,7 @@ const EmailServices = ({ content = emailServices }) => {
                   </li>
                 ))}
               </ul>
-              <Link href={content.cta.href} className="hp-mail-btn">
+              <Link href={content.cta.href} className="default-btn app-btn-shine">
                 {content.cta.label}
               </Link>
             </div>
@@ -177,7 +180,7 @@ const EmailServices = ({ content = emailServices }) => {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: 14px;
           font-weight: 700;
-          color: #666;
+          color: #0a1f44;
           margin-bottom: 12px;
         }
         .hp-mail-head h2 {
@@ -216,17 +219,17 @@ const EmailServices = ({ content = emailServices }) => {
         }
         .hp-mail-tabs button:hover {
           transform: translateY(-3px);
-          border-color: #111;
+          border-color: #1dd3f8;
         }
         .hp-mail-tabs button:focus-visible {
           outline: 2px solid #0a1f44;
           outline-offset: 3px;
         }
         .hp-mail-tabs button.is-active {
-          background: #0e0e10;
-          border-color: #0e0e10;
+          background: #060c4a;
+          border-color: #060c4a;
           color: #fff;
-          box-shadow: 0 22px 40px -24px rgba(0, 0, 0, 0.85);
+          box-shadow: 0 22px 40px -24px rgba(6, 12, 74, 0.85);
           transform: translateY(-3px);
         }
         .hp-mail-tab-icon {
@@ -257,7 +260,7 @@ const EmailServices = ({ content = emailServices }) => {
           inset-block-end: 0;
           inset-inline: 0;
           height: 3px;
-          background: linear-gradient(90deg, #1dd3f8, #7c5cff);
+          background: #1dd3f8;
           transform: scaleX(0);
           transform-origin: left;
           transition: transform 0.4s cubic-bezier(0.22, 1, 0.36, 1);
@@ -300,9 +303,9 @@ const EmailServices = ({ content = emailServices }) => {
           background: conic-gradient(
             from 190deg at 38% 108%,
             rgba(255, 255, 255, 0) 0deg,
-            rgba(35, 56, 216, 0.5) 34deg,
+            rgba(10, 31, 68, 0.5) 34deg,
             rgba(255, 255, 255, 0.9) 52deg,
-            rgba(246, 178, 60, 0.5) 60deg,
+            rgba(29, 211, 248, 0.5) 60deg,
             rgba(255, 255, 255, 0) 86deg
           );
           animation-duration: 16s;
@@ -366,25 +369,7 @@ const EmailServices = ({ content = emailServices }) => {
           border-radius: 999px;
           color: #fff;
         }
-        /* next/link renders a bare <a> with no styled-jsx scope class. */
-        .hp-mail-talk-body :global(.hp-mail-btn) {
-          display: inline-flex;
-          align-items: center;
-          justify-content: center;
-          min-height: 52px;
-          padding: 15px 32px;
-          border-radius: 12px;
-          background: #111;
-          color: #fff;
-          font: 700 15px / 1 "Cairo", system-ui, sans-serif;
-          box-shadow: 0 16px 30px -18px rgba(0, 0, 0, 0.8);
-          transition: transform 0.25s ease, opacity 0.25s ease;
-        }
-        .hp-mail-talk-body :global(.hp-mail-btn:hover) {
-          transform: translateY(-2px);
-          opacity: 0.9;
-          color: #fff;
-        }
+        /* CTA is the site's .default-btn (user, 2026-09-28) — no local style. */
         .hp-mail-figure {
           position: relative;
           margin: 0;
@@ -397,7 +382,7 @@ const EmailServices = ({ content = emailServices }) => {
           background: radial-gradient(
             circle at 30% 30%,
             rgba(29, 211, 248, 0.35),
-            rgba(124, 92, 255, 0.25) 60%,
+            rgba(10, 31, 68, 0.22) 60%,
             transparent 75%
           );
           filter: blur(26px);

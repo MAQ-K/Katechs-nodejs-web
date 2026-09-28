@@ -35,8 +35,15 @@ import { stores } from "../../data/home-new/data";
 // handlers. It writes transform straight to the node rather than going through
 // state — a tilt that re-renders four cards on every pointermove is a tilt
 // that drops frames.
+// 2026-09-28 (user): every card is one link, and the tall combo card and the
+// wide landing card use the SAME layout as the two squares (tag + title +
+// arrow, text, illustration). Combo has no illustration of its own, so it
+// shows the build + manage ones side by side — what the package is.
 const ILLUS = {
-  combo: { src: null, size: "clamp(72px,14vh,140px)", bg: "rgba(255,255,255,.04)" },
+  combo: {
+    srcs: ["/images/homepage/store-building.png", "/images/homepage/store-management.jpeg"],
+    cover: true,
+  },
   build: { src: "/images/homepage/store-building.png", cover: true },
   manage: { src: "/images/homepage/store-management.jpeg", cover: true },
   landing: { src: "/images/ecommerce/landing-page-store-card.webp", cover: true },
@@ -59,31 +66,17 @@ const Arrow = ({ size = 19 }) => (
   </svg>
 );
 
-const Back = () => (
-  <svg
-    viewBox="0 0 24 24"
-    width="15"
-    height="15"
-    fill="none"
-    stroke="currentColor"
-    strokeWidth="2"
-    strokeLinecap="round"
-    strokeLinejoin="round"
-    aria-hidden="true"
-  >
-    <line x1="19" y1="12" x2="5" y2="12" />
-    <polyline points="12 19 5 12 12 5" />
-  </svg>
-);
-
 const Slot = ({ card }) => {
   const illus = ILLUS[card] || {};
   return (
     <span
-      className={"hp-store-slot" + (illus.cover ? " is-bg" : "")}
+      className={"hp-store-slot" + (illus.cover ? " is-bg" : "") + (illus.srcs ? " is-pair" : "")}
       style={illus.cover ? undefined : { width: illus.size, height: illus.size, background: illus.bg }}
     >
       {illus.src && <img src={illus.src} alt="" loading="lazy" />}
+      {illus.srcs?.map((src) => (
+        <img key={src} src={src} alt="" loading="lazy" />
+      ))}
     </span>
   );
 };
@@ -128,41 +121,21 @@ const Stores = ({ content = stores }) => {
         </div>
 
         <div className="hp-store-grid">
-          {/* 1 · combo — the hero box, tall, physical left */}
-          <article className="hp-store-combo" dir="rtl" {...tiltProps}>
-            <div className="hp-store-combo-head">
-              <span className="hp-store-tag">{combo.tag}</span>
-              <span className="hp-store-circle" aria-hidden="true">
-                <Arrow size={16} />
-              </span>
-            </div>
-            <h3>{combo.title}.</h3>
-            <p>{combo.text}</p>
-            <ul>
-              {combo.points?.map((point) => (
-                <li key={point}>
-                  <span aria-hidden="true" />
-                  <span>{point}</span>
-                </li>
-              ))}
-            </ul>
-            <div className="hp-store-combo-foot">
-              <Link href={combo.link.href} className="hp-store-cta">
-                {combo.link.label}
-                <Back />
-              </Link>
-              <Slot card="combo" />
-            </div>
-          </article>
-
-          {/* 2 · build, 3 · manage — the two squares, upper right */}
-          {[build, manage].map((card) => (
+          {/* combo (tall, physical left) · build · manage · landing (wide) —
+              one markup for all four; only grid placement and colour differ. */}
+          {[combo, build, manage, landing].filter(Boolean).map((card) => (
             <article
               key={card.id}
               className={"hp-store-box is-" + card.id}
               dir="rtl"
               {...tiltProps}
             >
+              {/* Stretched link: the whole card is clickable. */}
+              <Link
+                href={card.link.href}
+                className="hp-store-hit"
+                aria-label={card.title + " - " + card.link.label}
+              />
               <div className="hp-store-box-head">
                 <div>
                   <span className="hp-store-box-tag">{card.tag}</span>
@@ -178,31 +151,6 @@ const Stores = ({ content = stores }) => {
               </div>
             </article>
           ))}
-
-          {/* 4 · landing page — wide, bottom */}
-          {landing && (
-            <article className="hp-store-wide" dir="rtl" {...tiltProps}>
-              <div className="hp-store-box-head">
-                <div>
-                  <span className="hp-store-box-tag">{landing.tag}</span>
-                  <h3>{landing.title}</h3>
-                </div>
-                <span aria-hidden="true" className="hp-store-box-arrow">
-                  <Arrow />
-                </span>
-              </div>
-              <div className="hp-store-wide-foot">
-                <Slot card="landing" />
-                <div className="hp-store-wide-copy">
-                  <p>{landing.text}</p>
-                  <Link href={landing.link.href} className="hp-store-underline">
-                    {landing.link.label}
-                    <Back />
-                  </Link>
-                </div>
-              </div>
-            </article>
-          )}
         </div>
       </div>
 
@@ -261,114 +209,6 @@ const Stores = ({ content = stores }) => {
         .hp-store-grid article {
           transform-style: preserve-3d;
         }
-        .hp-store-combo {
-          grid-column: 1;
-          grid-row: 1 / span 2;
-          position: relative;
-          display: flex;
-          flex-direction: column;
-          background: #05101f;
-          border: 1px solid rgba(149, 185, 231, 0.12);
-          border-radius: 22px;
-          padding: clamp(18px, 2.4vh, 32px);
-          overflow: hidden;
-          min-height: 0;
-        }
-        .hp-store-combo-head {
-          display: flex;
-          align-items: flex-start;
-          justify-content: space-between;
-          gap: 14px;
-          margin-bottom: clamp(10px, 1.6vh, 20px);
-          flex: 0 0 auto;
-        }
-        .hp-store-tag {
-          font-family: "Cairo", system-ui, sans-serif;
-          font-size: 12px;
-          font-weight: 700;
-          color: #1dd3f8;
-          letter-spacing: 0.3px;
-        }
-        .hp-store-circle {
-          flex: 0 0 auto;
-          width: 38px;
-          height: 38px;
-          border-radius: 50%;
-          border: 1px solid rgba(255, 255, 255, 0.22);
-          display: flex;
-          align-items: center;
-          justify-content: center;
-          color: #fff;
-        }
-        .hp-store-combo h3 {
-          font-family: "Cairo", system-ui, sans-serif;
-          font-size: clamp(23px, 3.8vh, 42px);
-          font-weight: 800;
-          line-height: 1.28;
-          color: #fff;
-          margin: 0 0 10px;
-          max-width: 16ch;
-          flex: 0 0 auto;
-        }
-        .hp-store-combo p {
-          font-size: clamp(12.5px, 1.55vh, 15px);
-          line-height: 1.85;
-          color: rgba(255, 255, 255, 0.66);
-          margin: 0 0 clamp(10px, 1.6vh, 18px);
-          max-width: 40ch;
-          flex: 0 0 auto;
-        }
-        .hp-store-combo ul {
-          list-style: none;
-          margin: 0 0 clamp(12px, 1.8vh, 20px);
-          padding: clamp(12px, 1.8vh, 20px) 0 0;
-          display: grid;
-          gap: 8px;
-          border-top: 1px solid rgba(149, 185, 231, 0.12);
-          flex: 0 0 auto;
-        }
-        .hp-store-combo li {
-          display: flex;
-          gap: 10px;
-          font-size: 12.5px;
-          line-height: 1.6;
-          color: rgba(255, 255, 255, 0.82);
-        }
-        .hp-store-combo li span:first-child {
-          width: 5px;
-          height: 5px;
-          border-radius: 50%;
-          background: #1dd3f8;
-          margin-top: 7px;
-          flex: 0 0 auto;
-        }
-        .hp-store-combo-foot {
-          margin-top: auto;
-          display: flex;
-          flex-direction: column;
-          align-items: flex-end;
-          justify-content: flex-end;
-          gap: 12px;
-          min-height: 0;
-          flex: 0 0 auto;
-        }
-        /* next/link renders a bare <a> with no styled-jsx scope class. */
-        .hp-store-combo-foot :global(.hp-store-cta) {
-          flex: 0 0 auto;
-          display: inline-flex;
-          align-items: center;
-          gap: 10px;
-          padding: 12px 24px;
-          border-radius: 999px;
-          background: #fff;
-          color: #05101f;
-          font: 700 13.5px / 1 "Cairo", system-ui, sans-serif;
-          transition: opacity 0.25s ease;
-        }
-        .hp-store-combo-foot :global(.hp-store-cta:hover) {
-          opacity: 0.88;
-          color: #05101f;
-        }
         .hp-store-box {
           grid-row: 1;
           position: relative;
@@ -386,17 +226,52 @@ const Stores = ({ content = stores }) => {
         .hp-store-box.is-manage {
           grid-column: 3;
         }
-        .hp-store-wide {
+        /* The tall card: column 1, both rows; dark. */
+        .hp-store-box.is-combo {
+          grid-column: 1;
+          grid-row: 1 / span 2;
+          background: #05101f;
+          border: 1px solid rgba(149, 185, 231, 0.12);
+        }
+        .hp-store-box.is-combo .hp-store-box-tag {
+          color: #1dd3f8;
+        }
+        .hp-store-box.is-combo .hp-store-box-head h3 {
+          color: #fff;
+          font-size: clamp(22px, 3.2vh, 34px);
+        }
+        .hp-store-box.is-combo p {
+          color: rgba(255, 255, 255, 0.66);
+          font-size: 14px;
+        }
+        .hp-store-box.is-combo .hp-store-box-arrow {
+          color: #fff;
+        }
+        /* The wide card: columns 2-3, second row. */
+        .hp-store-box.is-landing {
           grid-column: 2 / span 2;
           grid-row: 2;
-          position: relative;
-          display: flex;
-          flex-direction: column;
           background: #dfe4ea;
-          border-radius: 22px;
-          padding: clamp(16px, 2.2vh, 26px) clamp(18px, 2vw, 28px);
-          overflow: hidden;
-          min-height: 0;
+        }
+        .hp-store-box.is-landing p {
+          max-width: 52ch;
+        }
+        /* next/link renders a bare <a> with no scope class — :global(). */
+        .hp-store-grid :global(.hp-store-hit) {
+          position: absolute;
+          inset: 0;
+          z-index: 2;
+          border-radius: inherit;
+        }
+        .hp-store-grid :global(.hp-store-hit:focus-visible) {
+          outline: 3px solid #1dd3f8;
+          outline-offset: -3px;
+        }
+        .hp-store-box-arrow {
+          transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+        }
+        .hp-store-box:hover .hp-store-box-arrow {
+          transform: translate(-3px, -3px);
         }
         .hp-store-box-head {
           display: flex;
@@ -414,9 +289,6 @@ const Stores = ({ content = stores }) => {
           margin-bottom: 5px;
           letter-spacing: 0.3px;
         }
-        .hp-store-wide .hp-store-box-tag {
-          color: #4a5a6a;
-        }
         .hp-store-box-head h3 {
           font-family: "Cairo", system-ui, sans-serif;
           font-size: clamp(17px, 2.3vh, 23px);
@@ -424,11 +296,6 @@ const Stores = ({ content = stores }) => {
           line-height: 1.4;
           color: #111;
           margin: 0;
-        }
-        .hp-store-wide .hp-store-box-head h3 {
-          font-size: clamp(17px, 2.3vh, 25px);
-          line-height: 1.35;
-          max-width: 26ch;
         }
         .hp-store-box-arrow {
           flex: 0 0 auto;
@@ -449,43 +316,6 @@ const Stores = ({ content = stores }) => {
           min-height: 0;
           flex: 1 1 auto;
           align-items: flex-end;
-        }
-        .hp-store-wide-foot {
-          margin-top: auto;
-          display: flex;
-          flex-direction: row-reverse;
-          align-items: flex-end;
-          justify-content: space-between;
-          gap: clamp(16px, 2.4vw, 36px);
-          min-height: 0;
-          flex: 1 1 auto;
-          padding-top: 10px;
-        }
-        .hp-store-wide-copy {
-          flex: 1 1 auto;
-          min-width: 0;
-          text-align: right;
-        }
-        .hp-store-wide-copy p {
-          font-size: 12.5px;
-          line-height: 1.75;
-          color: #4f5b68;
-          margin: 0 0 12px;
-          max-width: 52ch;
-          margin-inline-start: auto;
-        }
-        .hp-store-wide-copy :global(.hp-store-underline) {
-          display: inline-flex;
-          align-items: center;
-          gap: 9px;
-          font: 700 13px / 1 "Cairo", system-ui, sans-serif;
-          color: #111;
-          border-bottom: 1px solid #111;
-          padding-bottom: 4px;
-        }
-        .hp-store-wide-copy :global(.hp-store-underline:hover) {
-          color: #111;
-          opacity: 0.75;
         }
         /* Slot is its own component, so styled-jsx never puts this file's
            scope class on it — every slot rule MUST go through :global() or it
@@ -515,9 +345,25 @@ const Stores = ({ content = stores }) => {
         .hp-store-grid :global(.hp-store-slot.is-bg img) {
           object-position: left bottom;
         }
+        /* Combo: two illustrations side by side on white tiles (they are
+           line art on white, and the combo card is dark). */
+        .hp-store-grid :global(.hp-store-slot.is-pair) {
+          display: flex;
+          gap: 10px;
+          width: calc(100% - 32px);
+          height: 42%;
+        }
+        .hp-store-grid :global(.hp-store-slot.is-pair img) {
+          flex: 1 1 0;
+          min-width: 0;
+          background: #fff;
+          border-radius: 12px;
+          padding: 8px;
+          object-fit: contain;
+          object-position: center;
+        }
         .hp-store-box-head,
-        .hp-store-box p,
-        .hp-store-wide-copy {
+        .hp-store-box p {
           position: relative;
           z-index: 1;
         }
@@ -536,18 +382,14 @@ const Stores = ({ content = stores }) => {
              pinning themselves to columns 2 and 3 of a one-column grid —
              specificity beats source order, so they have to be named here
              too or the bento stays three implicit columns wide on a phone. */
-          .hp-store-combo,
           .hp-store-box,
+          .hp-store-box.is-combo,
           .hp-store-box.is-build,
           .hp-store-box.is-manage,
-          .hp-store-wide {
+          .hp-store-box.is-landing {
             grid-column: auto;
             grid-row: auto;
             min-height: 220px;
-          }
-          .hp-store-wide-foot {
-            flex-direction: column-reverse;
-            align-items: stretch;
           }
         }
         @media (prefers-reduced-motion: reduce) {

@@ -73,7 +73,6 @@ const NAV_LINKS = [
   { href: "/services/seo/", label: "سيو" },
   { href: "/services/digital-marketing/", label: "تسويق إلكتروني" },
   { href: "/news/", label: "المدونة" },
-  { href: "/training/", label: "التدريب" },
 ];
 
 const CTA = { href: "/support/", label: "الدعم الفني" };

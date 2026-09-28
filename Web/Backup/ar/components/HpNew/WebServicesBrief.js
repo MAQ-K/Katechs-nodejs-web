@@ -27,16 +27,22 @@ import { webServices } from "../../data/home-new/data";
 //
 // The band background belongs to WebServicesScreen, not here — one band for all
 // three blocks, so they cannot seam against each other.
+// 2026-09-28 layout pass (user sketch): `title` is the section title and now
+// opens this card, replacing the old eyebrow; the headline is the section's h2.
+// The image is an equal box beside the card (no float loop, which made the two
+// boxes misalign).
 export default function WebServicesBrief({
+  title,
   brief = webServices.brief,
   chips = webServices.briefChips,
 }) {
   const { eyebrow, heading, body, cta, media } = brief;
+  const label = title || eyebrow;
   return (
     <div className="hp-brief">
       <div className="hp-brief-card" dir="rtl">
-        {eyebrow && <span className="hp-brief-eyebrow">{eyebrow}</span>}
-        <h3>{heading}</h3>
+        {label && <span className="hp-brief-eyebrow">{label}</span>}
+        <h2>{heading}</h2>
         <p>{body}</p>
 
         <div className="hp-brief-cta">
@@ -86,13 +92,13 @@ export default function WebServicesBrief({
           grid-template-columns: repeat(auto-fit, minmax(min(100%, 420px), 1fr));
           /* LTR so the card is physically first — see the header note. */
           direction: ltr;
-          gap: 10px;
+          gap: 16px;
           align-items: stretch;
         }
         .hp-brief-card {
           background: #fff;
           border-radius: 10px;
-          padding: clamp(20px, 2.4vw, 32px);
+          padding: clamp(24px, 3vw, 40px);
           display: flex;
           flex-direction: column;
           justify-content: center;
@@ -103,12 +109,11 @@ export default function WebServicesBrief({
         }
         .hp-brief-eyebrow {
           display: inline-block;
-          font: 700 12px / 1 "Cairo", system-ui, sans-serif;
-          letter-spacing: 0.14em;
-          color: #8a8a8a;
-          margin-bottom: 14px;
+          font: 800 15px / 1.4 "Cairo", system-ui, sans-serif;
+          color: #0a1f44;
+          margin-bottom: 12px;
         }
-        .hp-brief-card h3 {
+        .hp-brief-card h2 {
           font: 800 clamp(26px, 2.8vw, 40px) / 1.28 "Cairo", system-ui, sans-serif;
           color: #111;
           margin: 0 0 12px;
@@ -161,34 +166,20 @@ export default function WebServicesBrief({
           position: relative;
           margin: 0;
           width: 100%;
-          max-width: 680px;
-          justify-self: end;
-          aspect-ratio: 500 / 340;
-          max-height: clamp(340px, 48vh, 440px);
-          animation: hpFloatSlow 11s ease-in-out infinite;
+          min-height: 300px;
           border-radius: 10px;
           overflow: hidden;
           background: #ededed;
         }
+        /* Absolutely filled so the image takes the card's height, not the
+           other way round — the two boxes always line up. */
         .hp-brief-media img {
+          position: absolute;
+          inset: 0;
           display: block;
           width: 100%;
           height: 100%;
           object-fit: cover;
-        }
-        @keyframes hpFloatSlow {
-          0%,
-          100% {
-            transform: translate3d(0, 0, 0);
-          }
-          50% {
-            transform: translate3d(0, -12px, 0);
-          }
-        }
-        @media (prefers-reduced-motion: reduce) {
-          .hp-brief-media {
-            animation: none;
-          }
         }
       `}</style>
     </div>
