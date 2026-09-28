@@ -43,10 +43,12 @@ const CountUpValue = ({ value }) => {
   return <span ref={ref}>{display}</span>;
 };
 
-// Draws an SVG polyline in on scroll instead of it just appearing.
+// Draws an SVG polyline in on scroll instead of it just appearing, with a soft
+// area fill under it so a rising line reads as growth, not noise.
 const DrawLine = ({ points, viewBox, className, preserveAspectRatio }) => {
   const ref = useRef(null);
   const inView = useInView(ref, { once: true, margin: "-40px" });
+  const [, , w, h] = viewBox.split(" ");
 
   return (
     <svg
@@ -55,6 +57,13 @@ const DrawLine = ({ points, viewBox, className, preserveAspectRatio }) => {
       className={className}
       preserveAspectRatio={preserveAspectRatio}
     >
+      <motion.polygon
+        className="area"
+        points={`${points} ${w},${h} 0,${h}`}
+        initial={{ opacity: 0 }}
+        animate={inView ? { opacity: 1 } : {}}
+        transition={{ duration: 0.8, ease: EASE, delay: 0.9 }}
+      />
       <motion.polyline
         points={points}
         initial={{ pathLength: 0 }}
@@ -137,7 +146,7 @@ const Features = () => {
               <DrawLine
                 viewBox="0 0 220 60"
                 className="email-feature-sparkline"
-                points="0,38 20,30 40,42 60,20 80,34 100,16 120,30 140,12 160,26 180,18 200,32 220,14"
+                points="0,54 20,50 40,52 60,44 80,46 100,37 120,39 140,29 160,31 180,20 200,14 220,6"
               />
             </div>
             <h3>{features.speed.title}</h3>
@@ -166,7 +175,7 @@ const Features = () => {
               <DrawLine
                 viewBox="0 0 160 70"
                 preserveAspectRatio="none"
-                points="0,50 12,44 24,55 36,30 48,38 60,20 72,34 84,16 96,26 108,10 120,22 132,8 144,18 160,4"
+                points="0,64 16,60 32,62 48,53 64,55 80,44 96,46 112,34 128,30 144,18 160,8"
               />
             </div>
           </motion.div>

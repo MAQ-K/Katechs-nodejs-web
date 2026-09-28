@@ -9,17 +9,6 @@ const TrustStrip = () => {
   return (
     <section className="dm-section dm-alt">
       <div className="container">
-        <Reveal>
-          <div
-            className="dm-flag"
-            style={{ display: "flex", marginInline: "auto", maxWidth: 640, marginBottom: 36 }}
-          >
-            <div>
-              <strong>مطلوب من العميل:</strong> شعارات عملاء حقيقية أو أرقام
-              موثقة. لن يُكتب أي رقم هنا دون بيانات فعلية.
-            </div>
-          </div>
-        </Reveal>
 
         <Reveal delay={0.05}>
           <p className="dm-strip-label">عملاء نعمل معهم</p>

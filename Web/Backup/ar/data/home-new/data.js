@@ -338,46 +338,10 @@ export const stores = {
   // under them — 1) build 2) manage 3) build + manage 4) landing page").
   build: {
     heading: "نبني ونشغّل",
-    // .filter(Boolean) at the very end guards the .find() below: this exact
-    // shared array already changed shape ONCE while this section was being
-    // built (a "landing" entry appeared mid-session on 2026-09-04) — if it
-    // ever loses that id again, a bare .find() returns undefined and .map()
-    // in Stores.js would crash the whole section instead of quietly showing
-    // three cards.
-    cards: [
-      // build, manage, landing are ecommerce.storePlans VERBATIM — the single
-      // source the real services page (components/Services/Ecommerce/
-      // StorePlans.js) also reads. Order matters: storePlans is [build,
-      // manage, landing] and the user's numbered list wants landing LAST (the
-      // wide card), so it is pulled out and appended after the new one below
-      // rather than trusted to already be last if the shared array is ever
-      // reordered.
-      ...ecommerce.storePlans.filter((c) => c.id !== "landing"),
-
-      // NEW, HOMEPAGE-ONLY. Not added to ecommerce.storePlans in
-      // data/services/data.js: that array is the real Web Services page's
-      // single source of truth, and this combo package does not exist there
-      // — inventing it on the shared page would be a content decision, not a
-      // structure one. Deliberately no `image`: build and manage each have a
-      // real photograph of that half of the job (a launch moment, a dashboard
-      // being read); there is no third photo of "both at once", and reusing
-      // one of the other two would misrepresent what it shows. Stores.js
-      // renders a card's image strip only when `image` is present.
-      {
-        id: "combo",
-        tag: "الباقة الكاملة",
-        title: "نبني ونشغّل الاثنين",
-        text: "بلا فجوة بين التسليم والمتابعة: نبني متجرك من الصفر ثم نستمر في تشغيله معك — نفس الفريق، من أول يوم إلى ما بعد الإطلاق.",
-        points: [
-          "تصميم وإطلاق متجر كامل من الصفر",
-          "متابعة مستمرة للطلبات والمخزون والمدفوعات",
-          "دعم وتدريب لا ينتهيان عند التسليم",
-        ],
-        link: { label: "اطلب الباقة الكاملة", href: "/contactWeb" },
-      },
-
-      ecommerce.storePlans.find((c) => c.id === "landing"),
-    ].filter(Boolean),
+    // build, manage, combo, landing — ecommerce.storePlans verbatim, in that
+    // order. `combo` used to be defined here, homepage-only; it moved into
+    // data/services/data.js on 2026-09-28 so /services shows the same four.
+    cards: ecommerce.storePlans,
   },
 
   // Block 2 — رحلة الشراء: unchanged shape, still the four-step journey diagram

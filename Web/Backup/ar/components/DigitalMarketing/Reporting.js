@@ -9,6 +9,10 @@ const items = [
   "ما نُفّذ خلال الشهر، وما سنغيّره في الشهر التالي",
 ];
 
+// Sample dashboard figures (design pass, 2026-09-28), illustrative only.
+const bars = [34, 46, 42, 60, 72, 88];
+const months = ["أبريل", "مايو", "يونيو", "يوليو", "أغسطس", "سبتمبر"];
+
 const Reporting = () => {
   return (
     <section className="dm-section dm-alt">
@@ -48,17 +52,29 @@ const Reporting = () => {
                     <i className="bx bx-pie-chart-alt-2"></i>
                     لوحة الأداء
                   </span>
+                  <div className="dm-report-kpis">
+                    <div>
+                      <span dir="ltr">-38%</span>
+                      تكلفة العميل
+                    </div>
+                    <div>
+                      <span dir="ltr">+212</span>
+                      عميل محتمل
+                    </div>
+                  </div>
                   <div className="dm-report-bars">
-                    <div className="dm-report-bar" style={{ height: "40%", animationDelay: "0s" }}></div>
-                    <div className="dm-report-bar" style={{ height: "55%", animationDelay: ".05s" }}></div>
-                    <div className="dm-report-bar" style={{ height: "38%", animationDelay: ".1s" }}></div>
-                    <div className="dm-report-bar" style={{ height: "70%", animationDelay: ".15s" }}></div>
-                    <div className="dm-report-bar" style={{ height: "50%", animationDelay: ".2s" }}></div>
-                    <div className="dm-report-bar" style={{ height: "85%", animationDelay: ".25s" }}></div>
+                    {bars.map((h, i) => (
+                      <div
+                        className="dm-report-bar"
+                        key={i}
+                        style={{ height: `${h}%`, animationDelay: `${i * 0.05}s` }}
+                      ></div>
+                    ))}
                   </div>
                   <div className="dm-report-foot">
-                    <span>إنفاق</span>
-                    <span>تحويلات</span>
+                    {months.map((m) => (
+                      <span key={m}>{m}</span>
+                    ))}
                   </div>
                 </div>
               </div>

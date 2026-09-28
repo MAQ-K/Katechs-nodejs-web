@@ -49,21 +49,28 @@ const Channels = () => {
           <div className="dm-head dm-center" style={{ maxWidth: 640, marginInline: "auto" }}>
             <h2 className="dm-h2">القنوات التي نعمل عليها</h2>
             <p className="dm-p">
-              لا نستخدم كل القنوات لكل عميل — نختار ما يناسب جمهورك
+              لا نستخدم كل القنوات لكل عميل، نختار ما يناسب جمهورك
               وميزانيتك.
             </p>
           </div>
         </Reveal>
 
         <motion.div
-          className="dm-grid"
+          className="dm-bento"
           variants={staggerParent(0.08)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
         >
-          {channels.map((item) => (
-            <motion.div className="dm-card dm-card-dark" key={item.title} variants={staggerItem()}>
+          {/* 4-col bento: first and last cards span two columns and sit on
+              glass instead of white, so the six channels read as 2 rows of
+              varied tiles, not a repeat of the page's other card grids. */}
+          {channels.map((item, i) => (
+            <motion.div
+              className={`dm-card dm-card-dark${i === 0 || i === channels.length - 1 ? " is-wide" : ""}`}
+              key={item.title}
+              variants={staggerItem()}
+            >
               <span className="dm-icon-well">
                 <i className={`bx ${item.icon}`}></i>
               </span>
@@ -82,12 +89,6 @@ const Channels = () => {
           ))}
         </motion.div>
 
-        <Reveal delay={0.1}>
-          <p className="dm-note">
-            سؤال مفتوح: أي منصات إعلانية نذكرها بالاسم — Google، Meta،
-            TikTok، Snapchat، X؟
-          </p>
-        </Reveal>
       </div>
     </section>
   );

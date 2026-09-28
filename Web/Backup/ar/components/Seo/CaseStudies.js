@@ -4,28 +4,15 @@ import { motion } from "framer-motion";
 
 // Visual pass — from "seo page inspiration/seopage-insp.png": a light
 // two-column split (badge + heading + copy on one side, a 2x2 metric-card
-// grid on the other) rather than the old dark 3-card grid. Real case-study
-// numbers still don't exist (see the flag below), so every card shows its
-// metric name and trend direction but the value itself stays a pending
-// shimmer bar — same "coming soon, not broken" convention the old cards used
-// (.seo-stat-pending), just carried into the new card shape.
+// grid on the other) rather than the old dark 3-card grid. Figures filled in
+// at the user's request (2026-09-28). ⚠️ Illustrative — confirm with the
+// client before launch. Every trend is "up": a falling rank number is an
+// improvement, so the amber "down" styling would read as bad news.
 const metrics = [
-  {
-    label: "نمو الزيارات العضوية",
-    trend: "up",
-  },
-  {
-    label: "كلمات تصدّرت نتائج البحث",
-    trend: "up",
-  },
-  {
-    label: "عملاء محتملون من البحث",
-    trend: "up",
-  },
-  {
-    label: "متوسط ترتيب الكلمات المستهدفة",
-    trend: "down",
-  },
+  { label: "نمو الزيارات العضوية", value: "240%", change: "خلال 12 شهرًا", trend: "up" },
+  { label: "كلمات تصدّرت نتائج البحث", value: "+850", change: "في الصفحة الأولى", trend: "up" },
+  { label: "عملاء محتملون من البحث", value: "3.2x", change: "مقارنة بالبداية", trend: "up" },
+  { label: "متوسط ترتيب الكلمات المستهدفة", value: "#6", change: "كان #38", trend: "up" },
 ];
 
 const CaseStudies = () => {
@@ -50,15 +37,6 @@ const CaseStudies = () => {
               </p>
             </Reveal>
 
-            <Reveal delay={0.15}>
-              <div className="seo-flag" style={{ marginTop: 28, marginBottom: 0 }}>
-                <div>
-                  <strong>مطلوب من العميل:</strong> دراسات حالة حقيقية —
-                  المجال، المشكلة، ما نُفّذ، والرقم الذي تغيّر، ليحل محل
-                  القيم المؤقتة في البطاقات المجاورة.
-                </div>
-              </div>
-            </Reveal>
           </div>
 
           <motion.div
@@ -79,8 +57,8 @@ const CaseStudies = () => {
                 </span>
 
                 <div className="seo-metric-row">
-                  <span className="seo-metric-pending" aria-label="قيمة قادمة"></span>
-                  <span className="seo-metric-change">قريبًا</span>
+                  <span className="seo-metric-value" dir="ltr">{m.value}</span>
+                  <span className="seo-metric-change">{m.change}</span>
                 </div>
 
                 <span className="seo-metric-label">{m.label}</span>

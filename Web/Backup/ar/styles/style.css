@@ -6798,6 +6798,9 @@ supplied reference rather than forcing the lab's card recipe here.
   stroke-linecap: round;
   stroke-linejoin: round;
 }
+.email-features .email-feature-card .email-feature-widget .email-feature-sparkline .area {
+  fill: rgba(29, 211, 248, 0.14);
+}
 .email-features .email-feature-card.wide {
   grid-column: span 3;
   display: flex;
@@ -6848,6 +6851,10 @@ supplied reference rather than forcing the lab's card recipe here.
   fill: none;
   stroke: #212121;
   stroke-width: 2;
+  stroke-linejoin: round;
+}
+.email-features .email-feature-card.wide .email-feature-mini-chart svg .area {
+  fill: rgba(29, 211, 248, 0.14);
 }
 .email-features .email-feature-card.wide .email-feature-team {
   margin-top: auto;
@@ -8889,15 +8896,15 @@ marquee, the beam and the ambient hero glow.
   gap: 8px;
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
-  padding: 7px 16px;
-  font-size: 13px;
-  font-weight: 600;
+  padding: 9px 20px;
+  font-size: 16px;
+  font-weight: 700;
   color: #212121;
   margin-bottom: 20px;
 }
 .seo-eyebrow .dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
   background: #1dd3f8;
   box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.18);
@@ -8961,6 +8968,26 @@ marquee, the beam and the ambient hero glow.
 }
 .seo-actions.seo-center {
   justify-content: center;
+}
+
+.seo-link-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  font-weight: 700;
+  color: #0a1f44;
+}
+.seo-link-btn i {
+  font-size: 18px;
+  transition: transform 0.18s ease;
+}
+.seo-link-btn:hover {
+  color: #0a1f44;
+  text-decoration: underline;
+  text-underline-offset: 5px;
+}
+.seo-link-btn:hover i {
+  transform: translateX(-3px);
 }
 
 .seo-btn {
@@ -9683,9 +9710,9 @@ marquee, the beam and the ambient hero glow.
   color: #ffffff;
   font-family: "Almarai", sans-serif;
   font-weight: 700;
-  font-size: 12px;
+  font-size: 16px;
   border-radius: 100px;
-  padding: 7px 16px;
+  padding: 9px 20px;
   margin-bottom: 18px;
 }
 
@@ -9746,6 +9773,14 @@ marquee, the beam and the ambient hero glow.
   background: linear-gradient(90deg, rgba(15, 23, 42, 0.08) 25%, rgba(29, 211, 248, 0.22) 50%, rgba(15, 23, 42, 0.08) 75%);
   background-size: 200% 100%;
   animation: seoShimmer 2.2s ease-in-out infinite;
+}
+
+.seo-metric-value {
+  font-family: "Almarai", sans-serif;
+  font-weight: 700;
+  font-size: 26px;
+  line-height: 1;
+  color: #212121;
 }
 
 .seo-metric-change {
@@ -9897,24 +9932,27 @@ marquee, the beam and the ambient hero glow.
   gap: 8px;
   border: 1px solid rgba(15, 23, 42, 0.08);
   border-radius: 100px;
-  padding: 7px 16px;
+  padding: 9px 20px;
   font-family: "Almarai", sans-serif;
-  font-size: 13px;
-  font-weight: 600;
+  font-size: 16px;
+  font-weight: 700;
   color: #212121;
   margin-bottom: 20px;
 }
 .dm-eyebrow .dot {
-  width: 6px;
-  height: 6px;
+  width: 8px;
+  height: 8px;
   border-radius: 50%;
-  background: #1dd3f8;
-  box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.18);
+  background: #0a1f44;
+  box-shadow: 0 0 0 3px rgba(10, 31, 68, 0.18);
 }
 
 .dm-dark .dm-eyebrow {
   border-color: rgba(255, 255, 255, 0.12);
   color: rgba(255, 255, 255, 0.88);
+}
+.dm-dark .dm-eyebrow .dot {
+  background: #1dd3f8;
 }
 
 .dm-h1 {
@@ -9983,77 +10021,6 @@ marquee, the beam and the ambient hero glow.
   justify-content: center;
 }
 
-.dm-btn {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  background: #1dd3f8;
-  color: #ffffff;
-  font-family: "Almarai", sans-serif;
-  font-weight: 600;
-  font-size: 15px;
-  padding: 16px 31px;
-  border-radius: 10px;
-  border: none;
-  cursor: pointer;
-  transition: transform 0.18s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.18s ease, filter 0.18s ease;
-}
-.dm-btn i {
-  font-size: 18px;
-  transition: transform 0.18s ease;
-}
-.dm-btn:hover {
-  color: #ffffff;
-  filter: brightness(1.08);
-  box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.5);
-}
-.dm-btn:hover i {
-  transform: translateX(-3px);
-}
-.dm-btn:active {
-  transform: translateY(0);
-  filter: brightness(1.02);
-}
-.dm-btn.dm-btn-block {
-  width: 100%;
-  justify-content: center;
-}
-
-.dm-btn-ghost {
-  background: #ffffff;
-  color: #212121;
-  border: 1px solid #d9dde3;
-}
-.dm-btn-ghost:hover {
-  filter: none;
-  background: #ffffff;
-  border-color: #1dd3f8;
-  color: #1dd3f8;
-  box-shadow: none;
-}
-
-.dm-dark .dm-btn-ghost {
-  background: transparent;
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.12);
-}
-.dm-dark .dm-btn-ghost:hover {
-  background: rgba(255, 255, 255, 0.06);
-  border-color: #1dd3f8;
-  color: #1dd3f8;
-}
-
-.dm-btn-invert {
-  background: #ffffff;
-  color: #212121;
-}
-.dm-btn-invert:hover {
-  filter: none;
-  background: #1dd3f8;
-  color: #ffffff;
-  box-shadow: 0 10px 18px -10px rgba(29, 211, 248, 0.4);
-}
-
 .dm-proof-row {
   display: flex;
   flex-wrap: wrap;
@@ -10071,7 +10038,7 @@ marquee, the beam and the ambient hero glow.
   padding: 8px 14px;
 }
 .dm-proof-row span i {
-  color: #1dd3f8;
+  color: #0a1f44;
   font-size: 15px;
 }
 
@@ -10216,7 +10183,7 @@ marquee, the beam and the ambient hero glow.
   display: block;
   height: 100%;
   border-radius: 4px;
-  background: #1dd3f8;
+  background: #0a1f44;
 }
 
 .dm-strip-label {
@@ -10305,12 +10272,12 @@ marquee, the beam and the ambient hero glow.
   width: 40px;
   height: 40px;
   border-radius: 10px;
-  background: #eef7fb;
+  background: rgba(10, 31, 68, 0.07);
   display: flex;
   align-items: center;
   justify-content: center;
   font-size: 21px;
-  color: #1dd3f8;
+  color: #0a1f44;
   margin-bottom: 18px;
   transition: all 0.6s ease;
 }
@@ -10321,14 +10288,14 @@ marquee, the beam and the ambient hero glow.
   gap: 6px;
   font-size: 13px;
   font-weight: 700;
-  color: #1dd3f8;
+  color: #0a1f44;
 }
 .dm-inline-link i {
   font-size: 16px;
   transition: transform 0.18s ease;
 }
 .dm-inline-link:hover {
-  color: #1dd3f8;
+  color: #0a1f44;
 }
 .dm-inline-link:hover i {
   transform: translateX(-3px);
@@ -10336,11 +10303,11 @@ marquee, the beam and the ambient hero glow.
 
 .dm-step-num {
   font-family: "Almarai", sans-serif;
-  font-weight: 700;
-  font-size: 13px;
-  color: rgba(15, 23, 42, 0.32);
-  letter-spacing: 0.05em;
-  margin-bottom: 14px;
+  font-weight: 800;
+  font-size: 40px;
+  line-height: 1;
+  color: #0a1f44;
+  margin-bottom: 18px;
   display: block;
 }
 
@@ -10422,8 +10389,8 @@ marquee, the beam and the ambient hero glow.
   display: inline-flex;
   align-items: center;
   gap: 6px;
-  background: rgba(29, 211, 248, 0.12);
-  color: #0a90ac;
+  background: rgba(10, 31, 68, 0.12);
+  color: #0a1f44;
   font-size: 11px;
   font-weight: 700;
   border-radius: 100px;
@@ -10455,7 +10422,7 @@ marquee, the beam and the ambient hero glow.
 .dm-post-thumb {
   height: 150px;
   border-radius: 12px;
-  background: linear-gradient(135deg, rgba(29, 211, 248, 0.16), #f5f6f8);
+  background: linear-gradient(135deg, rgba(10, 31, 68, 0.16), #f5f6f8);
   margin-bottom: 16px;
 }
 
@@ -10471,7 +10438,7 @@ marquee, the beam and the ambient hero glow.
   gap: 5px;
 }
 .dm-post-stats i {
-  color: #1dd3f8;
+  color: #0a1f44;
   font-size: 15px;
 }
 
@@ -10497,8 +10464,8 @@ marquee, the beam and the ambient hero glow.
   height: 20px;
   margin-top: 4px;
   border-radius: 50%;
-  background-color: rgba(29, 211, 248, 0.14);
-  color: #1dd3f8;
+  background-color: rgba(10, 31, 68, 0.14);
+  color: #0a1f44;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10530,7 +10497,7 @@ marquee, the beam and the ambient hero glow.
   width: 64%;
   height: 18px;
   border-radius: 8px;
-  background: linear-gradient(90deg, rgba(15, 23, 42, 0.08) 25%, rgba(29, 211, 248, 0.22) 50%, rgba(15, 23, 42, 0.08) 75%);
+  background: linear-gradient(90deg, rgba(15, 23, 42, 0.08) 25%, rgba(10, 31, 68, 0.22) 50%, rgba(15, 23, 42, 0.08) 75%);
   background-size: 200% 100%;
   animation: dmShimmer 2.2s ease-in-out infinite;
 }
@@ -10578,11 +10545,11 @@ marquee, the beam and the ambient hero glow.
   background-color: rgba(29, 211, 248, 0.2);
   color: #1dd3f8;
 }
-.dm-plan.is-popular .dm-btn {
+.dm-plan.is-popular .default-btn {
   background: #ffffff;
   color: #0a1f44;
 }
-.dm-plan.is-popular .dm-btn:hover {
+.dm-plan.is-popular .default-btn:hover {
   background: #1dd3f8;
   color: #ffffff;
 }
@@ -10647,8 +10614,8 @@ marquee, the beam and the ambient hero glow.
   width: 32px;
   height: 32px;
   border-radius: 50%;
-  background: rgba(29, 211, 248, 0.12);
-  color: #1dd3f8;
+  background: rgba(10, 31, 68, 0.12);
+  color: #0a1f44;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -10698,13 +10665,13 @@ marquee, the beam and the ambient hero glow.
 
 .dm-report-bar {
   flex: 1;
-  background: rgba(29, 211, 248, 0.18);
+  background: rgba(10, 31, 68, 0.18);
   border-radius: 6px 6px 0 0;
   transform-origin: bottom;
   animation: dmBarGrow 1.1s cubic-bezier(0.22, 1, 0.36, 1) both;
 }
 .dm-report-bar:last-child {
-  background: #1dd3f8;
+  background: #0a1f44;
 }
 
 @keyframes dmBarGrow {
@@ -10722,6 +10689,513 @@ marquee, the beam and the ambient hero glow.
   color: #4d4d4d;
 }
 
+/* ---- Design pass (user, 2026-09-28: "it feel kinda poor in term of design") ----
+   Breaks the page's three identical 3-col card grids into three different
+   layout families: a bento (Channels), a sticky split list (WhyUs) and a
+   featured + stacked case layout (Results). Accent stays $dm-accent (navy). */
+.dm-bento {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
+}
+.dm-bento .dm-card.is-wide {
+  grid-column: span 2;
+  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(6px);
+}
+.dm-bento .dm-card.is-wide .dm-h3 {
+  color: #ffffff;
+  font-size: 20px;
+}
+.dm-bento .dm-card.is-wide .dm-p {
+  color: rgba(255, 255, 255, 0.68);
+  max-width: 42ch;
+}
+.dm-bento .dm-card.is-wide .dm-icon-well {
+  background: rgba(255, 255, 255, 0.1);
+  color: #ffffff;
+}
+.dm-bento .dm-card.is-wide .dm-inline-link {
+  color: #ffffff;
+}
+.dm-bento .dm-card.is-wide:hover {
+  transform: translateY(-6px);
+  background: rgba(255, 255, 255, 0.09);
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08);
+}
+@media (max-width: 991px) {
+  .dm-bento {
+    grid-template-columns: repeat(2, 1fr);
+  }
+}
+@media (max-width: 575px) {
+  .dm-bento {
+    grid-template-columns: 1fr;
+  }
+  .dm-bento .dm-card.is-wide {
+    grid-column: auto;
+  }
+}
+
+.dm-why {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.6fr);
+  gap: 64px;
+  align-items: start;
+}
+@media (max-width: 991px) {
+  .dm-why {
+    grid-template-columns: 1fr;
+    gap: 32px;
+  }
+}
+
+.dm-why-head {
+  position: sticky;
+  top: 120px;
+}
+@media (max-width: 991px) {
+  .dm-why-head {
+    position: static;
+  }
+}
+
+.dm-why-list {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 40px 36px;
+}
+.dm-why-list li {
+  padding-top: 22px;
+  border-top: 2px solid rgba(15, 23, 42, 0.08);
+  transition: border-color 0.3s ease;
+}
+.dm-why-list li:hover {
+  border-top-color: #0a1f44;
+}
+.dm-why-list .dm-icon-well {
+  margin-bottom: 14px;
+}
+@media (max-width: 575px) {
+  .dm-why-list {
+    grid-template-columns: 1fr;
+    gap: 28px;
+  }
+}
+
+.dm-cases {
+  display: grid;
+  grid-template-columns: 1.25fr 1fr;
+  grid-template-rows: auto auto;
+  gap: 22px;
+}
+@media (max-width: 991px) {
+  .dm-cases {
+    grid-template-columns: 1fr;
+  }
+}
+
+.dm-case {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 28px;
+  transition: transform 0.35s ease, box-shadow 0.35s ease;
+}
+.dm-case .dm-h3 {
+  color: #212121;
+  font-size: 19px;
+  margin-bottom: 2px;
+}
+.dm-case .dm-p {
+  color: #4d4d4d;
+  font-size: 15px;
+  line-height: 1.8;
+}
+.dm-case:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 24px 40px -24px rgba(0, 0, 0, 0.45);
+}
+.dm-case.is-featured {
+  grid-row: span 2;
+  padding: 36px;
+}
+.dm-case.is-featured .dm-h3 {
+  font-size: 24px;
+}
+.dm-case.is-featured .dm-case-value {
+  font-size: clamp(3rem, 6vw, 4.5rem);
+}
+@media (max-width: 991px) {
+  .dm-case.is-featured {
+    grid-row: auto;
+  }
+}
+
+.dm-case-tag {
+  align-self: flex-start;
+  font-size: 13px;
+  font-weight: 700;
+  color: #0a1f44;
+  background: rgba(10, 31, 68, 0.07);
+  border-radius: 100px;
+  padding: 6px 14px;
+  margin-bottom: 8px;
+}
+
+.dm-case-metric {
+  margin-top: auto;
+  padding-top: 20px;
+}
+
+.dm-case-value {
+  display: block;
+  font-family: "Almarai", sans-serif;
+  font-weight: 800;
+  font-size: clamp(2.2rem, 4vw, 2.8rem);
+  line-height: 1.1;
+  color: #0a1f44;
+  text-align: start;
+}
+.dm-case-value.sm {
+  font-size: 26px;
+}
+
+.dm-case-label {
+  display: block;
+  font-size: 14px;
+  color: #4d4d4d;
+  margin-top: 4px;
+}
+
+.dm-case-extra {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+  margin-top: 22px;
+  padding-top: 22px;
+  border-top: 1px solid rgba(15, 23, 42, 0.08);
+}
+
+.dm-case-duration {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  margin-top: 18px;
+  font-size: 13px;
+  font-weight: 600;
+  color: #4d4d4d;
+}
+.dm-case-duration i {
+  font-size: 16px;
+}
+
+.dm-post-row strong {
+  display: block;
+  font-size: 14px;
+  color: #212121;
+}
+.dm-post-row span {
+  font-size: 12px;
+  color: #4d4d4d;
+}
+
+.dm-post-avatar {
+  display: grid;
+  place-items: center;
+  background: #0a1f44;
+  color: #ffffff;
+  font-weight: 800;
+  font-size: 14px;
+}
+
+.dm-post-text {
+  font-size: 14px;
+  line-height: 1.7;
+  color: #212121;
+  margin-bottom: 14px;
+}
+
+.dm-post-thumb {
+  display: grid;
+  place-items: center;
+  background: linear-gradient(135deg, #0a1f44, #1c3d78);
+}
+.dm-post-thumb i {
+  font-size: 54px;
+  color: rgba(255, 255, 255, 0.85);
+}
+
+.dm-post-stats {
+  font-weight: 700;
+  color: #212121;
+}
+.dm-post-stats .bxs-heart {
+  color: #e0245e;
+}
+
+.dm-report-kpis {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 12px;
+  margin-bottom: 20px;
+}
+.dm-report-kpis div {
+  background: #f5f6f8;
+  border-radius: 12px;
+  padding: 12px 14px;
+  font-size: 12px;
+  color: #4d4d4d;
+}
+.dm-report-kpis span {
+  display: block;
+  font-family: "Almarai", sans-serif;
+  font-weight: 800;
+  font-size: 22px;
+  color: #0a1f44;
+  text-align: start;
+}
+
+/* ---- Hovers + cyan (user, 2026-09-28: "most of the page dont have hovers",
+   "add the cyan color too"). Navy stays the base; cyan ($main-color) is the
+   hover / highlight colour. Text on cyan is navy, not white: white on
+   #1dd3f8 fails contrast. ---- */
+.dm-eyebrow .dot {
+  background: #1dd3f8;
+  box-shadow: 0 0 0 3px rgba(29, 211, 248, 0.2);
+}
+
+.dm-section .default-btn i {
+  font-size: 18px;
+  vertical-align: middle;
+  margin-inline-start: 6px;
+}
+
+.dm-section:not(.dm-dark) .default-btn.active {
+  box-shadow: inset 0 0 0 1px #d9dde3;
+}
+
+.dm-inline-link:hover {
+  color: #1dd3f8;
+}
+
+.dm-card {
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease, background 0.35s ease;
+}
+.dm-card .dm-icon-well,
+.dm-card .dm-step-num {
+  transition: background 0.3s ease, color 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-card:hover {
+  transform: translateY(-6px);
+  border-color: rgba(29, 211, 248, 0.6);
+  box-shadow: 0 22px 36px -22px rgba(10, 31, 68, 0.35);
+}
+.dm-card:hover .dm-icon-well {
+  background: #1dd3f8;
+  color: #0a1f44;
+  transform: rotate(-6deg) scale(1.06);
+}
+.dm-card:hover .dm-step-num {
+  color: #1dd3f8;
+  transform: translateX(-4px);
+}
+
+.dm-card-dark:hover {
+  box-shadow: 0 0 0 2px #1dd3f8, 0 24px 40px -24px rgba(0, 0, 0, 0.5);
+}
+
+.dm-bento .dm-card.is-wide:hover {
+  border-color: #1dd3f8;
+  box-shadow: inset 0 1px 0 rgba(255, 255, 255, 0.08), 0 24px 40px -24px rgba(0, 0, 0, 0.5);
+}
+.dm-bento .dm-card.is-wide:hover .dm-icon-well {
+  background: #1dd3f8;
+  color: #0a1f44;
+}
+
+.dm-why-list li .dm-icon-well,
+.dm-why-list li .dm-h3 {
+  transition: background 0.3s ease, color 0.3s ease, transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-why-list li:hover {
+  border-top-color: #1dd3f8;
+}
+.dm-why-list li:hover .dm-icon-well {
+  background: #1dd3f8;
+  color: #0a1f44;
+}
+.dm-why-list li:hover .dm-h3 {
+  transform: translateX(-4px);
+}
+
+.dm-case {
+  border-top: 4px solid transparent;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease, border-color 0.35s ease;
+}
+.dm-case:hover {
+  border-top-color: #1dd3f8;
+  box-shadow: 0 28px 44px -24px rgba(0, 0, 0, 0.55);
+}
+.dm-case:hover .dm-case-tag {
+  background: #1dd3f8;
+  color: #0a1f44;
+}
+
+.dm-case-tag {
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.dm-case.is-featured .dm-case-metric .dm-case-value {
+  background: linear-gradient(90deg, #0a1f44, #0e7fa0);
+  -webkit-background-clip: text;
+  background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+.dm-proof-row span,
+.dm-tag {
+  transition: border-color 0.25s ease, background 0.25s ease, color 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-proof-row span:hover,
+.dm-tag:hover {
+  border-color: #1dd3f8;
+  background: rgba(29, 211, 248, 0.1);
+  color: #0a1f44;
+  transform: translateY(-2px);
+}
+
+.dm-tag i {
+  transition: color 0.25s ease;
+}
+
+.dm-tag:hover i {
+  color: #0e7fa0;
+}
+
+.dm-list li {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1), color 0.25s ease;
+}
+.dm-list li i {
+  transition: background 0.25s ease, color 0.25s ease;
+}
+.dm-list li:hover {
+  color: #212121;
+  transform: translateX(-4px);
+}
+.dm-list li:hover i {
+  background: #1dd3f8;
+  color: #0a1f44;
+}
+
+.dm-media-panel {
+  transition: border-color 0.35s ease, background 0.35s ease;
+}
+.dm-media-panel:hover {
+  border-color: rgba(29, 211, 248, 0.45);
+}
+
+.dm-campaign-card,
+.dm-post-card,
+.dm-report-card {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.45s ease;
+}
+
+.dm-media-panel:hover .dm-campaign-card,
+.dm-media-panel:hover .dm-post-card,
+.dm-media-panel:hover .dm-report-card {
+  transform: translateY(-8px) rotate(-1deg);
+  box-shadow: 0 36px 60px -28px rgba(10, 31, 68, 0.35), 0 0 0 1px rgba(29, 211, 248, 0.35);
+}
+
+.dm-campaign-fill {
+  background: linear-gradient(270deg, #0a1f44, #1dd3f8);
+  transition: filter 0.3s ease;
+}
+
+.dm-campaign-row {
+  transition: transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-campaign-row:hover {
+  transform: translateX(-4px);
+}
+.dm-campaign-row:hover .dm-campaign-fill {
+  filter: brightness(1.15);
+}
+.dm-campaign-row:hover .dm-campaign-label i {
+  color: #0e7fa0;
+}
+
+.dm-report-bar {
+  transition: background 0.25s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-report-bar:last-child {
+  background: linear-gradient(180deg, #1dd3f8, #0a1f44);
+}
+.dm-report-bar:hover {
+  background: #1dd3f8;
+}
+
+.dm-report-kpis div {
+  transition: background 0.25s ease;
+}
+.dm-report-kpis div:hover {
+  background: rgba(29, 211, 248, 0.12);
+}
+
+.dm-post-thumb {
+  background: linear-gradient(135deg, #0a1f44, #0e7fa0 70%, #1dd3f8);
+  overflow: hidden;
+}
+.dm-post-thumb i {
+  transition: transform 0.45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-post-thumb:hover i {
+  transform: scale(1.15) rotate(-8deg);
+}
+
+.dm-post-stats span {
+  cursor: default;
+  transition: color 0.2s ease, transform 0.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.dm-post-stats span:hover {
+  color: #0e7fa0;
+  transform: translateY(-2px);
+}
+
+.dm-accordion .accordion__item {
+  border: 1px solid transparent;
+  transition: box-shadow 0.3s ease, border-color 0.3s ease;
+}
+.dm-accordion .accordion__item:hover {
+  border-color: rgba(29, 211, 248, 0.6);
+}
+.dm-accordion .accordion__button:hover .dm-acc-sign,
+.dm-accordion .accordion__button[aria-expanded=true] .dm-acc-sign {
+  background: #1dd3f8;
+  color: #0a1f44;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .dm-card,
+  .dm-case,
+  .dm-list li,
+  .dm-proof-row span,
+  .dm-tag,
+  .dm-campaign-card,
+  .dm-post-card,
+  .dm-report-card,
+  .dm-campaign-row {
+    transform: none !important;
+  }
+}
 @media (prefers-reduced-motion: reduce) {
   .dm-campaign-badge,
   .dm-report-bar,
@@ -12275,7 +12749,7 @@ to change a value.
   );
   position: fixed;
   top: 50%;
-  left: 16px;
+  left: 32px;
   transform: translateY(-50%);
   z-index: 50;
   display: flex;
@@ -12361,7 +12835,7 @@ to change a value.
 /*================================================
 === Web Services: Area 1 — Business Websites ===
 The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
-.wsv-p, .wsv-list, .wsv-frame) are deliberately NOT prefixed per-area: areas
+.wsv-p, .wsv-list, .wsv-about-img) are deliberately NOT prefixed per-area: areas
 2-4 render the same components with their own data, so these must stay generic.
 =================================================*/
 /*-- Shared atoms for the area sections --*/
@@ -12425,25 +12899,16 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 }
 
 /* Outer plate + inner media — the AppDev double-frame, for a real photo. */
-.wsv-frame {
-  position: relative;
-  padding: 14px;
-  border-radius: 24px;
-  background-color: #ffffff;
-  box-shadow: 0px 24px 48px -20px rgba(15, 23, 42, 0.18), 0px 8px 16px -10px rgba(15, 23, 42, 0.1), 0px -10px 0px 0px rgba(0, 0, 0, 0.02) inset, 0px 6px 0px 0px rgba(255, 255, 255, 0.55) inset;
-}
-
-.wsv-frame-media {
-  position: relative;
-  border-radius: 16px;
-  overflow: hidden;
-  background-color: #f5f6f8;
+/* Overview image: no plate behind it (user, 2026-09-28) — just the image with
+   the card radius and the shared .svc-img-hover corner brackets. */
+.wsv-about-img {
   line-height: 0;
 }
-.wsv-frame-media img {
+.wsv-about-img img {
   width: 100%;
   height: auto;
   display: block;
+  border-radius: 16px;
 }
 
 /*-- Section 4: business websites — overview --*/
@@ -12458,20 +12923,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   flex-wrap: wrap;
   gap: 12px 24px;
   margin-top: 30px;
-}
-
-/* .wsv-btn was authored white-on-photo for the hero. On this white section it
-   needs the inverse: solid navy, cyan on hover — same swap, legible ground. */
-.wsv-btn-solid {
-  background-color: #0a1f44;
-  border-color: #0a1f44;
-  color: #ffffff;
-  box-shadow: 0 12px 28px rgba(10, 31, 68, 0.22);
-}
-.wsv-btn-solid:hover {
-  background-color: #1dd3f8;
-  border-color: #1dd3f8;
-  color: #0a1f44;
 }
 
 /* Secondary reads as a link, not a second button, so the solid one stays the
@@ -12583,19 +13034,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
   font-weight: 700;
 }
 
-.wsv-plan-icon {
-  width: 50px;
-  height: 50px;
-  margin-bottom: 18px;
-  border-radius: 14px;
-  background-color: #f4f4f5;
-  color: #0a1f44;
-  font-size: 26px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
-
 .wsv-plan-summary {
   display: block;
   font-size: 14px;
@@ -12701,9 +13139,6 @@ The first service area's own sections. Shared atoms (.wsv-split, .wsv-h2,
 }
 .wsv-plan.is-popular .wsv-plan-summary {
   color: rgba(255, 255, 255, 0.65);
-}
-.wsv-plan.is-popular .wsv-plan-icon {
-  background-color: rgba(255, 255, 255, 0.1);
 }
 .wsv-plan.is-popular .wsv-plan-amount {
   color: #ffffff;
@@ -13466,10 +13901,12 @@ html.wsv-smooth {
    breakpoint rule. At 2 cards each takes ~558px (matching the original
    `repeat(2, 1fr)` width exactly); at 3 they settle near 364px each — still
    comfortably above the 280px floor a card's image + 3-point list needs. */
+/* Four services, one row (user, 2026-09-28). Two per row below 1200px, one
+   below 576px — see the responsive block. */
 .wsv-store-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: 24px;
+  grid-template-columns: repeat(4, 1fr);
+  gap: 20px;
 }
 
 .wsv-store-card {
@@ -13498,7 +13935,7 @@ html.wsv-smooth {
   flex: 1;
   display: flex;
   flex-direction: column;
-  padding: 30px 28px;
+  padding: 26px 22px;
 }
 
 .wsv-store-tag {
@@ -13516,7 +13953,7 @@ html.wsv-smooth {
 .wsv-store-body h3 {
   margin-bottom: 10px;
   font-family: "Almarai", sans-serif;
-  font-size: 22px;
+  font-size: 20px;
   font-weight: 700;
   color: #212121;
 }
@@ -13559,31 +13996,19 @@ html.wsv-smooth {
   justify-content: center;
 }
 
-/* margin-top:auto pins the link to the bottom of the body, so both cards'
-   links sit on one line even when one has a longer paragraph. */
-.wsv-store-link {
+/* The CTA is the site's .default-btn. margin-top:auto pins it to the bottom of
+   the body so all four buttons sit on one line whatever the copy length. */
+.wsv-store-btn {
   margin-top: auto;
-  align-self: flex-start;
-  display: inline-flex;
-  align-items: center;
-  gap: 7px;
-  font-family: "Almarai", sans-serif;
-  font-size: 14.5px;
-  font-weight: 700;
-  color: #0a1f44;
-  transition: color 0.25s ease;
+  display: block;
+  width: 100%;
+  text-align: center;
+  padding: 15px 18px;
 }
-.wsv-store-link i {
+.wsv-store-btn i {
   font-size: 18px;
-  transition: transform 0.25s ease;
-}
-.wsv-store-link:hover {
-  color: #1dd3f8;
-  /* Negative X: the arrow points left because the page is RTL, so it has to
-     travel left to read as "onward". */
-}
-.wsv-store-link:hover i {
-  transform: translateX(-4px);
+  vertical-align: middle;
+  margin-inline-start: 4px;
 }
 
 .wsv-store-media {
@@ -13591,6 +14016,7 @@ html.wsv-smooth {
      3:2 matches the 1536x1024 sources, so `cover` crops nothing on desktop. */
   aspect-ratio: 3/2;
   background-color: #f5f6f8;
+  /* Combo package: build + manage photos side by side. */
 }
 .wsv-store-media img {
   display: block;
@@ -13598,10 +14024,16 @@ html.wsv-smooth {
   height: 100%;
   object-fit: cover;
 }
+.wsv-store-media.is-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 3px;
+}
 
 /*-- Responsive --*/
 @media only screen and (max-width: 1199px) {
-  .wsv-nav-grid {
+  .wsv-nav-grid,
+  .wsv-store-grid {
     grid-template-columns: repeat(2, 1fr);
   }
 }
@@ -13616,11 +14048,6 @@ html.wsv-smooth {
   .wsv-caps-grid,
   .wsv-check-grid {
     grid-template-columns: repeat(2, 1fr);
-  }
-  /* Two wide cards side by side stop being wide below this — and the photo
-     in each is the point of the card, so it needs the full column. */
-  .wsv-store-grid {
-    grid-template-columns: 1fr;
   }
   /* The diagnostic stacks rather than shrinks: three dashboard cards side by
      side below this width would compress the score bars and the priority
@@ -13647,7 +14074,7 @@ html.wsv-smooth {
   .wsv-split > :first-child {
     order: 2;
   }
-  .wsv-frame {
+  .wsv-about-img {
     max-width: 520px;
     margin-inline: auto;
   }
@@ -13658,6 +14085,9 @@ html.wsv-smooth {
   }
 }
 @media only screen and (max-width: 575px) {
+  .wsv-store-grid {
+    grid-template-columns: 1fr;
+  }
   .wsv-grid {
     grid-template-columns: 1fr;
   }
@@ -15002,7 +15432,7 @@ WHAT IS DELIBERATELY NOT UNIFIED
 .email-pricing .email-plan-card .default-btn,
 .app-pricing .app-plan-card .default-btn,
 .seo-card.seo-plan .seo-btn-block,
-.dm-card.dm-plan .dm-btn-block,
+.dm-card.dm-plan .default-btn,
 .tr-card.tr-plan .tr-btn-block {
   display: block;
   width: 100%;
@@ -15025,8 +15455,8 @@ WHAT IS DELIBERATELY NOT UNIFIED
 .app-pricing .app-plan-card .default-btn::after,
 .seo-card.seo-plan .seo-btn-block::before,
 .seo-card.seo-plan .seo-btn-block::after,
-.dm-card.dm-plan .dm-btn-block::before,
-.dm-card.dm-plan .dm-btn-block::after,
+.dm-card.dm-plan .default-btn::before,
+.dm-card.dm-plan .default-btn::after,
 .tr-card.tr-plan .tr-btn-block::before,
 .tr-card.tr-plan .tr-btn-block::after {
   display: none;
@@ -15035,7 +15465,7 @@ WHAT IS DELIBERATELY NOT UNIFIED
 .email-pricing .email-plan-card .default-btn:hover,
 .app-pricing .app-plan-card .default-btn:hover,
 .seo-card.seo-plan .seo-btn-block:hover,
-.dm-card.dm-plan .dm-btn-block:hover,
+.dm-card.dm-plan .default-btn:hover,
 .tr-card.tr-plan .tr-btn-block:hover {
   background-color: #0f2f68;
   color: #ffffff;
@@ -15046,7 +15476,7 @@ WHAT IS DELIBERATELY NOT UNIFIED
 .email-pricing .email-plan-card.is-popular .default-btn,
 .app-pricing .app-plan-card.is-popular .default-btn,
 .seo-card.seo-plan.is-popular .seo-btn-block,
-.dm-card.dm-plan.is-popular .dm-btn-block,
+.dm-card.dm-plan.is-popular .default-btn,
 .tr-card.tr-plan.is-popular .tr-btn-block {
   background-color: #ffffff;
   color: #0a1f44;
@@ -15055,7 +15485,7 @@ WHAT IS DELIBERATELY NOT UNIFIED
 .email-pricing .email-plan-card.is-popular .default-btn:hover,
 .app-pricing .app-plan-card.is-popular .default-btn:hover,
 .seo-card.seo-plan.is-popular .seo-btn-block:hover,
-.dm-card.dm-plan.is-popular .dm-btn-block:hover,
+.dm-card.dm-plan.is-popular .default-btn:hover,
 .tr-card.tr-plan.is-popular .tr-btn-block:hover {
   background-color: #e5e5e5;
   color: #0a1f44;
@@ -15224,16 +15654,19 @@ WHAT IS DELIBERATELY NOT UNIFIED
    pages and there is one phone number to maintain.
 
    THE TWO FLOATING CONTROLS, and why each sits where it does:
-     .scroll-to-top .top  — bottom RIGHT. Pinned with the physical `right: 15px`,
-                            so it does not move under RTL. Appears past 300px.
-     .floatwhats          — bottom, inline END (= LEFT under RTL). Always on.
+     .scroll-to-top .top  — bottom LEFT. style.scss says `right: 15px`, but
+                            styles/rtl.css flips it to `left: 15px`, and rtl.css
+                            is loaded on every page. Appears past 300px.
+     .floatwhats          — bottom RIGHT, physical `right` so RTL can't flip it
+                            (user, 2026-09-28: "whatsapp to the right, back to
+                            the top on the left", all pages). Always on.
    (A third, .seo-plans-fab, used to share this edge — removed 2026-09-04 along
    with the SEO pricing section it pointed at. If a floating control is added
    here again, give it its own slot rather than reusing either corner.) */
 .floatwhats {
   position: fixed;
   bottom: 22px;
-  inset-inline-end: 22px;
+  right: 22px;
   /* Above the page, below the navbar. .wsv-rail is 4 and .navbar-area is higher;
      this must not cover a fixed header on a short viewport. */
   z-index: 5;
@@ -15279,7 +15712,7 @@ WHAT IS DELIBERATELY NOT UNIFIED
 @media only screen and (max-width: 575px) {
   .floatwhats {
     bottom: 16px;
-    inset-inline-end: 16px;
+    right: 16px;
     width: 50px;
     height: 50px;
   }
@@ -16284,6 +16717,7 @@ icon and the AppDev platform cards, which are not images).
   position: relative;
   /* Physical top/right and bottom/left on purpose: the brief names the
      corners, and they must not swap under RTL. */
+  /* -18px = the gap between image and bracket (user: "like it has padding"). */
 }
 .svc-img-hover img {
   transition: transform 0.5s cubic-bezier(0.22, 1, 0.36, 1);
@@ -16300,20 +16734,20 @@ icon and the AppDev platform cards, which are not images).
   transition: width 0.4s cubic-bezier(0.22, 1, 0.36, 1), height 0.4s cubic-bezier(0.22, 1, 0.36, 1), opacity 0.2s ease;
 }
 .svc-img-hover::before {
-  top: -10px;
-  right: -10px;
+  top: -18px;
+  right: -18px;
   border-top-width: 3px;
   border-right-width: 3px;
 }
 .svc-img-hover::after {
-  bottom: -10px;
-  left: -10px;
+  bottom: -18px;
+  left: -18px;
   border-bottom-width: 3px;
   border-left-width: 3px;
 }
 .svc-img-hover:hover::before, .svc-img-hover:hover::after {
-  width: 56px;
-  height: 56px;
+  width: 80px;
+  height: 80px;
   opacity: 1;
 }
 .svc-img-hover:hover img {
@@ -16323,7 +16757,8 @@ icon and the AppDev platform cards, which are not images).
 /* The legacy wrappers are full column width while the image inside is not, so
    the brackets would float off the image's corners. Shrink them to the image. */
 .service-list-img.svc-img-hover,
-.industries-img.svc-img-hover {
+.industries-img.svc-img-hover,
+.ssl-type-img.svc-img-hover {
   width: fit-content;
   max-width: 100%;
   margin-inline: auto;
@@ -16552,5 +16987,146 @@ frozen homepage (pages/index.js), which must not change.
     padding: 26px 22px;
   }
 }
+/*================================================
+===  WEB SERVICES (/services) — PLAN CARDS → HOSTING CARD  ===
 
-/*# sourceMappingURL=style.css.map */
+User, 2026-09-28: the business-websites / WordPress plan cards must look like
+the Hosting Services cards. What differed after the shared PLAN CARD block:
+the icon well (removed in Plans.js), equal-height cards (hosting centres them,
+so the popular card stands taller), the popular card's spinning border ring,
+the cyan currency switch and the bigger price. Sits at the end of the file so
+it wins over PLAN CARD — ONE STYLE.
+=================================================*/
+.wsv-grid {
+  align-items: center;
+}
+
+.wsv-grid .wsv-plan {
+  height: auto;
+}
+
+.wsv-plan-amount {
+  font-size: 34px;
+}
+
+.wsv-cur-switch button.is-active {
+  background-color: #1dd3f8;
+  color: #ffffff;
+}
+
+/* Same ring as .hosting-pricing-beam: 2px padding around the card, a conic
+   gradient spinning behind it (shared appBeamSpin keyframe). */
+.wsv-plan-beam {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  padding: 2px;
+  border-radius: 18px;
+  overflow: hidden;
+  isolation: isolate;
+}
+.wsv-plan-beam::before {
+  content: "";
+  position: absolute;
+  z-index: -1;
+  left: 50%;
+  top: 50%;
+  width: 220%;
+  aspect-ratio: 1;
+  transform: translate(-50%, -50%) rotate(0deg);
+  background: conic-gradient(from 0deg, transparent 0deg 250deg, #1dd3f8 300deg, #5ce1c9 340deg, #ffffff 356deg, transparent 360deg);
+  animation: appBeamSpin 5s linear infinite;
+}
+.wsv-plan-beam:hover::before {
+  animation-duration: 2s;
+}
+.wsv-plan-beam .wsv-plan {
+  width: 100%;
+  padding-block: 44px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .wsv-plan-beam::before {
+    animation: none;
+  }
+}
+/*================================================
+===  WEB SERVICES — PROJECT LIGHTBOX  ===
+Click the centre project in "مواقع أطلقناها لعملائنا" to see it large
+(user, 2026-09-28). Native <dialog>, see components/Services/Projects.js.
+=================================================*/
+.wsv-lightbox {
+  width: min(1100px, 100vw - 32px);
+  max-height: calc(100dvh - 32px);
+  padding: 0;
+  border: 0;
+  border-radius: 18px;
+  background: transparent;
+  overflow: visible;
+}
+.wsv-lightbox::backdrop {
+  background: rgba(6, 12, 74, 0.82);
+  backdrop-filter: blur(4px);
+}
+.wsv-lightbox[open] {
+  animation: wsvLightboxIn 0.3s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.wsv-lightbox figure {
+  margin: 0;
+}
+.wsv-lightbox img {
+  display: block;
+  width: 100%;
+  max-height: calc(100dvh - 110px);
+  object-fit: contain;
+  border-radius: 18px;
+  box-shadow: 0 40px 80px -30px rgba(0, 0, 0, 0.6);
+}
+.wsv-lightbox figcaption {
+  margin-top: 14px;
+  text-align: center;
+  font-family: "Almarai", sans-serif;
+  font-size: 16px;
+  font-weight: 700;
+  color: #ffffff;
+}
+
+.wsv-lightbox-close {
+  position: absolute;
+  top: -18px;
+  left: -18px;
+  width: 44px;
+  height: 44px;
+  display: grid;
+  place-items: center;
+  border: 0;
+  border-radius: 50%;
+  background: #ffffff;
+  color: #0a1f44;
+  font-size: 26px;
+  cursor: pointer;
+  box-shadow: 0 10px 24px -8px rgba(0, 0, 0, 0.5);
+  transition: background 0.2s ease, color 0.2s ease;
+}
+.wsv-lightbox-close:hover, .wsv-lightbox-close:focus-visible {
+  background: #1dd3f8;
+  color: #ffffff;
+}
+@media (max-width: 575px) {
+  .wsv-lightbox-close {
+    top: -54px;
+    left: 0;
+  }
+}
+
+@keyframes wsvLightboxIn {
+  from {
+    opacity: 0;
+    transform: scale(0.94);
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wsv-lightbox[open] {
+    animation: none;
+  }
+}

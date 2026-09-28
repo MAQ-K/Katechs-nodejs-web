@@ -27,11 +27,11 @@ const Overview = ({ area, id }) => {
     <section className="wsv-about" id={id}>
       <div className="container">
         <div className="wsv-split">
+          {/* No white plate behind the image, and the shared corner-bracket
+              hover (.svc-img-hover) — user, 2026-09-28. */}
           <Reveal>
-            <div className="wsv-frame">
-              <div className="wsv-frame-media">
-                <img src={media.src} alt={media.alt} />
-              </div>
+            <div className="wsv-about-img svc-img-hover">
+              <img src={media.src} alt={media.alt} />
             </div>
           </Reveal>
 
@@ -68,7 +68,7 @@ const Overview = ({ area, id }) => {
 
             <Reveal delay={0.3}>
               <div className="wsv-about-cta">
-                <Link href={cta.href} className="wsv-btn wsv-btn-solid">
+                <Link href={cta.href} className="default-btn app-btn-shine">
                   {cta.label}
                 </Link>
                 <Link href={secondary.href} className="wsv-about-link">

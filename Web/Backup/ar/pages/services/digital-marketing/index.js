@@ -14,7 +14,7 @@ import Footer from "../../../components/Layouts/Footer";
 export default function DigitalMarketingPage() {
   return (
     <>
-      <Navbar />
+      <Navbar theme="navy" />
 
       <Hero />
 

@@ -21,7 +21,7 @@ export default function Services2Page() {
       </Head>
 
 
-      <Navbar />
+      <Navbar theme="navy" />
 
       <PageBanner
         pageTitle="تصميم المواقع الالكترونية"

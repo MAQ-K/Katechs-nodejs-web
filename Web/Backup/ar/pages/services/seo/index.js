@@ -15,7 +15,7 @@ import Footer from "../../../components/Layouts/Footer";
 export default function SeoPage() {
   return (
     <>
-      <Navbar />
+      <Navbar theme="navy" />
 
       <Hero />
 

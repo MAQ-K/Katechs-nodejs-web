@@ -44,6 +44,9 @@ export default function CoverflowCarousel({
   prevLabel = "Previous slide",
   nextLabel = "Next slide",
   dotLabel = (i) => `Go to slide ${i + 1}`,
+  /** Optional. Called with the index when the CENTRE card is clicked (not
+      dragged). Clicking a side card rotates it to the centre instead. */
+  onOpen = null,
   className = "",
 }) {
   const count = slides ? slides.length : 0;
@@ -58,6 +61,8 @@ export default function CoverflowCarousel({
   const widthRef = React.useRef(0);
   const rafRef = React.useRef(null);
   const dragRef = React.useRef(null);
+  /** Pixels the last press travelled — tells a click from a drag. */
+  const movedRef = React.useRef(0);
 
   const [selected, setSelected] = React.useState(0);
   /** Autoplay is suspended while the pointer or the keyboard is on it. */
@@ -161,6 +166,7 @@ export default function CoverflowCarousel({
     }
     event.currentTarget.setPointerCapture(event.pointerId);
     targetRef.current = posRef.current;
+    movedRef.current = 0;
     dragRef.current = {
       id: event.pointerId,
       x: event.clientX,
@@ -177,6 +183,7 @@ export default function CoverflowCarousel({
     const pitch = widthRef.current * (1 + gap);
     if (!pitch) return;
 
+    movedRef.current = Math.max(movedRef.current, Math.abs(event.clientX - drag.x));
     const now = performance.now();
     const previous = posRef.current;
     posRef.current = clamp(drag.pos - (event.clientX - drag.x) / pitch);
@@ -196,6 +203,19 @@ export default function CoverflowCarousel({
     // Let a flick carry, but never more than two cards.
     const carried = Math.max(-2, Math.min(2, drag.v * 0.18));
     settle(clamp(Math.round(posRef.current + carried)));
+
+    // A press that barely moved is a click. Handled here, not in an onClick on
+    // the card: setPointerCapture above sends the click to the FRAME, so a
+    // card's own onClick never fires. Look up the card under the pointer.
+    if (onOpen && movedRef.current <= 6) {
+      const hit = document
+        .elementFromPoint(event.clientX, event.clientY)
+        ?.closest(".cf-card");
+      const index = cardRefs.current.indexOf(hit);
+      if (index === -1) return;
+      if (index === indexAt(targetRef.current)) onOpen(index);
+      else goTo(index);
+    }
   };
 
   // Card width drives pitch, depth and perspective, so it is the only thing
@@ -280,6 +300,9 @@ export default function CoverflowCarousel({
             } else if (event.key === "ArrowRight") {
               event.preventDefault();
               nudge(1);
+            } else if (onOpen && event.key === "Enter") {
+              event.preventDefault();
+              onOpen(selected);
             }
           }}
           className="cf-frame"
@@ -294,7 +317,7 @@ export default function CoverflowCarousel({
                 role="group"
                 aria-roledescription="slide"
                 aria-label={`${index + 1} / ${count}`}
-                className="cf-card"
+                className={`cf-card${onOpen && index === selected ? " is-openable" : ""}`}
               >
                 <img
                   src={slide.src}
@@ -439,6 +462,10 @@ export default function CoverflowCarousel({
           background-color: #eef1f5;
           box-shadow: 0 18px 40px rgba(10, 31, 68, 0.22);
           will-change: transform;
+        }
+
+        .cf-card.is-openable {
+          cursor: zoom-in;
         }
 
         .cf-img {

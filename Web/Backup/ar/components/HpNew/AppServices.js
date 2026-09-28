@@ -69,9 +69,13 @@ const STREAKS = [
   ["103%", "1.5px", "26%", 0.9, "#3b82f6", "15px", "9s", "4.6s"],
 ];
 
-const AppServices = ({ content = appServices }) => {
+// `features` — optional. When given (the app dev page's Platforms section,
+// user 2026-09-28: "mobile object on the middle, talk on the right, features
+// on the left"), the section becomes three columns. The homepage passes
+// nothing and keeps its two-column layout.
+const AppServices = ({ content = appServices, features }) => {
   return (
-    <div className="hp-app">
+    <div className={features ? "hp-app is-three" : "hp-app"}>
       <div className="hp-app-bg" aria-hidden="true">
         {STREAKS.map(([start, w, h, op, colour, glow, dur, delay], i) => (
           <div
@@ -108,6 +112,7 @@ const AppServices = ({ content = appServices }) => {
           <h2>{content.heading}</h2>
           <p>{content.body}</p>
 
+          {content.points?.length > 0 && (
           <ul className="hp-app-list">
             {content.points.map((point) => (
               <li key={point}>
@@ -128,14 +133,17 @@ const AppServices = ({ content = appServices }) => {
               </li>
             ))}
           </ul>
+          )}
 
           <div className="hp-app-cta">
             <Link href={content.cta.href} className="hp-app-btn">
               {content.cta.label}
             </Link>
-            <Link href={content.secondary.href} className="hp-app-btn is-ghost">
-              {content.secondary.label}
-            </Link>
+            {content.secondary && (
+              <Link href={content.secondary.href} className="hp-app-btn is-ghost">
+                {content.secondary.label}
+              </Link>
+            )}
           </div>
         </div>
 
@@ -155,10 +163,24 @@ const AppServices = ({ content = appServices }) => {
                 // the wallet (never adjacent to it on the ring).
                 "توصيل وتتبّع": "/images/homepage/app-wallet.jpeg",
               }}
-              radius={235}
+              radius={features ? 190 : 235}
             />
           </div>
         </div>
+
+        {features && (
+          <ul className="hp-app-features">
+            {features.map((item) => (
+              <li key={item.title}>
+                <i className={item.icon} aria-hidden="true"></i>
+                <div>
+                  <h3>{item.title}</h3>
+                  <span>{item.meta}</span>
+                </div>
+              </li>
+            ))}
+          </ul>
+        )}
       </div>
 
       <style jsx>{`
@@ -447,6 +469,73 @@ const AppServices = ({ content = appServices }) => {
         .hp-app-cta :global(.hp-app-btn.is-ghost:hover) {
           background: rgba(255, 255, 255, 0.1);
           color: #fff;
+        }
+        /* Three columns (features passed). RTL: order 1 lands on the right —
+           talk right, phone middle, features left. */
+        @media (min-width: 992px) {
+          .hp-app.is-three .hp-app-inner {
+            grid-template-columns: minmax(0, 1fr) minmax(0, 1.25fr) minmax(0, 0.9fr);
+            gap: clamp(24px, 3vw, 48px);
+          }
+        }
+        .hp-app.is-three .hp-app-text {
+          order: 1;
+        }
+        .hp-app.is-three .hp-app-stage {
+          order: 2;
+          height: min(540px, 72vh);
+        }
+        .hp-app.is-three .hp-app-orbit-host :global(.app-orbit) {
+          transform: none;
+        }
+        .hp-app-features {
+          order: 3;
+          list-style: none;
+          margin: 0;
+          padding: 0;
+          display: grid;
+          gap: 14px;
+        }
+        .hp-app-features li {
+          display: flex;
+          align-items: center;
+          gap: 14px;
+          padding: 18px 20px;
+          border-radius: 16px;
+          background: rgba(255, 255, 255, 0.05);
+          border: 1px solid rgba(255, 255, 255, 0.1);
+          backdrop-filter: blur(6px);
+          transition: background 0.25s ease, border-color 0.25s ease;
+        }
+        .hp-app-features li:hover {
+          background: rgba(255, 255, 255, 0.09);
+          border-color: rgba(29, 211, 248, 0.45);
+        }
+        .hp-app-features i {
+          flex: 0 0 auto;
+          width: 48px;
+          height: 48px;
+          display: grid;
+          place-items: center;
+          border-radius: 12px;
+          font-size: 26px;
+          color: #fff;
+          background: linear-gradient(
+            135deg,
+            rgba(29, 211, 248, 0.35),
+            rgba(124, 92, 255, 0.35)
+          );
+        }
+        .hp-app-features h3 {
+          font-family: "Cairo", system-ui, sans-serif;
+          font-size: 17px;
+          font-weight: 700;
+          color: #fff;
+          margin: 0 0 4px;
+        }
+        .hp-app-features span {
+          font-size: 14px;
+          color: rgba(255, 255, 255, 0.62);
         }
         @keyframes appStreak {
           0% {

@@ -9,7 +9,7 @@ import Footer from "../../../components/Layouts/Footer";
 export default function Services2Page() {
   return (
     <>
-      <Navbar />
+      <Navbar theme="navy" />
 
       <Hero />
 

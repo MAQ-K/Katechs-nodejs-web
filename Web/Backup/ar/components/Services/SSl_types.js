@@ -13,7 +13,7 @@ const ServicesStyleOne = () => {
             <div className="col-lg-4 col-sm-6">
               <div className="single-features ssl-type">
                 <p>أقصى قدر من الحماية والثقة</p>
-                <div className="mb-20">
+                <div className="mb-20 ssl-type-img svc-img-hover">
                   <img  src="/images/ssl-dv-icons.png"  width={200}/>
                 </div>
                 <h3 >التحقق الممتد  (EV)</h3>
@@ -27,7 +27,7 @@ const ServicesStyleOne = () => {
             <div className="col-lg-4 col-sm-6">
               <div className="single-features ssl-type">
                 <p>SSL قوي على مستوى الأعمال</p>
-                <div className="mb-20">
+                <div className="mb-20 ssl-type-img svc-img-hover">
                   <img  src="/images/ssl-ov-icon.png"  width={200}/>
                 </div>
                 <h3 >التحقق من صحة المنظمة (OV)</h3>
@@ -41,7 +41,7 @@ const ServicesStyleOne = () => {
             <div className="col-lg-4 col-sm-6">
               <div className="single-features ssl-type">
                 <p>الأمن الأساسي</p>
-                <div className="mb-20">
+                <div className="mb-20 ssl-type-img svc-img-hover">
                   <img  src="/images/ssl-ev-icon.png" width={200}  />
                 </div>
                 <h3>التحقق من صحة المجال (DV)</h3>

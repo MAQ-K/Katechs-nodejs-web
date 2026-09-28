@@ -10,7 +10,7 @@ import ServicesStyleTwo from "../../../components/Services/security-details";
 export default function Services2Page() {
   return (
     <>
-      <Navbar />
+      <Navbar theme="navy" />
 
       <PageBanner
         pageTitle="حماية شبكات الشركات"

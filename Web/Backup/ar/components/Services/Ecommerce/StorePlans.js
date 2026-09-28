@@ -23,8 +23,10 @@ import Reveal, { staggerParent, staggerItem } from "../../Common/Reveal";
 //      own interface furniture (a browser bar, an orders dashboard); adding a
 //      chip on top would be a second fake UI layered on a real one.
 //
-// Text links, not buttons: the area's single heavy CTA is the banner directly
-// above this, and the brief for this area allows exactly one.
+// Four services in one row (user, 2026-09-28: build, manage, build + manage,
+// landing page — the same four the homepage shows), and the CTA is now a real
+// button (.default-btn, the site's own) because the user asked for it to stand
+// out more. That overrides the earlier "soft text links only" call.
 
 const StorePlans = ({ area, id }) => {
   const reduced = useReducedMotion();
@@ -62,7 +64,10 @@ const StorePlans = ({ area, id }) => {
                   ))}
                 </ul>
 
-                <Link href={plan.link.href} className="wsv-store-link">
+                <Link
+                  href={plan.link.href}
+                  className="default-btn app-btn-shine wsv-store-btn"
+                >
                   {plan.link.label}
                   {/* Left-pointing: this page is RTL, so "forward" is left. */}
                   <i className="bx bx-left-arrow-alt" aria-hidden="true"></i>
@@ -78,15 +83,24 @@ const StorePlans = ({ area, id }) => {
                   them. Regenerate with sharp if the crop ever needs to change.
                   Kept as next/image rather than a bare <img> for the reserved box
                   and the lazy loading, both of which work with unoptimized. */}
-              <div className="wsv-store-media">
-                <Image
-                  src={plan.image}
-                  alt={plan.alt}
-                  width={plan.imageW}
-                  height={plan.imageH}
-                  sizes="(max-width: 991px) 100vw, 560px"
-                />
-              </div>
+              {plan.images ? (
+                // The combo package: build + manage photos, split down the middle.
+                <div className="wsv-store-media is-split" role="img" aria-label={plan.alt}>
+                  {plan.images.map((src) => (
+                    <img key={src} src={src} alt="" loading="lazy" />
+                  ))}
+                </div>
+              ) : (
+                <div className="wsv-store-media">
+                  <Image
+                    src={plan.image}
+                    alt={plan.alt}
+                    width={plan.imageW}
+                    height={plan.imageH}
+                    sizes="(max-width: 991px) 100vw, 340px"
+                  />
+                </div>
+              )}
             </motion.article>
           ))}
         </motion.div>

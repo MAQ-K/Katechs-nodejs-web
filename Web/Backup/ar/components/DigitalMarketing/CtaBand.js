@@ -17,12 +17,12 @@ const CtaBand = () => {
 
             <div className="dm-actions dm-center" style={{ marginTop: 26 }}>
               <div className="d-inline-block">
-                <Link href="/digital-market-order" className="dm-btn dm-btn-invert">
+                <Link href="/digital-market-order" className="default-btn app-btn-shine">
                   اطلب عرض سعر
                   <i className="bx bx-left-arrow-alt"></i>
                 </Link>
               </div>
-              <Link href="/contactWeb" className="dm-btn dm-btn-ghost">
+              <Link href="/contactWeb" className="default-btn active">
                 تواصل معنا
               </Link>
             </div>

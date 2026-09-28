@@ -56,12 +56,6 @@ const Strategy = () => {
           ))}
         </motion.div>
 
-        <Reveal delay={0.1}>
-          <p className="dm-note">
-            عناوين الخطوات مكتوبة فعليًا في
-            components/Services/digital-service.js
-          </p>
-        </Reveal>
       </div>
     </section>
   );

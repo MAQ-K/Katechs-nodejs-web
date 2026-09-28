@@ -637,6 +637,27 @@ export const ecommerce = {
       alt: "صاحب متجر يتابع الطلبات والمبيعات من لوحة التحكم",
     },
     {
+      // Moved here from data/home-new/data.js (user, 2026-09-28: "the services
+      // we have the 4"), so /services and the homepage show the same four.
+      // No photo of its own: StorePlans shows the build + manage photos side
+      // by side (`images`), which is literally what this package is.
+      id: "combo",
+      tag: "الباقة الكاملة",
+      title: "نبني ونشغّل الاثنين",
+      text: "بلا فجوة بين التسليم والمتابعة: نبني متجرك من الصفر ثم نستمر في تشغيله معك — نفس الفريق، من أول يوم إلى ما بعد الإطلاق.",
+      points: [
+        "تصميم وإطلاق متجر كامل من الصفر",
+        "متابعة مستمرة للطلبات والمخزون والمدفوعات",
+        "دعم وتدريب لا ينتهيان عند التسليم",
+      ],
+      link: { label: "اطلب الباقة الكاملة", href: "/contactWeb" },
+      images: [
+        "/images/ecommerce/salla-store-card.webp",
+        "/images/ecommerce/shopify-store-card.webp",
+      ],
+      alt: "بناء المتجر وتشغيله معاً",
+    },
+    {
       // Added on user request (2026-09-04): "add making landing page service".
       // A lighter third option next to build/manage — for a single product,
       // offer or ad campaign that does not need a full store. Reuses the

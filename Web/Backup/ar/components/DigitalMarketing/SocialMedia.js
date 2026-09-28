@@ -31,19 +31,27 @@ const SocialMedia = () => {
                     تفاعل هذا الأسبوع
                   </span>
                   <div className="dm-post-row">
-                    <span className="dm-post-avatar"></span>
-                    <div className="dm-skel-line w80"></div>
+                    <span className="dm-post-avatar">K</span>
+                    <div>
+                      <strong>متجرك</strong>
+                      <span>منشور ممول · منذ ساعتين</span>
+                    </div>
                   </div>
-                  <div className="dm-post-thumb"></div>
+                  <p className="dm-post-text">
+                    تشكيلة الشتاء وصلت. شحن مجاني لأول 100 طلب.
+                  </p>
+                  <div className="dm-post-thumb">
+                    <i className="bx bx-shopping-bag"></i>
+                  </div>
                   <div className="dm-post-stats">
                     <span>
-                      <i className="bx bx-heart"></i> إعجاب
+                      <i className="bx bxs-heart"></i> 2.4K
                     </span>
                     <span>
-                      <i className="bx bx-comment"></i> تعليق
+                      <i className="bx bx-comment"></i> 186
                     </span>
                     <span>
-                      <i className="bx bx-share"></i> مشاركة
+                      <i className="bx bx-share"></i> 94
                     </span>
                   </div>
                 </div>
@@ -94,12 +102,6 @@ const SocialMedia = () => {
               </div>
             </Reveal>
 
-            <Reveal delay={0.3}>
-              <p className="dm-note">
-                النص أعلاه مكتوب فعليًا في
-                components/digitalfeature/WhatWeOffer.js
-              </p>
-            </Reveal>
           </div>
         </div>
       </div>

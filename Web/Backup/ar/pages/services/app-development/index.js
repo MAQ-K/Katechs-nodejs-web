@@ -10,7 +10,7 @@ import Footer from "../../../components/Layouts/Footer";
 export default function AppDevelopmentPage() {
   return (
     <>
-      <Navbar />
+      <Navbar theme="navy" />
 
       <Hero />
 

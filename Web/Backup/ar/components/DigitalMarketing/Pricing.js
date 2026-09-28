@@ -58,15 +58,6 @@ const Pricing = () => {
           </div>
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <div className="dm-flag" style={{ display: "flex", marginInline: "auto", maxWidth: 640 }}>
-            <div>
-              <strong>سؤال مفتوح:</strong> اشتراك شهري (المعتاد في هذا
-              المجال) أم تسعير حسب المشروع؟ الأسعار متروكة فارغة حتى يتحدد
-              ذلك.
-            </div>
-          </div>
-        </Reveal>
 
         <motion.div
           className="dm-grid"
@@ -104,7 +95,7 @@ const Pricing = () => {
               </ul>
 
               <div style={{ marginTop: "auto" }}>
-                <Link href="/digital-market-order" className="dm-btn dm-btn-block">
+                <Link href="/digital-market-order" className="default-btn app-btn-shine w-100 text-center">
                   اطلب الباقة
                 </Link>
               </div>

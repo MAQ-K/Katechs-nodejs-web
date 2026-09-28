@@ -40,7 +40,7 @@ const Hero = () => {
             <Reveal delay={0.15}>
               <p className="dm-p">
                 ندرس سوقك وجمهورك أولًا، ثم نختار القنوات المناسبة وننفذ
-                الحملات ونقيس النتائج — بحيث تعرف في كل شهر ما الذي أنفقته
+                الحملات ونقيس النتائج، بحيث تعرف في كل شهر ما الذي أنفقته
                 وما الذي عاد عليك.
               </p>
             </Reveal>
@@ -59,23 +59,17 @@ const Hero = () => {
             <Reveal delay={0.25}>
               <div className="dm-actions">
                 <div className="d-inline-block">
-                  <Link href="/digital-market-order" className="dm-btn">
+                  <Link href="/digital-market-order" className="default-btn app-btn-shine">
                     اطلب عرض سعر
                     <i className="bx bx-left-arrow-alt"></i>
                   </Link>
                 </div>
-                <Link href="#channels" className="dm-btn dm-btn-ghost">
+                <Link href="#channels" className="default-btn active">
                   شاهد الخدمات
                 </Link>
               </div>
             </Reveal>
 
-            <Reveal delay={0.3}>
-              <p className="dm-note">
-                سؤال مفتوح: يبقى الزر الأساسي على /digital-market-order أم
-                ينتقل إلى /contactWeb؟
-              </p>
-            </Reveal>
           </div>
 
           <div>

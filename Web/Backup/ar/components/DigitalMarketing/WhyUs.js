@@ -14,7 +14,7 @@ const reasons = [
   {
     icon: "bx-rocket",
     title: "تبدأ فورًا",
-    text: "لا وقت توظيف ولا تدريب — الفريق جاهز ويعرف ما يفعله.",
+    text: "لا وقت توظيف ولا تدريب. الفريق جاهز ويعرف ما يفعله.",
   },
   {
     icon: "bx-globe",
@@ -38,37 +38,39 @@ const reasons = [
   },
 ];
 
+// Sticky heading beside a 2-col list with no card boxes (design pass,
+// 2026-09-28): the page's other grids are cards, this one breathes.
 const WhyUs = () => {
   return (
     <section className="dm-section dm-alt">
       <div className="container">
-        <Reveal>
-          <div className="dm-head" style={{ maxWidth: 640 }}>
+        <div className="dm-why">
+          <Reveal className="dm-why-head">
             <h2 className="dm-h2">لماذا وكالة بدل فريق داخلي؟</h2>
             <p className="dm-p">
               المقارنة الحقيقية ليست بيننا وبين وكالة أخرى، بل بين الاستعانة
               بنا وبناء فريق داخلي.
             </p>
-          </div>
-        </Reveal>
+          </Reveal>
 
-        <motion.div
-          className="dm-grid"
-          variants={staggerParent(0.08)}
-          initial="hidden"
-          whileInView="show"
-          viewport={{ once: true, margin: "-80px" }}
-        >
-          {reasons.map((item) => (
-            <motion.div className="dm-card" key={item.title} variants={staggerItem()}>
-              <span className="dm-icon-well">
-                <i className={`bx ${item.icon}`}></i>
-              </span>
-              <h3 className="dm-h3">{item.title}</h3>
-              <p className="dm-p">{item.text}</p>
-            </motion.div>
-          ))}
-        </motion.div>
+          <motion.ul
+            className="dm-why-list"
+            variants={staggerParent(0.08)}
+            initial="hidden"
+            whileInView="show"
+            viewport={{ once: true, margin: "-80px" }}
+          >
+            {reasons.map((item) => (
+              <motion.li key={item.title} variants={staggerItem()}>
+                <span className="dm-icon-well">
+                  <i className={`bx ${item.icon}`}></i>
+                </span>
+                <h3 className="dm-h3">{item.title}</h3>
+                <p className="dm-p">{item.text}</p>
+              </motion.li>
+            ))}
+          </motion.ul>
+        </div>
       </div>
     </section>
   );

@@ -66,7 +66,8 @@ const Plans = ({ area, id }) => {
         {/* Keyed on the currency so the cards re-key and fade when it flips —
             without it the numbers swap in place with no acknowledgement. */}
         <div className="wsv-grid" key={currency}>
-          {active.plans.map((plan, i) => (
+          {active.plans.map((plan, i) => {
+            const card = (
             <Reveal
               key={plan.id}
               className={`wsv-plan${plan.isPopular ? " is-popular" : ""}`}
@@ -76,10 +77,6 @@ const Plans = ({ area, id }) => {
               {plan.badge ? (
                 <span className="wsv-plan-badge">{plan.badge}</span>
               ) : null}
-
-              <span className="wsv-plan-icon">
-                <i className={plan.icon} aria-hidden="true"></i>
-              </span>
 
               <h3>{plan.name}</h3>
               <span className="wsv-plan-summary">{plan.summary}</span>
@@ -125,7 +122,17 @@ const Plans = ({ area, id }) => {
                 </Link>
               </div>
             </Reveal>
-          ))}
+            );
+
+            // Popular card rides in the same spinning-border ring as the
+            // Hosting page's (.hosting-pricing-beam) — user, 2026-09-28: "card
+            // style same as the plan cards on the host services page".
+            return plan.isPopular ? (
+              <div className="wsv-plan-beam" key={plan.id}>{card}</div>
+            ) : (
+              <React.Fragment key={plan.id}>{card}</React.Fragment>
+            );
+          })}
         </div>
 
         {active.billingNote ? (

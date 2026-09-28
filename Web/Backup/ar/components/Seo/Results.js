@@ -4,15 +4,14 @@ import { motion } from "framer-motion";
 
 // From "seo page inspiration/numbers section 2nd.png" — a bordered white
 // card holding the number row, not the numbers loose on the section bg.
-// No real client numbers exist yet (see flag) — a static "00" read as a
-// broken counter rather than a deliberate pending state, so this shows a
-// shimmering placeholder bar instead. Swap seo-stat-pending for a real
-// <span className="seo-stat-value"> once figures land.
+// Figures filled in at the user's request (2026-09-28, "add a good results
+// data"). 240% matches the hero badge; 15 years matches the site's other
+// copy. ⚠️ The rest are illustrative — confirm with the client before launch.
 const stats = [
-  "مواقع نعمل عليها",
-  "كلمات في الصفحة الأولى",
-  "متوسط نمو الزيارات",
-  "سنوات خبرة",
+  { value: "+120", label: "مواقع نعمل عليها" },
+  { value: "+3,500", label: "كلمات في الصفحة الأولى" },
+  { value: "240%", label: "متوسط نمو الزيارات" },
+  { value: "+15", label: "سنوات خبرة" },
 ];
 
 const Results = () => {
@@ -25,14 +24,6 @@ const Results = () => {
           </div>
         </Reveal>
 
-        <Reveal delay={0.05}>
-          <div className="seo-flag" style={{ display: "flex", marginInline: "auto", maxWidth: 640 }}>
-            <div>
-              <strong>مطلوب من العميل:</strong> أرقام حقيقية لهذا القسم. لن
-              تُكتب أي قيمة هنا دون بيانات فعلية.
-            </div>
-          </div>
-        </Reveal>
 
         <div className="seo-stats-card">
           <motion.div
@@ -42,11 +33,9 @@ const Results = () => {
             whileInView="show"
             viewport={{ once: true, margin: "-80px" }}
           >
-            {stats.map((label) => (
+            {stats.map(({ value, label }) => (
               <motion.div className="seo-stat" key={label} variants={staggerItem()}>
-                <span className="seo-stat-pending" aria-label="بيانات قادمة">
-                  <span className="seo-stat-pending-bar"></span>
-                </span>
+                <span className="seo-stat-value" dir="ltr">{value}</span>
                 <span className="seo-stat-label">{label}</span>
               </motion.div>
             ))}

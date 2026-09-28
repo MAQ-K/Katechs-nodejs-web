@@ -2,60 +2,104 @@ import React from "react";
 import Reveal, { staggerParent, staggerItem } from "../Common/Reveal";
 import { motion } from "framer-motion";
 
-// Visual pass — from "seo page inspiration/cards.png" (dark, 3-card grid),
-// same treatment as components/Seo/CaseStudies.js including the
-// pending-data shimmer instead of a static "+00%" (no real case studies
-// exist yet — see the flag).
-const cases = [1, 2, 3];
+// Draft case studies (user, 2026-09-28: "نتائج عملاء => add good draft data").
+// ⚠️ Illustrative figures, not real clients. Replace with real case studies
+// before launch. Layout: one featured case + two stacked, instead of three
+// equal cards (the page already has two other 3-col grids).
+const cases = [
+  {
+    sector: "متجر إلكتروني",
+    title: "متجر أزياء نسائية",
+    text: "مبيعات متذبذبة تعتمد على العروض فقط. أعدنا بناء حملات البحث والسوشيال حول المنتجات الأعلى ربحًا.",
+    value: "+184%",
+    label: "نمو المبيعات من الإعلانات",
+    extra: [
+      { value: "4.6x", label: "عائد الإنفاق الإعلاني" },
+      { value: "-41%", label: "تكلفة الطلب الواحد" },
+    ],
+    duration: "خلال 6 أشهر",
+  },
+  {
+    sector: "عيادات",
+    title: "مجموعة عيادات أسنان",
+    text: "حجوزات عبر إعلانات البحث المحلي وصفحة هبوط لكل خدمة.",
+    value: "+320",
+    label: "حجز شهري جديد",
+    duration: "خلال 4 أشهر",
+  },
+  {
+    sector: "عقارات",
+    title: "شركة تطوير عقاري",
+    text: "استهداف دقيق على ميتا بدل جمهور عام، مع متابعة يومية للعملاء المحتملين.",
+    value: "-58%",
+    label: "تكلفة العميل المحتمل",
+    duration: "خلال 3 أشهر",
+  },
+];
 
 const Results = () => {
+  const [featured, ...rest] = cases;
+
   return (
     <section className="dm-section dm-dark">
       <div className="container">
         <Reveal>
-          <div className="dm-head dm-center" style={{ maxWidth: 640, marginInline: "auto" }}>
+          <div className="dm-head dm-center">
             <h2 className="dm-h2">نتائج عملاء</h2>
-          </div>
-        </Reveal>
-
-        <Reveal delay={0.05}>
-          <div
-            className="dm-flag dm-flag-dark"
-            style={{ display: "flex", marginInline: "auto", maxWidth: 640 }}
-          >
-            <div>
-              <strong>مطلوب من العميل:</strong> دراسات حالة حقيقية — القطاع،
-              المشكلة، ما نُفّذ، والرقم الذي تغيّر. لا يمكن كتابة هذا القسم
-              بدونها.
-            </div>
+            <p className="dm-p">
+              أرقام من حملات أدرناها، مقاسة من أول شهر حتى آخر تقرير.
+            </p>
           </div>
         </Reveal>
 
         <motion.div
-          className="dm-grid"
+          className="dm-cases"
           variants={staggerParent(0.1)}
           initial="hidden"
           whileInView="show"
           viewport={{ once: true, margin: "-80px" }}
         >
-          {cases.map((n) => (
-            <motion.div className="dm-card dm-card-dark" key={n} variants={staggerItem()}>
-              <div className="dm-tag-row">
-                <span className="dm-tag">القطاع</span>
+          <motion.article className="dm-case is-featured" variants={staggerItem()}>
+            <span className="dm-case-tag">{featured.sector}</span>
+            <h3 className="dm-h3">{featured.title}</h3>
+            <p className="dm-p">{featured.text}</p>
+
+            <div className="dm-case-metric">
+              <span className="dm-case-value" dir="ltr">{featured.value}</span>
+              <span className="dm-case-label">{featured.label}</span>
+            </div>
+
+            <div className="dm-case-extra">
+              {featured.extra.map((m) => (
+                <div key={m.label}>
+                  <span className="dm-case-value sm" dir="ltr">{m.value}</span>
+                  <span className="dm-case-label">{m.label}</span>
+                </div>
+              ))}
+            </div>
+
+            <span className="dm-case-duration">
+              <i className="bx bx-time-five"></i>
+              {featured.duration}
+            </span>
+          </motion.article>
+
+          {rest.map((c) => (
+            <motion.article className="dm-case" key={c.title} variants={staggerItem()}>
+              <span className="dm-case-tag">{c.sector}</span>
+              <h3 className="dm-h3">{c.title}</h3>
+              <p className="dm-p">{c.text}</p>
+
+              <div className="dm-case-metric">
+                <span className="dm-case-value" dir="ltr">{c.value}</span>
+                <span className="dm-case-label">{c.label}</span>
               </div>
 
-              <h3 className="dm-h3">اسم العميل أو القطاع</h3>
-              <p className="dm-p">
-                وصف مختصر للوضع قبل الحملة والهدف المطلوب تحقيقه.
-              </p>
-
-              <div style={{ marginTop: "auto", paddingTop: 20 }}>
-                <span className="dm-stat-pending" aria-label="بيانات قادمة">
-                  <span className="dm-stat-pending-bar dm-stat-pending-bar-dark"></span>
-                </span>
-                <span className="dm-stat-label">النتيجة خلال 00 شهرًا</span>
-              </div>
-            </motion.div>
+              <span className="dm-case-duration">
+                <i className="bx bx-time-five"></i>
+                {c.duration}
+              </span>
+            </motion.article>
           ))}
         </motion.div>
       </div>

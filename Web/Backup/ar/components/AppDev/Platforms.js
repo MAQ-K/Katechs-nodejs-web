@@ -1,9 +1,19 @@
 import React from "react";
-import Link from "next/link";
-import { motion } from "framer-motion";
-import Reveal, { EASE } from "../Common/Reveal";
-import Tilt3D from "../Emails/Tilt3D";
-import AppOrbit from "./AppOrbit";
+import AppServices from "../HpNew/AppServices";
+
+// Same element as the homepage's app section (components/HpNew/AppServices.js
+// — streak backdrop, iPhone orbit), rendered, not copied. One change, user
+// 2026-09-28: phone in the middle, talk on the right, features on the left —
+// that's the `features` prop. The previous version (orbit + three tilt cards)
+// is in git history.
+const content = {
+  eyebrow: "المنصات",
+  heading: "نطوّر على المنصة التي يستخدمها عملاؤك",
+  body:
+    "نختار التقنية المناسبة لمشروعك بناءً على جمهورك وميزانيتك وخطة نموّك — سواء كان تطبيقًا أصليًا لمنصة واحدة أو تطبيقًا هجينًا يغطي المنصتين بكود واحد.",
+  points: [],
+  cta: { label: "اطلب الآن", href: "/contactWeb" },
+};
 
 const platforms = [
   {
@@ -23,65 +33,10 @@ const platforms = [
   },
 ];
 
-const Platforms = () => {
-  return (
-    <section className="app-platforms" id="platforms">
-      <div className="container">
-        <div className="app-platforms-head">
-          <Reveal as="h2">
-            نطوّر على المنصة
-            <br />
-            التي يستخدمها عملاؤك
-          </Reveal>
-
-          <Reveal as="p" delay={0.1}>
-            نختار التقنية المناسبة لمشروعك بناءً على جمهورك وميزانيتك وخطة
-            نموّك — سواء كان تطبيقًا أصليًا لمنصة واحدة أو تطبيقًا هجينًا يغطي
-            المنصتين بكود واحد.
-          </Reveal>
-        </div>
-
-        <div className="app-platforms-body">
-          <div className="app-platforms-orbit">
-            <AppOrbit />
-          </div>
-
-          <div className="app-platforms-cards">
-            {platforms.map((item, i) => (
-              <Reveal className="app-platform-card" delay={0.08 * i} key={item.title}>
-                <Tilt3D className="app-platform-tilt" max={9} glare={false}>
-                  <div className="app-platform-media">
-                    <span className="app-platform-sheen" aria-hidden="true"></span>
-                    <motion.i
-                      className={item.icon}
-                      whileHover={{ scale: 1.12, rotate: -6 }}
-                      transition={{ duration: 0.4, ease: EASE }}
-                    ></motion.i>
-                  </div>
-                </Tilt3D>
-
-                <div className="app-platform-meta">
-                  <div>
-                    <h3>{item.title}</h3>
-                    <span>{item.meta}</span>
-                  </div>
-
-                  {/* Was "الباقات" -> #pricing. The pricing section was removed
-                      from this page (user request, 2026-09-04: "remove plans
-                      its open no plans") — repointed to the real conversion
-                      target every other CTA on this page already uses. */}
-                  <Link href="/contactWeb" className="app-platform-link">
-                    اطلب الآن
-                    <i className="bx bx-left-arrow-alt"></i>
-                  </Link>
-                </div>
-              </Reveal>
-            ))}
-          </div>
-        </div>
-      </div>
-    </section>
-  );
-};
+const Platforms = () => (
+  <section id="platforms">
+    <AppServices content={content} features={platforms} />
+  </section>
+);
 
 export default Platforms;
