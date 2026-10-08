@@ -10,14 +10,8 @@ import SideRail from "../../components/Services/SideRail";
 import useSmoothScroll from "../../components/Services/useSmoothScroll";
 import ScrollProgress from "../../components/Services/ScrollProgress";
 import AreaOverview from "../../components/Services/ServiceArea/Overview";
-import AreaPlans from "../../components/Services/ServiceArea/Plans";
-import AreaFaq from "../../components/Services/ServiceArea/Faq";
 import AreaCta from "../../components/Services/ServiceArea/Cta";
-import EcomIntro from "../../components/Services/Ecommerce/Intro";
-import EcomCapabilities from "../../components/Services/Ecommerce/Capabilities";
-import EcomStorePlans from "../../components/Services/Ecommerce/StorePlans";
 import ConsIntro from "../../components/Services/Consulting/Intro";
-import ConsDiagnostic from "../../components/Services/Consulting/Diagnostic";
 import {
   heroMedia,
   heroSlides,
@@ -35,7 +29,7 @@ import {
 const areas = [
   {
     id: "business-websites",
-    label: "مواقع الشركات",
+    label: "موقع مخصص",
     icon: "bx bx-buildings",
     blocks: [
       { kind: "split", label: "نظرة عامة", note: "مصداقية + وضوح: من نحن وماذا نقدم" },
@@ -57,7 +51,7 @@ const areas = [
   },
   {
     id: "type-3",
-    label: "متجر إلكتروني",
+    label: "متجر إلكتروني مخصص",
     icon: "bx bx-cart-alt",
     // Built — see BUILT_AREAS. `blocks` is unused for built areas; kept so the
     // table's shape stays uniform.
@@ -93,7 +87,7 @@ const BUILT_AREAS = [
   // visitor cannot pick a tier before they know what is wrong with their site.
   { id: "business-websites", kind: "standard", data: businessWebsites },
   { id: "type-2", kind: "standard", data: wordpress },
-  { id: "type-3", kind: "ecommerce", data: ecommerce },
+  { id: "type-3", kind: "standard", data: ecommerce },
   { id: "type-4", kind: "consulting", data: consulting },
 ];
 
@@ -329,7 +323,11 @@ export default function ServicesHubWireframe() {
   return (
     <>
       <Head>
-        <title>خدمات الويب</title>
+        <title>شركة تصميم مواقع في مصر | كاتكس</title>
+        <meta
+          name="description"
+          content="كاتكس شركة تصميم مواقع الويب في مصر. مواقع ومتاجر إلكترونية بباقات واضحة تبدأ من 6,999 ج.م، وتشمل الدومين والاستضافة والبريد لأول سنة."
+        />
       </Head>
 
       <Navbar theme="navy" />
@@ -411,32 +409,16 @@ export default function ServicesHubWireframe() {
           className={`wsv-area${i === BUILT_AREAS.length - 1 ? " wsv-area-last" : ""}`}
           ref={(el) => (areaRefs.current[id] = el)}
         >
+          {/* Brief + navigation only (user, 2026-10-08): plans, FAQs and the
+              service-detail sections came off this page. Their components
+              and data are untouched, ready for each service's own page. */}
           {kind === "standard" && (
-            <>
-              <AreaOverview area={data} id={`${id}-overview`} />
-              <AreaPlans area={data} id={`${id}-plans`} />
-              <AreaFaq area={data} id={`${id}-faq`} />
-            </>
-          )}
-
-          {kind === "ecommerce" && (
-            <>
-              <EcomIntro area={data} id={`${id}-intro`} />
-              <EcomCapabilities area={data} id={`${id}-caps`} />
-              <AreaCta cta={data.cta} id={`${id}-cta`} />
-              {/* Placed AFTER the CTA banner on user request (2026-09-02).
-                  Worth knowing: this puts content below the area's close, so
-                  the banner is no longer the last thing read. The two cards
-                  carry soft text links rather than buttons precisely so they
-                  do not compete with it. */}
-              <EcomStorePlans area={data} id={`${id}-store`} />
-            </>
+            <AreaOverview area={data} id={`${id}-overview`} />
           )}
 
           {kind === "consulting" && (
             <>
               <ConsIntro area={data} id={`${id}-intro`} />
-              <ConsDiagnostic area={data} id={`${id}-flow`} />
               <AreaCta cta={data.cta} id={`${id}-cta`} />
             </>
           )}

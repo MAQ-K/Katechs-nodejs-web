@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>محتوى صفحة الهب للمطور</title>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--bg:#f6f7fb;--card:#fff;--ink:#1b2033;--muted:#5d6480;--navy:#1a2456;--cyan:#00b4d8;--line:#e3e6ef;--kw:#d7f2f8;--warn:#fff4c7;--out:#ffe3e3}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0f1328;--card:#171d3a;--ink:#e8eaf6;--muted:#a9b1dc;--navy:#8fa0ff;--line:#2a3360;--kw:#0d3b47;--warn:#3d3510;--out:#4a1f25}}
+:root[data-theme="dark"]{--bg:#0f1328;--card:#171d3a;--ink:#e8eaf6;--muted:#a9b1dc;--navy:#8fa0ff;--line:#2a3360;--kw:#0d3b47;--warn:#3d3510;--out:#4a1f25}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:'Cairo',Tahoma,sans-serif;line-height:1.8;font-size:16px}
+.wrap{max-width:980px;margin:0 auto;padding:32px 16px 80px}
+h1{font-size:30px;margin:0 0 6px;color:var(--navy)}
+h2.s{font-size:22px;margin:44px 0 14px;color:var(--navy);border-bottom:2px solid var(--line);padding-bottom:8px}
+.muted{color:var(--muted)}
+.card{background:var(--card);border:1px solid var(--line);border-radius:14px;padding:18px 20px;margin:12px 0}
+.row{display:flex;gap:12px;align-items:flex-start;padding:8px 0;border-bottom:1px dashed var(--line)}
+.row:last-child{border-bottom:0}
+.tag{flex:none;min-width:74px;text-align:center;font:700 13px/1.9 'Cairo',sans-serif;border-radius:8px;padding:0 8px;background:var(--line);color:var(--ink)}
+.t-h1{background:#1a2456;color:#fff}.t-h2{background:#00708a;color:#fff}.t-h3{background:#00b4d8;color:#121a40}
+.t-btn{background:var(--warn)}.t-img{background:var(--out)}
+.txt{flex:1;min-width:0}
+.kw{background:var(--kw);border-radius:4px;padding:0 3px}
+.note{font-size:14px;color:var(--muted);margin-top:4px}
+table{width:100%;border-collapse:collapse;background:var(--card);border:1px solid var(--line);border-radius:12px;overflow:hidden;font-size:15px}
+th,td{padding:9px 12px;border-bottom:1px solid var(--line);text-align:right;vertical-align:top}
+th{background:var(--navy);color:#fff}
+:root[data-theme="dark"] th{color:#0f1328}
+.tree{font-size:15px}
+.tree div{padding:3px 0}
+.tree .l2{padding-right:22px}.tree .l3{padding-right:48px}
+code{direction:ltr;unicode-bidi:embed;background:var(--line);border-radius:5px;padding:0 5px;font-size:14px}
+.ph{background:var(--warn);border-radius:4px;padding:0 3px}
+.scroll{overflow-x:auto}
+</style>
+</head>
+<body>
+<div class="wrap">
+<h1>صفحة الهب: محتوى المطور وهيكل العناوين</h1>
+<p class="muted">الصفحة: <code>/web-design/</code> · النسخة المطابقة لملف katechs-hub-v2.html · المظلّل <span class="kw">بالأزرق الفاتح</span> كلمة مفتاحية يجب أن تبقى حرفياً كما هي، و<span class="ph">المظلّل بالأصفر</span> بيانات ناقصة تُستبدل قبل النشر.</p>
+
+<h2 class="s">1. بيانات الصفحة (Head)</h2>
+<table>
+<tr><th style="width:30%">العنصر</th><th>القيمة</th></tr>
+<tr><td>الرابط</td><td><code>https://katechs.com/web-design/</code> <span class="ph">[تأكيد الدومين]</span></td></tr>
+<tr><td>اللغة والاتجاه</td><td><code>&lt;html lang="ar" dir="rtl"&gt;</code></td></tr>
+<tr><td>Title</td><td><span class="kw">شركة تصميم مواقع في مصر</span> | كاتكس</td></tr>
+<tr><td>Meta Description</td><td>كاتكس <span class="kw">شركة تصميم مواقع الويب</span> في مصر. مواقع ومتاجر إلكترونية بباقات واضحة تبدأ من 6,999 ج.م، وتشمل الدومين والاستضافة والبريد لأول سنة.</td></tr>
+<tr><td>Canonical</td><td><code>https://katechs.com/web-design/</code></td></tr>
+<tr><td>Open Graph</td><td>og:title = نفس الـ Title · og:description = «مواقع ومتاجر إلكترونية بباقات واضحة تبدأ من 6,999 ج.م، وتشمل الدومين والاستضافة والبريد لأول سنة.» · og:locale = ar_EG · og:image = <span class="ph">[صورة 1200×630]</span></td></tr>
+<tr><td>Schema (JSON-LD @graph)</td><td>ProfessionalService (الاسم، العنوان، الهاتف، البريد، areaServed: مصر والسعودية والخليج، sameAs) + WebPage + BreadcrumbList + FAQPage. موجود جاهزاً في ملف HTML.</td></tr>
+<tr><td>Breadcrumb</td><td>الرئيسية ‹ تصميم مواقع الويب</td></tr>
+</table>
+
+<h2 class="s">2. خريطة العناوين</h2>
+<div class="card tree">
+<div><span class="tag t-h1">H1</span> شركة تصميم مواقع الويب</div>
+<div class="l2"><span class="tag t-h2">H2</span> مواقع أطلقناها لعملائنا</div>
+<div class="l2"><span class="tag t-h2">H2</span> تصميم مواقع ومتاجر تناسب نشاطك</div>
+<div class="l3"><span class="tag t-h3">H3</span> موقع يعكس هوية شركتك، لا قالباً يشبه غيره</div>
+<div class="l3"><span class="tag t-h3">H3</span> موقع تديره بنفسك، دون الرجوع لأحد</div>
+<div class="l3"><span class="tag t-h3">H3</span> متجر يُبنى حول طريقة بيعك</div>
+<div class="l3"><span class="tag t-h3">H3</span> ابدأ البيع على سلة في أقصر وقت</div>
+<div class="l2"><span class="tag t-h2">H2</span> كيف تختار أفضل شركة تصميم مواقع في مصر؟</div>
+<div class="l2"><span class="tag t-h2">H2</span> لماذا لا يجلب موقعك العملاء؟</div>
+<div class="l2"><span class="tag t-h2">H2</span> أسئلة قبل أن تبدأ</div>
+<div class="l2"><span class="tag t-h2">H2</span> جاهز لإطلاق موقعك؟</div>
+</div>
+<p class="note">قواعد: H1 واحد فقط. لا تُستخدم وسوم العناوين للتنسيق. العناوين الصغيرة فوق كل H2 (eyebrow) وعناوين البطاقات وعناوين الفوتر تُكتب <code>&lt;span&gt;</code> أو <code>&lt;p&gt;</code> أو <code>&lt;b&gt;</code>، لا H4/H5. أسئلة FAQ داخل <code>&lt;summary&gt;</code>.</p>
+
+<h2 class="s">3. المحتوى بالترتيب</h2>
+
+<div class="card">
+<b>القسم 1: الواجهة (Hero)</b> <span class="note">خلفية صورة التصميم الحالي، بدون سلايدر</span>
+<div class="row"><span class="tag">مسار</span><div class="txt">الرئيسية ‹ تصميم مواقع الويب</div></div>
+<div class="row"><span class="tag t-h1">H1</span><div class="txt"><span class="kw">شركة تصميم مواقع الويب</span></div></div>
+<div class="row"><span class="tag">P</span><div class="txt">نصمم موقعك أو متجرك على أساس واحد: أن يأتيك منه عملاء. أخبرنا عن نشاطك، ونرشّح لك الحل الأنسب وباقته.</div></div>
+<div class="row"><span class="tag t-btn">زر 1</span><div class="txt">اطلب عرض سعر <span class="note">← نموذج طلب عرض السعر</span></div></div>
+<div class="row"><span class="tag t-btn">زر 2</span><div class="txt">تحدث معنا على واتساب <span class="note">← <code>https://wa.me/201555085828</code></span></div></div>
+<div class="row"><span class="tag">شريط ثقة</span><div class="txt">16 عاماً من الخبرة · عملاء في مصر والسعودية والخليج · الدومين والاستضافة لأول سنة <span class="ph">[تأكيد: التأسيس 2011 = 15 عاماً]</span></div></div>
+</div>
+
+<div class="card">
+<b>القسم 2: أعمالنا</b>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">أعمالنا</div></div>
+<div class="row"><span class="tag t-h2">H2</span><div class="txt">مواقع أطلقناها لعملائنا</div></div>
+<div class="row"><span class="tag t-img">صور</span><div class="txt">5 لقطات مشروعات <span class="ph">[المشروعات]</span>. نص alt لكل صورة: «موقع [اسم العميل] من تصميم كاتكس».</div></div>
+</div>
+
+<div class="card">
+<b>القسم 3: الخدمات</b> <span class="note">id="services" · بلوكات متبادلة: الصورة يميناً ثم يساراً</span>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt"><span class="kw">خدمات تصميم المواقع</span></div></div>
+<div class="row"><span class="tag t-h2">H2</span><div class="txt"><span class="kw">تصميم مواقع</span> ومتاجر تناسب نشاطك</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">كاتكس كنوز الجيل للتكنولوجيا المتطورة، <span class="kw">شركة تصميم مواقع في مصر</span>. نقدم <span class="kw">تصميم المواقع الإلكترونية</span> و<span class="kw">تطوير مواقع الويب</span> في أربعة حلول، بفريق واحد ومعايير واحدة، والقرارات التقنية مسؤوليتنا.</div></div>
+<div class="row"><span class="tag t-btn">مفتاح</span><div class="txt">مفتاح العملة: ج.م | ر.س</div></div>
+<div class="row"><span class="tag">شارة</span><div class="txt">كل باقة تشمل الدومين والاستضافة والبريد الإلكتروني لأول سنة</div></div>
+
+<p style="margin:16px 0 4px"><b>البلوك 1 (الصورة يميناً)</b></p>
+<div class="row"><span class="tag t-img">صورة</span><div class="txt">alt: «موقع شركة من تصميم كاتكس على لابتوب وجوال»</div></div>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">موقع مخصص</div></div>
+<div class="row"><span class="tag t-h3">H3</span><div class="txt">موقع يعكس هوية شركتك، لا قالباً يشبه غيره</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">نصمم موقعك ونبرمجه من الصفر حول نشاطك وجمهورك، ليكون سريعاً وواضحاً ويقود الزائر إلى التواصل معك.</div></div>
+<div class="row"><span class="tag">UL</span><div class="txt">تصميم خاص بهويتك، بلا قوالب جاهزة · سرعة عالية وتوافق كامل مع الجوال · تهيئة أساسية لمحركات البحث من اليوم الأول</div></div>
+<div class="row"><span class="tag">سعر</span><div class="txt">يبدأ من 6,999 ج.م / 1,999 ر.س</div></div>
+<div class="row"><span class="tag t-btn">زر</span><div class="txt">باقات <span class="kw">تصميم موقع إلكتروني</span> <span class="note">← <code>/web-design/custom-website/</code></span></div></div>
+
+<p style="margin:16px 0 4px"><b>البلوك 2 (الصورة يساراً)</b></p>
+<div class="row"><span class="tag t-img">صورة</span><div class="txt">alt: «موقع ووردبريس بلوحة تحكم عربية من كاتكس»</div></div>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">ووردبريس</div></div>
+<div class="row"><span class="tag t-h3">H3</span><div class="txt">موقع تديره بنفسك، دون الرجوع لأحد</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">ووردبريس يشغّل أكثر من 40% من مواقع الإنترنت لسبب واحد: أنت تملك المحتوى وتتحكم فيه. نبني موقعك بقالب مصمم لك، ونسلّمك لوحة تحكم عربية تفهمها من أول جلسة.</div></div>
+<div class="row"><span class="tag">UL</span><div class="txt">قالب مصمم لك خصيصاً، لا قالب جاهز يشبه آلاف المواقع · تضيف الصفحات والمقالات والصور بنفسك دون خبرة تقنية · متجر ووردبريس متاح ضمن الباقات</div></div>
+<div class="row"><span class="tag">سعر</span><div class="txt">يبدأ من 9,999 ج.م / 2,499 ر.س</div></div>
+<div class="row"><span class="tag t-btn">زر</span><div class="txt">باقات <span class="kw">تصميم مواقع ووردبريس</span> <span class="note">← <code>/web-design/wordpress/</code></span></div></div>
+
+<p style="margin:16px 0 4px"><b>البلوك 3 (الصورة يميناً)</b></p>
+<div class="row"><span class="tag t-img">صورة</span><div class="txt">alt: «متجر إلكتروني مخصص من تصميم كاتكس»</div></div>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">متجر إلكتروني مخصص</div></div>
+<div class="row"><span class="tag t-h3">H3</span><div class="txt">متجر يُبنى حول طريقة بيعك</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">عندما لا تكفيك المنصات الجاهزة، نبني لك متجراً كاملاً يعمل كما تعمل أنت، من عرض المنتج حتى وصول الطلب.</div></div>
+<div class="row"><span class="tag">UL</span><div class="txt">تجربة شراء سلسة مصممة لعملائك · ربط الدفع والشحن والمخزون بأنظمتك · لوحة لإدارة الطلبات ومتابعة المبيعات</div></div>
+<div class="row"><span class="tag">سعر</span><div class="txt">يبدأ من 29,999 ج.م / 7,999 ر.س</div></div>
+<div class="row"><span class="tag t-btn">زر</span><div class="txt">باقات <span class="kw">تصميم متجر إلكتروني</span> <span class="note">← <code>/web-design/online-store/</code></span></div></div>
+
+<p style="margin:16px 0 4px"><b>البلوك 4 (الصورة يساراً)</b></p>
+<div class="row"><span class="tag t-img">صورة</span><div class="txt">alt: «متجر على منصة سلة من تصميم كاتكس»</div></div>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">متجر سلة</div></div>
+<div class="row"><span class="tag t-h3">H3</span><div class="txt">ابدأ البيع على سلة في أقصر وقت</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">نصمم متجرك على منصة سلة ونجهزه للبيع بالكامل، لتستقبل أول طلب بأسرع وقت ممكن.</div></div>
+<div class="row"><span class="tag">UL</span><div class="txt">واجهة بتصميم يعكس علامتك التجارية · تجهيز المنتجات والدفع والشحن · الاشتراك في منصة سلة باسمك وتحت ملكيتك</div></div>
+<div class="row"><span class="tag">سعر</span><div class="txt">يبدأ من 4,999 ج.م / 1,499 ر.س</div></div>
+<div class="row"><span class="tag t-btn">زر</span><div class="txt">باقات <span class="kw">تصميم متجر سلة</span> <span class="note">← <code>/web-design/salla-store/</code></span></div></div>
+
+<div class="row" style="margin-top:10px"><span class="tag">P</span><div class="txt">لم تحدد بعد ما يناسبك؟ <u>احجز استشارة مجانية</u> ونرشّح لك الأنسب. <span class="note">← <code>#audit</code></span></div></div>
+</div>
+
+<div class="card">
+<b>القسم 4: لماذا كاتكس</b>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">لماذا كاتكس</div></div>
+<div class="row"><span class="tag t-h2">H2</span><div class="txt">كيف تختار <span class="kw">أفضل شركة تصميم مواقع في مصر</span>؟</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">قبل مقارنة الأسعار بين <span class="kw">شركات تصميم مواقع</span>، اسأل عن أربعة أمور. فـ<span class="kw">أفضل شركة تصميم مواقع إلكترونية</span> لنشاطك هي التي تجيب عنها بوضوح.</div></div>
+<div class="row"><span class="tag">4 بطاقات</span><div class="txt">
+<b>أعمال حقيقية</b>: مشروعات منشورة يمكنك زيارتها، لا تصاميم تجريبية.<br>
+<b>مدة تسليم مكتوبة</b>: نتفق على النطاق والجدول الزمني قبل بدء العمل.<br>
+<b>دعم بعد الإطلاق</b>: فريق يتابع موقعك بعد التسليم. <span class="ph">[المدة]</span><br>
+<b>شريك تقني واحد</b>: التصميم والبرمجة والاستضافة لدى جهة واحدة.</div></div>
+<div class="row"><span class="tag">بطاقة تقييم</span><div class="txt">تقييمات جوجل · <span class="ph">[المتوسط]</span> ★ · من <span class="ph">[العدد]</span> تقييماً لعملائنا في مصر والخليج · زر «اقرأ التقييمات على جوجل» ← رابط ملف النشاط على جوجل</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">تثق بنا علامات تجارية · 6 شعارات <span class="ph">[الشعارات]</span>، alt لكل شعار: اسم العميل</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">من مقرّنا في القاهرة، نقدّم <span class="kw">تصميم مواقع إلكترونية في مصر</span> ودول الخليج. ونختلف عن كثير من <span class="kw">شركات تصميم المواقع في مصر</span> بأننا <span class="kw">شركة إنشاء مواقع إلكترونية</span> ترافقك من الفكرة حتى ما بعد الإطلاق. وإن كنت تبحث عن <span class="kw">شركات تصميم مواقع في القاهرة</span>، يسعدنا استقبالك في مكتبنا.</div></div>
+<div class="row"><span class="tag t-btn">زر</span><div class="txt">موقعنا على الخريطة <span class="note">← رابط خرائط جوجل للمكتب</span></div></div>
+</div>
+
+<div class="card">
+<b>القسم 5: تحليل مجاني</b> <span class="note">id="audit"</span>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">تحليل مجاني لموقعك الحالي</div></div>
+<div class="row"><span class="tag t-h2">H2</span><div class="txt">لماذا لا يجلب موقعك العملاء؟</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">نراجع موقعك الحالي معك في جلسة مدتها 20 دقيقة، ونوضح لك بدقة ما يحتاج إلى تحسين، وهل يكفيه التعديل أم يحتاج إلى موقع جديد. دون أي التزام.</div></div>
+<div class="row"><span class="tag">3 نقاط</span><div class="txt"><b>الأداء</b>: سرعة الموقع على الجوال وأداؤه التقني. · <b>السيو والفحص التقني</b>: ما يعيق ظهورك في نتائج البحث. · <b>التحويل</b>: وضوح الرسالة والأزرار وسهولة التواصل.</div></div>
+<div class="row"><span class="tag t-btn">زر</span><div class="txt">احجز تحليلاً مجانياً <span class="note">← نموذج الحجز</span></div></div>
+<div class="row"><span class="tag">بطاقة</span><div class="txt">«فحص الموقع» (نص وليس عنواناً): الأداء 32 · السيو 36 · تجربة الجوال 29 · التحويل 27 · «أرقام توضيحية»</div></div>
+</div>
+
+<div class="card">
+<b>القسم 6: الأسئلة الشائعة</b> <span class="note">نص الأسئلة والأجوبة نفسه يُولَّد منه FAQPage Schema حرفياً</span>
+<div class="row"><span class="tag">Eyebrow</span><div class="txt">الأسئلة الشائعة</div></div>
+<div class="row"><span class="tag t-h2">H2</span><div class="txt">أسئلة قبل أن تبدأ</div></div>
+<div class="row"><span class="tag">س1</span><div class="txt"><b>ما الخدمات التي تقدمونها في تصميم المواقع؟</b><br>أربعة حلول: موقع مخصص، وموقع ووردبريس تديره بنفسك ومعه متجر ووردبريس، ومتجر إلكتروني مخصص، ومتجر على سلة. وإن لم تحدد ما يناسبك، نرشّحه لك في استشارة مجانية.</div></div>
+<div class="row"><span class="tag">س2</span><div class="txt"><b>كم تكلفة تصميم الموقع لديكم؟</b><br>تبدأ الباقات من 6,999 ج.م، وتختلف حسب نوع الموقع وحجمه. ولكل خدمة صفحة توضح باقاتها وما تشمله كل باقة.<div class="note">لاحقاً: رابط إلى مقال «تكلفة إنشاء موقع إلكتروني في مصر 2026» عند نشره.</div></div></div>
+<div class="row"><span class="tag">س3</span><div class="txt"><b>هل تختلف الأسعار بين مصر ودول الخليج؟</b><br>نعم، الأسعار حسب بلد نشاطك. تظهر لك الأسعار بعملة بلدك تلقائياً، ويمكنك تغيير العملة من زر الأسعار.</div></div>
+<div class="row"><span class="tag">س4</span><div class="txt"><b>كم يستغرق تنفيذ الموقع؟</b><br>يختلف حسب نوع الموقع وحجم المحتوى، ونحدد المدة كتابياً قبل بدء العمل. <span class="ph">[المدة التقريبية لكل نوع]</span></div></div>
+<div class="row"><span class="tag">س5</span><div class="txt"><b>هل الدومين والاستضافة ضمن الباقة؟</b><br>نعم. كل باقة تشمل الدومين والاستضافة والبريد الإلكتروني لأول سنة، ويختلف عدد حسابات البريد حسب الباقة.</div></div>
+<div class="row"><span class="tag">س6</span><div class="txt"><b>هل يمكنكم تقييم موقعي الحالي؟</b><br>نعم، دون مقابل. احجز استشارة مدتها 20 دقيقة، ونوضح لك ما يحتاجه موقعك بالتحديد.</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">آخر تحديث: <span class="ph">[التاريخ]</span></div></div>
+</div>
+
+<div class="card">
+<b>القسم 7: الدعوة الأخيرة</b>
+<div class="row"><span class="tag t-h2">H2</span><div class="txt">جاهز لإطلاق موقعك؟</div></div>
+<div class="row"><span class="tag">P</span><div class="txt">أخبرنا عن نشاطك، ونرسل لك الحل المقترح وعرض السعر خلال <span class="ph">[مدة الرد]</span>.</div></div>
+<div class="row"><span class="tag t-btn">زران</span><div class="txt">اطلب عرض سعر · تحدث معنا على واتساب</div></div>
+</div>
+
+<div class="card">
+<b>الفوتر وزر واتساب العائم</b>
+<div class="row"><span class="tag">نص</span><div class="txt">شركة مصرية رسمية بالقاهرة، نقدم حلولاً رقمية متكاملة تساعدك على الوصول إلى أهدافك باحترافية.</div></div>
+<div class="row"><span class="tag">روابط</span><div class="txt">تصميم المواقع: موقع مخصص · مواقع ووردبريس · متجر إلكتروني مخصص · متجر سلة</div></div>
+<div class="row"><span class="tag">NAP</span><div class="txt">واتساب: +201555085828 · sales@katechs.com · مصر، القاهرة، التجمع الخامس، بلس مول المستثمرين، مكتب R01<div class="note">يُكتب بنفس الصيغة حرفياً في الموقع كله وفي ملف النشاط على جوجل والـ Schema.</div></div></div>
+<div class="row"><span class="tag">حقوق</span><div class="txt">جميع الحقوق محفوظة لـ كنوز الجيل للتكنولوجيا المتطورة (KATECHS) © 2011-2026</div></div>
+<div class="row"><span class="tag t-btn">عائم</span><div class="txt">زر واتساب، aria-label: «تحدث معنا على واتساب»</div></div>
+</div>
+
+<h2 class="s">4. الروابط الداخلية</h2>
+<div class="scroll"><table>
+<tr><th>نص الرابط (Anchor)</th><th>الوجهة</th><th>المكان</th></tr>
+<tr><td>باقات تصميم موقع إلكتروني</td><td><code>/web-design/custom-website/</code></td><td>بلوك موقع مخصص</td></tr>
+<tr><td>باقات تصميم مواقع ووردبريس</td><td><code>/web-design/wordpress/</code></td><td>بلوك ووردبريس</td></tr>
+<tr><td>باقات تصميم متجر إلكتروني</td><td><code>/web-design/online-store/</code></td><td>بلوك المتجر</td></tr>
+<tr><td>باقات تصميم متجر سلة</td><td><code>/web-design/salla-store/</code></td><td>بلوك سلة</td></tr>
+<tr><td>احجز استشارة مجانية</td><td><code>#audit</code></td><td>أسفل الخدمات</td></tr>
+</table></div>
+<p class="note">تبقى روابط النص كما هي. لا يُستخدم «اضغط هنا» أو «المزيد». الروابط الداخلية بدون nofollow.</p>
+
+<h2 class="s">5. تنفيذ الأسعار حسب الدولة</h2>
+<div class="card">
+<div class="row"><span class="tag">افتراضي</span><div class="txt">HTML يخرج من السيرفر بالجنيه المصري. هذا ما يراه جوجل، فلا تُخفى الأسعار خلف JavaScript.</div></div>
+<div class="row"><span class="tag">الخليج</span><div class="txt">زائر من السعودية أو الإمارات أو الكويت أو قطر أو البحرين أو عُمان يرى الريال السعودي. تُحدد الدولة من <code>CF-IPCountry</code>.</div></div>
+<div class="row"><span class="tag">الكاش</span><div class="txt">يُخزّن الكاش نسخة لكل دولة (Cache Key يشمل الدولة)، حتى لا يرى زائر مصري أسعار الخليج.</div></div>
+<div class="row"><span class="tag">المفتاح</span><div class="txt">مفتاح «ج.م | ر.س» يغيّر القيم من <code>data-egp</code> و<code>data-sar</code>، والكود موجود في ملف HTML.</div></div>
+<div class="row"><span class="tag">Schema</span><div class="txt">أي سعر يُكتب في الـ Schema يكون بالجنيه المصري فقط.</div></div>
+</div>
+
+<h2 class="s">6. الكلمات المفتاحية: ما يُستخدم وما يُمنع</h2>
+<div class="scroll"><table>
+<tr><th>الكلمة</th><th>البحث الشهري</th><th>مكانها في الصفحة</th></tr>
+<tr><td><b>شركة تصميم مواقع الويب</b> (رئيسية)</td><td>2,400</td><td>H1 + Meta</td></tr>
+<tr><td><b>شركة تصميم مواقع</b> (رئيسية)</td><td>2,400</td><td>Title + داخل H1</td></tr>
+<tr><td><b>شركات تصميم مواقع</b> (رئيسية بصيغة الجمع)</td><td>2,400</td><td>مقدمة «لماذا كاتكس»</td></tr>
+<tr><td>تصميم مواقع</td><td>1,300</td><td>H2 الخدمات</td></tr>
+<tr><td>تصميم المواقع</td><td>720</td><td>Eyebrow الخدمات</td></tr>
+<tr><td>شركة تصميم مواقع في مصر</td><td>390</td><td>Title + مقدمة الخدمات + Schema</td></tr>
+<tr><td>تصميم المواقع الإلكترونية</td><td>390</td><td>مقدمة الخدمات</td></tr>
+<tr><td>شركات تصميم المواقع في مصر</td><td>390</td><td>فقرة المقر</td></tr>
+<tr><td>أفضل شركة تصميم مواقع في مصر</td><td>320</td><td>H2 «لماذا كاتكس»</td></tr>
+<tr><td>تطوير مواقع / تطوير مواقع الويب</td><td>110 / 30</td><td>مقدمة الخدمات</td></tr>
+<tr><td>شركات تصميم مواقع في القاهرة</td><td>90</td><td>فقرة المقر</td></tr>
+<tr><td>تصميم مواقع إلكترونية في مصر</td><td>70</td><td>فقرة المقر</td></tr>
+<tr><td>شركة إنشاء مواقع إلكترونية</td><td>40</td><td>فقرة المقر</td></tr>
+<tr><td>أفضل شركة تصميم مواقع إلكترونية</td><td>30</td><td>مقدمة «لماذا كاتكس»</td></tr>
+<tr><td>خدمات تصميم المواقع</td><td>20</td><td>Eyebrow الخدمات</td></tr>
+</table></div>
+<div class="card" style="background:var(--out)">
+<b>ممنوع في هذه الصفحة إلا كنص رابط</b>
+<p style="margin:6px 0 0">كلمات صفحات الخدمات: تصميم موقع إلكتروني · تصميم مواقع ووردبريس · تصميم متجر إلكتروني · تصميم متجر سلة.<br>
+كلمات المقالات: انشاء موقع الكتروني · إنشاء متجر إلكتروني · تكلفة / أسعار تصميم المواقع · انواع المواقع الالكترونية · موقع wordpress.<br>
+<span class="note">إضافة أي منها في نص الهب تجعل الصفحتين تتنافسان على الكلمة نفسها.</span></p>
+</div>
+
+<h2 class="s">7. بيانات ناقصة قبل النشر</h2>
+<div class="card">
+<div class="row"><span class="tag">1</span><div class="txt">الدومين النهائي ومسار الشعار وصورة المشاركة 1200×630</div></div>
+<div class="row"><span class="tag">2</span><div class="txt">سنوات الخبرة: 16 أم 15 (التأسيس 2011)</div></div>
+<div class="row"><span class="tag">3</span><div class="txt">صور 5 مشروعات و6 شعارات عملاء</div></div>
+<div class="row"><span class="tag">4</span><div class="txt">متوسط تقييم جوجل وعدده، ورابط ملف النشاط على جوجل، وروابط حسابات التواصل</div></div>
+<div class="row"><span class="tag">5</span><div class="txt">مدة التنفيذ لكل نوع، ومدة الدعم بعد الإطلاق، ومدة الرد على طلب عرض السعر</div></div>
+<div class="row"><span class="tag">6</span><div class="txt">تاريخ «آخر تحديث» يوم النشر</div></div>
+</div>
+</div>
+</body>
+</html>

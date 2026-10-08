@@ -32,8 +32,8 @@ const ServiceNav = ({ onNavigate }) => {
       <div className="container">
         <Reveal>
           <div className="wsv-nav-head">
-            <span className="wsv-eyebrow">اختر ما يناسبك</span>
-            <h2>أي خدمة تحتاج؟</h2>
+            <span className="wsv-eyebrow">خدمات تصميم المواقع</span>
+            <h2>تصميم مواقع ومتاجر تناسب نشاطك</h2>
           </div>
         </Reveal>
 

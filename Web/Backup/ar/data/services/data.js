@@ -20,12 +20,12 @@ export const heroMedia = {
 export const heroSlides = [
   {
     id: "slide-1",
-    badge: "خدمات الويب",
-    title: "موقعك الإلكتروني يبدأ من هنا",
-    headlineBold: "موقعك الإلكتروني",
-    headlineLight: "يبدأ من هنا",
-    text: "اختر نوع الموقع المناسب لك، ونحن نتكفّل بكل ما هو تقني. لا تحتاج لأي خبرة برمجية — نحن نتولى القرارات الصعبة نيابةً عنك.",
-    primary: { label: "اطلب خدمتك الآن", href: "/website-order" },
+    badge: "تصميم مواقع الويب",
+    title: "شركة تصميم مواقع الويب",
+    headlineBold: "شركة تصميم",
+    headlineLight: "مواقع الويب",
+    text: "نصمم موقعك أو متجرك على أساس واحد: أن يأتيك منه عملاء. أخبرنا عن نشاطك، ونرشّح لك الحل الأنسب وباقته.",
+    primary: { label: "اطلب عرض سعر", href: "/website-order" },
     secondary: { label: "تصفح الخدمات", href: "#type-1" },
   },
   {
@@ -98,7 +98,7 @@ export const serviceNav = [
   {
     id: "nav-1",
     icon: "bx bx-buildings",
-    title: "مواقع الشركات",
+    title: "موقع مخصص",
     brief: "مناسب لك إذا كنت تريد موقعاً يعكس حجم شركتك الحقيقي ويجلب لك استفسارات.",
     href: "#business-websites",
   },
@@ -112,7 +112,7 @@ export const serviceNav = [
   {
     id: "nav-3",
     icon: "bx bx-cart-alt",
-    title: "متجر إلكتروني",
+    title: "متجر إلكتروني مخصص",
     brief: "مناسب لك إذا كنت تبيع منتجات وتحتاج متجراً يسهل الشراء منه وإدارته.",
     href: "#type-3",
   },
@@ -145,20 +145,20 @@ export const serviceNav = [
 export const businessWebsites = {
   // --- Section 1a: overview split ------------------------------------------
   overview: {
-    eyebrow: "مواقع الشركات",
-    heading: "موقع يعكس حجم شركتك الحقيقي",
-    body: "أغلب مواقع الشركات تفشل لأنها جميلة لكنها غير مفهومة. نحن نبدأ من نشاطك أنت: ماذا تقدّم، ولمن، ولماذا يختارك العميل — ثم نبني الموقع حول مسار واضح يقود الزائر من الاهتمام إلى طلب عرض سعر.",
+    eyebrow: "موقع مخصص",
+    heading: "موقع يعكس هوية شركتك، لا قالباً يشبه غيره",
+    body: "نصمم موقعك ونبرمجه من الصفر حول نشاطك وجمهورك، ليكون سريعاً وواضحاً ويقود الزائر إلى التواصل معك.",
     points: [
-      "بنية ومحتوى نجهّزهما معك، لا نطلب منك تسليمنا كل شيء جاهزاً",
-      "خدماتك وأعمالك وشهاداتك معروضة بشكل يبني الثقة من أول زيارة",
-      "سريع على الجوال ومهيّأ لمحركات البحث من أول سطر كود",
+      "تصميم خاص بهويتك، بلا قوالب جاهزة",
+      "سرعة عالية وتوافق كامل مع الجوال",
+      "تهيئة أساسية لمحركات البحث من اليوم الأول",
     ],
-    cta: { label: "اطلب عرض سعر", href: "/website-order" },
+    cta: { label: "باقات تصميم موقع إلكتروني", href: "/website-order" },
     secondary: { label: "تحدث معنا أولاً", href: "/contact" },
     // Real client work, not a stock mockup — this is the Tabqat project.
     media: {
       src: "/images/inspiration/webservices_page/area1-project1.png",
-      alt: "موقع شركة طبقات معروضاً على حاسوب محمول وهاتف",
+      alt: "موقع شركة من تصميم كاتكس على لابتوب وجوال",
     },
   },
 
@@ -315,7 +315,7 @@ export const businessWebsites = {
   // The last question answers motive 5, confidence before spending.
   faqSection: {
     eyebrow: "الأسئلة الشائعة",
-    heading: "أسئلة قبل ما تبدأ",
+    heading: "أسئلة قبل أن تبدأ",
   },
 
   faqs: [
@@ -363,17 +363,17 @@ export const wordpress = {
   overview: {
     eyebrow: "ووردبريس",
     heading: "موقع تديره بنفسك، دون الرجوع لأحد",
-    body: "ووردبريس يشغّل أكثر من 40% من مواقع الإنترنت لسبب واحد: أنت تملك المحتوى وتتحكم فيه. نبنيه لك بقالب مخصّص لا جاهز، ونسلّمك لوحة تحكم تفهمها من أول جلسة تدريب.",
+    body: "ووردبريس يشغّل أكثر من 40% من مواقع الإنترنت لسبب واحد: أنت تملك المحتوى وتتحكم فيه. نبني موقعك بقالب مصمم لك، ونسلّمك لوحة تحكم عربية تفهمها من أول جلسة.",
     points: [
-      "قالب مصمَّم لك خصيصاً، لا قالب جاهز يشبه آلاف المواقع",
+      "قالب مصمم لك خصيصاً، لا قالب جاهز يشبه آلاف المواقع",
       "تضيف الصفحات والمقالات والصور بنفسك دون خبرة تقنية",
-      "جلسة تدريب عملية على لوحة التحكم بعد التسليم",
+      "متجر ووردبريس متاح ضمن الباقات",
     ],
-    cta: { label: "اطلب عرض سعر", href: "/website-order" },
+    cta: { label: "باقات تصميم مواقع ووردبريس", href: "/website-order" },
     secondary: { label: "تحدث معنا أولاً", href: "/contact" },
     media: {
       src: "/images/projects/alamoudi-projects.png",
-      alt: "موقع شركة العمودي مبني على ووردبريس معروضاً على حاسوب وهاتف",
+      alt: "موقع ووردبريس بلوحة تحكم عربية من كاتكس",
     },
   },
 
@@ -547,10 +547,31 @@ export const wordpress = {
 //   3. The visual must explain the SERVICE, not the technology: the customer's
 //      path from product to paid order.
 export const ecommerce = {
+  // The brief /services shows for this area — same shape as the other two, so
+  // it renders through ServiceArea/Overview. Text is the Hub file's, verbatim.
+  // `intro`, `journey`, `capabilities`, `storePlans` below are no longer on
+  // /services but still feed the homepage.
+  overview: {
+    eyebrow: "متجر إلكتروني مخصص",
+    heading: "متجر يُبنى حول طريقة بيعك",
+    body: "عندما لا تكفيك المنصات الجاهزة، نبني لك متجراً كاملاً يعمل كما تعمل أنت، من عرض المنتج حتى وصول الطلب.",
+    points: [
+      "تجربة شراء سلسة مصممة لعملائك",
+      "ربط الدفع والشحن والمخزون بأنظمتك",
+      "لوحة لإدارة الطلبات ومتابعة المبيعات",
+    ],
+    cta: { label: "باقات تصميم متجر إلكتروني", href: "/website-order" },
+    secondary: { label: "تحدث معنا أولاً", href: "/contact" },
+    media: {
+      src: "/images/projects/Doffo-Project.png",
+      alt: "متجر إلكتروني مخصص من تصميم كاتكس",
+    },
+  },
+
   intro: {
-    eyebrow: "التجارة الإلكترونية",
-    heading: "حوّل منتجاتك إلى طلبات",
-    body: "لا نبني كتالوجاً للعرض فقط. نبني متجراً يسهل الشراء منه، يسهل عليك إدارته، وجاهز ليكبر مع نشاطك.",
+    eyebrow: "متجر إلكتروني مخصص",
+    heading: "متجر يُبنى حول طريقة بيعك",
+    body: "عندما لا تكفيك المنصات الجاهزة، نبني لك متجراً كاملاً يعمل كما تعمل أنت، من عرض المنتج حتى وصول الطلب.",
   },
 
   // The buying journey. Rendered right-to-left, so the first step sits on the
@@ -692,17 +713,17 @@ export const ecommerce = {
 // before they know what is wrong. The audit is the single entry product.
 export const consulting = {
   intro: {
-    eyebrow: "استشارات وتحسين الأداء",
-    heading: "اكتشف ما الذي يكلّف موقعك عملاء",
-    body: "نحلّل موقعك، نحدّد ما الذي يعيقه، ونسلّمك خطة واضحة بما يجب إصلاحه أولاً.",
+    eyebrow: "تحليل مجاني لموقعك الحالي",
+    heading: "لماذا لا يجلب موقعك العملاء؟",
+    body: "نراجع موقعك الحالي معك في جلسة مدتها 20 دقيقة، ونوضح لك بدقة ما يحتاج إلى تحسين، وهل يكفيه التعديل أم يحتاج إلى موقع جديد. دون أي التزام.",
   },
 
   analyzeTitle: "ما الذي نحلّله",
   analyze: [
-    { id: "perf", title: "الأداء", text: "سرعة الموقع وأداؤه التقني." },
+    { id: "perf", title: "الأداء", text: "سرعة الموقع على الجوال وأداؤه التقني." },
     { id: "seo", title: "السيو والفحص التقني", text: "ما يعيق ظهورك في نتائج البحث." },
     { id: "ux", title: "تجربة المستخدم", text: "التنقّل والوضوح والاستخدام على الجوال." },
-    { id: "cvr", title: "التحويل", text: "النماذج وأزرار الإجراء ومسار الطلب." },
+    { id: "cvr", title: "التحويل", text: "وضوح الرسالة والأزرار وسهولة التواصل." },
     { id: "tracking", title: "التتبع", text: "التحليلات وتتبع التحويلات." },
     { id: "reco", title: "توصيات قابلة للتنفيذ", text: "أولويات واضحة، لا تقرير تقني فقط." },
   ],
@@ -718,10 +739,10 @@ export const consulting = {
       title: "فحص الموقع",
       note: "أرقام توضيحية",
       metrics: [
-        { id: "perf", label: "الأداء", score: 63 },
-        { id: "seo", label: "السيو", score: 71 },
-        { id: "mobile", label: "تجربة الجوال", score: 58 },
-        { id: "cvr", label: "التحويل", score: 54 },
+        { id: "perf", label: "الأداء", score: 32 },
+        { id: "seo", label: "السيو", score: 36 },
+        { id: "mobile", label: "تجربة الجوال", score: 29 },
+        { id: "cvr", label: "التحويل", score: 27 },
         { id: "tech", label: "السلامة التقنية", score: 62 },
       ],
     },
@@ -752,6 +773,6 @@ export const consulting = {
   cta: {
     heading: "جاهز تحسّن موقعك؟",
     note: "اعرف ما الذي يعمل، وما لا يعمل، وبماذا تبدأ.",
-    action: { label: "حلّل موقعي", href: "/contactWeb" },
+    action: { label: "احجز تحليلاً مجانياً", href: "/contactWeb" },
   },
 };
