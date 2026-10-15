@@ -5,6 +5,14 @@ import Image from "next/image";
 
 import logo from "../../public/images/logo-konoz-ar.png";
 
+const webServices = [
+  { href: "/services/", label: "كل خدمات المواقع" },
+  { href: "/services/custom-website/", label: "موقع مخصص" },
+  { href: "/services/wordpress/", label: "ووردبريس" },
+  { href: "/services/online-store/", label: "متجر إلكتروني مخصص" },
+  { href: "/services/#type-4", label: "استشارات وتحسين" },
+];
+
 const Navbar = ({ theme }) => {
   const router = useRouter();
 
@@ -113,13 +121,29 @@ const Navbar = ({ theme }) => {
                   </Link>
                 </li>
 
+                {/* Web services: hub + one page per service (2026-10-15).
+                    Template CSS opens .dropdown-menu on hover. */}
                 <li className="nav-item">
-                      <Link
-                            href="/services/website-design/"
-                            className={`nav-link ${isActive("/services/website-design/") ? "active" : ""}`}
-                          >
-                             مواقع ويب
-                      </Link>
+                  <Link
+                    href="/services/"
+                    className={`dropdown-toggle nav-link ${
+                      webServices.some((s) => isActive(s.href)) ? "active" : ""
+                    }`}
+                  >
+                    مواقع ويب <i className="bx bx-chevron-down"></i>
+                  </Link>
+                  <ul className="dropdown-menu">
+                    {webServices.map((s) => (
+                      <li className="nav-item" key={s.href}>
+                        <Link
+                          href={s.href}
+                          className={`nav-link ${isActive(s.href) ? "active" : ""}`}
+                        >
+                          {s.label}
+                        </Link>
+                      </li>
+                    ))}
+                  </ul>
                 </li>
 
                 <li className="nav-item">

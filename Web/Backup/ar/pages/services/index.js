@@ -85,9 +85,11 @@ const BUILT_AREAS = [
   // (rest of web servicespage areas.md) rules out pricing cards entirely —
   // e-commerce scope is too variable to price on a card, and a consulting
   // visitor cannot pick a tier before they know what is wrong with their site.
-  { id: "business-websites", kind: "standard", data: businessWebsites },
-  { id: "type-2", kind: "standard", data: wordpress },
-  { id: "type-3", kind: "standard", data: ecommerce },
+  // `page` = the service's own route (pages/services/[area].js). The hub shows
+  // the brief only; the button sends the visitor there for plans and FAQ.
+  { id: "business-websites", kind: "standard", data: businessWebsites, page: "/services/custom-website/" },
+  { id: "type-2", kind: "standard", data: wordpress, page: "/services/wordpress/" },
+  { id: "type-3", kind: "standard", data: ecommerce, page: "/services/online-store/" },
   { id: "type-4", kind: "consulting", data: consulting },
 ];
 
@@ -395,7 +397,7 @@ export default function ServicesHubWireframe() {
           bring their own .container, so the wireframe wrapper's 1140px cap and
           side padding must not apply to them. Keeps the id + ref the SideRail
           scroll-spy and the deep links (/services/#business-websites) need. */}
-      {BUILT_AREAS.map(({ id, kind, data }, i) => (
+      {BUILT_AREAS.map(({ id, kind, data, page }, i) => (
         <div
           key={id}
           id={id}
@@ -412,8 +414,20 @@ export default function ServicesHubWireframe() {
           {/* Brief + navigation only (user, 2026-10-08): plans, FAQs and the
               service-detail sections came off this page. Their components
               and data are untouched, ready for each service's own page. */}
+          {/* Hub = brief only (user, 2026-10-15): checklist dropped, main
+              button goes to the service's own page. Consulting untouched. */}
           {kind === "standard" && (
-            <AreaOverview area={data} id={`${id}-overview`} />
+            <AreaOverview
+              area={{
+                ...data,
+                overview: {
+                  ...data.overview,
+                  points: [],
+                  cta: { label: "تفاصيل الخدمة والباقات", href: page },
+                },
+              }}
+              id={`${id}-overview`}
+            />
           )}
 
           {kind === "consulting" && (

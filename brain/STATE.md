@@ -9,6 +9,10 @@
 | Manager | PC1 | main | Brain, agents, Lab, parallel workflow — done | `brain/`, `.claude/`, `pages/lab/` | 2026-08-24 |
 
 ## Broadcast — read before you start
+- **2026-10-15 · Web Services split into a hub + one page per service.** Tracked in
+  `Web/Backup/ar/memory.md` (the user's running reminder; read it first and update it). New:
+  `pages/services/[area].js` (custom-website / wordpress / online-store), `pages/services/old-web-services.js`
+  (frozen snapshot), navbar مواقع ويب dropdown. The consulting area on the hub must stay untouched (user).
 - **2026-09-28 · service pages — image hover, button hover, plan cards** (`brain/logs/2026-09-28.md`).
   Images use `.svc-img-hover` (navy corner brackets + tiny zoom); the old 3D tilt is KEPT in
   `Emails/Tilt3D.js` on purpose. `Magnetic` + hover lifts are gone from every service-page button —

@@ -40,7 +40,9 @@ function MyApp({ Component, pageProps }) {
   // behavior:"instant" and cancels the native animation on the first frame.
   // GoTop.js hit the same wall and documents it too.
   const pageOwnsScroll =
-    router.pathname === "/services" || router.pathname === "/hp-new";
+    router.pathname === "/services" ||
+    router.pathname === "/services/old-web-services" ||
+    router.pathname === "/hp-new";
 
   React.useEffect(() => {
     AOS.init();
