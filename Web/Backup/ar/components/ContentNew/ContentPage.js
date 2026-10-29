@@ -33,8 +33,8 @@ const RESET = `
 .cn-root .cn-subnav a{display:block;white-space:nowrap;padding:8px 14px;border-radius:100px;font-size:14px;font-weight:700;color:var(--text);text-decoration:none;transition:background .3s,color .3s}
 .cn-root .cn-subnav a:hover{color:var(--cyan-d)}
 .cn-root .cn-subnav a[aria-current="true"]{background:var(--cyan);color:#fff}
-.cn-root>section.cn-arrive>.cn-wrap{animation:cnArrive .6s cubic-bezier(.22,1,.36,1)}
-@keyframes cnArrive{from{opacity:.35;transform:translateY(14px)}to{opacity:1;transform:none}}
+.cn-root>section.cn-arrive>.cn-wrap{animation:cnArrive .75s cubic-bezier(.22,1,.36,1)}
+@keyframes cnArrive{from{opacity:.8;transform:translateY(10px)}to{opacity:1;transform:none}}
 @media (prefers-reduced-motion:reduce){.cn-root>section.cn-arrive>.cn-wrap{animation:none}}
 `;
 // ^ the mockup hero's own top padding plus the fixed navbar (navbar-navy is
@@ -203,11 +203,14 @@ function arrive(e, id) {
   if (!sec) return;
   e.preventDefault();
   history.replaceState(null, "", "#" + id);
+  let landed = false;
   const land = () => {
+    if (landed) return;
+    landed = true;
     sec.classList.remove("cn-arrive");
     void sec.offsetWidth; // restart the animation on repeat clicks
     sec.classList.add("cn-arrive");
-    setTimeout(() => sec.classList.remove("cn-arrive"), 700);
+    setTimeout(() => sec.classList.remove("cn-arrive"), 800);
   };
   const pad = parseFloat(getComputedStyle(document.documentElement).scrollPaddingTop) || 0;
   const from = window.scrollY;
@@ -228,6 +231,9 @@ function arrive(e, id) {
   const step = (now) => {
     const t = Math.min(1, (now - t0) / dur);
     window.scrollTo({ top: from + dist * ease(t), behavior: "instant" });
+    // settle the content while the glide is still slowing down, so page and
+    // content come to rest as one motion instead of stop-then-move
+    if (t >= 0.65) land();
     if (t < 1) glide = requestAnimationFrame(step);
     else {
       glide = null;
