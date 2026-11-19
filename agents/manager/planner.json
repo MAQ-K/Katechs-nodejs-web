@@ -1,0 +1,1615 @@
+{
+  "plans": {
+    "g1": {
+      "code": "G1",
+      "deadline": "",
+      "dept": "execution",
+      "order": 1,
+      "start": "2026-08-24",
+      "status": "archived",
+      "summary": "SEO, Digital Marketing and Training. Reskinned to the AppDev card/button system on 2026-08-25; animations and cleanup still owed.",
+      "title": "Finish the last three service pages",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g10": {
+      "code": "G10",
+      "deadline": "",
+      "dept": "planning",
+      "order": 10,
+      "start": "2026-11-19",
+      "status": "archived",
+      "summary": "The site can't build for production, and the contact forms can be abused. Found in the 2026-11-19 review.",
+      "title": "Security and production build",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g11": {
+      "code": "G11",
+      "deadline": "",
+      "dept": "planning",
+      "order": 11,
+      "start": "2026-11-19",
+      "status": "archived",
+      "summary": "Folder reorganized on 2026-11-19 (app/, content/, docs/, design-assets/). Remaining: finish the rename, delete dead code, split style.scss.",
+      "title": "Repo cleanup",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g12": {
+      "code": "G12",
+      "deadline": "",
+      "dept": "content",
+      "order": 12,
+      "start": "2026-10-26",
+      "status": "archived",
+      "summary": "10 routes generated from content/ by scripts/build-content-new.js: web-design hub + 4 sub-services, emails, SEO packages and quote V1/V2.",
+      "title": "Content team pages (-new URLs)",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g2": {
+      "code": "G2",
+      "deadline": "",
+      "dept": "planning",
+      "order": 2,
+      "start": "2026-08-24",
+      "status": "archived",
+      "summary": "Split on 2026-10-15 into a hub at /services/ plus one page per service (custom-website, wordpress, online-store). Consulting stays on the hub untouched.",
+      "title": "Web services page at the highest level",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g3": {
+      "code": "G3",
+      "deadline": "",
+      "dept": "execution",
+      "order": 3,
+      "start": "2026-08-31",
+      "status": "archived",
+      "summary": "Design, UX and content for the non-service pages, page by page, in place in style.scss.",
+      "title": "Finish the sub-pages",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g4": {
+      "code": "G4",
+      "deadline": "",
+      "dept": "design",
+      "order": 4,
+      "start": "",
+      "status": "archived",
+      "summary": "Header, plan cards, buttons, font. Shared components: runs alone, never in parallel with page work.",
+      "title": "Finish the common components",
+      "archivedFrom": "not-started",
+      "archivedOn": "2026-11-19"
+    },
+    "g5": {
+      "code": "G5",
+      "deadline": "",
+      "dept": "execution",
+      "order": 5,
+      "start": "2026-09-03",
+      "status": "archived",
+      "summary": "Rebuilt section by section on /hp-new (sketch, design, finish). pages/index.js stays frozen until the swap is approved.",
+      "title": "New homepage",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g6": {
+      "code": "G6",
+      "deadline": "",
+      "dept": "execution",
+      "order": 6,
+      "start": "",
+      "status": "archived",
+      "summary": "Strict QA sweep after G1 to G5: build, render, RTL, responsive, accessibility, console, links, performance.",
+      "title": "Test the whole site",
+      "archivedFrom": "not-started",
+      "archivedOn": "2026-11-19"
+    },
+    "g7": {
+      "code": "G7",
+      "deadline": "",
+      "dept": "content",
+      "order": 7,
+      "start": "2026-08-24",
+      "status": "archived",
+      "summary": "Real Arabic copy everywhere, no lorem ipsum, every section data-driven.",
+      "title": "Finish content",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g8": {
+      "code": "G8",
+      "deadline": "",
+      "dept": "design",
+      "order": 8,
+      "start": "2026-08-24",
+      "status": "archived",
+      "summary": "Motion and interactivity across the site, from the primitives in the design lab.",
+      "title": "Visuals: motion, 3D, hover",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "g9": {
+      "code": "G9",
+      "deadline": "",
+      "dept": "design",
+      "order": 9,
+      "start": "2026-09-01",
+      "status": "archived",
+      "summary": "Replace the navy/cyan .ds-* / .wsv-* styling with the .ds-new-* monochrome system, page by page. Decided 2026-09-01.",
+      "title": "Monochrome design system rollout",
+      "archivedFrom": "active",
+      "archivedOn": "2026-11-19"
+    },
+    "qs41u8zpugmwngldiz": {
+      "title": "Pages Finish",
+      "code": "L1st",
+      "status": "active",
+      "start": "2026-11-19",
+      "deadline": "2026-11-26",
+      "summary": "design system  update\nnew pages design \ndesign needed \ndesigner document\nfinish all pages \nfinish all requirement's",
+      "order": 1,
+      "created": "2026-11-19T11:20:38.075Z",
+      "diagram": {
+        "nodes": [
+          {
+            "id": "nmwnglfdvupb9",
+            "x": 36,
+            "y": 6,
+            "text": "#what need to be done\n\ndesign system  update\nnew pages design \ndesigns needed \ndesigner document\nfinish all pages \nfinish all requirement's"
+          },
+          {
+            "id": "nmwngnclngg3o",
+            "x": 580,
+            "y": 77,
+            "text": "#design system\n\nwe gonna recreate the design system\nwe have a white problem ,the white color very annoying to the eye we need a solution\nthe design direction\ni don't like boxes and borders\ni don't like icons\ni don't AI slops"
+          },
+          {
+            "id": "nmwngopgk3ng2",
+            "x": 4,
+            "y": 221,
+            "text": "designs needed"
+          },
+          {
+            "id": "nmwngp4dwm9wi",
+            "x": 4,
+            "y": 307,
+            "text": "designer needs"
+          },
+          {
+            "id": "nmwngq71p5vrj",
+            "x": 171,
+            "y": 268,
+            "text": "designer document"
+          },
+          {
+            "id": "nmwngqx1glm9j",
+            "x": 354,
+            "y": 0,
+            "text": "#Content\nwe have 3 services content ready\n\n-email\n-SEO\n-website (all websites services)"
+          }
+        ],
+        "edges": [
+          {
+            "id": "emwngngmzt0vj",
+            "from": "nmwnglfdvupb9",
+            "to": "nmwngnclngg3o"
+          },
+          {
+            "id": "emwngp2hwj9kf",
+            "from": "nmwnglfdvupb9",
+            "to": "nmwngopgk3ng2"
+          },
+          {
+            "id": "emwngpdo4i4ou",
+            "from": "nmwngopgk3ng2",
+            "to": "nmwngp4dwm9wi"
+          },
+          {
+            "id": "emwngqhzoddi0",
+            "from": "nmwngp4dwm9wi",
+            "to": "nmwngq71p5vrj"
+          },
+          {
+            "id": "emwngqk5hjsn3",
+            "from": "nmwngopgk3ng2",
+            "to": "nmwngq71p5vrj"
+          },
+          {
+            "id": "emwngtz7i2ek5",
+            "from": "nmwnglfdvupb9",
+            "to": "nmwngqx1glm9j"
+          }
+        ]
+      }
+    }
+  },
+  "tasks": {
+    "t-004": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-004",
+      "dept": "planning",
+      "due": "",
+      "notes": "Code now reads process.env.SENDGRID_API_KEY, but the old live key is still in git history. Only the account owner can rotate it.",
+      "plan": "g10",
+      "priority": "high",
+      "start": "",
+      "status": "done",
+      "title": "Rotate the SendGrid API key",
+      "updated": "2026-11-19T11:07:08.725Z"
+    },
+    "t-006": {
+      "agent": "pulse",
+      "assignee": "",
+      "code": "T-006",
+      "dept": "design",
+      "due": "",
+      "notes": "Motion, components, design system, sections, area transitions, UI library. Dev only.",
+      "plan": "g8",
+      "priority": "normal",
+      "start": "2026-08-24",
+      "status": "done",
+      "title": "Build the design lab at /lab/"
+    },
+    "t-010": {
+      "agent": "prism",
+      "assignee": "",
+      "code": "T-010",
+      "dept": "design",
+      "due": "",
+      "notes": "Only the SEO hero is done (4 Dribbble-sourced references). Remaining SEO sections and all of Digital Marketing and Training still to do.",
+      "plan": "g1",
+      "priority": "normal",
+      "start": "2026-08-24",
+      "status": "done",
+      "title": "Find UI references for SEO, Digital Marketing and Training",
+      "updated": "2026-11-19T11:07:12.173Z"
+    },
+    "t-011": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-011",
+      "dept": "execution",
+      "due": "",
+      "notes": "The seo- / dm- / tr- blocks in style.scss were reskinned in place on 2026-08-25 to match AppDev's card/button/font system. Waiting on your review.",
+      "plan": "g1",
+      "priority": "normal",
+      "start": "2026-08-24",
+      "status": "done",
+      "title": "Implement UI for SEO, Digital Marketing and Training",
+      "updated": "2026-11-19T11:07:10.253Z"
+    },
+    "t-012": {
+      "agent": "pulse",
+      "assignee": "",
+      "code": "T-012",
+      "dept": "design",
+      "due": "",
+      "notes": "Only after T-011 is approved, page by page.",
+      "plan": "g1",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Add animations to SEO, Digital Marketing and Training",
+      "updated": "2026-11-19T11:07:08.565Z"
+    },
+    "t-013": {
+      "agent": "prism",
+      "assignee": "",
+      "code": "T-013",
+      "dept": "design",
+      "due": "",
+      "notes": "components/Layouts/**, Common/**. Shared: can break every page. Runs alone.",
+      "plan": "g4",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Redesign header, plan cards, buttons and font",
+      "updated": "2026-11-19T11:07:08.405Z"
+    },
+    "t-014a": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-014a",
+      "dept": "planning",
+      "due": "",
+      "notes": "Acceptance test: the 5-second rule in docs/tasks/web services page ins.md.",
+      "plan": "g2",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Finish the web services page UX",
+      "updated": "2026-11-19T11:07:08.213Z"
+    },
+    "t-014e": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-014e",
+      "dept": "execution",
+      "due": "",
+      "notes": "Hero restyled to the reference image. components/Services/**",
+      "plan": "g2",
+      "priority": "normal",
+      "start": "2026-08-28",
+      "status": "done",
+      "title": "Implement the web services UI",
+      "updated": "2026-11-19T11:07:10.069Z"
+    },
+    "t-014f": {
+      "agent": "pulse",
+      "assignee": "",
+      "code": "T-014f",
+      "dept": "design",
+      "due": "",
+      "notes": "",
+      "plan": "g2",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Add animations to the web services page",
+      "updated": "2026-11-19T11:07:08.029Z"
+    },
+    "t-015": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-015",
+      "dept": "execution",
+      "due": "",
+      "notes": "Done (pass 5, 09-04): about-us, news/*, useful-articles, case-studies-details. Still on the old navy/cyan layer: pass 2's 16 routes. Never covered: coming-soon, 404, offers (blocked by T-022). Scope rules under a page wrapper because rtl.css loads after style.css.",
+      "plan": "g3",
+      "priority": "normal",
+      "start": "2026-08-31",
+      "status": "done",
+      "title": "Move the sub-pages onto the monochrome system",
+      "updated": "2026-11-19T11:07:11.685Z"
+    },
+    "t-016": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-016",
+      "dept": "execution",
+      "due": "",
+      "notes": "Audit first. Runs alone.",
+      "plan": "g4",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Audit common components so they all look consistent",
+      "updated": "2026-11-19T11:07:07.869Z"
+    },
+    "t-017": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-017",
+      "dept": "execution",
+      "due": "",
+      "notes": "Only once all of T-011 has landed.",
+      "plan": "g1",
+      "priority": "low",
+      "start": "",
+      "status": "done",
+      "title": "Delete styles/ux-prototype.css and its _app.js import",
+      "updated": "2026-11-19T11:07:07.693Z"
+    },
+    "t-018": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-018",
+      "dept": "execution",
+      "due": "",
+      "notes": "12 sections, most in DESIGN → REVIEW. Tracker: docs/homepage/README.md. Services sections rebuilt to the Claude Design handoff on 2026-09-23.",
+      "plan": "g5",
+      "priority": "normal",
+      "start": "2026-09-03",
+      "status": "done",
+      "title": "Rebuild the homepage on /hp-new, section by section",
+      "updated": "2026-11-19T11:07:11.493Z"
+    },
+    "t-019": {
+      "agent": "lens",
+      "assignee": "",
+      "code": "T-019",
+      "dept": "execution",
+      "due": "",
+      "notes": "After G1 to G5.",
+      "plan": "g6",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Run the full-site QA sweep",
+      "updated": "2026-11-19T11:07:07.541Z"
+    },
+    "t-020": {
+      "agent": "quill",
+      "assignee": "",
+      "code": "T-020",
+      "dept": "content",
+      "due": "",
+      "notes": "Known: AboutTwo/*, degital-markiting-/WhatWeOffer/*, ComingSoon/*, case-studies-details, Common/CTA, fake seeded comments on the blog detail pages.",
+      "plan": "g7",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Remove the remaining lorem ipsum and fake content",
+      "updated": "2026-11-19T11:07:07.389Z"
+    },
+    "t-021": {
+      "agent": "beacon",
+      "assignee": "",
+      "code": "T-021",
+      "dept": "content",
+      "due": "",
+      "notes": "Small; do it with the next SEO pass.",
+      "plan": "g6",
+      "priority": "low",
+      "start": "",
+      "status": "done",
+      "title": "robots.txt: disallow /lab/ and keep it out of the sitemap",
+      "updated": "2026-11-19T11:07:07.237Z"
+    },
+    "t-022": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-022",
+      "dept": "execution",
+      "due": "",
+      "notes": "Fixed 2026-11-19: removed the raw <script> HTML and the nested <Head>; one Google Ads tag left, with the conversion event fired in the same script. npm run build passes (first time since 2026-08-19). Check in Google Ads that the مشاهدة صفحة conversion still records after deploy.",
+      "plan": "g10",
+      "priority": "high",
+      "start": "",
+      "status": "done",
+      "title": "Fix the production build (pages/offers.js)",
+      "updated": "2026-11-19T11:07:10.429Z"
+    },
+    "t-023": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-023",
+      "dept": "execution",
+      "due": "",
+      "notes": "Full visual rebuild of each page's buttons, cards and tags, not a class rename. Web Services first.",
+      "plan": "g9",
+      "priority": "normal",
+      "start": "2026-09-01",
+      "status": "done",
+      "title": "Roll .ds-new-* out across the site, page by page",
+      "updated": "2026-11-19T11:07:11.077Z"
+    },
+    "t-025": {
+      "agent": "quill",
+      "assignee": "",
+      "code": "T-025",
+      "dept": "content",
+      "due": "",
+      "notes": "data/services/data.js, components/Services/ServiceNav.js",
+      "plan": "g2",
+      "priority": "normal",
+      "start": "2026-10-08",
+      "status": "done",
+      "title": "Swap /services text for the hub copy, layout unchanged",
+      "updated": "2026-11-19T11:07:09.909Z"
+    },
+    "t-026": {
+      "agent": "quill",
+      "assignee": "",
+      "code": "T-026",
+      "dept": "content",
+      "due": "",
+      "notes": "/web-design-new/**, /services/emails-new/, /seo-new/{packages,quote}-v{1,2}/. Generated from content/ — never hand-edit data/content-new/. ?kw=1 shows the keyword layer.",
+      "plan": "g12",
+      "priority": "normal",
+      "start": "2026-10-26",
+      "status": "done",
+      "title": "Review the content team pages under -new URLs",
+      "updated": "2026-11-19T11:07:09.717Z"
+    },
+    "t-027": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-027",
+      "dept": "planning",
+      "due": "",
+      "notes": "Hub, the 3 service pages (/services/custom-website/, /wordpress/, /online-store/) and the navbar dropdown on desktop and mobile. Nobody has checked it visually yet.",
+      "plan": "g2",
+      "priority": "high",
+      "start": "2026-10-15",
+      "status": "done",
+      "title": "Review the web services split in the browser",
+      "updated": "2026-11-19T11:07:10.589Z"
+    },
+    "t-028": {
+      "agent": "quill",
+      "assignee": "",
+      "code": "T-028",
+      "dept": "content",
+      "due": "",
+      "notes": "They currently reuse the hub placeholder image (heroMedia) and the nav brief.",
+      "plan": "g2",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Give each service page its own hero image and copy",
+      "updated": "2026-11-19T11:07:07.069Z"
+    },
+    "t-029": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-029",
+      "dept": "planning",
+      "due": "",
+      "notes": "No longer in the navbar. Redirect to /services/ or keep it? Also decide whether the hub's ServiceNav cards should link to the service pages instead of scrolling.",
+      "plan": "g2",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Decide what happens to /services/website-design/",
+      "updated": "2026-11-19T11:07:06.901Z"
+    },
+    "t-030": {
+      "agent": "quill",
+      "assignee": "",
+      "code": "T-030",
+      "dept": "content",
+      "due": "",
+      "notes": "Still TODO(prices) placeholders on the service pages and the homepage plans section.",
+      "plan": "g2",
+      "priority": "high",
+      "start": "",
+      "status": "done",
+      "title": "Put real prices on the plan cards",
+      "updated": "2026-11-19T11:07:08.869Z"
+    },
+    "t-031": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-031",
+      "dept": "execution",
+      "due": "",
+      "notes": "docs/tasks/newest-tasks-homepage.md: remove Training from the navbar; sub navbar in brand colours with instant active state; reorganize web services layout; projects strip taller, 3px gap and radius, no side fades; vertical 'more' button on plan cards; app dev phones right / talk middle / features left; email section in brand colours and buttons; whole ecommerce card as a link.",
+      "plan": "g5",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Apply the homepage edits list",
+      "updated": "2026-11-19T11:07:06.749Z"
+    },
+    "t-032": {
+      "agent": "quill",
+      "assignee": "",
+      "code": "T-032",
+      "dept": "content",
+      "due": "",
+      "notes": "Stores combo + landing illustrations are empty by design; email panel images are placeholders.",
+      "plan": "g5",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Fill the empty homepage image slots",
+      "updated": "2026-11-19T11:07:06.621Z"
+    },
+    "t-033": {
+      "agent": "quill",
+      "assignee": "",
+      "code": "T-033",
+      "dept": "content",
+      "due": "",
+      "notes": "data/<page>/brief.md for app-development, digital-marketing, emails, seo, vps-hosting, wordprees-hosting, security, ssl-certificate, website-design, services.",
+      "plan": "g7",
+      "priority": "normal",
+      "start": "2026-09-07",
+      "status": "done",
+      "title": "Write team briefs for every remaining service page"
+    },
+    "t-034": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-034",
+      "dept": "planning",
+      "due": "",
+      "notes": "pages/services/security/ is third-party vendor copy (Veritas, Sophos) with no pricing. Needs a business decision before design or content work.",
+      "plan": "g7",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Decide what the security page should be",
+      "updated": "2026-11-19T11:07:10.917Z"
+    },
+    "t-035": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-035",
+      "dept": "design",
+      "due": "",
+      "notes": ".svc-img-hover corner brackets, <Navbar theme=\"navy\" />, magnetic and lift removed from buttons. docs/tasks/newest-tasks-subpages.md",
+      "plan": "g9",
+      "priority": "normal",
+      "start": "2026-09-28",
+      "status": "done",
+      "title": "Service pages: image hover, navy header, button hover"
+    },
+    "t-036": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-036",
+      "dept": "execution",
+      "due": "",
+      "notes": "Still runs on the live homepage. The /hp-new fork (HpNew/Marketing.js) already fixes it.",
+      "plan": "g8",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Fix the 40ms forever setInterval in Common/SeoShowcase.js",
+      "updated": "2026-11-19T11:07:06.477Z"
+    },
+    "t-037": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-037",
+      "dept": "execution",
+      "due": "",
+      "notes": "pages/api/contact.js and pages/api/web.js can be called directly to send spam through SendGrid.",
+      "plan": "g10",
+      "priority": "high",
+      "start": "",
+      "status": "done",
+      "title": "Verify reCAPTCHA on the server and accept POST only",
+      "updated": "2026-11-19T11:07:09.029Z"
+    },
+    "t-038": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-038",
+      "dept": "execution",
+      "due": "",
+      "notes": "pages/api/contact.js, pages/api/web.js",
+      "plan": "g10",
+      "priority": "high",
+      "start": "",
+      "status": "done",
+      "title": "Escape form fields before putting them into email HTML",
+      "updated": "2026-11-19T11:07:09.197Z"
+    },
+    "t-039": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-039",
+      "dept": "planning",
+      "due": "",
+      "notes": "Quote form emails support@knoztech.com. Also in the Navbar, VPS/WordPress pricing order buttons and data/home-new/data.js. If unintended, leads are going elsewhere.",
+      "plan": "g10",
+      "priority": "high",
+      "start": "",
+      "status": "done",
+      "title": "Confirm the knoztech.com domain",
+      "updated": "2026-11-19T11:07:09.365Z"
+    },
+    "t-040": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-040",
+      "dept": "execution",
+      "due": "",
+      "notes": "32 at last check (9 critical, 14 high), incl. prototype pollution in swiper.",
+      "plan": "g10",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Fix npm audit vulnerabilities",
+      "updated": "2026-11-19T11:07:06.333Z"
+    },
+    "t-041": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-041",
+      "dept": "planning",
+      "due": "",
+      "notes": "Done 2026-11-19: everything moved into app/, all main routes return 200 from the new folder. Left for you: stop the old dev server still on port 3000 (it runs from the old folder and returns 500), then delete the empty Web/ folder.",
+      "plan": "g11",
+      "priority": "high",
+      "start": "2026-11-19",
+      "status": "done",
+      "title": "Finish renaming Web/Backup/ar to app/",
+      "updated": "2026-11-19T11:07:10.749Z"
+    },
+    "t-042": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-042",
+      "dept": "execution",
+      "due": "",
+      "notes": "HomeOne/Three/Four/Five, AboutTwo, Team, ServiceDetails, PricingEmail, PricingShareHosting, TermsAndConditions, WebOfferAbout, why-katechs, EmailFag, EmailProDataFag, degital-* (3). Check for dynamic imports first.",
+      "plan": "g11",
+      "priority": "low",
+      "start": "",
+      "status": "done",
+      "title": "Delete the 17 unused component folders",
+      "updated": "2026-11-19T11:07:06.197Z"
+    },
+    "t-043": {
+      "agent": "forge",
+      "assignee": "",
+      "code": "T-043",
+      "dept": "execution",
+      "due": "",
+      "notes": "19,500 lines shared by every page. One partial per page via @use.",
+      "plan": "g11",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Split style.scss into per-page partials",
+      "updated": "2026-11-19T11:07:06.045Z"
+    },
+    "t-044": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-044",
+      "dept": "planning",
+      "due": "",
+      "notes": "D:\\Work\\katechs-backups (about 1.9 GB), moved out of the repo on 2026-11-19.",
+      "plan": "g11",
+      "priority": "low",
+      "start": "",
+      "status": "done",
+      "title": "Delete the backup archives once you're sure",
+      "updated": "2026-11-19T11:07:05.885Z"
+    },
+    "t-045": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-045",
+      "dept": "planning",
+      "due": "",
+      "notes": "git filter-repo removes the archives and the old key from history; every device must re-clone after.",
+      "plan": "g11",
+      "priority": "low",
+      "start": "",
+      "status": "done",
+      "title": "Decide whether to shrink .git by rewriting history",
+      "updated": "2026-11-19T11:07:05.725Z"
+    },
+    "t-046": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-046",
+      "dept": "planning",
+      "due": "",
+      "notes": "Also pick V1 or V2 for the SEO packages and quote pages.",
+      "plan": "g12",
+      "priority": "normal",
+      "start": "",
+      "status": "done",
+      "title": "Decide: replace the old pages with the -new ones, or merge",
+      "updated": "2026-11-19T11:07:04.017Z"
+    },
+    "t-047": {
+      "agent": "atlas",
+      "assignee": "",
+      "code": "T-047",
+      "dept": "planning",
+      "due": "",
+      "notes": "Host fixed 2026-09-08 but flagged as possibly the wrong company. Same question as T-039.",
+      "plan": "g5",
+      "priority": "high",
+      "start": "",
+      "status": "done",
+      "title": "Confirm the domain search host (WHMCS)",
+      "updated": "2026-11-19T11:07:09.549Z"
+    }
+  },
+  "notes": {
+    "fg6sjd42fpmwnhodur": {
+      "text": "",
+      "color": "yellow",
+      "x": 0.015577459432048682,
+      "y": 0.059482758620689656,
+      "z": 2,
+      "created": "2026-11-19T11:50:58.083Z"
+    }
+  },
+  "agents": {
+    "atlas": {
+      "file": "MANAGER.md",
+      "lastUsed": "Fixed the offers.js build, moved the app to app/, and moved this planner into the project (localhost:3000/lab/planner/).",
+      "lastUsedOn": "2026-11-19",
+      "md": "# Manager\n\nThe one you talk to every time you start work. Every Claude Code session in this repo starts as the Manager.\n\n## Files (source of truth, in the repo)\n- `agents/manager/MANAGER.md` — role and session routine\n- `agents/manager/MEMORY.md` — its own memory, loaded automatically\n- `agents/manager/log.md` — one entry per session\n\n## Owns\n- The plan, priorities and deadlines\n- This planner (`agents/manager/planner.json`): keeps tasks, notes and agents true\n- The team: briefs each agent, reviews the work, records what they did\n\n## Every session\n- **Start:** reads memory + planner, tells you where you left off in 5 lines or less\n- **End:** updates the planner, its memory and the log, and lists files for you to push\n\n## Never\n- Runs git\n- Marks work done before you've seen it\n- Builds a guess from an unclear sketch without asking\n",
+      "name": "Manager",
+      "order": 1,
+      "role": "Plans with you · runs the team and the planner"
+    },
+    "beacon": {
+      "file": "beacon.md",
+      "lastUsed": "",
+      "lastUsedOn": "",
+      "md": "# Beacon — SEO\n\nKeeps the technical SEO clean so a human SEO specialist can plug in their strategy.\n\n## Owns\n- Meta tags and `<Head>` plumbing\n- `robots.txt`, sitemap, canonical URLs\n- Structured data\n- Page speed and crawlability\n- Redirects in `next.config.js`\n\n## Never does\n- Writes keyword or content strategy — a person does that\n\n## Open\n- `robots.txt`: disallow `/lab/`, keep it out of the sitemap (T-021)\n- `public/` is 106 MB with image optimization off — convert to WebP\n",
+      "name": "Beacon",
+      "order": 6,
+      "role": "SEO · technical surface"
+    },
+    "forge": {
+      "file": "forge.md",
+      "lastUsed": "Split Web Services into a hub plus one page per service (custom website, WordPress, online store) and added the navbar dropdown.",
+      "lastUsedOn": "2026-10-15",
+      "md": "# Forge — Builder\n\nBuilds and fixes the actual site: pages, components and styles.\n\n## Owns\n- `app/pages/`, `app/components/`, `app/styles/`\n- Bug and security fixes in code\n- Wiring data files into sections\n\n## Never does\n- Writes copy (that's Quill)\n- Changes `Common/` or `Layouts/` to fix one page — makes a page-scoped component instead\n\n## Rules\n- Pages Router, Bootstrap 5 + global SCSS. No CSS Modules, no Tailwind.\n- New CSS goes under a page wrapper class: `rtl.css` loads after `style.css` and silently wins flat selectors\n- Use `.ds-new-*` monochrome classes, never `--ds-cyan`\n- Icons: `bx-*` only\n- Broken images or webpack errors: delete `.next/cache` and restart\n\n## Run\n```\ncd app\nnpm run dev\n```\nPort 3000. Another port: `$env:port=3001; npm run dev` (lowercase).\n",
+      "name": "Forge",
+      "order": 3,
+      "role": "Builder · pages, components, SCSS"
+    },
+    "lens": {
+      "file": "lens.md",
+      "lastUsed": "",
+      "lastUsedOn": "",
+      "md": "# Lens — Tester\n\nStrict QA. Reports problems, never fixes them.\n\n## Checks\n- `npm run build` passes\n- Every route renders, no console errors\n- RTL correct, Arabic text not clipped\n- Responsive: 375, 768, 1280, 1920 wide\n- One section = one screen on desktop\n- Accessibility: contrast, focus, alt text\n- Links and buttons go where they say\n\n## Never does\n- Edits code\n\n## Output\nA report with: what failed, where (route + file), how to reproduce, severity.\n\n## Tip\nOn `/hp-new`, smooth scroll takes content out of flow — headless screenshots come back blank unless you scroll first.\n",
+      "name": "Lens",
+      "order": 7,
+      "role": "Tester · QA reports"
+    },
+    "prism": {
+      "file": "prism.md",
+      "lastUsed": "Found 4 Dribbble references for the SEO page hero (task T-010).",
+      "lastUsedOn": "2026-08-24",
+      "md": "# Prism — UI researcher\n\nFinds section ideas and layout references before anything gets built.\n\n## Owns\n- References from 21st.dev and Dribbble, as screenshots, not code\n- Several picks per section, section by section\n- Checking every idea against the design system (Design tab)\n\n## Never does\n- Writes app code\n\n## How to brief\n- Name the page and the section\n- Say what you didn't like about the current one\n- Attach a sketch if you have one. Prism asks before guessing an unclear sketch.\n\n## Sources\n- `ui-ux-pro-max` skill: styles, palettes, typography, UX rules\n- `design-taste-frontend` pass before calling a design done\n- `docs/design-system/inspirations/`, `docs/homepage/inspirations/`\n",
+      "name": "Prism",
+      "order": 2,
+      "role": "UI researcher · ideas and references"
+    },
+    "pulse": {
+      "file": "pulse.md",
+      "lastUsed": "",
+      "lastUsedOn": "",
+      "md": "# Pulse — Motion designer\n\nAdds motion, 3D, hover and interactivity once a section's layout is approved.\n\n## Owns\n- `app/components/Motion/` and the motion helpers in `Common/` (Reveal, Magnetic, ParticleField)\n- The design lab: `/lab/motion/`\n- Hover behaviour across the site\n\n## Never does\n- Changes layout or structure\n- Adds motion before the section is approved\n\n## Rules\n- framer-motion. GSAP is not installed — translate any GSAP snippet\n- Hover = same ink lighter/darker, or a border or lift. Never a colour swap.\n- No magnetic or lift on service-page buttons\n- Respect reduced motion\n- Image hover on service pages: `.svc-img-hover` corner brackets\n",
+      "name": "Pulse",
+      "order": 4,
+      "role": "Motion designer · animation, 3D, hover"
+    },
+    "quill": {
+      "file": "quill.md",
+      "lastUsed": "Wrote team briefs for every remaining service page (data/<page>/brief.md).",
+      "lastUsedOn": "2026-09-07",
+      "md": "# Quill — Content writer\n\nOwns every word and image on the site.\n\n## Owns\n- Arabic copy, no lorem ipsum\n- `app/data/<page>/data.js` and `brief.md`\n- Images in `app/public/images/`\n- The content team's pages: edit `content/`, then re-run `node scripts/build-content-new.js`\n\n## Never does\n- Edits JSX layout or SCSS\n- Hand-edits `data/content-new/` (it's generated)\n\n## How to brief\n- Name the page and section\n- Say if the copy must stay word-for-word (content team pages do)\n\n## Open debt\n- Lorem ipsum in AboutTwo, WhatWeOffer, ComingSoon, case-studies-details, Common/CTA\n- Fake comments on the blog detail pages\n- `hostingFeature.js` says كنوز تك instead of Katechs\n",
+      "name": "Quill",
+      "order": 5,
+      "role": "Content writer · copy, data, images"
+    },
+    "art-director": {
+      "name": "Art Director",
+      "role": "Writes the Designer Brief for the visual designer",
+      "order": 2,
+      "file": "art-director.md",
+      "lastUsedOn": "2026-11-19",
+      "lastUsed": "Wrote the Claude designer handoff (README, design direction as an update, current system doc, inspirations) in new-design-system/claude-designer/.",
+      "md": "# Art Director\n\nYou write the **Designer Brief** for the Katechs website (RTL Arabic site for katechs.com). A human\ndesigner makes every visual on the site. They are skilled with images but **do not know web design**.\nYour document is the only thing they get, so it must teach them enough about the web to do the job\nright, and tell them exactly what to make.\n\nWrite in **English**. Plain, direct sentences; the designer may not be a native speaker.\n\n## Before you start, every time\n1. Read your notes: `agents/art-director/NOTES.md` (decisions, open questions, status).\n2. Read the current brief if it exists: `docs/designer-brief/BRIEF.md`.\n3. Read `agents/manager/MEMORY.md` → \"Design taste\" for the user's preferences.\n\n## What the site needs\n- **Visual types: edited photos and device mockups** (screens showing websites, on laptop/phone).\n  Nothing else unless the user adds a type.\n- **A lot of visuals** across the services. Treat this as a catalogue, not a handful of heroes.\n- Services with ready content (start here): **Email**, **SEO**, **Websites** (custom website,\n  WordPress, online store, Salla store, website hub).\n\n## The document — `docs/designer-brief/BRIEF.md`\nKeep this structure. Every section must be useful to someone who has never made a web visual.\n\n1. **How to use this brief** — what's inside, how to read a slot screenshot, the order to work in.\n2. **About Katechs** — what the company does, who the customers are (Arabic-speaking businesses),\n   what the site must make them feel.\n3. **Visual language (design goals)**\n   - Mood and tone. The user's taste: pure white is too harsh, so the site uses a softer ground;\n     no boxes, no borders, no icons; nothing that looks AI-generated.\n   - **Edited photos:** subject matter, people or no people, local context, colour grade, lighting,\n     crop, what to avoid (stock clichés, handshakes, glowing brains, fake holograms).\n   - **Device mockups:** which devices, angle, shadows/no shadows, background, and that screens show\n     **real Katechs pages** (you provide the screenshots), never invented UI.\n   - Mark anything that depends on the design system still being decided as **PENDING**, and list it\n     in Open questions. Don't invent a palette.\n4. **Web basics for designers** — what a \"slot\" is; aspect ratio; how the same image crops on desktop vs\n   phone and where the safe area is; right-to-left layout (the visual usually sits opposite the Arabic\n   text); resolution (deliver at 2× the display size); formats (WebP or PNG for the site, layered source\n   file too); transparent vs soft background; file size limits; naming.\n5. **Services** — one sub-section per service: what it is, who buys it, the single message its visuals\n   must carry, key points. Take facts ONLY from `content/**` and `app/data/<page>/brief.md`; never invent\n   features, prices or claims.\n6. **Visual inventory** — one table row per visual: ID (e.g. `EML-03`), page, section, purpose,\n   type (photo / mockup), display size + aspect ratio, slot screenshot, priority, status.\n7. **Inspirations** — each reference with **Take:** and **Avoid:** notes. Never a bare image.\n8. **Process & delivery** — style test first (one photo + one mockup), user approves, then the rest;\n   review rounds; delivery folder and file naming.\n9. **Open questions** — what you need from the user before a section can be finished.\n\n## Slot screenshots\nShow the designer exactly where each visual goes: a screenshot of the page with the slot marked.\n- Run the site: `cd app` then `port=3001 npm run dev` (lowercase `port`; 3000 may be taken). Pages with\n  the ready content: `/web-design-new/**`, `/services/emails-new/`, `/seo-new/*`.\n- Capture with headless Chrome:\n  `\"/c/Program Files/Google/Chrome/Application/chrome.exe\" --headless=new --disable-gpu --hide-scrollbars --window-size=1440,900 --screenshot=<out.png> <url>`\n  (phone: `--window-size=390,844`).\n- Save under `docs/designer-brief/slots/<ID>.png`. Stop the dev server you started when done.\n\n## Rules\n- Never edit app code, styles or data. Your outputs live in `docs/designer-brief/` and your notes.\n- Never invent service facts. If content is missing, write it as an open question.\n- Ask (through the Manager) before deciding anything the user hasn't decided: palette, photo style\n  direction, which pages get visuals first.\n- Never run git. List the files you touched.\n\n## When you finish a session\n- Update `agents/art-director/NOTES.md`: what changed in the brief, decisions made, open questions,\n  what's next.\n- Tell the Manager in 3–5 lines what you did and what you need.\n"
+    },
+    "claude-designer": {
+      "name": "Claude designer",
+      "role": "Third-party AI designer · applies the design update to real pages",
+      "order": 3,
+      "file": "README.md",
+      "lastUsedOn": "",
+      "lastUsed": "Handoff ready in new-design-system/claude-designer/ — not started yet.",
+      "md": "# Claude designer\n\nThird-party team member (Claude Design). Gets the handoff folder `new-design-system/claude-designer/` and returns redesigned pages in `delivery/`.\n\n## Brief\n- The design system is **updated**, not replaced: see `01-design-direction.md`.\n- Pages to try it on: homepage, old email services, new email services, new SEO.\n- Arabic copy stays word for word; RTL; one section = one screen on desktop; no icons, no bordered boxes, no AI look, no AI images.\n"
+    }
+  },
+  "folders": {
+    "assets": {
+      "desc": "Where images live, served and unserved.",
+      "items": [
+        {
+          "detail": "Everything the site loads.",
+          "path": "app/public/images/",
+          "status": "reference",
+          "title": "Site images (served)"
+        },
+        {
+          "detail": "Visuals Creating area, mockups, screenshots.",
+          "path": "design-assets/",
+          "status": "reference",
+          "title": "Design assets (not served)"
+        },
+        {
+          "detail": "cards, img, split-img and tags style images.",
+          "path": "docs/design-system/inspirations/",
+          "status": "reference",
+          "title": "Design system references"
+        },
+        {
+          "detail": "",
+          "path": "docs/homepage/images/",
+          "status": "reference",
+          "title": "Homepage images"
+        }
+      ],
+      "name": "Images & assets",
+      "order": 7
+    },
+    "briefs": {
+      "desc": "One team brief per service page. Read the right one before touching that page.",
+      "items": [
+        {
+          "detail": "",
+          "path": "app/data/app-development/brief.md",
+          "status": "reference",
+          "title": "App development"
+        },
+        {
+          "detail": "",
+          "path": "app/data/digital-marketing/brief.md",
+          "status": "reference",
+          "title": "Digital marketing"
+        },
+        {
+          "detail": "",
+          "path": "app/data/emails/brief.md",
+          "status": "reference",
+          "title": "Emails"
+        },
+        {
+          "detail": "",
+          "path": "app/data/hosting-services/brief.md",
+          "status": "reference",
+          "title": "Hosting services"
+        },
+        {
+          "detail": "",
+          "path": "app/data/seo/brief.md",
+          "status": "reference",
+          "title": "SEO"
+        },
+        {
+          "detail": "The 4 built areas.",
+          "path": "app/data/services/brief.md",
+          "status": "reference",
+          "title": "Web services hub"
+        },
+        {
+          "detail": "",
+          "path": "app/data/ssl-certificate/brief.md",
+          "status": "reference",
+          "title": "SSL certificate"
+        },
+        {
+          "detail": "Order buttons link to clients.knoztech.com — confirm the domain.",
+          "path": "app/data/vps-hosting/brief.md",
+          "status": "todo",
+          "title": "VPS hosting"
+        },
+        {
+          "detail": "Order buttons link to clients.knoztech.com — confirm the domain.",
+          "path": "app/data/wordprees-hosting/brief.md",
+          "status": "todo",
+          "title": "WordPress hosting"
+        },
+        {
+          "detail": "",
+          "path": "app/data/website-design/brief.md",
+          "status": "reference",
+          "title": "Website design"
+        },
+        {
+          "detail": "Third-party vendor copy (Veritas, Sophos) with no pricing. Needs a business decision first.",
+          "path": "app/data/security/brief.md",
+          "status": "todo",
+          "title": "Security"
+        }
+      ],
+      "name": "Service page briefs",
+      "order": 1
+    },
+    "contentteam": {
+      "desc": "Source pages from the content team. Edit here, then run: node scripts/build-content-new.js. Copy stays word-for-word.",
+      "items": [
+        {
+          "detail": "Website-Custom, Website-Section-Hub, WordPress-Web-Store, Store-Online-, Salla-Store → /web-design-new/**",
+          "path": "content/Website-Services/",
+          "status": "review",
+          "title": "Website services"
+        },
+        {
+          "detail": "Email.docx + HTML mockups → /services/emails-new/",
+          "path": "content/Email-Services/",
+          "status": "review",
+          "title": "Email services"
+        },
+        {
+          "detail": "V1 and V2 packages and quote → /seo-new/. Pick one version (T-046).",
+          "path": "content/SEO-Services/",
+          "status": "review",
+          "title": "SEO services"
+        },
+        {
+          "detail": "content hub & business web, WordPress.",
+          "path": "content/web services/",
+          "status": "reference",
+          "title": "Web services hub copy"
+        },
+        {
+          "detail": "Never hand-edit. Re-run the script instead.",
+          "path": "app/data/content-new/",
+          "status": "reference",
+          "title": "Generated data"
+        }
+      ],
+      "name": "Content team pages",
+      "order": 4
+    },
+    "docs": {
+      "desc": "Task lists, specs and project notes in the repo.",
+      "items": [
+        {
+          "detail": "Homepage and sub-page edit lists, region pricing spec, web services instructions.",
+          "path": "docs/tasks/",
+          "status": "reference",
+          "title": "Task lists and specs"
+        },
+        {
+          "detail": "Layout, conventions, rules for anyone working in the repo.",
+          "path": "CLAUDE.md",
+          "status": "reference",
+          "title": "Project instructions"
+        },
+        {
+          "detail": "",
+          "path": "docs/design-system/design-system.md",
+          "status": "reference",
+          "title": "Design system quick reference"
+        },
+        {
+          "detail": "",
+          "path": "docs/design-system/scroll-snap-mechanism.md",
+          "status": "reference",
+          "title": "Scroll-snap mechanism"
+        },
+        {
+          "detail": "Everything before 2026-08-24.",
+          "path": "docs/archive/PROJECT.md",
+          "status": "reference",
+          "title": "Project history"
+        }
+      ],
+      "name": "Docs & notes",
+      "order": 8
+    },
+    "fixcopy": {
+      "desc": "Lorem ipsum, fake content and wrong names still on the site.",
+      "items": [
+        {
+          "detail": "Lorem ipsum.",
+          "path": "app/components/AboutTwo/",
+          "status": "todo",
+          "title": "About page (AboutTwo)"
+        },
+        {
+          "detail": "Lorem ipsum.",
+          "path": "app/components/degital-markiting-/WhatWeOffer/",
+          "status": "todo",
+          "title": "Digital marketing — What we offer"
+        },
+        {
+          "detail": "Lorem ipsum.",
+          "path": "app/components/ComingSoon/",
+          "status": "todo",
+          "title": "Coming soon page"
+        },
+        {
+          "detail": "English lorem ipsum.",
+          "path": "app/pages/case-studies/case-studies-details/",
+          "status": "todo",
+          "title": "Case study details"
+        },
+        {
+          "detail": "English lorem ipsum. Shared component — one change hits every page.",
+          "path": "app/components/Common/CTA.js",
+          "status": "todo",
+          "title": "Shared CTA"
+        },
+        {
+          "detail": "Fake seeded comments.",
+          "path": "app/pages/news/*-blog/",
+          "status": "todo",
+          "title": "Blog detail pages"
+        },
+        {
+          "detail": "Says كنوز تك instead of Katechs.",
+          "path": "app/components/Services/hostingFeature.js",
+          "status": "todo",
+          "title": "Hosting feature text"
+        }
+      ],
+      "name": "Copy to fix",
+      "order": 5
+    },
+    "homepage": {
+      "desc": "Copy, sketches and references for the new homepage on /hp-new.",
+      "items": [
+        {
+          "detail": "Copy for every /hp-new section.",
+          "path": "app/data/home-new/data.js",
+          "status": "draft",
+          "title": "Homepage data"
+        },
+        {
+          "detail": "Stores combo + landing illustrations; email panel images are placeholders.",
+          "path": "app/components/HpNew/Stores.js · EmailServices.js",
+          "status": "todo",
+          "title": "Empty image slots"
+        },
+        {
+          "detail": "",
+          "path": "docs/homepage/VISION.md",
+          "status": "reference",
+          "title": "Vision and notes"
+        },
+        {
+          "detail": "Status of all 12 sections.",
+          "path": "docs/homepage/README.md",
+          "status": "reference",
+          "title": "Section tracker"
+        },
+        {
+          "detail": "Your sketches, one per section.",
+          "path": "docs/homepage/structure-drafts/",
+          "status": "reference",
+          "title": "Structure drafts"
+        },
+        {
+          "detail": "",
+          "path": "docs/homepage/inspirations/",
+          "status": "reference",
+          "title": "Inspiration images"
+        },
+        {
+          "detail": "",
+          "path": "docs/homepage/Homepage.pdf",
+          "status": "reference",
+          "title": "Homepage PDF"
+        }
+      ],
+      "name": "Homepage",
+      "order": 3
+    },
+    "seo": {
+      "desc": "Technical SEO surface.",
+      "items": [
+        {
+          "detail": "Disallow /lab/ and keep it out of the sitemap.",
+          "path": "app/public/robots.txt",
+          "status": "todo",
+          "title": "robots.txt"
+        },
+        {
+          "detail": "/services/degital-market → /services/digital-marketing (permanent).",
+          "path": "app/next.config.js",
+          "status": "done",
+          "title": "Old digital marketing URL redirect"
+        },
+        {
+          "detail": "public/ is 106 MB and image optimization is off. Convert to WebP.",
+          "path": "app/public/images/",
+          "status": "todo",
+          "title": "Image weight"
+        }
+      ],
+      "name": "SEO",
+      "order": 6
+    },
+    "webservices": {
+      "desc": "Copy and data for the hub and the three service pages.",
+      "items": [
+        {
+          "detail": "Hub text swapped in, layout unchanged (T-025).",
+          "path": "app/data/services/data.js",
+          "status": "review",
+          "title": "Hub copy"
+        },
+        {
+          "detail": "custom-website, wordpress and online-store reuse the hub placeholder image and nav brief.",
+          "path": "app/pages/services/[area].js",
+          "status": "todo",
+          "title": "Hero image and copy per service page"
+        },
+        {
+          "detail": "Still TODO(prices) placeholders.",
+          "path": "app/data/services/data.js",
+          "status": "todo",
+          "title": "Plan prices"
+        },
+        {
+          "detail": "What was done on 2026-10-15 and what's still open.",
+          "path": "docs/memory.md",
+          "status": "reference",
+          "title": "Running reminder for the split"
+        }
+      ],
+      "name": "Web services",
+      "order": 2
+    }
+  },
+  "lib": {
+    "ds-btn": {
+      "category": "Design system",
+      "detail": "Dark: navy fill, hover lightens 8%. Outline: white fill, hairline border, navy text.",
+      "order": 3,
+      "status": "live",
+      "title": "Buttons",
+      "where": ".ds-new-btn .ds-new-btn-dark / .ds-new-btn-outline"
+    },
+    "ds-card": {
+      "category": "Design system",
+      "detail": "No shadow. 1px --ds-line border, 16px radius. Hover: border goes navy and the card lifts 4px.",
+      "order": 4,
+      "status": "live",
+      "title": "Cards",
+      "where": "docs/design-system/inspirations/cards style.png"
+    },
+    "ds-direction": {
+      "category": "Design system",
+      "detail": "Decided 2026-09-01. One ink colour (navy) against white and grey. No cyan accent, no gradients as an accent.",
+      "order": 1,
+      "status": "rule",
+      "title": "Monochrome direction",
+      "where": "docs/design-system/design-system.md · /lab/design-system/"
+    },
+    "ds-export": {
+      "category": "Design system",
+      "detail": "Exported tokens and component snippets.",
+      "order": 12,
+      "status": "reference",
+      "title": "Design system export and element code",
+      "where": "docs/design-system/design-system-export.md · docs/design-system/elements code.md"
+    },
+    "ds-hero": {
+      "category": "Design system",
+      "detail": "Two columns, media first in the DOM (RTL puts it left). Eyebrow pill, h2, paragraph, dark + outline button pair.",
+      "order": 8,
+      "status": "live",
+      "title": "Split hero",
+      "where": ".ds-new-hero-split · inspirations/split-img style.png"
+    },
+    "ds-icons": {
+      "category": "Design system",
+      "detail": "Use regular Boxicons (bx-*). Solid bxs-* glyphs are missing from the bundled font and render as empty boxes.",
+      "order": 10,
+      "status": "rule",
+      "title": "Icons",
+      "where": "bx-*"
+    },
+    "ds-media": {
+      "category": "Design system",
+      "detail": "The image is the card; a bottom gradient carries the title and a button.",
+      "order": 6,
+      "status": "live",
+      "title": "Media card",
+      "where": ".ds-new-media-card · inspirations/img style.png"
+    },
+    "ds-old": {
+      "category": "Design system",
+      "detail": "The previous system. Being replaced page by page (plan G9). Don't use --ds-cyan or --ds-shadow-card in new work.",
+      "order": 11,
+      "status": "deprecated",
+      "title": "Old navy/cyan layer",
+      "where": ".ds-* · .wsv-* · --ds-cyan · --ds-shadow-card"
+    },
+    "ds-stat": {
+      "category": "Design system",
+      "detail": "Number plus an up/down % pill (.is-up green, .is-down red) and a hairline footer.",
+      "order": 5,
+      "status": "live",
+      "title": "Stat card",
+      "where": ".ds-new-stat-card"
+    },
+    "ds-tag": {
+      "category": "Design system",
+      "detail": "Pill split by a hairline: strong word | plain descriptor. .is-good / .is-bad colour the icon only.",
+      "order": 7,
+      "status": "live",
+      "title": "Combo tag",
+      "where": ".ds-new-combo-tag · inspirations/tags style .png"
+    },
+    "ds-tokens": {
+      "category": "Design system",
+      "detail": "navy #0a1f44 · white · line rgba(15,23,42,.08) · band #f5f6f8 · muted #6084a4 · heading #212121 · body #4d4d4d. Radii: card 16, button 10, well 12, pill 100. h2 clamp(1.7rem, 2.8vw, 2.3rem); body 15px / 1.95; eyebrow 13px; section gap clamp(32px, 4vw, 48px).",
+      "order": 2,
+      "status": "live",
+      "title": "Tokens (--ds-*)",
+      "where": "styles/style.scss (search --ds-)"
+    },
+    "ds-type": {
+      "category": "Design system",
+      "detail": "Almarai sitewide, weights 300/400/700/800 only. Cairo is loaded only on /hp-new for its section headings.",
+      "order": 9,
+      "status": "rule",
+      "title": "Typography",
+      "where": "pages/_document.js · pages/hp-new.js"
+    },
+    "hp-folder": {
+      "category": "Homepage",
+      "detail": "Vision, section tracker, your sketches, structure drafts and inspiration images.",
+      "order": 1,
+      "status": "reference",
+      "title": "Homepage working folder",
+      "where": "docs/homepage/ (README.md, VISION.md, structure-drafts/, inspirations/)"
+    },
+    "hp-fork": {
+      "category": "Homepage",
+      "detail": "HpNew/Marketing.js is a deliberate fork of Common/SeoShowcase.js so the live homepage is untouched. Don't de-duplicate them.",
+      "order": 3,
+      "status": "rule",
+      "title": "Marketing section fork",
+      "where": "components/HpNew/Marketing.js"
+    },
+    "hp-rejected": {
+      "category": "Homepage",
+      "detail": "2026-09-09: a single 100vh web services band, and a vertical side-rail section nav. Both reverted. Don't rebuild unless asked by name.",
+      "order": 4,
+      "status": "deprecated",
+      "title": "Rejected designs",
+      "where": "components/HpNew/SectionNav.js · WebServicesScreen.js"
+    },
+    "hp-route": {
+      "category": "Homepage",
+      "detail": "12 sections, most in design review. Services sections built to the Claude Design handoff on 2026-09-23. pages/index.js stays frozen until the swap.",
+      "order": 2,
+      "status": "draft",
+      "title": "/hp-new route",
+      "where": "pages/hp-new.js · components/HpNew/ · data/home-new/data.js"
+    },
+    "lab-components": {
+      "category": "Design lab",
+      "detail": "The real components rendered in isolation at any width, RTL or LTR, light or dark ground. ?only=<id> shows one.",
+      "order": 3,
+      "status": "live",
+      "title": "/lab/components/",
+      "where": "pages/lab/components.js · components/Lab/specimens.js"
+    },
+    "lab-ds": {
+      "category": "Design lab",
+      "detail": "Live docs and examples of the monochrome system: buttons, cards, tags, media cards, split hero.",
+      "order": 4,
+      "status": "live",
+      "title": "/lab/design-system/",
+      "where": "pages/lab/design-system.js"
+    },
+    "lab-hub": {
+      "category": "Design lab",
+      "detail": "Entry point to every lab view plus every real route with its state. Dev only: 404s in a production build.",
+      "order": 1,
+      "status": "live",
+      "title": "/lab/ hub",
+      "where": "pages/lab/index.js · npm run dev → localhost:3000/lab/"
+    },
+    "lab-motion": {
+      "category": "Design lab",
+      "detail": "Every motion primitive running: reveals, magnetic hover, 3D tilt, marquee, count-up, particles. Mapped to the ui-ux-pro-max motion presets.",
+      "order": 2,
+      "status": "live",
+      "title": "/lab/motion/",
+      "where": "pages/lab/motion.js"
+    },
+    "lab-sections": {
+      "category": "Design lab",
+      "detail": "Preview of the standalone portable sections.",
+      "order": 5,
+      "status": "live",
+      "title": "/lab/sections/",
+      "where": "pages/lab/sections.js"
+    },
+    "lab-transitions": {
+      "category": "Design lab",
+      "detail": "Transitions between the web services areas.",
+      "order": 6,
+      "status": "live",
+      "title": "/lab/area-transitions/",
+      "where": "pages/lab/area-transitions.js"
+    },
+    "lab-uilib": {
+      "category": "Design lab",
+      "detail": "Reference screenshots from public/images/*inspiration* folders. Click to zoom.",
+      "order": 7,
+      "status": "live",
+      "title": "/lab/ui-library/",
+      "where": "pages/lab/ui-library.js"
+    },
+    "mo-common": {
+      "category": "Motion",
+      "detail": "Shared motion helpers. Magnetic was removed from every service-page button on 2026-09-28; don't re-add it there.",
+      "order": 2,
+      "status": "live",
+      "title": "Reveal, Magnetic, ParticleField",
+      "where": "components/Common/Reveal.js · Magnetic.js · ParticleField.js"
+    },
+    "mo-components": {
+      "category": "Motion",
+      "detail": "CardStack3D, Cube3D, FlipCard3D, FloatingBlobs, FloatingIcons, GradientAurora, OrbitRing, OrbitSphere3D, ParallaxLayers3D, WaveDivider.",
+      "order": 1,
+      "status": "live",
+      "title": "Motion components",
+      "where": "components/Motion/"
+    },
+    "mo-css-field": {
+      "category": "Motion",
+      "detail": "Replaced the three.js shader aurora on /hp-new on 2026-09-23, dropping a ~600 KB chunk. ShaderBackground.js is no longer imported.",
+      "order": 6,
+      "status": "live",
+      "title": "Pure-CSS streak field (app dev backdrop)",
+      "where": "components/HpNew/AppServices.js"
+    },
+    "mo-imghover": {
+      "category": "Motion",
+      "detail": "Navy corner brackets top-right and bottom-left, 18px out from the image, 80px long, with a tiny zoom. Service pages.",
+      "order": 4,
+      "status": "live",
+      "title": "Image hover: corner brackets",
+      "where": ".svc-img-hover (end of styles/style.scss)"
+    },
+    "mo-stack": {
+      "category": "Motion",
+      "detail": "framer-motion (plus AOS and animejs in older pages). GSAP is not installed: translate ui-ux-pro-max GSAP snippets to framer-motion.",
+      "order": 3,
+      "status": "rule",
+      "title": "Motion stack",
+      "where": "package.json"
+    },
+    "mo-tilt": {
+      "category": "Motion",
+      "detail": "Kept on purpose in case it's wanted again. Wrap an image in <Tilt3D max={8}>.",
+      "order": 5,
+      "status": "reference",
+      "title": "Tilt3D (old image hover)",
+      "where": "components/Emails/Tilt3D.js"
+    },
+    "r-data": {
+      "category": "Rules & decisions",
+      "detail": "Copy lives in data/<page>/data.js, not hardcoded in JSX.",
+      "order": 5,
+      "status": "rule",
+      "title": "Data-driven sections",
+      "where": "data/"
+    },
+    "r-hover": {
+      "category": "Rules & decisions",
+      "detail": "Same ink going lighter or darker, or a border/lift. Never a colour swap. No lift or magnetic on service-page buttons; plan cards may lift as a whole.",
+      "order": 2,
+      "status": "rule",
+      "title": "Hover behaviour",
+      "where": ""
+    },
+    "r-onescreen": {
+      "category": "Rules & decisions",
+      "detail": "On desktop, a section fills exactly the screen below the sticky bars. Never shrink it, never overflow.",
+      "order": 1,
+      "status": "rule",
+      "title": "One section = one screen",
+      "where": ""
+    },
+    "r-rtl": {
+      "category": "Rules & decisions",
+      "detail": "rtl.css loads after style.css with flat legacy rules, so a flat selector at the end of style.scss silently loses. Use .about-page .x, .news-grid-page .x, etc.",
+      "order": 3,
+      "status": "rule",
+      "title": "Scope new CSS under a page wrapper",
+      "where": "pages/_app.js · styles/rtl.css"
+    },
+    "r-shared": {
+      "category": "Rules & decisions",
+      "detail": "Never change Common/ or Layouts/ to fix one page. Make a page-scoped component instead.",
+      "order": 4,
+      "status": "rule",
+      "title": "Don't edit shared components for one page",
+      "where": "components/Common/ · components/Layouts/"
+    },
+    "r-sketch": {
+      "category": "Rules & decisions",
+      "detail": "When a sketch or annotation is ambiguous, ask before fully building a guess.",
+      "order": 6,
+      "status": "rule",
+      "title": "Ask before guessing a sketch",
+      "where": ""
+    },
+    "r-sources": {
+      "category": "Rules & decisions",
+      "detail": "Use the ui-ux-pro-max skill for styles, palettes and UX rules, then a design-taste-frontend pass before calling a design done. References from 21st.dev and Dribbble, as screenshots, section by section, several picks.",
+      "order": 7,
+      "status": "rule",
+      "title": "Design sources",
+      "where": ""
+    },
+    "sc-area": {
+      "category": "Sections & components",
+      "detail": "Generic sections for the web services areas. Adding an area = one row in BUILT_AREAS + a data key. Never fork per area.",
+      "order": 2,
+      "status": "rule",
+      "title": "Service area components",
+      "where": "components/Services/ServiceArea/ · pages/services/index.js"
+    },
+    "sc-contentnew": {
+      "category": "Sections & components",
+      "detail": "Renders the generated -new pages from data/content-new/.",
+      "order": 5,
+      "status": "live",
+      "title": "Content team page renderer",
+      "where": "components/ContentNew/ContentPage.js"
+    },
+    "sc-plans": {
+      "category": "Sections & components",
+      "detail": "Legacy .single-pricing cards restyled only under .svc-plans, so the homepage stays untouched.",
+      "order": 3,
+      "status": "live",
+      "title": "Plan cards on service pages",
+      "where": ".svc-plans"
+    },
+    "sc-sections": {
+      "category": "Sections & components",
+      "detail": "Portable one-file sections built from a reference image, self-contained via styled-jsx, no dependency on SCSS, data or icon fonts. HeroBuildSmarter, CoverflowCarousel.",
+      "order": 1,
+      "status": "live",
+      "title": "Standalone sections",
+      "where": "components/Sections/ (read its README)"
+    },
+    "sc-service-page": {
+      "category": "Sections & components",
+      "detail": "One shared file for custom-website, wordpress and online-store: hero, overview, plans, FAQ (+ journey, capabilities, store plans, CTA for the store).",
+      "order": 4,
+      "status": "live",
+      "title": "Service page template",
+      "where": "pages/services/[area].js"
+    }
+  },
+  "archive": {
+    "a-backups": {
+      "date": "2026-11-19",
+      "detail": "About 1.9 GB of .rar/.zip backups. Delete when sure (task T-044).",
+      "title": "Backup archives moved out of the repo",
+      "where": "D:\\Work\\katechs-backups"
+    },
+    "a-brain": {
+      "date": "2026-11-19",
+      "detail": "Replaced by this planner. Still in git history if needed.",
+      "title": "Brain folder and the 6-agent system",
+      "where": "brain/ · .claude/agents/ · .claude/commands/"
+    },
+    "a-history": {
+      "date": "2026-08-24",
+      "detail": "Everything up to 2026-08-24.",
+      "title": "Project history before the brain system",
+      "where": "docs/archive/PROJECT.md"
+    },
+    "a-hub": {
+      "date": "2026-10-08",
+      "detail": "Built and reverted the same day on your instruction. Replaced by the 2026-10-15 split.",
+      "title": "/services rebuilt as a hub (T-024)",
+      "where": ""
+    },
+    "a-magnetic": {
+      "date": "2026-09-28",
+      "detail": "Removed; colour/fill hover stays. The old 3D image tilt is kept in Tilt3D.js.",
+      "title": "Magnetic hover and lift on service-page buttons",
+      "where": "components/Emails/Tilt3D.js"
+    },
+    "a-oldws": {
+      "date": "2026-10-15",
+      "detail": "Frozen copy of /services before the split.",
+      "title": "Old web services page",
+      "where": "pages/services/old-web-services.js"
+    },
+    "a-shader": {
+      "date": "2026-09-23",
+      "detail": "Replaced by a pure-CSS streak field; dropped a ~600 KB chunk. ShaderBackground.js is no longer imported.",
+      "title": "Three.js shader aurora on /hp-new",
+      "where": "components/HpNew/ShaderBackground.js"
+    },
+    "a-swiper": {
+      "date": "2026-09-23",
+      "detail": "Replaced by a plain CSS belt. Swiper is still used elsewhere.",
+      "title": "Swiper in the projects marquee",
+      "where": "components/HpNew/ProjectsMarquee.js"
+    }
+  },
+  "settings": {
+    "main": {
+      "currentPlan": "qs41u8zpugmwngldiz"
+    }
+  }
+}

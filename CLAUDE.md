@@ -1,72 +1,54 @@
-# Katechs — read this first
+# Katechs
 
-**How to work here without breaking things: `brain/WORKFLOW.md`.** Start there if git feels slow, if you're
-about to commit, or if you're not sure who owns a file.
+## You are the Manager
+Every session in this repo starts as the Manager. Your role and your memory load below; follow the
+start-of-session steps in MANAGER.md before anything else.
 
-**🚫 Agents never run git here.** No pull, push, add, commit, status, checkout, branch, merge, log or diff.
-`.git` is 1.6 GB and every call is slow. Write files, report the paths you touched — **the user pushes
-manually.** The only exception is the user invoking `/ag-sync` themselves.
+@agents/manager/MANAGER.md
+@agents/manager/MEMORY.md
 
-**Before doing anything in this repo:**
-1. Read `brain/MANAGEMENT.md` — brief, goals, tasks, history, agents, work assigned
-2. Read `brain/STATE.md` — the Broadcast section
-3. Read `brain/README.md` — the working protocol (read → work → record → report)
+**🚫 Agents never run git here.** `.git` is huge and every call is slow. Write files, report the paths you
+touched — **the user pushes manually.**
 
-`brain/` is the shared memory for the Manager and all agents, across every device, synced through GitHub.
-Nothing is remembered anywhere else. If it isn't written to `brain/`, the next session and the other device
-will not know it happened.
+## Layout
+| Path | What |
+|------|------|
+| `app/` | The website — Next.js 14 Pages Router, RTL Arabic, Bootstrap 5 + global SCSS, custom `server.js` |
+| `content/` | Content team's source pages. `app/scripts/build-content-new.js` turns them into `app/data/content-new/` — never hand-edit the generated data, change the source and re-run |
+| `docs/tasks/` | Task lists and specs from the user |
+| `docs/homepage/`, `docs/design-system/` | Homepage vision/drafts, design-system notes |
+| `docs/memory.md` | The user's running reminder — read it, keep it updated |
+| `docs/archive/PROJECT.md` | Old project history |
+| `design-assets/` | Source images, mockups, screenshots — not served by the site |
+| `agents/manager/` | The Manager's role, memory and log |
 
-## Agents & shortcuts
-| Shortcut | Agent |
-|----------|-------|
-| `/ag-board` | Manager status report |
-| `/ag-sync` | Pull + reconcile the brain + broadcast |
-| `/ag-ui-search` | UI Library Searcher — section ideas → `brain/ui-library/` |
-| `/ag-ui-build` | UI Implementer — components, pages, SCSS |
-| `/ag-anim` | UI Animator — motion, 3D, hover, interactivity |
-| `/ag-content` | Content & Data Manager — copy, `data/**`, images |
-| `/ag-test` | Tester — strict QA report (never fixes) |
-| `/ag-seo` | SEO Manager — technical SEO surface only |
+## Planner
+Plans, tasks, sticky notes, agents, content folders and the design library live in
+`agents/manager/planner.json`, shown at **http://localhost:3000/lab/planner/** (dev only; page in
+`app/components/Lab/planner.html`, backend `app/pages/api/lab/planner.js`). Read it before starting
+work; update task status there when you finish something.
 
-Definitions: `.claude/agents/`. Shared rules every agent inherits: `.claude/agents/_SHARED-PROTOCOL.md`.
+## Run
+`cd app && npm run dev` → http://localhost:3000. Dev-only tools at **/lab/** (motion, components, inspiration).
+`server.js` reads lowercase `process.env.port` — PowerShell: `$env:port=3001; npm run dev`.
 
-## Two rules that protect everyone
-- **Claim before you write, when a run is concurrent.** `brain/locks/<zone>.lock.md` + a row in
-  *Work Assigned*. No git needed — sessions in the same folder see each other's files instantly.
-- **Never `git add .` inside `Web/Backup/ar`** — `sendgrid.env` is not actually ignored and contains a live
-  API key. Stage explicit paths until that is fixed (`brain/MANAGEMENT.md` → Known Issues #1, #2).
+## Conventions (do not break)
+- `pages/<route>.js` is thin: `Layout` + a stack of sections. Page-owned components in `components/<Page>/`,
+  cross-page ones in `components/Common/`, shell in `components/Layouts/`.
+- Content lives in `data/<page>/data.js` — new sections are data-driven, not hardcoded JSX.
+- Styling = global SCSS (`styles/style.scss`). No CSS Modules / Tailwind / styled-components.
+  Exception: `components/Sections/` (self-contained `styled-jsx`, see its README).
+- `styles/rtl.css` loads AFTER `style.css` with flat legacy rules — scope new rules under a page wrapper
+  class or they silently lose.
+- Don't edit `Common/` or `Layouts/` to fix one page — make a page-scoped component.
+- Icons: use `bx-*`. `bxs-*` glyphs are missing from the bundled font.
+- Broken images / weird webpack errors → delete `.next/cache` and restart.
 
-## Where the app is
-`Web/Backup/ar` — Next.js 14 Pages Router, RTL Arabic, Bootstrap 5 + global SCSS, custom `server.js`.
-`npm run dev` → port 3000. Conventions and gotchas: `brain/MANAGEMENT.md` → Brief.
+## Security
+- `app/sendgrid.env` is local-only. Never `git add .` inside `app/` — stage explicit paths.
+- SendGrid key is read from `process.env.SENDGRID_API_KEY`.
 
-## See the work
-`cd Web/Backup/ar && npm run dev` → **http://localhost:3000/lab/**
-- `/lab/motion/` — every motion primitive running, mapped to the `ui-ux-pro-max` motion.csv presets
-- `/lab/components/` — the real components in isolation, any viewport width, RTL or LTR
-- `/lab/ui-library/` — reference screenshots + the ideas filed in `brain/ui-library/`
-
-Dev only — `/lab/` 404s in a production build. **Look here before rebuilding anything.**
-
-## Running more than one agent at once
-Read `brain/PARALLEL.md` first. Two rules decide whether it works:
-- **`styles/style.scss` is its own lock zone** — 12,733 lines shared by every page, one holder at a time,
-  whatever page you're on.
-- **`server.js` reads lowercase `process.env.port`.** `PORT=3001` silently does nothing.
-  PowerShell: `$env:port=3001; npm run dev`.
-
-## Design intelligence
-`brain/ui-library/SOURCES.md` — `ui-ux-pro-max` (motion presets, styles, palettes, UX rules) and
-`design-taste-frontend` are **required sources** for the design agents, not optional.
-⚠️ Its motion snippets are GSAP; **GSAP is not installed here** — translate to framer-motion.
-
-**Standing rule (2026-08-29, user) — whenever asked to design a UI, section, or page, in *any*
-session, not just `/ag-ui-search` or `/ag-ui-build`:**
-1. Read `brain/ui-library/README.md` and skim `brain/ui-library/inspiration/*.md` for anything
-   relevant to the request — reuse a filed idea before inventing a new one.
-2. Pull from the `ui-ux-pro-max` skill (styles, palettes, typography, UX guidelines — see
-   `SOURCES.md` for which file holds what) for whatever the request needs.
-3. Run the design through `design-taste-frontend` before calling it done — the anti-slop
-   judgment pass, not optional.
-4. Only then design/build. If the library has nothing relevant, say so before starting from a
-   blank page — don't skip the check silently.
+## Design
+When asked to design UI, use the `ui-ux-pro-max` skill (styles, palettes, typography, UX rules) and run the
+result through `design-taste-frontend` before calling it done. Its motion snippets are GSAP — GSAP is not
+installed; translate to framer-motion.

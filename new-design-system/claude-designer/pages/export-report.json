@@ -1,0 +1,56 @@
+[
+  {
+    "name": "01b-homepage-live-old",
+    "route": "/",
+    "desktopHeight": 9884,
+    "mobileHeight": 14224,
+    "assets": 40,
+    "mb": 42.5,
+    "skipped": 0
+  },
+  {
+    "name": "01-homepage",
+    "route": "/hp-new/",
+    "desktopHeight": 11690,
+    "mobileHeight": 12000,
+    "assets": 46,
+    "mb": 33.3,
+    "skipped": 0
+  },
+  {
+    "name": "02-email-services-old",
+    "route": "/services/emails/",
+    "desktopHeight": 4850,
+    "mobileHeight": 8902,
+    "assets": 21,
+    "mb": 3.1,
+    "skipped": 0
+  },
+  {
+    "name": "03-email-services-new",
+    "route": "/services/emails-new/",
+    "desktopHeight": 7696,
+    "mobileHeight": 14149,
+    "assets": 19,
+    "mb": 3.2,
+    "skipped": 0
+  },
+  {
+    "name": "04-seo-new-packages-v1",
+    "route": "/seo-new/packages-v1/",
+    "desktopHeight": 9869,
+    "mobileHeight": 17364,
+    "assets": 18,
+    "mb": 3.1,
+    "skipped": 0
+  },
+  {
+    "name": "04b-seo-new-packages-v2",
+    "route": "/seo-new/packages-v2/",
+    "desktopHeight": 12767,
+    "mobileHeight": 21346,
+    "assets": 18,
+    "mb": 3.1,
+    "skipped": 0
+  }
+]
