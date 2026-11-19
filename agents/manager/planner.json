@@ -798,6 +798,15 @@
       "status": "done",
       "title": "Confirm the domain search host (WHMCS)",
       "updated": "2026-11-19T11:07:09.549Z"
+    },
+    "T-045": {
+      "title": "Rework the Claude designer's design result (user not satisfied)",
+      "status": "todo",
+      "priority": "high",
+      "plan": "qs41u8zpugmwngldiz",
+      "agent": "claude-designer",
+      "due": "2026-11-26",
+      "notes": "2026-11-19: user reviewed the delivery in new-design-system/claude-designer/delivery/ and is not satisfied. Work on it later together: first pin down what is wrong before asking for a new round."
     }
   },
   "notes": {

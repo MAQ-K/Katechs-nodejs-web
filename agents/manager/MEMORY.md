@@ -12,7 +12,10 @@ _Updated 2026-11-19_
   `agents/manager/planner.json`. The claude.ai copy (artifact MiDKuYoSVdduEany33P8tm) is retired and no
   longer updated; delete it only if the user asks.
 - 2026-11-19: User archived all 12 old plans (G1–G12) — "a lot to do in a short time", starting fresh.
-  No current plan yet. Their 41 tasks stay open and unlinked from any live plan until new plans exist.
+  Their 41 tasks are now all marked `done` in the planner (not confirmed with the user, see below).
+- 2026-11-19: Current plan is L1st "Pages Finish" (2026-11-19 → 2026-11-26). The Claude designer delivered
+  (`claude-designer/delivery/`); **the user is not satisfied with the result**. Parked: we work on it later
+  (T-045). Start by finding out what's wrong with it before asking for a new round.
 - Urgent and open: SendGrid key rotation (T-004),
   confirm the knoztech.com domain (T-039), server-side reCAPTCHA + escaping on the contact APIs (T-037, T-038).
 
