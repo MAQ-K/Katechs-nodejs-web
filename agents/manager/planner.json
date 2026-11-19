@@ -165,7 +165,7 @@
             "id": "nmwngnclngg3o",
             "x": 580,
             "y": 77,
-            "text": "#design system\n\nwe gonna recreate the design system\nwe have a white problem ,the white color very annoying to the eye we need a solution\nthe design direction\ni don't like boxes and borders\ni don't like icons\ni don't AI slops"
+            "text": "#design system ✓ DONE 2026-11-20\nkept: typography + light grey only\n\nwe gonna recreate the design system\nwe have a white problem ,the white color very annoying to the eye we need a solution\nthe design direction\ni don't like boxes and borders\ni don't like icons\ni don't AI slops"
           },
           {
             "id": "nmwngopgk3ng2",
@@ -799,14 +799,50 @@
       "title": "Confirm the domain search host (WHMCS)",
       "updated": "2026-11-19T11:07:09.549Z"
     },
-    "T-045": {
-      "title": "Rework the Claude designer's design result (user not satisfied)",
+    "T-048": {
+      "code": "T-048",
+      "title": "Apply the kept parts of the new design system to the current site: typography + light grey ground",
+      "status": "done",
+      "priority": "high",
+      "plan": "qs41u8zpugmwngldiz",
+      "agent": "forge",
+      "updated": "2026-11-20",
+      "preview": "new-design-system/claude-designer/pages/01-homepage/index-edited.html (snapshot copy + one override <style id=ds-edit-2026-11-20> before </body>). Same edit on 02-email-services-old/index-edited.html and 03-email-services-new/index-edited.html. Originals untouched. 2026-11-20: user closed the design-system part. Not yet in the real app (app/styles) — separate task when we roll it out.",
+      "due": "2026-11-26",
+      "notes": "2026-11-19: the new design system FAILED (Claude designer redesigned everything, not close to the inspirations). Dropped. Keep ONLY: typography (01-design-direction.md §5 type table) and page ground #F2F2F2. Everything else stays as the current site. Further edits (borders/cards closer to the inspirations) to be decided with the user first."
+    },
+    "T-049": {
+      "code": "T-049",
+      "title": "Designs needed: list the visuals each page needs (email, SEO, websites)",
       "status": "todo",
       "priority": "high",
       "plan": "qs41u8zpugmwngldiz",
-      "agent": "claude-designer",
+      "agent": "art-director",
+      "due": "2026-11-22",
+      "created": "2026-11-20",
+      "notes": "NEXT. From plan L1st diagram: designs needed → designer needs → designer document. Decide with the user page by page which visuals (edited photos / device mockups) each section needs. Start with the 3 services that have ready content: email, SEO, websites."
+    },
+    "T-050": {
+      "code": "T-050",
+      "title": "Designer document: brief for the human designer",
+      "status": "todo",
+      "priority": "high",
+      "plan": "qs41u8zpugmwngldiz",
+      "agent": "art-director",
+      "due": "2026-11-24",
+      "created": "2026-11-20",
+      "notes": "After T-049. docs/designer-brief/BRIEF.md: service brief, design goals, inspirations, visual inventory, web basics for a designer who doesn't know web. Use only the kept design decisions (Almarai typography, #F2F2F2 ground)."
+    },
+    "T-051": {
+      "code": "T-051",
+      "title": "Finish the pages with ready content: email, SEO, websites",
+      "status": "todo",
+      "priority": "normal",
+      "plan": "qs41u8zpugmwngldiz",
+      "agent": "forge",
       "due": "2026-11-26",
-      "notes": "2026-11-19: user reviewed the delivery in new-design-system/claude-designer/delivery/ and is not satisfied. Work on it later together: first pin down what is wrong before asking for a new round."
+      "created": "2026-11-20",
+      "notes": "From plan L1st: 'finish all pages'. Content team pages under content/ (-new URLs). Includes rolling the T-048 typography + grey into the real app. Scope to agree with the user first."
     }
   },
   "notes": {
@@ -897,8 +933,8 @@
       "role": "Third-party AI designer · applies the design update to real pages",
       "order": 3,
       "file": "README.md",
-      "lastUsedOn": "",
-      "lastUsed": "Handoff ready in new-design-system/claude-designer/ — not started yet.",
+      "lastUsedOn": "2026-11-19",
+      "lastUsed": "Redesigned homepage, email (old/new) and SEO pages. Rejected 2026-11-19: changed the whole design, not close to the inspirations. Only typography + light grey kept.",
       "md": "# Claude designer\n\nThird-party team member (Claude Design). Gets the handoff folder `new-design-system/claude-designer/` and returns redesigned pages in `delivery/`.\n\n## Brief\n- The design system is **updated**, not replaced: see `01-design-direction.md`.\n- Pages to try it on: homepage, old email services, new email services, new SEO.\n- Arabic copy stays word for word; RTL; one section = one screen on desktop; no icons, no bordered boxes, no AI look, no AI images.\n"
     }
   },

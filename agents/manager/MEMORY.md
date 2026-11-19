@@ -1,7 +1,13 @@
 # Manager memory
 
 ## Where we left off
-_Updated 2026-11-19_
+_Updated 2026-11-20_
+- 2026-11-20: **Design-system part closed (T-048 done).** Typography + #F2F2F2 applied as one override
+  `<style id="ds-edit-2026-11-20">` on `index-edited.html` copies of the homepage, old email and new email
+  snapshots (`new-design-system/claude-designer/pages/`). Not in the real app yet (T-051).
+- **Next: T-049 "designs needed"** (which visuals per page, email/SEO/websites) → T-050 designer document
+  → T-051 finish pages. Order comes from the user's L1st plan diagram.
+- This machine has no Node.js (and PowerShell is blocked) — the dev server can't run here.
 - Manager created today. Next step: **build the rest of the team together**, one agent at a time.
 - 2026-11-19: app moved to `app/` and verified (all main routes 200 on port 3001). Leftover: an empty
   `Web\Backup\ar` folder held open by an old dev server (node pid 7892 under cmd 7044, started 10:42 from
@@ -25,7 +31,7 @@ _Updated 2026-11-19_
 - Likes things simple. Asked for a simpler, dark planner over a feature-heavy one.
 - Wants to plan *with* the Manager and decide, not be handed finished surprises.
 
-## Design update — decided 2026-11-19 (user answered the 8 questions)
+## Design update — decided 2026-11-19 (SUPERSEDED same day: system failed, see Design taste)
 - An **update** of the current system, not a new one.
 - Ground `#F2F2F2` neutral grey · white panels OK · borderless panels for sibling items only ·
   **no accent** (cyan retired) · headline weight by level (display light, section titles bold) ·
@@ -34,6 +40,14 @@ _Updated 2026-11-19_
 - Recorded in `new-design-system/claude-designer/01-design-direction.md` §4 and the lab page.
 
 ## Design taste (from plan L1st, 2026-11-19)
+- **2026-11-19: the new design system FAILED and is dropped.** We keep the current site/design and only
+  apply edits to it. From the new system the user keeps ONLY: the **typography** (01-design-direction §5
+  type table: display light & large, section titles bold, bigger body ~16–18px, Almarai) and the
+  **light grey ground `#F2F2F2`**. Nothing else (no pills, two-tone, panels, placeholders, icon removal).
+- The user likes the current homepage as it is. Next edit on the table: borders/cards to feel closer to
+  the inspirations — style not chosen yet (Whenevr rim+soft shadow vs Luxura flat tone).
+- The Claude designer redesigned the whole page because our brief asked for too much. Brief small, exact
+  edits from now on.
 - Pure white backgrounds are too harsh on the eye — wants a softer ground.
 - Dislikes boxes and borders, dislikes icons, dislikes anything that looks AI-generated.
 - The design system is being recreated; the 2026-09-01 monochrome `.ds-new-*` (bordered cards) is
